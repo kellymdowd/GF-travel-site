@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How We Score — Somewhere I've Been</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --cream: #FFFFFF; --slate: #C8717A; --slate-bg: #FBF0F1; --rose: #B8907A; --ink: #2A2018; --ink-mid: #5A5048; --ink-light: #9A907A; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body { background: var(--cream); color: var(--ink); font-family: 'Jost', sans-serif; font-weight: 300; line-height: 1.7; min-height: 100vh; display: flex; flex-direction: column; padding-top: 52px; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 100; opacity: 0.6; }
+
+    /* ─── Nav ──────────────────────────────────────────────── */
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 52px;
+      background: var(--cream);
+      border-bottom: 1px solid rgba(42, 32, 24, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      z-index: 300;
+    }
+
+    .nav-home {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 0.85rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-home:hover { color: var(--slate); }
+
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+
+    .nav-link {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-link:hover { color: var(--ink); }
+    .nav-link.is-active { color: var(--slate); }
+
+    /* ─── Header ───────────────────────────────────────────── */
+    .header { padding: 2.4rem 2.5rem 1.2rem; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
+    .page-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1; }
+    .header-rule { height: 1px; background: linear-gradient(to right, var(--rose), transparent 60%); margin: 0 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 0.6s forwards; }
+
+    /* ─── Content ───────────────────────────────────────────── */
+    .content { max-width: 860px; padding: 2.4rem 2.5rem 4rem; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards; }
+
+    .intro { margin-bottom: 3rem; }
+    .intro p { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.01em; }
+    .intro p + p { margin-top: 1rem; }
+
+    /* ─── Section Headings ──────────────────────────────────── */
+    .section { margin-bottom: 3.5rem; }
+    .section:last-child { margin-bottom: 0; }
+
+    .section-label {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 0.6rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+      letter-spacing: 0.06em;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 1.4rem;
+    }
+
+    .section-rule {
+      height: 1px;
+      background: rgba(42, 32, 24, 0.08);
+      margin-bottom: 1.6rem;
+    }
+
+    .section-desc {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.7;
+      margin-bottom: 1.8rem;
+      letter-spacing: 0.01em;
+    }
+
+    /* ─── Score Rows ────────────────────────────────────────── */
+    .score-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(42, 32, 24, 0.05);
+    }
+
+    .score-row:first-of-type {
+      border-top: 1px solid rgba(42, 32, 24, 0.08);
+    }
+
+    .score-row-left {
+      flex: 1;
+      padding-right: 2rem;
+    }
+
+    .score-category {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--ink);
+      letter-spacing: 0.02em;
+      margin-bottom: 0.25rem;
+    }
+
+    .score-desc {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: var(--ink-light);
+      line-height: 1.5;
+      letter-spacing: 0.01em;
+    }
+
+    .score-pips {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+      padding-top: 0.35rem;
+      flex-shrink: 0;
+    }
+
+    .score-pip {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(42, 32, 24, 0.08);
+    }
+
+    .score-pip.is-filled {
+      background: var(--slate);
+    }
+
+    /* ─── Pip Legend ────────────────────────────────────────── */
+    .pip-legend {
+      display: flex;
+      gap: 1.2rem;
+      margin-top: 0.6rem;
+      margin-bottom: 1.4rem;
+      padding: 0.5rem 0;
+    }
+
+    .pip-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 300;
+      color: var(--ink-light);
+      letter-spacing: 0.04em;
+    }
+
+    .pip-legend-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .pip-legend-dot.filled { background: var(--slate); }
+    .pip-legend-dot.unfilled { background: rgba(42, 32, 24, 0.08); }
+
+    /* ─── Score Total ──────────────────────────────────────── */
+    .score-total {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      margin-top: 1.2rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(42, 32, 24, 0.12);
+    }
+
+    .score-total-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 2.4rem;
+      color: var(--ink);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .score-total-label {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+    }
+
+    /* ─── Verdict Table ────────────────────────────────────── */
+    .verdict-section {
+      margin-top: 2rem;
+    }
+
+    .verdict-label {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 0.8rem;
+    }
+
+    .verdict-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(42, 32, 24, 0.05);
+    }
+
+    .verdict-row:first-of-type {
+      border-top: 1px solid rgba(42, 32, 24, 0.08);
+    }
+
+    .verdict-range {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 1rem;
+      color: var(--ink);
+      min-width: 3.2rem;
+      letter-spacing: 0.02em;
+    }
+
+    .verdict-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.7rem 0.25rem 0.5rem;
+      border-radius: 100px;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .verdict-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .verdict-easy { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .verdict-easy .verdict-dot { background: #4c8c50; }
+
+    .verdict-moderate { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
+    .verdict-moderate .verdict-dot { background: #b48c3c; }
+
+    .verdict-difficult { background: rgba(180, 70, 60, 0.08); color: #8a3a30; }
+    .verdict-difficult .verdict-dot { background: #b4463c; }
+
+    .verdict-very-difficult { background: rgba(160, 50, 40, 0.08); color: #7a2a20; }
+    .verdict-very-difficult .verdict-dot { background: #a03228; }
+
+    .verdict-desc {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 300;
+      color: var(--ink-light);
+      letter-spacing: 0.01em;
+    }
+
+    /* ─── Special Rule Callout ──────────────────────────────── */
+    .callout {
+      margin-top: 1.6rem;
+      padding: 1.2rem 1.4rem;
+      background: var(--slate-bg);
+      border-left: 2px solid var(--slate);
+      border-radius: 0 6px 6px 0;
+    }
+
+    .callout p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--ink-mid);
+      line-height: 1.6;
+      letter-spacing: 0.01em;
+    }
+
+    .callout strong {
+      font-weight: 500;
+      color: var(--ink);
+      font-style: normal;
+    }
+
+    /* ─── Footer ────────────────────────────────────────────── */
+    .page-footer {
+      margin-top: auto;
+      padding: 2rem 2.5rem;
+      border-top: 1px solid rgba(42, 32, 24, 0.08);
+      opacity: 0;
+      animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.8s forwards;
+    }
+
+    .footer-text {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+    }
+
+    /* ─── Animations ───────────────────────────────────────── */
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    /* ─── Responsive ───────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .score-row { flex-direction: column; gap: 0.4rem; }
+      .score-row-left { padding-right: 0; }
+      .score-pips { padding-top: 0; }
+    }
+
+    @media (max-width: 600px) {
+      .site-nav { padding: 0 1.2rem; }
+      .header, .content, .page-footer { padding-left: 1.2rem; padding-right: 1.2rem; }
+      .header-rule { margin: 0 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="index.html" class="nav-home">Somewhere I've Been</a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Places</a>
+      <a href="gf-scoring.html" class="nav-link is-active">GF Scoring</a>
+      <a href="about.html" class="nav-link">About Me</a>
+    </div>
+  </nav>
+
+  <header class="header">
+    <h1 class="page-title">How We Score</h1>
+  </header>
+  <div class="header-rule"></div>
+
+  <main class="content">
+
+    <!-- ─── Intro ──────────────────────────────────────────── -->
+    <div class="intro">
+      <p>Every score on this site is based on first-hand experience as a celiac traveler. These aren't crowd-sourced ratings or algorithmic guesses — they reflect real meals eaten, real questions asked, and real confidence (or anxiety) felt at the table.</p>
+      <p>We use two separate rubrics: one for cities as a whole, and one for individual restaurants. Both are designed to give you a quick, honest sense of what to expect before you arrive.</p>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- CITY-LEVEL GF SCORE                                    -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-label">Rubric 1</div>
+      <h2 class="section-title">City-Level GF Score</h2>
+      <div class="section-rule"></div>
+
+      <p class="section-desc">Five categories, each scored 0&ndash;2. The total gives a score out of 10 that captures how easy or difficult a city is for gluten-free dining overall.</p>
+
+      <div class="pip-legend">
+        <span class="pip-legend-item"><span class="pip-legend-dot filled"></span> Scored</span>
+        <span class="pip-legend-item"><span class="pip-legend-dot unfilled"></span> Not scored</span>
+      </div>
+
+      <!-- Row 1 -->
+      <div class="score-row">
+        <div class="score-row-left">
+          <div class="score-category">Dedicated GF Restaurants</div>
+          <div class="score-desc">Are there fully gluten-free restaurants in the city? 0 = none, 1 = a few, 2 = multiple / easy to find</div>
+        </div>
+        <div class="score-pips">
+          <span class="score-pip"></span>
+          <span class="score-pip"></span>
+        </div>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="score-row">
+        <div class="score-row-left">
+          <div class="score-category">Menu Labeling</div>
+          <div class="score-desc">Do restaurants typically mark GF items on their menus? 0 = rarely, 1 = some do, 2 = most / standard practice</div>
+        </div>
+        <div class="score-pips">
+          <span class="score-pip"></span>
+          <span class="score-pip"></span>
+        </div>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="score-row">
+        <div class="score-row-left">
+          <div class="score-category">Staff Knowledge &amp; Safety</div>
+          <div class="score-desc">Do servers understand cross-contamination and celiac needs? 0 = poor, 1 = hit or miss, 2 = generally well-informed</div>
+        </div>
+        <div class="score-pips">
+          <span class="score-pip"></span>
+          <span class="score-pip"></span>
+        </div>
+      </div>
+
+      <!-- Row 4 -->
+      <div class="score-row">
+        <div class="score-row-left">
+          <div class="score-category">Density of GF Dining</div>
+          <div class="score-desc">How many GF-friendly restaurants are there relative to city size? 0 = sparse, 1 = moderate, 2 = abundant</div>
+        </div>
+        <div class="score-pips">
+          <span class="score-pip"></span>
+          <span class="score-pip"></span>
+        </div>
+      </div>
+
+      <!-- Row 5 -->
+      <div class="score-row">
+        <div class="score-row-left">
+          <div class="score-category">Grocery Availability</div>
+          <div class="score-desc">Can you find GF products in local supermarkets? 0 = very limited, 1 = some options, 2 = excellent free-from aisles</div>
+        </div>
+        <div class="score-pips">
+          <span class="score-pip"></span>
+          <span class="score-pip"></span>
+        </div>
+      </div>
+
+      <!-- Total -->
+      <div class="score-total">
+        <span class="score-total-num">X</span>
+        <span class="score-total-label">out of 10</span>
+      </div>
+
+      <!-- Verdict Scale -->
+      <div class="verdict-section">
+        <div class="verdict-label">Verdict Scale</div>
+
+        <div class="verdict-row">
+          <span class="verdict-range">9&ndash;10</span>
+          <span class="verdict-tag verdict-easy"><span class="verdict-dot"></span>Easy</span>
+        </div>
+        <div class="verdict-row">
+          <span class="verdict-range">7&ndash;8</span>
+          <span class="verdict-tag verdict-easy"><span class="verdict-dot"></span>Easy</span>
+        </div>
+        <div class="verdict-row">
+          <span class="verdict-range">5&ndash;6</span>
+          <span class="verdict-tag verdict-moderate"><span class="verdict-dot"></span>Moderate</span>
+        </div>
+        <div class="verdict-row">
+          <span class="verdict-range">3&ndash;4</span>
+          <span class="verdict-tag verdict-difficult"><span class="verdict-dot"></span>Difficult</span>
+        </div>
+        <div class="verdict-row">
+          <span class="verdict-range">0&ndash;2</span>
+          <span class="verdict-tag verdict-very-difficult"><span class="verdict-dot"></span>Very Difficult</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- RESTAURANT-LEVEL GF SCORE                              -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="section">
+      <div class="section-label">Rubric 2</div>
+      <h2 class="section-title">Restaurant-Level GF Score</h2>
+      <div class="section-rule"></div>
+
+      <p class="section-desc">Five categories, each scored 0 or 1. The total gives a score out of 5 that tells you how confidently you can eat at a specific restaurant.</p>
+
+      <div class="pip-legend">
+        <span class="pip-legend-item"><span class="pip-legend-dot filled"></span> Yes</span>
+        <span class="pip-legend-item"><span class="pip-legend-dot unfilled"></span> No</span>
+      </div>
+
+      <!-- Row 1 -->
+      <div class="score-row">
+        <div class="score-row-left">
+          <div class="score-category">GF Options Available</div>
+          <div class="score-desc">Does the restaurant have GF items you can actually order? 0 = no clear GF options / 1 = yes, GF items available</div>
+        </div>
+        <div class="score-pips">
+          <span class="score-pip"></span>
+        </div>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="score-row">
+        <div class="score-row-left">
+          <div class="score-category">Menu Labeling</div>
+          <div class="score-desc">Are GF items marked on the menu, or does staff proactively guide you? 0 = not marked, have to ask / 1 = clearly labeled or staff-guided</div>
+        </div>
+        <div class="score-pips">
+          <span class="score-pip"></span>
+        </div>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="score-row">
+        <div class="score-row-left">
+          <div class="score-category">Good Range of Options</div>
+          <div class="score-desc">More than 1&ndash;2 dishes? Do you have real choices? 0 = very limited / 1 = multiple options to choose from</div>
+        </div>
+        <div class="score-pips">
+          <span class="score-pip"></span>
+        </div>
+      </div>
+
+      <!-- Row 4 -->
+      <div class="score-row">
+        <div class="score-row-left">
+          <div class="score-category">Safety Awareness</div>
+          <div class="score-desc">Dedicated GF facility, mentions cross-contamination protocols, or staff understand celiac needs? 0 = no clear safety awareness / 1 = dedicated GF or documented safety protocols</div>
+        </div>
+        <div class="score-pips">
+          <span class="score-pip"></span>
+        </div>
+      </div>
+
+      <!-- Row 5 -->
+      <div class="score-row">
+        <div class="score-row-left">
+          <div class="score-category">Would Recommend to a Celiac Friend</div>
+          <div class="score-desc">Your overall gut feeling &mdash; would you send someone there without worry? 0 = proceed with caution / 1 = would recommend</div>
+        </div>
+        <div class="score-pips">
+          <span class="score-pip"></span>
+        </div>
+      </div>
+
+      <!-- Total -->
+      <div class="score-total">
+        <span class="score-total-num">X</span>
+        <span class="score-total-label">out of 5</span>
+      </div>
+
+      <!-- Special Rule -->
+      <div class="callout">
+        <p><strong>100% gluten-free restaurants automatically score 5/5.</strong> If a restaurant is entirely dedicated to gluten-free cooking, every category is met by definition.</p>
+      </div>
+
+      <!-- Verdict Scale -->
+      <div class="verdict-section">
+        <div class="verdict-label">Verdict Scale</div>
+
+        <div class="verdict-row">
+          <span class="verdict-range">5</span>
+          <span class="verdict-tag verdict-easy"><span class="verdict-dot"></span>Excellent</span>
+          <span class="verdict-desc">eat with total confidence</span>
+        </div>
+        <div class="verdict-row">
+          <span class="verdict-range">4</span>
+          <span class="verdict-tag verdict-easy"><span class="verdict-dot"></span>Great</span>
+          <span class="verdict-desc">strong GF awareness</span>
+        </div>
+        <div class="verdict-row">
+          <span class="verdict-range">3</span>
+          <span class="verdict-tag verdict-moderate"><span class="verdict-dot"></span>Good</span>
+          <span class="verdict-desc">solid options with some communication needed</span>
+        </div>
+        <div class="verdict-row">
+          <span class="verdict-range">2</span>
+          <span class="verdict-tag verdict-difficult"><span class="verdict-dot"></span>Fair</span>
+          <span class="verdict-desc">possible but limited</span>
+        </div>
+        <div class="verdict-row">
+          <span class="verdict-range">1</span>
+          <span class="verdict-tag verdict-difficult"><span class="verdict-dot"></span>Caution</span>
+          <span class="verdict-desc">very few confirmed safe options</span>
+        </div>
+      </div>
+
+      <!-- Disclaimer Note -->
+      <div class="callout" style="margin-top: 1.6rem;">
+        <p><strong>A note on scoring:</strong> These scores are based on personal experience and research, and they err on the generous side. A score reflects what a celiac traveler can reasonably expect, not a worst-case scenario. When in doubt, always communicate your needs directly with the restaurant.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="page-footer">
+    <p class="footer-text">Somewhere I've Been</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maldives — Somewhere I've Been</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+  <style>
+    :root { --cream: #FFFFFF; --slate: #C8717A; --slate-dark: #AD5D65; --rose: #B8907A; --ink: #2A2018; --ink-mid: #5A5048; --ink-light: #9A907A; --pin: #B8907A; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body { background: var(--cream); color: var(--ink); font-family: 'Jost', sans-serif; font-weight: 300; min-height: 100vh; padding-top: 52px; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 100; opacity: 0.6; }
+    .site-nav { position: fixed; top: 0; left: 0; right: 0; height: 52px; background: var(--cream); border-bottom: 1px solid rgba(42, 32, 24, 0.08); display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; z-index: 300; }
+    .nav-home { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.85rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); text-decoration: none; transition: color 0.2s ease; }
+    .nav-home:hover { color: var(--slate); }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-link { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; transition: color 0.2s ease; }
+    .nav-link:hover { color: var(--ink); }
+    .nav-sub { padding: 1.2rem 2.5rem 0; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards; }
+    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .back-link:hover { color: var(--slate); }
+    .back-link:hover svg { transform: translateX(-3px); }
+    .back-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .header { display: flex; justify-content: space-between; align-items: flex-end; padding: 1.4rem 2.5rem 1.2rem; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
+    .country-name { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1; }
+    .trip-dates { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(0.85rem, 1.3vw, 1rem); color: var(--ink-light); letter-spacing: 0.04em; padding-bottom: 0.2rem; }
+    .header-rule { height: 1px; background: linear-gradient(to right, var(--rose), transparent 60%); margin: 0 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 0.6s forwards; }
+    .map-section { padding: 1.5rem 2.5rem 1rem; opacity: 0; animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
+    #country-map { width: 100%; display: block; }
+    #country-map svg { width: 100%; display: block; overflow: hidden; }
+    .city-pin { cursor: pointer; }
+    .city-pin circle.pin-fill { transition: r 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), fill 0.2s ease; }
+    .city-pin:hover circle.pin-fill { r: 7; fill: #C8A088; }
+    .city-label { font-family: 'Jost', sans-serif; font-size: 10px; font-weight: 400; letter-spacing: 0.1em; fill: var(--ink-mid); pointer-events: none; transition: fill 0.2s ease; }
+    .city-pin:hover .city-label { fill: var(--ink); }
+    .cities-section { padding: 0.5rem 2.5rem 2rem; opacity: 0; animation: fadeIn 0.8s ease 1.2s forwards; }
+    .cities-rule { height: 1px; background: rgba(170, 170, 170, 0.3); margin-bottom: 1.2rem; }
+    .cities-grid { display: flex; flex-wrap: wrap; gap: 0.6rem 1.2rem; }
+    .city-chip { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 0.75rem 0.35rem 0.6rem; border: 1px solid rgba(180, 168, 155, 0.4); cursor: pointer; background: transparent; font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease; }
+    .city-chip:hover { border-color: var(--rose); background: rgba(184, 144, 122, 0.06); color: var(--ink); }
+    .city-chip-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--pin); flex-shrink: 0; }
+    #map-tooltip { position: fixed; pointer-events: none; background: var(--ink); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.4rem 0.75rem; white-space: nowrap; opacity: 0; transition: opacity 0.15s ease; z-index: 200; }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { to { opacity: 1; } }
+    @media (max-width: 600px) { .site-nav { padding: 0 1.2rem; } .nav-sub, .header, .map-section, .cities-section { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav">
+    <a href="../index.html" class="nav-home">Somewhere I've Been</a>
+    <div class="nav-links">
+      <a href="../index.html" class="nav-link">Places</a>
+      <a href="../about.html" class="nav-link">About Me</a>
+    </div>
+  </nav>
+
+  <div class="nav-sub">
+    <a href="../index.html" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      All Countries
+    </a>
+  </div>
+
+  <header class="header">
+    <h1 class="country-name">Maldives</h1>
+    <span class="trip-dates"><!-- Add trip dates when known --></span>
+  </header>
+  <div class="header-rule"></div>
+
+  <section class="map-section">
+    <div id="country-map"></div>
+  </section>
+
+  <section class="cities-section">
+    <div class="cities-rule"></div>
+    <div class="cities-grid" id="city-chips"></div>
+  </section>
+
+  <div id="map-tooltip"></div>
+
+  <script>
+    const CITIES = [
+      { name: 'South Malé Atoll', slug: 'south-male-atoll', lat: 3.2028, lon: 73.2207, trips: '' },
+    ];
+
+    const LABEL_OPTS = {
+      'South Malé Atoll': { dx: 10, dy: 4, anchor: 'start' },
+    };
+
+    // The Maldives is a chain of tiny atolls — use a regional bounding box
+    const REGION = {
+      type: 'Feature',
+      geometry: {
+        type: 'Polygon',
+        coordinates: [[[72.4, 7.2], [74.0, 7.2], [74.0, -0.8], [72.4, -0.8], [72.4, 7.2]]]
+      }
+    };
+
+    const W = 960, H = 560;
+
+    const svg = d3.select('#country-map')
+      .append('svg')
+      .attr('viewBox', `0 0 ${W} ${H}`)
+      .attr('preserveAspectRatio', 'xMidYMid meet');
+
+    const projection = d3.geoMercator();
+    const path = d3.geoPath().projection(projection);
+    const tooltip = document.getElementById('map-tooltip');
+
+    fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json')
+      .then(r => r.json())
+      .then(world => {
+        const countries = topojson.feature(world, world.objects.countries);
+        const maldives = countries.features.find(f => +f.id === 462);
+
+        projection.fitExtent([[60, 40], [W - 60, H - 50]], REGION);
+
+        svg.append('rect').attr('width', W).attr('height', H).attr('fill', '#F3F3F3');
+
+        svg.selectAll('.bg-country')
+          .data(countries.features)
+          .enter().append('path')
+          .attr("fill", "#E0E0E0")
+          .attr('stroke', 'rgba(255,255,255,0.7)')
+          .attr('stroke-width', 0.5)
+          .attr('d', path);
+
+        if (maldives) {
+          svg.append('path')
+            .datum(maldives)
+            .attr('fill', '#C8717A')
+            .attr('stroke', '#AD5D65')
+            .attr('stroke-width', 1.5)
+            .attr('d', path);
+        }
+
+        const pinGroup = svg.selectAll('.city-pin')
+          .data(CITIES).enter()
+          .append('g')
+          .attr('class', 'city-pin')
+          .attr('transform', d => {
+            const [x, y] = projection([d.lon, d.lat]);
+            return `translate(${x},${y})`;
+          });
+
+        pinGroup.append('circle').attr('r', 7).attr('cy', 2).attr('fill', 'rgba(42, 32, 24, 0.15)');
+        pinGroup.append('circle').attr('class', 'pin-fill').attr('r', 5).attr('fill', '#B8907A').attr('stroke', '#FFFFFF').attr('stroke-width', 1.5);
+        pinGroup.append('text')
+          .attr('class', 'city-label')
+          .attr('dx', d => (LABEL_OPTS[d.name] || { dx: 10 }).dx)
+          .attr('dy', d => (LABEL_OPTS[d.name] || { dy: 4 }).dy)
+          .attr('text-anchor', d => (LABEL_OPTS[d.name] || { anchor: 'start' }).anchor)
+          .text(d => d.name.toUpperCase());
+
+        pinGroup
+          .on('mousemove', function(event, d) {
+            tooltip.textContent = d.name;
+            tooltip.style.opacity = '1';
+            tooltip.style.left = (event.clientX - tooltip.offsetWidth / 2) + 'px';
+            tooltip.style.top  = (event.clientY - 42) + 'px';
+          })
+          .on('mouseleave', () => { tooltip.style.opacity = '0'; })
+          .on('click', (event, d) => { window.location.href = `maldives/${d.slug}.html`; });
+
+        pinGroup.style('opacity', 0).each(function(d, i) {
+          d3.select(this).transition().delay(800 + i * 100).duration(500).ease(d3.easeCubicOut).style('opacity', 1);
+        });
+
+        const chipsEl = document.getElementById('city-chips');
+        chipsEl.innerHTML = '';
+        CITIES.forEach(city => {
+          const a = document.createElement('a');
+          a.className = 'city-chip';
+          a.href = `maldives/${city.slug}.html`;
+          a.innerHTML = `<span class="city-chip-dot"></span>${city.name}`;
+          chipsEl.appendChild(a);
+        });
+      });
+  </script>
+
+</body>
+</html>

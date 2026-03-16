@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:commons.wikimedia.org)",
+      "WebFetch(domain:en.wikipedia.org)",
+      "Bash(curl -s \"https://en.wikipedia.org/w/api.php?action=query&titles=File:Charlotte_Square,_north_side.JPG&prop=imageinfo&iiprop=url|extmetadata&format=json\")",
+      "Bash(python3 -m json.tool)",
+      "Bash(curl -s \"https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=Charlotte+Square+Edinburgh&srnamespace=6&format=json\")",
+      "Bash(curl -s \"https://en.wikipedia.org/w/api.php?action=query&titles=File:Charlotte_Square,_Edinburgh_-_geograph.org.uk_-_5090166.jpg|File:Georgian_houses_in_Charlotte_Square,_Edinburgh_-_geograph.org.uk_-_6660034.jpg|File:Charlotte_Square,_Edinburgh_-_geograph.org.uk_-_6190243.jpg|File:Charlotte_Square,_Edinburgh_-_geograph.org.uk_-_6429724.jpg&prop=imageinfo&iiprop=url|extmetadata&format=json\")",
+      "Bash(python3 -c \":*)",
+      "WebFetch(domain:www.geograph.org.uk)",
+      "Bash(node -e \":*)"
+    ],
+    "additionalDirectories": [
+      "/tmp",
+      "/private/tmp"
+    ]
+  }
+}
