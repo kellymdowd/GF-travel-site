@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GF Gone Global — Logo Concepts</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Oswald:wght@600;700&family=Inter:wght@400;500;600&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #edeae3;
+    font-family: 'Inter', sans-serif;
+    padding: 52px 24px 64px;
+    min-height: 100vh;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-bottom: 48px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 32px;
+    max-width: 1040px;
+    margin: 0 auto;
+  }
+
+  .card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px 28px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+    box-shadow:
+      0 1px 3px rgba(0,0,0,.04),
+      0 8px 24px rgba(0,0,0,.06),
+      0 24px 56px rgba(0,0,0,.06);
+  }
+
+  .tag {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: #ccc;
+  }
+
+  .stamp-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .swatches {
+    display: flex;
+    gap: 9px;
+    align-items: center;
+  }
+
+  .dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0,0,0,.13);
+    flex-shrink: 0;
+  }
+
+  .hex-codes {
+    font-size: 9.5px;
+    color: #ccc;
+    letter-spacing: .04em;
+  }
+
+  .desc {
+    font-size: 12.5px;
+    color: #777;
+    text-align: center;
+    line-height: 1.7;
+    max-width: 230px;
+  }
+
+  .dark-wrap {
+    width: 100%;
+    border-radius: 12px;
+    padding: 28px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .scale-down {
+    transform: scale(0.56);
+    transform-origin: center center;
+    flex-shrink: 0;
+  }
+
+  .mini-label {
+    font-size: 10px;
+    color: #ccc;
+    letter-spacing: .06em;
+  }
+</style>
+</head>
+<body>
+
+<h1>GF Gone Global &nbsp;·&nbsp; Logo Concepts &nbsp;·&nbsp; Passport Stamp Direction</h1>
+<div class="grid" id="grid"></div>
+
+<script>
+// ─── SVG Stamp Generator ────────────────────────────────────────────────────
+
+function makeCircleStamp({ uid, bg, stampColor, filled, topText, botText, l1, l2 }) {
+  const W = 310, H = 310;
+  const cx = W / 2, cy = H / 2;
+  const STAMP_R   = 128;   // stamp fill radius
+  const PERF_R    = 128;   // perf holes centered ON the stamp edge
+  const HOLE_R    = 6.5;   // hole radius
+  const HOLE_ARC  = 15.5;  // arc-length between hole centers (controls density)
+  const HOLE_N    = Math.round(2 * Math.PI * PERF_R / HOLE_ARC);
+  const INNER_R   = 117;   // decorative inner ring
+  const TEXT_ARC  = 105;   // arc text path radius
+
+  const ink      = filled ? 'rgba(255,255,255,0.92)' : stampColor;
+  const inkFaint = filled ? 'rgba(255,255,255,0.50)' : (stampColor + '99');
+  const fill     = filled ? stampColor : 'white';
+  const stroke   = filled ? 'none'     : `stroke="${stampColor}" stroke-width="3"`;
+
+  // Perforations — drawn on top of stamp fill, colored bg to "punch" holes
+  let perfs = '';
+  for (let i = 0; i < HOLE_N; i++) {
+    const a  = (2 * Math.PI * i / HOLE_N);
+    const px = (cx + PERF_R * Math.cos(a)).toFixed(2);
+    const py = (cy + PERF_R * Math.sin(a)).toFixed(2);
+    perfs += `<circle cx="${px}" cy="${py}" r="${HOLE_R}" fill="${bg}"/>`;
+  }
+
+  // Arc text paths
+  const topPath = `M ${cx - TEXT_ARC},${cy} A ${TEXT_ARC},${TEXT_ARC} 0 0,1 ${cx + TEXT_ARC},${cy}`;
+  const botPath = `M ${cx - TEXT_ARC},${cy} A ${TEXT_ARC},${TEXT_ARC} 0 0,0 ${cx + TEXT_ARC},${cy}`;
+
+  // Globe icon
+  const gx = cx, gy = cy - 21, gr = 21;
+  const gc = ink;
+  const globe = `
+    <circle cx="${gx}" cy="${gy}" r="${gr}" fill="none" stroke="${gc}" stroke-width="1.7"/>
+    <ellipse cx="${gx}" cy="${gy}" rx="${(gr*0.48).toFixed(1)}" ry="${gr}" fill="none" stroke="${gc}" stroke-width="1.3"/>
+    <line x1="${gx-gr}" y1="${gy}" x2="${gx+gr}" y2="${gy}" stroke="${gc}" stroke-width="1.3"/>
+    <path d="M ${(gx-gr*0.8).toFixed(1)} ${(gy-gr*0.52).toFixed(1)} Q ${gx} ${(gy-gr*0.28).toFixed(1)} ${(gx+gr*0.8).toFixed(1)} ${(gy-gr*0.52).toFixed(1)}" fill="none" stroke="${gc}" stroke-width="1.1"/>
+    <path d="M ${(gx-gr*0.8).toFixed(1)} ${(gy+gr*0.52).toFixed(1)} Q ${gx} ${(gy+gr*0.28).toFixed(1)} ${(gx+gr*0.8).toFixed(1)} ${(gy+gr*0.52).toFixed(1)}" fill="none" stroke="${gc}" stroke-width="1.1"/>`;
+
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <path id="ta${uid}" d="${topPath}"/>
+    <path id="ba${uid}" d="${botPath}"/>
+  </defs>
+
+  <!-- Stamp base -->
+  <circle cx="${cx}" cy="${cy}" r="${STAMP_R}" fill="${fill}" ${stroke}/>
+  <!-- Inner decorative ring -->
+  <circle cx="${cx}" cy="${cy}" r="${INNER_R}" fill="none" stroke="${inkFaint}" stroke-width="1.5"/>
+  <!-- Perforations -->
+  ${perfs}
+
+  <!-- Arc text: top -->
+  <text font-family="'Oswald',sans-serif" font-size="10.5" font-weight="700"
+        letter-spacing="4" fill="${ink}" text-anchor="middle">
+    <textPath href="#ta${uid}" startOffset="50%">${topText}</textPath>
+  </text>
+  <!-- Arc text: bottom -->
+  <text font-family="'Oswald',sans-serif" font-size="9.5" font-weight="600"
+        letter-spacing="3.2" fill="${inkFaint}" text-anchor="middle">
+    <textPath href="#ba${uid}" startOffset="50%">${botText}</textPath>
+  </text>
+
+  <!-- Globe -->
+  ${globe}
+
+  <!-- Divider -->
+  <line x1="${cx-26}" y1="${cy+8}" x2="${cx+26}" y2="${cy+8}" stroke="${inkFaint}" stroke-width="1" opacity="0.7"/>
+
+  <!-- Main text -->
+  <text x="${cx}" y="${cy+31}" font-family="'Playfair Display',serif" font-size="22"
+        font-weight="700" fill="${ink}" text-anchor="middle" letter-spacing="0.5">${l1}</text>
+  <text x="${cx}" y="${cy+59}" font-family="'Playfair Display',serif" font-size="30"
+        font-weight="900" fill="${ink}" text-anchor="middle" letter-spacing="-0.5">${l2}</text>
+</svg>`;
+}
+
+
+function makeRectStamp({ uid, bg, stampColor, filled, eyebrow, l1, l2, sub }) {
+  const W = 350, H = 238;
+  const MARGIN = 26;
+  const rx = MARGIN, ry = MARGIN;
+  const rw = W - MARGIN * 2, rh = H - MARGIN * 2;
+  const cx = W / 2, cy = H / 2;
+  const HOLE_R = 6, STEP = 16;
+
+  const ink      = filled ? 'rgba(255,255,255,0.92)' : stampColor;
+  const inkFaint = filled ? 'rgba(255,255,255,0.48)' : (stampColor + '88');
+  const fill     = filled ? stampColor : 'white';
+  const border   = filled ? '' : `stroke="${stampColor}" stroke-width="2.5"`;
+
+  // Perforations along all 4 edges
+  let perfs = '';
+  // Top & bottom
+  for (let x = rx; x <= rx + rw; x += STEP) {
+    perfs += `<circle cx="${x.toFixed(1)}" cy="${ry}" r="${HOLE_R}" fill="${bg}"/>`;
+    perfs += `<circle cx="${x.toFixed(1)}" cy="${ry + rh}" r="${HOLE_R}" fill="${bg}"/>`;
+  }
+  // Left & right (skip corners already covered)
+  for (let y = ry + STEP; y < ry + rh; y += STEP) {
+    perfs += `<circle cx="${rx}" cy="${y.toFixed(1)}" r="${HOLE_R}" fill="${bg}"/>`;
+    perfs += `<circle cx="${rx + rw}" cy="${y.toFixed(1)}" r="${HOLE_R}" fill="${bg}"/>`;
+  }
+
+  // Globe
+  const gx = cx, gy = cy - 26, gr = 19;
+  const globe = `
+    <circle cx="${gx}" cy="${gy}" r="${gr}" fill="none" stroke="${ink}" stroke-width="1.5"/>
+    <ellipse cx="${gx}" cy="${gy}" rx="${(gr*0.48).toFixed(1)}" ry="${gr}" fill="none" stroke="${ink}" stroke-width="1.2"/>
+    <line x1="${gx-gr}" y1="${gy}" x2="${gx+gr}" y2="${gy}" stroke="${ink}" stroke-width="1.2"/>
+    <path d="M ${(gx-gr*0.8).toFixed(1)} ${(gy-gr*0.52).toFixed(1)} Q ${gx} ${(gy-gr*0.28).toFixed(1)} ${(gx+gr*0.8).toFixed(1)} ${(gy-gr*0.52).toFixed(1)}" fill="none" stroke="${ink}" stroke-width="1"/>
+    <path d="M ${(gx-gr*0.8).toFixed(1)} ${(gy+gr*0.52).toFixed(1)} Q ${gx} ${(gy+gr*0.28).toFixed(1)} ${(gx+gr*0.8).toFixed(1)} ${(gy+gr*0.52).toFixed(1)}" fill="none" stroke="${ink}" stroke-width="1"/>`;
+
+  return `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">
+  <!-- Stamp base -->
+  <rect x="${rx}" y="${ry}" width="${rw}" height="${rh}" fill="${fill}" ${border} rx="3"/>
+  <!-- Inner border -->
+  <rect x="${rx+10}" y="${ry+10}" width="${rw-20}" height="${rh-20}" fill="none"
+        stroke="${inkFaint}" stroke-width="1.3" rx="1.5"/>
+  <!-- Perforations -->
+  ${perfs}
+
+  <!-- Eyebrow -->
+  <text x="${cx}" y="${cy-54}" font-family="'Oswald',sans-serif" font-size="9"
+        font-weight="700" letter-spacing="4.5" fill="${inkFaint}" text-anchor="middle">${eyebrow}</text>
+  <line x1="${cx-44}" y1="${cy-45}" x2="${cx+44}" y2="${cy-45}" stroke="${inkFaint}" stroke-width="0.8"/>
+
+  <!-- Globe -->
+  ${globe}
+
+  <!-- Divider -->
+  <line x1="${cx-24}" y1="${cy-3}" x2="${cx+24}" y2="${cy-3}" stroke="${inkFaint}" stroke-width="0.9" opacity="0.7"/>
+
+  <!-- Main text -->
+  <text x="${cx}" y="${cy+20}" font-family="'Playfair Display',serif" font-size="21"
+        font-weight="700" fill="${ink}" text-anchor="middle" letter-spacing="0.5">${l1}</text>
+  <text x="${cx}" y="${cy+48}" font-family="'Playfair Display',serif" font-size="27"
+        font-weight="900" fill="${ink}" text-anchor="middle" letter-spacing="-0.5">${l2}</text>
+
+  <!-- Sub -->
+  <text x="${cx}" y="${cy+68}" font-family="'Oswald',sans-serif" font-size="8"
+        font-weight="600" letter-spacing="4" fill="${inkFaint}" text-anchor="middle">${sub}</text>
+</svg>`;
+}
+
+
+// ─── Stamp Config ────────────────────────────────────────────────────────────
+
+const stamps = [
+  {
+    tag: 'Option A — Forest Green · Circular',
+    type: 'circle',
+    uid: 'a',
+    bg: '#edeae3',
+    darkBg: '#0d1a10',
+    stampColor: '#1b3d2b',
+    filled: false,
+    topText: 'GLUTEN-FREE  TRAVEL',
+    botText: 'WORLDWIDE',
+    l1: 'GF Gone',
+    l2: 'Global',
+    swatches: ['#1b3d2b', '#4a7c59', '#edeae3'],
+    desc: 'Deep forest green ink stamp — earthy, trustworthy, and adventurous. Like a vintage national park badge.',
+  },
+  {
+    tag: 'Option B — Terracotta · Circular',
+    type: 'circle',
+    uid: 'b',
+    bg: '#edeae3',
+    darkBg: '#1c0d07',
+    stampColor: '#c8401a',
+    filled: true,
+    topText: 'GLUTEN-FREE  TRAVEL',
+    botText: 'WORLDWIDE',
+    l1: 'GF Gone',
+    l2: 'Global',
+    swatches: ['#c8401a', '#e8956d', '#fdf6f0'],
+    desc: 'Bold terracotta fill — warm, energetic, and instantly eye-catching on social media and website headers.',
+  },
+  {
+    tag: 'Option C — Navy · Rectangular Visa',
+    type: 'rect',
+    uid: 'c',
+    bg: '#edeae3',
+    darkBg: '#090f1c',
+    stampColor: '#2c4a7c',
+    filled: false,
+    eyebrow: '✈  CERTIFIED GF TRAVELER',
+    l1: 'GF Gone',
+    l2: 'Global',
+    sub: 'EST. 2025',
+    swatches: ['#2c4a7c', '#5b82c0', '#f0f4fb'],
+    desc: 'Navy rectangular visa stamp — editorial and sophisticated. Looks like an actual passport customs entry.',
+  },
+];
+
+
+// ─── Render ──────────────────────────────────────────────────────────────────
+
+const grid = document.getElementById('grid');
+
+stamps.forEach(s => {
+  const svgLight = s.type === 'circle'
+    ? makeCircleStamp({ uid: s.uid,      bg: s.bg,     stampColor: s.stampColor, filled: s.filled, topText: s.topText, botText: s.botText, l1: s.l1, l2: s.l2 })
+    : makeRectStamp ({  uid: s.uid,      bg: s.bg,     stampColor: s.stampColor, filled: s.filled, eyebrow: s.eyebrow, l1: s.l1, l2: s.l2, sub: s.sub });
+
+  const svgDark  = s.type === 'circle'
+    ? makeCircleStamp({ uid: s.uid+'d', bg: s.darkBg, stampColor: s.filled ? s.stampColor : 'rgba(255,255,255,0.82)', filled: s.filled, topText: s.topText, botText: s.botText, l1: s.l1, l2: s.l2 })
+    : makeRectStamp ({  uid: s.uid+'d', bg: s.darkBg, stampColor: s.filled ? s.stampColor : 'rgba(255,255,255,0.80)', filled: s.filled, eyebrow: s.eyebrow, l1: s.l1, l2: s.l2, sub: s.sub });
+
+  const swatchDots = s.swatches.map(c => `<div class="dot" style="background:${c}"></div>`).join('');
+  const isRect = s.type === 'rect';
+  // scale-down container needs explicit size to prevent layout collapse
+  const scaleW = isRect ? 350 : 310;
+  const scaleH = isRect ? 238 : 310;
+  const scaleF = 0.54;
+
+  grid.innerHTML += `
+    <div class="card">
+      <span class="tag">${s.tag}</span>
+      <div class="stamp-wrap">${svgLight}</div>
+      <div class="swatches">
+        ${swatchDots}
+        <span class="hex-codes">${s.swatches.join(' &nbsp;·&nbsp; ')}</span>
+      </div>
+      <p class="desc">${s.desc}</p>
+      <div class="dark-wrap" style="background:${s.darkBg}; min-height:${Math.round(scaleH*scaleF+40)}px;">
+        <div class="scale-down" style="width:${scaleW}px; height:${scaleH}px; transform:scale(${scaleF});">
+          ${svgDark}
+        </div>
+      </div>
+      <span class="mini-label">↑ on dark backgrounds</span>
+    </div>`;
+});
+</script>
+</body>
+</html>
