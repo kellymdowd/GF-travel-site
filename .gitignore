@@ -6,3 +6,4 @@ map downloads/
 ~$*
 *.HEIC
 .claude/settings.local.json
+admin.html

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interlaken, Switzerland — Somewhere I've Been</title>
+  <title>Interlaken, Switzerland — GF Gone Global</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
@@ -331,10 +331,103 @@
     @keyframes fadeIn { to { opacity: 1; } }
 
     @media (max-width: 600px) {
-      .nav, .header, .map-section, .snapshot, .toc { padding-left: 1.2rem; padding-right: 1.2rem; }
+      .nav, .header, .map-section, .snapshot, .toc, .coming-soon-banner { padding-left: 1.2rem; padding-right: 1.2rem; }
       .header-rule { margin: 0 1.2rem; }
     }
+  
+    /* ─── Coming Soon Badge ────────────────────────────────── */
+    .coming-soon-banner {
+      padding: 2.5rem 2.5rem 0;
+      opacity: 0;
+      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
+    }
+
+    .coming-soon-inner {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.2rem 1.6rem;
+      background: var(--slate-bg, #FBF0F1);
+      border-left: 2px solid var(--slate, #C8717A);
+    }
+
+    .coming-soon-icon {
+      flex-shrink: 0;
+      color: var(--slate, #C8717A);
+      opacity: 0.6;
+    }
+
+    .coming-soon-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .coming-soon-label {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--slate, #C8717A);
+    }
+
+    .coming-soon-desc {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--ink-mid, #5A5048);
+      letter-spacing: 0.02em;
+      line-height: 1.4;
+    }
   </style>
+
+  <!-- Google Analytics (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-64V5CSB1DT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-64V5CSB1DT');
+
+    // ─── Custom event tracking ─────────────────────────────
+    document.addEventListener('DOMContentLoaded', function() {
+
+      // Outbound link clicks (links with target="_blank")
+      document.querySelectorAll('a[target="_blank"]').forEach(function(link) {
+        link.addEventListener('click', function() {
+          gtag('event', 'outbound_click', {
+            event_category: 'engagement',
+            event_label: this.href,
+            transport_type: 'beacon'
+          });
+        });
+      });
+
+      // Section navigation (TOC / anchor links)
+      document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+        link.addEventListener('click', function() {
+          gtag('event', 'section_nav', {
+            event_category: 'navigation',
+            event_label: this.getAttribute('href')
+          });
+        });
+      });
+
+      // Map interactions — clicks on map containers, SVGs, and iframes
+      document.querySelectorAll('.map-container, [class*="map"], svg.map, iframe[src*="google.com/maps"]').forEach(function(el) {
+        el.addEventListener('click', function() {
+          gtag('event', 'map_interaction', {
+            event_category: 'engagement',
+            event_label: document.title
+          });
+        });
+      });
+
+    });
+  </script>
+  
 </head>
 <body>
 
@@ -354,6 +447,19 @@
     <span class="trip-date">Last traveled · October 2022</span>
   </header>
   <div class="header-rule"></div>
+
+  <div class="coming-soon-banner">
+    <div class="coming-soon-inner">
+      <svg class="coming-soon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M10 5.5V10.5L13 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="coming-soon-text">
+        <span class="coming-soon-label">Coming Soon</span>
+        <span class="coming-soon-desc">Full guide with restaurants, hotels &amp; landmarks is on its way.</span>
+      </div>
+    </div>
+  </div>
 
   <section class="snapshot">
     <div class="snapshot-label">City Snapshot</div>
