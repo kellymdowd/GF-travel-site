@@ -2021,14 +2021,83 @@
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
     @media (max-width: 600px) { .nav, .header, .snapshot, .toc, .gf-guide, .restaurants, .where-to-stay, .landmarks, .neighborhoods, .things-to-do, .packing, .travel-tips, .getting-around, .page-footer { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
+  
+
+    /* ─── Visited / Researched Source Indicators ───────────── */
+    .restaurant-tag-closed {
+      background: rgba(180, 60, 60, 0.08);
+      color: #9a3030;
+    }
+
+    .restaurant-source {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.56rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.9rem;
+    }
+
+    .restaurant-source-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .restaurant-source-visited {
+      color: var(--rose);
+    }
+
+    .restaurant-source-visited .restaurant-source-dot {
+      background: var(--rose);
+    }
+
+    .restaurant-source-researched {
+      color: var(--ink-light);
+      opacity: 0.7;
+    }
+
+    .restaurant-source-researched .restaurant-source-dot {
+      background: var(--ink-light);
+    }
+
+    .landmark-source {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.54rem;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      margin-top: 0.5rem;
+    }
+
+    .landmark-source-visited {
+      color: var(--rose);
+    }
+
+    .landmark-source-visited .restaurant-source-dot {
+      background: var(--rose);
+    }
+
+    .landmark-source-researched {
+      color: var(--ink-light);
+      opacity: 0.7;
+    }
+
+    .landmark-source-researched .restaurant-source-dot {
+      background: var(--ink-light);
+    }
+
   </style>
 </head>
 <body>
   <nav class="nav">
     <a href="../scotland.html" class="back-link">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Scotland
     </a>
     <span class="nav-sep">/</span>
@@ -2056,16 +2125,7 @@
         <div class="snapshot-score">
           <span class="snapshot-score-num">8/10</span>
           <div class="snapshot-score-bar">
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip"></span>
-            <span class="snapshot-score-pip"></span>
+            <span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span>
           </div>
         </div>
       </div>
@@ -2095,7 +2155,7 @@
       <li class="toc-item"><a href="#gluten-free" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Gluten-free survival guide</a></li>
       <li class="toc-item"><a href="#restaurants" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Restaurants</a></li>
       <li class="toc-item"><a href="#getting-around" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Getting around</a></li>
-      <li class="toc-item"><a href="#landmarks" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Landmarks & must-see spots</a></li>
+      <li class="toc-item"><a href="#landmarks" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Landmarks &amp; must-see spots</a></li>
       <li class="toc-item"><a href="#neighborhoods" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Neighborhoods</a></li>
       <li class="toc-item"><a href="#things-to-do" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Things to do</a></li>
       <li class="toc-item"><a href="#what-to-pack" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>What to pack</a></li>
@@ -2106,13 +2166,13 @@
   <section class="where-to-stay" id="where-to-stay">
     <div class="stay-header">
       <h2 class="stay-title">Where to Stay</h2>
-      <span class="stay-subtitle">Recommended</span>
+      <span class="stay-subtitle">Traveler recommended</span>
     </div>
     <div class="stay-rule"></div>
 
     <div class="hotel-card">
       <div class="hotel-image-side">
-        <img src="images/kimpton-charlotte-square.jpg" alt="Charlotte Square north side — Georgian townhouses, Edinburgh" class="hotel-image" loading="lazy">
+        <img src="images/kimpton-charlotte-square.jpg" alt="Kimpton Charlotte Square Hotel, Edinburgh" class="hotel-image" loading="lazy">
         <div class="hotel-image-overlay"></div>
         <div class="hotel-badge">
           <span class="hotel-badge-dot"></span>
@@ -2121,7 +2181,7 @@
       </div>
 
       <div class="hotel-info-side">
-        <h3 class="hotel-name">Kimpton Charlotte Square</h3>
+        <h3 class="hotel-name">Kimpton Charlotte Square Hotel</h3>
         <div class="hotel-location">
           <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
           New Town · Charlotte Square
@@ -2129,22 +2189,49 @@
 
         <div class="hotel-why">
           <div class="hotel-why-label">Why Stay Here</div>
-          <div class="hotel-why-text">Seven interconnected Georgian townhouses on one of Edinburgh's prettiest squares. Steps from Princes Street and George Street shopping, with a spa, pool, and two on-site restaurants — including BABA, which marks gluten-free options on the menu. Breakfast in The Garden courtyard is a highlight.</div>
+          <div class="hotel-why-text">Seven interconnected Georgian townhouses on one of Edinburgh's prettiest squares.</div>
         </div>
 
         <div class="hotel-features">
-          <span class="hotel-feature">
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            GF Breakfast
-          </span>
-          <span class="hotel-feature">
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Spa &amp; Pool
-          </span>
-          <span class="hotel-feature">
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Central Location
-          </span>
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> GF Breakfast</span>
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Spa &amp; Pool</span>
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Central Location</span>
+        </div>
+
+        <a href="#" class="hotel-cta" target="_blank" rel="noopener sponsored">
+          Check Availability
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="hotel-card" style="margin-top:1.6rem;">
+      <div class="hotel-image-side">
+        <div style="position:absolute;inset:0;background:rgba(42,32,24,0.03);display:flex;align-items:center;justify-content:center;color:var(--ink-light);opacity:0.4;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        </div>
+        <div class="hotel-badge">
+          <span class="hotel-badge-dot"></span>
+          Traveler recommended
+        </div>
+      </div>
+
+      <div class="hotel-info-side">
+        <h3 class="hotel-name">Waldorf Astoria Edinburgh — The Caledonian</h3>
+        <div class="hotel-location">
+          <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+          West End · Princes Street
+        </div>
+
+        <div class="hotel-why">
+          <div class="hotel-why-label">Why Stay Here</div>
+          <div class="hotel-why-text">Grand Victorian railway hotel at the west end of Princes Street with views of the Castle.</div>
+        </div>
+
+        <div class="hotel-features">
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Castle Views</span>
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Historic</span>
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Central Location</span>
         </div>
 
         <a href="#" class="hotel-cta" target="_blank" rel="noopener sponsored">
@@ -2159,7 +2246,6 @@
   <section class="gf-guide" id="gluten-free">
     <div class="gf-guide-header">
       <h2 class="gf-guide-title">Gluten-Free Survival Guide</h2>
-      <!--<span class="gf-guide-difficulty gf-difficulty-easy"><span class="gf-dot"></span>Easy</span>-->
     </div>
     <div class="gf-guide-rule"></div>
     <div class="gf-guide-grid">
@@ -2179,7 +2265,7 @@
           <div class="gf-info-label">Grocery Stores</div>
           <ul class="gf-list">
             <li>Tesco &amp; Sainsbury's — large free-from aisles</li>
-            <li>Marks &amp; Spencer — premium GF range</li>
+            <li>M&amp;S Food — premium GF range</li>
             <li>Holland &amp; Barrett — specialty health store</li>
           </ul>
         </div>
@@ -2188,7 +2274,7 @@
           <ul class="gf-list">
             <li>Indian — many naturally GF dishes</li>
             <li>Thai &amp; Vietnamese — rice-based</li>
-            <li>Mexican — corn tortillas common</li>
+            <li>Seafood — naturally GF when not battered</li>
           </ul>
         </div>
       </div>
@@ -2196,36 +2282,23 @@
         <div class="gf-score-title">Score Breakdown</div>
         <div class="gf-score-row">
           <span class="gf-score-category">Dedicated GF restaurants</span>
-          <div class="gf-score-pips">
-            <span class="gf-score-pip is-filled"></span>
-            <span class="gf-score-pip is-filled"></span>
-          </div>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
         </div>
         <div class="gf-score-row">
           <span class="gf-score-category">Menu labeling</span>
-          <div class="gf-score-pips">
-            <span class="gf-score-pip is-filled"></span>
-            <span class="gf-score-pip is-filled"></span>
-          </div>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
         </div>
         <div class="gf-score-row">
           <span class="gf-score-category">Staff knowledge &amp; safety</span>
-          <div class="gf-score-pips">
-            <span class="gf-score-pip is-filled"></span>
-            <span class="gf-score-pip is-filled"></span>
-          </div>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
         </div>
         <div class="gf-score-row">
           <span class="gf-score-category">Density of GF dining</span>
-          <div class="gf-score-pips">
-            <span class="gf-score-pip is-filled"></span>
-          </div>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div>
         </div>
         <div class="gf-score-row">
           <span class="gf-score-category">Grocery availability</span>
-          <div class="gf-score-pips">
-            <span class="gf-score-pip is-filled"></span>
-          </div>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div>
         </div>
         <div class="gf-score-total">
           <span class="gf-score-total-num">8/10</span>
@@ -2241,7 +2314,7 @@
   <section class="restaurants" id="restaurants">
     <div class="restaurants-header">
       <h2 class="restaurants-title">Restaurants</h2>
-      <span class="restaurants-count">14 spots</span>
+      <span class="restaurants-count">19 spots</span>
     </div>
     <div class="restaurants-rule"></div>
 
@@ -2252,7 +2325,7 @@
       <span style="display:inline-flex;align-items:center;gap:0.3rem;"><span style="width:10px;height:10px;border-radius:50%;background:#6a9a40;"></span> 4/5</span>
       <span style="display:inline-flex;align-items:center;gap:0.3rem;"><span style="width:10px;height:10px;border-radius:50%;background:#b48c3c;"></span> 3/5</span>
       <span style="display:inline-flex;align-items:center;gap:0.3rem;"><span style="width:10px;height:10px;border-radius:50%;background:#c87a50;"></span> 2/5</span>
-      <span style="display:inline-flex;align-items:center;gap:0.3rem;"><span style="width:10px;height:10px;border-radius:50%;background:#b4463c;"></span> 1/5</span>
+      <span style="display:inline-flex;align-items:center;gap:0.3rem;"><span style="width:10px;height:10px;border-radius:50%;background:#9a9a9a;"></span> Closed</span>
       <span style="display:inline-flex;align-items:center;gap:0.3rem;"><span style="width:10px;height:10px;border-radius:50%;background:#2A2018;"></span> Hotel</span>
     </div>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -2265,26 +2338,31 @@
         maxZoom: 18
       }).addTo(map);
 
-      var colors = { 5:'#3d6e40', 4:'#6a9a40', 3:'#b48c3c', 2:'#c87a50', 1:'#b4463c' };
+      var colors = { 5:'#3d6e40', 4:'#6a9a40', 3:'#b48c3c', 2:'#c87a50', 1:'#b4463c', 0:'#9a9a9a' };
 
       var restaurants = [
-        { name:'GF Café', score:5, tag:'100% GF', lat:55.9449, lng:-3.2175 },
+        { name:'GF Café', score:0, tag:'Closed', lat:55.9449, lng:-3.2175 },
+        { name:'Salt Café', score:0, tag:'Closed', lat:55.9272, lng:-3.2084 },
         { name:'Bellfield Brewery', score:5, tag:'100% GF', lat:55.9556, lng:-3.1691 },
-        { name:'LYLA', score:5, tag:'Michelin Star', lat:55.9568, lng:-3.1808 },
+        { name:'Tupiniquim', score:5, tag:'100% GF', lat:55.9452, lng:-3.1914 },
+        { name:'Sugar Daddy\'s Bakery', score:5, tag:'100% GF', lat:55.9382, lng:-3.1923 },
+        { name:'Dyno Dough', score:5, tag:'100% GF', lat:55.9413, lng:-3.1919 },
+        { name:'La Locanda Edinburgh', score:4, tag:'GF Options', lat:55.9507, lng:-3.1889 },
+        { name:'Urban Angel', score:4, tag:'GF Options', lat:55.9548, lng:-3.1977 },
         { name:'Greenwoods Edinburgh', score:4, tag:'GF Options', lat:55.9541, lng:-3.2007 },
-        { name:'Salt Café', score:4, tag:'GF Options', lat:55.9272, lng:-3.2084 },
-        { name:'Honeycomb & Co.', score:3, tag:'GF Options', lat:55.9358, lng:-3.2103 },
-        { name:'Laila Lunch & Brunch', score:3, tag:'GF Options', lat:55.9507, lng:-3.1888 },
-        { name:'La Locanda Edinburgh', score:3, tag:'GF Options', lat:55.9507, lng:-3.1889 },
-        { name:'LeftField', score:3, tag:'GF Options', lat:55.9396, lng:-3.2039 },
-        { name:'Junk', score:3, tag:'GF Options', lat:55.9400, lng:-3.1805 },
-        { name:'Urban Angel', score:2, tag:'GF Options', lat:55.9548, lng:-3.1977 },
-        { name:'Toast', score:2, tag:'GF Options', lat:55.9753, lng:-3.1707 },
-        { name:'The Haggis Box', score:2, tag:'GF Options', lat:55.9507, lng:-3.1849 },
-        { name:'Origano', score:2, tag:'GF Options', lat:55.9619, lng:-3.1748 }
+        { name:'The Haggis Box', score:4, tag:'GF Options', lat:55.9507, lng:-3.1849 },
+        { name:'LeftField', score:4, tag:'GF Options', lat:55.9396, lng:-3.2039 },
+        { name:'The Little Chartroom', score:4, tag:'GF Options', lat:55.9726, lng:-3.1759 },
+        { name:'Laila Lunch &amp; Brunch', score:3, tag:'GF Options', lat:55.9507, lng:-3.1888 },
+        { name:'Honeycomb &amp; Co.', score:3, tag:'GF Options', lat:55.9358, lng:-3.2103 },
+        { name:'tipo', score:3, tag:'GF Options', lat:55.9545, lng:-3.1981 },
+        { name:'Toast', score:3, tag:'GF Options', lat:55.9753, lng:-3.1707 },
+        { name:'Origano', score:3, tag:'GF Options', lat:55.9667, lng:-3.1755 },
+        { name:'Junk', score:2, tag:'GF Options', lat:55.94, lng:-3.1805 },
+        { name:'Cult Coffee Roasters', score:2, tag:'GF Options', lat:55.9415, lng:-3.1837 }
       ];
 
-      // Hotel marker
+      // Hotel markers
       var hotelIcon = L.divIcon({
         className: '',
         html: '<div style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;background:#2A2018;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.25);"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 21V13h6v8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 21h22" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><rect x="7" y="8" width="3" height="3" rx="0.5" fill="#fff"/><rect x="14" y="8" width="3" height="3" rx="0.5" fill="#fff"/></svg></div>',
@@ -2293,7 +2371,10 @@
       });
       L.marker([55.9516, -3.2063], { icon: hotelIcon })
         .addTo(map)
-        .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">Kimpton Charlotte Square</strong><br><span style="font-size:11px;color:#5A5048;">Where I stayed</span></div>', { closeButton: false });
+        .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">Kimpton Charlotte Square Hotel</strong><br><span style="font-size:11px;color:#5A5048;">Where I stayed</span></div>', { closeButton: false });
+      L.marker([55.9498, -3.2073], { icon: hotelIcon })
+        .addTo(map)
+        .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">Waldorf Astoria Edinburgh — The Caledonian</strong><br><span style="font-size:11px;color:#5A5048;">Traveler recommended</span></div>', { closeButton: false });
 
       restaurants.forEach(function(r) {
         var color = colors[r.score];
@@ -2305,22 +2386,136 @@
         });
         L.marker([r.lat, r.lng], { icon: icon })
           .addTo(map)
-          .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">'+r.name+'</strong><br><span style="font-size:11px;color:#5A5048;">'+r.tag+' · GF Score: '+r.score+'/5</span></div>', { closeButton: false });
+          .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">'+r.name+'</strong><br><span style="font-size:11px;color:#5A5048;">'+r.tag+' \u00b7 GF Score: '+r.score+'/5</span></div>', { closeButton: false });
       });
     })();
     </script>
 
     <div class="restaurants-grid">
 
-    <!-- 100% GF -->
     <div class="restaurant-card">
       <div class="restaurant-top">
-        <h3 class="restaurant-name">GF Café</h3>
+        <h3 class="restaurant-name">LYLA</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Modern Scottish</div>
+      <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">Modern Scottish restaurant. Can accommodate GF requests — mention celiac when booking.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">Tasting menu can be adapted GF. Seasonal Scottish ingredients.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">New Town</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/lyla/5765043982090240" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Noto</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Italian</div>
+      <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">Italian restaurant with GF pasta options. Mention celiac when ordering.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">GF pasta dishes available.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Old Town</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/noto/6155778898296832" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">tipo</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Italian</div>
+      <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">GF sourdough bread and GF pasta available. Not a dedicated facility.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">Homemade GF sourdough bread and GF pasta.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">New Town</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/tipo/6319674891042816" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Tupiniquim</h3>
         <div class="restaurant-tags">
           <span class="restaurant-tag restaurant-tag-gf">100% GF</span>
         </div>
       </div>
-      <div class="restaurant-cuisine">Café / Gluten-Free</div>
+      <div class="restaurant-cuisine">Brazilian Crepes</div>
+      <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
       <div class="restaurant-gf-score">
         <span class="restaurant-gf-score-label">GF Score</span>
         <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
@@ -2328,29 +2523,28 @@
       <div class="restaurant-details">
         <div class="restaurant-detail">
           <div class="restaurant-detail-label">Safety Notes</div>
-          <div class="restaurant-detail-value">Dedicated gluten-free café. Everything on the menu is safe. Closed Mondays; open 10–3 Tues &amp; Wed.</div>
+          <div class="restaurant-detail-value">100% GF. Owner is celiac. No gluten ingredients anywhere — zero cross-contamination risk.</div>
         </div>
         <div class="restaurant-detail">
           <div class="restaurant-detail-label">What to Order</div>
-          <div class="restaurant-detail-value">The GF paninis with tomato and avocado are incredible.</div>
+          <div class="restaurant-detail-value">Sweet and savory Brazilian crepes and waffles. Closed Sunday and Monday.</div>
         </div>
         <div class="restaurant-detail restaurant-location">
           <div class="restaurant-detail-label">Location</div>
           <div class="restaurant-detail-value restaurant-location-value">
             <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-            <span class="restaurant-detail-value">Dalry</span>
+            <span class="restaurant-detail-value">Lauriston Place</span>
           </div>
         </div>
       </div>
 
-<div class="restaurant-fmgf">
-        <a href="#" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/tupiniquim/4942796559745024" class="restaurant-fmgf-link" target="_blank" rel="noopener">
           See reviews on Find Me Gluten Free
           <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
         </a>
       </div>
     </div>
-
     <div class="restaurant-card">
       <div class="restaurant-top">
         <h3 class="restaurant-name">Bellfield Brewery</h3>
@@ -2359,6 +2553,7 @@
         </div>
       </div>
       <div class="restaurant-cuisine">Brewery / Taproom</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
       <div class="restaurant-gf-score">
         <span class="restaurant-gf-score-label">GF Score</span>
         <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
@@ -2366,11 +2561,11 @@
       <div class="restaurant-details">
         <div class="restaurant-detail">
           <div class="restaurant-detail-label">Safety Notes</div>
-          <div class="restaurant-detail-value">100% gluten-free brewery. Every beer on tap is GF. No cross-contamination risk.</div>
+          <div class="restaurant-detail-value">100% GF brewery — all Bellfield beers are Coeliac UK certified. Owner is celiac. Kitchen is small with some cross-contact risk for food, but beer is certified safe.</div>
         </div>
         <div class="restaurant-detail">
           <div class="restaurant-detail-label">What to Order</div>
-          <div class="restaurant-detail-value">Try the full range — it's all safe. A must-visit for any GF beer lover.</div>
+          <div class="restaurant-detail-value">Any Bellfield beer. The Nobles all-day food menu has most dishes GF or adaptable.</div>
         </div>
         <div class="restaurant-detail restaurant-location">
           <div class="restaurant-detail-label">Location</div>
@@ -2381,172 +2576,83 @@
         </div>
       </div>
 
-<div class="restaurant-fmgf">
-        <a href="#" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/bellfield-brewery/6429051537981440" class="restaurant-fmgf-link" target="_blank" rel="noopener">
           See reviews on Find Me Gluten Free
           <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
         </a>
       </div>
     </div>
-
     <div class="restaurant-card">
       <div class="restaurant-top">
-        <h3 class="restaurant-name">LYLA</h3>
+        <h3 class="restaurant-name">Sugar Daddy's Bakery</h3>
         <div class="restaurant-tags">
-          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+          <span class="restaurant-tag restaurant-tag-gf">100% GF</span>
         </div>
       </div>
-      <div class="restaurant-card-inner">
-        <div class="restaurant-card-content">
-          <div class="restaurant-cuisine">Seafood / Modern British · Michelin Star</div>
-          <div class="restaurant-gf-score">
-            <span class="restaurant-gf-score-label">GF Score</span>
-            <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
-          </div>
-          <div class="restaurant-details">
-            <div class="restaurant-detail">
-              <div class="restaurant-detail-label">Safety Notes</div>
-              <div class="restaurant-detail-value">Intimate 28-cover tasting menu restaurant. Mention celiac when booking — chef-driven menu can accommodate. Contact reservations in advance.</div>
-            </div>
-            <div class="restaurant-detail">
-              <div class="restaurant-detail-label">What to Order</div>
-              <div class="restaurant-detail-value">The tasting menu (5–10 courses) — sustainably caught fish, Scottish langoustines, wild halibut. Most courses are naturally GF.</div>
-            </div>
-            <div class="restaurant-detail restaurant-location">
-              <div class="restaurant-detail-label">Location</div>
-              <div class="restaurant-detail-value restaurant-location-value">
-                <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-                <span class="restaurant-detail-value">Royal Terrace · 3 Royal Terrace</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <img src="images/lyla.jpg" alt="LYLA restaurant" class="restaurant-photo">
-      </div>
-
-<div class="restaurant-fmgf">
-        <a href="#" class="restaurant-fmgf-link" target="_blank" rel="noopener">
-          See reviews on Find Me Gluten Free
-          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-        </a>
-      </div>
-    </div>
-
-    <!-- GF Options -->
-    <div class="restaurant-card">
-      <div class="restaurant-top">
-        <h3 class="restaurant-name">Greenwoods Edinburgh</h3>
-        <div class="restaurant-tags">
-          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
-        </div>
-      </div>
-      <div class="restaurant-cuisine">Breakfast / Brunch</div>
+      <div class="restaurant-cuisine">Bakery</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
       <div class="restaurant-gf-score">
         <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
       </div>
       <div class="restaurant-details">
         <div class="restaurant-detail">
           <div class="restaurant-detail-label">Safety Notes</div>
-          <div class="restaurant-detail-value">GF clearly marked on the menu. Lots of good options including eggs benny.</div>
+          <div class="restaurant-detail-value">Edinburgh's only 100% dedicated GF bakery. No gluten on premises.</div>
         </div>
         <div class="restaurant-detail">
           <div class="restaurant-detail-label">What to Order</div>
-          <div class="restaurant-detail-value">The breakfast is incredible — eggs Benedict and the full GF-marked options.</div>
+          <div class="restaurant-detail-value">Brownies, cookies, pizza slices, toasted sandwiches. Also dairy-free and vegan options.</div>
         </div>
         <div class="restaurant-detail restaurant-location">
           <div class="restaurant-detail-label">Location</div>
           <div class="restaurant-detail-value restaurant-location-value">
             <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-            <span class="restaurant-detail-value">New Town</span>
-          </div>
-        </div>
-      </div>
-
-<div class="restaurant-fmgf">
-        <a href="#" class="restaurant-fmgf-link" target="_blank" rel="noopener">
-          See reviews on Find Me Gluten Free
-          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-        </a>
-      </div>
-    </div>
-
-    <div class="restaurant-card">
-      <div class="restaurant-top">
-        <h3 class="restaurant-name">Urban Angel</h3>
-        <div class="restaurant-tags">
-          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
-        </div>
-      </div>
-      <div class="restaurant-cuisine">Café / Brunch</div>
-      <div class="restaurant-gf-score">
-        <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
-      </div>
-      <div class="restaurant-details">
-        <div class="restaurant-detail">
-          <div class="restaurant-detail-label">Safety Notes</div>
-          <div class="restaurant-detail-value">GF options available but not marked on menu — ask your server. Gets very busy for breakfast.</div>
-        </div>
-        <div class="restaurant-detail">
-          <div class="restaurant-detail-label">What to Order</div>
-          <div class="restaurant-detail-value">GF french toast and the smoothies.</div>
-        </div>
-        <div class="restaurant-detail restaurant-location">
-          <div class="restaurant-detail-label">Location</div>
-          <div class="restaurant-detail-value restaurant-location-value">
-            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-            <span class="restaurant-detail-value">New Town</span>
-          </div>
-        </div>
-      </div>
-
-<div class="restaurant-fmgf">
-        <a href="#" class="restaurant-fmgf-link" target="_blank" rel="noopener">
-          See reviews on Find Me Gluten Free
-          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-        </a>
-      </div>
-    </div>
-
-    <div class="restaurant-card">
-      <div class="restaurant-top">
-        <h3 class="restaurant-name">Laila Lunch &amp; Brunch</h3>
-        <div class="restaurant-tags">
-          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
-        </div>
-      </div>
-      <div class="restaurant-cuisine">Brunch / Café</div>
-      <div class="restaurant-gf-score">
-        <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
-      </div>
-      <div class="restaurant-details">
-        <div class="restaurant-detail">
-          <div class="restaurant-detail-label">Safety Notes</div>
-          <div class="restaurant-detail-value">GF options marked on the menu. Very instagrammable, cute place.</div>
-        </div>
-        <div class="restaurant-detail">
-          <div class="restaurant-detail-label">What to Order</div>
-          <div class="restaurant-detail-value">Check the GF-marked items — great brunch selection.</div>
-        </div>
-        <div class="restaurant-detail restaurant-location">
-          <div class="restaurant-detail-label">Location</div>
-          <div class="restaurant-detail-value restaurant-location-value">
-            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-            <span class="restaurant-detail-value">Old Town · Cockburn St</span>
+            <span class="restaurant-detail-value">Marchmont</span>
           </div>
         </div>
       </div>
 
       <div class="restaurant-fmgf">
-        <a href="#" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+        <a href="https://www.findmeglutenfree.com/biz/sugar-daddys-bakery/6364369676009472" class="restaurant-fmgf-link" target="_blank" rel="noopener">
           See reviews on Find Me Gluten Free
           <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
         </a>
       </div>
     </div>
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Dyno Dough</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-gf">100% GF</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Pizza / Bakery</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">100% GF pop-up by Tupiniquim owners. Zero cross-contamination.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">GF pizza, calzone, and crepes. Check social media for current location.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Pop-up (Meadows area)</span>
+          </div>
+        </div>
+      </div>
 
+    </div>
     <div class="restaurant-card">
       <div class="restaurant-top">
         <h3 class="restaurant-name">La Locanda Edinburgh</h3>
@@ -2555,120 +2661,7 @@
         </div>
       </div>
       <div class="restaurant-cuisine">Italian</div>
-      <div class="restaurant-gf-score">
-        <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
-      </div>
-      <div class="restaurant-details">
-        <div class="restaurant-detail">
-          <div class="restaurant-detail-label">Safety Notes</div>
-          <div class="restaurant-detail-value">Italian menu that can be made GF — ask about pasta and pizza options.</div>
-        </div>
-        <div class="restaurant-detail">
-          <div class="restaurant-detail-label">What to Order</div>
-          <div class="restaurant-detail-value">GF pizza and pasta dishes available on request.</div>
-        </div>
-        <div class="restaurant-detail restaurant-location">
-          <div class="restaurant-detail-label">Location</div>
-          <div class="restaurant-detail-value restaurant-location-value">
-            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-            <span class="restaurant-detail-value">Old Town · Cockburn St</span>
-          </div>
-        </div>
-      </div>
-
-<div class="restaurant-fmgf">
-        <a href="#" class="restaurant-fmgf-link" target="_blank" rel="noopener">
-          See reviews on Find Me Gluten Free
-          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-        </a>
-      </div>
-    </div>
-
-    <div class="restaurant-card">
-      <div class="restaurant-top">
-        <h3 class="restaurant-name">Honeycomb &amp; Co.</h3>
-        <div class="restaurant-tags">
-          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
-        </div>
-      </div>
-      <div class="restaurant-cuisine">Breakfast / Brunch</div>
-      <div class="restaurant-gf-score">
-        <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
-      </div>
-      <div class="restaurant-details">
-        <div class="restaurant-detail">
-          <div class="restaurant-detail-label">Safety Notes</div>
-          <div class="restaurant-detail-value">GF marked on the menu. Breakfast served daily until noon.</div>
-        </div>
-        <div class="restaurant-detail">
-          <div class="restaurant-detail-label">What to Order</div>
-          <div class="restaurant-detail-value">Great savory breakfast options — check the GF-marked selections.</div>
-        </div>
-        <div class="restaurant-detail restaurant-location">
-          <div class="restaurant-detail-label">Location</div>
-          <div class="restaurant-detail-value restaurant-location-value">
-            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-            <span class="restaurant-detail-value">Bruntsfield</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="restaurant-fmgf">
-        <a href="#" class="restaurant-fmgf-link" target="_blank" rel="noopener">
-          See reviews on Find Me Gluten Free
-          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-        </a>
-      </div>
-    </div>
-
-    <div class="restaurant-card">
-      <div class="restaurant-top">
-        <h3 class="restaurant-name">Toast</h3>
-        <div class="restaurant-tags">
-          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
-        </div>
-      </div>
-      <div class="restaurant-cuisine">Café / Juice Bar</div>
-      <div class="restaurant-gf-score">
-        <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
-      </div>
-      <div class="restaurant-details">
-        <div class="restaurant-detail">
-          <div class="restaurant-detail-label">Safety Notes</div>
-          <div class="restaurant-detail-value">GF french toast and cakes available. Also has fresh green juices.</div>
-        </div>
-        <div class="restaurant-detail">
-          <div class="restaurant-detail-label">What to Order</div>
-          <div class="restaurant-detail-value">GF french toast, GF cakes, and the green juice.</div>
-        </div>
-        <div class="restaurant-detail restaurant-location">
-          <div class="restaurant-detail-label">Location</div>
-          <div class="restaurant-detail-value restaurant-location-value">
-            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-            <span class="restaurant-detail-value">Leith</span>
-          </div>
-        </div>
-      </div>
-
-<div class="restaurant-fmgf">
-        <a href="#" class="restaurant-fmgf-link" target="_blank" rel="noopener">
-          See reviews on Find Me Gluten Free
-          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-        </a>
-      </div>
-    </div>
-
-    <div class="restaurant-card">
-      <div class="restaurant-top">
-        <h3 class="restaurant-name">Salt Café</h3>
-        <div class="restaurant-tags">
-          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
-        </div>
-      </div>
-      <div class="restaurant-cuisine">Café / Breakfast</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
       <div class="restaurant-gf-score">
         <span class="restaurant-gf-score-label">GF Score</span>
         <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div>
@@ -2676,29 +2669,104 @@
       <div class="restaurant-details">
         <div class="restaurant-detail">
           <div class="restaurant-detail-label">Safety Notes</div>
-          <div class="restaurant-detail-value">GF marked on the menu. Great breakfast selection with solid GF choices.</div>
+          <div class="restaurant-detail-value">Owner's son has celiac disease. Staff extremely knowledgeable. Scratch-made GF pasta, GF gnocchi, GF bread.</div>
         </div>
         <div class="restaurant-detail">
           <div class="restaurant-detail-label">What to Order</div>
-          <div class="restaurant-detail-value">Eggs benny, french toast, and the breakfast sandwiches — all available GF.</div>
+          <div class="restaurant-detail-value">Homemade GF tagliatelle — rare even in Italy. Reserve ahead; max 4 per booking.</div>
         </div>
         <div class="restaurant-detail restaurant-location">
           <div class="restaurant-detail-label">Location</div>
           <div class="restaurant-detail-value restaurant-location-value">
             <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-            <span class="restaurant-detail-value">Morningside</span>
+            <span class="restaurant-detail-value">Old Town · Cockburn Street</span>
           </div>
         </div>
       </div>
 
-<div class="restaurant-fmgf">
-        <a href="#" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/la-locanda/6726662492520448" class="restaurant-fmgf-link" target="_blank" rel="noopener">
           See reviews on Find Me Gluten Free
           <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
         </a>
       </div>
     </div>
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Urban Angel</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Café / Brunch</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">Kitchen has a dedicated GF zone. Staff ask allergy vs intolerance and flag celiac to kitchen.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">House-baked GF sourdough, eggs dishes, and salads.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">New Town</span>
+          </div>
+        </div>
+      </div>
 
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/urban-angel/6593095194378240" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Greenwoods Edinburgh</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Dutch Breakfast / Brunch</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">GF clearly marked on menu. Dedicated fryer. Staff double-check celiac orders at ordering AND delivery.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">Eggs Benedict, full GF-marked breakfast options. Book ahead — small and busy.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">New Town</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/greenwoods/6095150659534848" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
     <div class="restaurant-card">
       <div class="restaurant-top">
         <h3 class="restaurant-name">The Haggis Box</h3>
@@ -2706,19 +2774,20 @@
           <span class="restaurant-tag restaurant-tag-options">GF Options</span>
         </div>
       </div>
-      <div class="restaurant-cuisine">Scottish / Traditional</div>
+      <div class="restaurant-cuisine">Traditional Scottish</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
       <div class="restaurant-gf-score">
         <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div>
       </div>
       <div class="restaurant-details">
         <div class="restaurant-detail">
           <div class="restaurant-detail-label">Safety Notes</div>
-          <div class="restaurant-detail-value">Local delicacy spot. The veggie haggis is also GF — ask to confirm.</div>
+          <div class="restaurant-detail-value">All haggis uses GF oats from Findlays of Portobello. GF marked on menu.</div>
         </div>
         <div class="restaurant-detail">
           <div class="restaurant-detail-label">What to Order</div>
-          <div class="restaurant-detail-value">The vegetarian haggis — it's gluten-free and a great way to try the local specialty.</div>
+          <div class="restaurant-detail-value">Traditional, veggie, or vegan haggis with neeps &amp; tatties — all GF.</div>
         </div>
         <div class="restaurant-detail restaurant-location">
           <div class="restaurant-detail-label">Location</div>
@@ -2729,52 +2798,13 @@
         </div>
       </div>
 
-<div class="restaurant-fmgf">
-        <a href="#" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/the-haggis-box/5501218846277632" class="restaurant-fmgf-link" target="_blank" rel="noopener">
           See reviews on Find Me Gluten Free
           <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
         </a>
       </div>
     </div>
-
-    <div class="restaurant-card">
-      <div class="restaurant-top">
-        <h3 class="restaurant-name">Origano</h3>
-        <div class="restaurant-tags">
-          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
-        </div>
-      </div>
-      <div class="restaurant-cuisine">Italian / Pizzeria</div>
-      <div class="restaurant-gf-score">
-        <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
-      </div>
-      <div class="restaurant-details">
-        <div class="restaurant-detail">
-          <div class="restaurant-detail-label">Safety Notes</div>
-          <div class="restaurant-detail-value">GF pizza available. Ask about cross-contamination practices.</div>
-        </div>
-        <div class="restaurant-detail">
-          <div class="restaurant-detail-label">What to Order</div>
-          <div class="restaurant-detail-value">The GF pizza.</div>
-        </div>
-        <div class="restaurant-detail restaurant-location">
-          <div class="restaurant-detail-label">Location</div>
-          <div class="restaurant-detail-value restaurant-location-value">
-            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-            <span class="restaurant-detail-value">Leith Walk</span>
-          </div>
-        </div>
-      </div>
-
-<div class="restaurant-fmgf">
-        <a href="#" class="restaurant-fmgf-link" target="_blank" rel="noopener">
-          See reviews on Find Me Gluten Free
-          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-        </a>
-      </div>
-    </div>
-
     <div class="restaurant-card">
       <div class="restaurant-top">
         <h3 class="restaurant-name">LeftField</h3>
@@ -2783,18 +2813,19 @@
         </div>
       </div>
       <div class="restaurant-cuisine">Seafood</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
       <div class="restaurant-gf-score">
         <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div>
       </div>
       <div class="restaurant-details">
         <div class="restaurant-detail">
           <div class="restaurant-detail-label">Safety Notes</div>
-          <div class="restaurant-detail-value">Seafood-focused menu with naturally GF options. Ask server about specific dishes.</div>
+          <div class="restaurant-detail-value">Almost the entire menu is naturally GF. Not dedicated but predominantly GF.</div>
         </div>
         <div class="restaurant-detail">
           <div class="restaurant-detail-label">What to Order</div>
-          <div class="restaurant-detail-value">Fresh seafood dishes — many are naturally gluten-free.</div>
+          <div class="restaurant-detail-value">Seafood — most of the menu. No GF desserts besides ice cream.</div>
         </div>
         <div class="restaurant-detail restaurant-location">
           <div class="restaurant-detail-label">Location</div>
@@ -2805,22 +2836,60 @@
         </div>
       </div>
 
-<div class="restaurant-fmgf">
-        <a href="#" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/leftfield/6068861148987392" class="restaurant-fmgf-link" target="_blank" rel="noopener">
           See reviews on Find Me Gluten Free
           <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
         </a>
       </div>
     </div>
-
     <div class="restaurant-card">
       <div class="restaurant-top">
-        <h3 class="restaurant-name">Junk</h3>
+        <h3 class="restaurant-name">The Little Chartroom</h3>
         <div class="restaurant-tags">
           <span class="restaurant-tag restaurant-tag-options">GF Options</span>
         </div>
       </div>
-      <div class="restaurant-cuisine">Bar &amp; Restaurant</div>
+      <div class="restaurant-cuisine">Modern Scottish</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">Michelin-recognized. Menu highly adaptable for celiacs. Call 0131 556 6600 when booking.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">Most dishes are naturally GF or adaptable. Mention celiac when booking.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Leith</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/the-little-chartroom/6269427514998784" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Laila Lunch &amp; Brunch</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Middle Eastern Brunch</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
       <div class="restaurant-gf-score">
         <span class="restaurant-gf-score-label">GF Score</span>
         <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
@@ -2828,11 +2897,163 @@
       <div class="restaurant-details">
         <div class="restaurant-detail">
           <div class="restaurant-detail-label">Safety Notes</div>
-          <div class="restaurant-detail-value">Can adapt almost everything to be GF with 48 hours notice. Call ahead to arrange.</div>
+          <div class="restaurant-detail-value">GF pita substitution available. Mixed consistency — some staff check carefully, others don't. Call ahead.</div>
         </div>
         <div class="restaurant-detail">
           <div class="restaurant-detail-label">What to Order</div>
-          <div class="restaurant-detail-value">Nearly the full menu — just give them 48 hours notice to prepare GF versions.</div>
+          <div class="restaurant-detail-value">Ask for GF pita substitution.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Old Town · Cockburn Street</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/lailas/5966195014631424" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Honeycomb &amp; Co.</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Brunch / Tearoom</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">GF bread available. Not dedicated GF. Contact ahead at hello@honeycombandco.com.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">Eggs benedict on GF bread, GF brownie.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Bruntsfield</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/honeycomb-and-co/5523662664499200" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Toast</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Brunch</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">GF options available. Has separate GF toaster. Not dedicated.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">GF breakfast/brunch, GF cakes.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Leith</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/toast/6699863439966208" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Origano</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Italian / Pizza</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">House-made GF dough (not frozen), but shared oven. Cross-contamination risk for celiacs.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">Any pizza on GF base, GF meatballs, orange ricotta cake.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Leith</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/origano-pizzeria/4706802601164800" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Junk</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Bar / Restaurant</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">Can adapt menu with 48hrs notice. Very inconsistent reviews — some celiacs got sick. Proceed with caution.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">Call 48 hours ahead. GF bread/buns available.</div>
         </div>
         <div class="restaurant-detail restaurant-location">
           <div class="restaurant-detail-label">Location</div>
@@ -2844,7 +3065,273 @@
       </div>
 
       <div class="restaurant-fmgf">
-        <a href="#" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+        <a href="https://www.findmeglutenfree.com/biz/junk/5234846651252736" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Cult Coffee Roasters</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Coffee / Café</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">NGCI items labeled. GF bread toasted in baking paper to avoid shared press contact.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">GF toast options.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Newington</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/cult-coffee/5997292592693248" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Aizle</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Modern Scottish</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">Seasonal tasting menu restaurant. Can accommodate dietary requirements with advance notice.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">Multi-course tasting menu — notify of celiac needs when booking.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Leith</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/aizle/5364801767170048" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Eleanore</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">French / Bistro</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">French-inspired bistro. Can adapt dishes for GF — discuss with staff.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">Seasonal menu with GF adaptations available.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">New Town</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/eleanore/5521684631339008" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">LOWDOWN</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Coffee / Café</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">Café with some GF options available.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">Check with staff for current GF offerings.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">George Street</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/lowdown/4876543219875840" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Spry Wines</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Wine Bar</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">Wine bar with small plates. Many items naturally GF.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">Cheese and charcuterie boards, naturally GF small plates.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Tollcross</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/spry-wines/6210985437839360" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">GF Café</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-closed">Looks to be Closed</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Café / Gluten-Free</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">Edinburgh's first dedicated GF café near Haymarket. Permanently closed after 8 years.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">Permanently closed.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Dalry</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/gf-cafe/4970286863351808" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Salt Café</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-closed">Looks to be Closed</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Café / Breakfast</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">Was celiac-aware. Permanently closed.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">Permanently closed.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Morningside</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/salt/5658016697942016" class="restaurant-fmgf-link" target="_blank" rel="noopener">
           See reviews on Find Me Gluten Free
           <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
         </a>
@@ -2925,7 +3412,7 @@
   <section class="landmarks" id="landmarks">
     <div class="landmarks-header">
       <h2 class="landmarks-title">Landmarks &amp; Must-See Spots</h2>
-      <span class="landmarks-count">10 spots</span>
+      <span class="landmarks-count">11 spots</span>
     </div>
     <div class="landmarks-rule"></div>
 
@@ -2943,11 +3430,9 @@
               <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
               Old Town · top of Royal Mile
             </div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
           </div>
-          <!-- <img src="images/edinburgh-castle.jpg" alt="Edinburgh Castle" class="landmark-photo"> -->
-          <div class="landmark-photo-placeholder">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          </div>
+          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
         </div>
       </div>
 
@@ -2963,107 +3448,171 @@
               <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
               Old Town
             </div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
           </div>
-          <!-- <img src="images/royal-mile.jpg" alt="Royal Mile" class="landmark-photo"> -->
-          <div class="landmark-photo-placeholder">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+        </div>
+      </div>
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <h3 class="landmark-name">Arthur's Seat</h3>
+              <span class="landmark-type landmark-type-nature">Nature</span>
+            </div>
+            <div class="landmark-desc">An ancient volcano right in the middle of the city. The hike to the summit takes about 45 minutes and rewards with 360-degree panoramic views. Go early morning to beat the crowds.</div>
+            <div class="landmark-location">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+              Holyrood Park
+            </div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
           </div>
+          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
         </div>
       </div>
 
       <div class="landmark-card">
-        <div class="landmark-top">
-          <h3 class="landmark-name">Arthur's Seat</h3>
-          <span class="landmark-type landmark-type-nature">Nature</span>
-        </div>
-        <div class="landmark-desc">An ancient volcano right in the middle of the city. The hike to the summit takes about 45 minutes and rewards with 360-degree panoramic views. Go early morning to beat the crowds.</div>
-        <div class="landmark-location">
-          <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-          Holyrood Park
-        </div>
-      </div>
-
-      <div class="landmark-card">
-        <div class="landmark-top">
-          <h3 class="landmark-name">Calton Hill</h3>
-          <span class="landmark-type landmark-type-nature">Nature</span>
-        </div>
-        <div class="landmark-desc">A shorter, easier climb than Arthur's Seat with equally stunning views. The unfinished National Monument at the top gives it a Greek-ruin feel. Perfect for sunset.</div>
-        <div class="landmark-location">
-          <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-          East end of Princes Street
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <h3 class="landmark-name">Calton Hill</h3>
+              <span class="landmark-type landmark-type-nature">Nature</span>
+            </div>
+            <div class="landmark-desc">A shorter, easier climb than Arthur's Seat with equally stunning views. The unfinished National Monument at the top gives it a Greek-ruin feel. Perfect for sunset.</div>
+            <div class="landmark-location">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+              East end of Princes Street
+            </div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+          </div>
+          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
         </div>
       </div>
 
       <div class="landmark-card">
-        <div class="landmark-top">
-          <h3 class="landmark-name">Water of Leith Walkway</h3>
-          <span class="landmark-type landmark-type-walk">Walk</span>
-        </div>
-        <div class="landmark-desc">A peaceful riverside path that winds 12 miles from Balerno to Leith. The stretch through Dean Village to Stockbridge is the most scenic — lush, quiet, and completely removed from the city above.</div>
-        <div class="landmark-location">
-          <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-          Dean Village → Stockbridge → Leith
-        </div>
-      </div>
-
-      <div class="landmark-card">
-        <div class="landmark-top">
-          <h3 class="landmark-name">Greyfriars Kirkyard</h3>
-          <span class="landmark-type landmark-type-historic">Historic</span>
-        </div>
-        <div class="landmark-desc">Atmospheric 16th-century cemetery where J.K. Rowling borrowed names from the tombstones — look for Tom Riddle and McGonagall. Also home to the famous Greyfriars Bobby statue just outside the gate.</div>
-        <div class="landmark-location">
-          <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-          Old Town · off Candlemaker Row
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <h3 class="landmark-name">Water of Leith Walkway</h3>
+              <span class="landmark-type landmark-type-walk">Walk</span>
+            </div>
+            <div class="landmark-desc">A peaceful riverside path that winds 12 miles from Balerno to Leith. The stretch through Dean Village to Stockbridge is the most scenic — lush, quiet, and completely removed from the city above.</div>
+            <div class="landmark-location">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+              Dean Village → Stockbridge → Leith
+            </div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+          </div>
+          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
         </div>
       </div>
 
       <div class="landmark-card">
-        <div class="landmark-top">
-          <h3 class="landmark-name">Cockburn Street</h3>
-          <span class="landmark-type landmark-type-historic">Historic</span>
-        </div>
-        <div class="landmark-desc">A curving, cobbled street with colourful shopfronts dropping steeply from the Royal Mile to Waverley. One of Edinburgh's most photographed streets — and home to some great restaurants.</div>
-        <div class="landmark-location">
-          <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-          Old Town
-        </div>
-      </div>
-
-      <div class="landmark-card">
-        <div class="landmark-top">
-          <h3 class="landmark-name">Royal Yacht Britannia</h3>
-          <span class="landmark-type landmark-type-historic">Historic</span>
-        </div>
-        <div class="landmark-desc">The Queen's former floating palace, now permanently docked at Ocean Terminal. The audio tour through the royal quarters and engine room is surprisingly fascinating — allow 2 hours.</div>
-        <div class="landmark-location">
-          <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-          Leith · Ocean Terminal
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <h3 class="landmark-name">Greyfriars Kirkyard</h3>
+              <span class="landmark-type landmark-type-historic">Historic</span>
+            </div>
+            <div class="landmark-desc">Atmospheric 16th-century cemetery where J.K. Rowling borrowed names from the tombstones — look for Tom Riddle and McGonagall. Also home to the famous Greyfriars Bobby statue just outside the gate.</div>
+            <div class="landmark-location">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+              Old Town · off Candlemaker Row
+            </div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+          </div>
+          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
         </div>
       </div>
 
       <div class="landmark-card">
-        <div class="landmark-top">
-          <h3 class="landmark-name">Edinburgh Farmers' Market</h3>
-          <span class="landmark-type landmark-type-market">Market</span>
-        </div>
-        <div class="landmark-desc">Every Saturday at the foot of the Castle. Local producers selling Scottish cheeses, baked goods, seasonal veg, and street food. Some stalls have gluten-free options — worth asking.</div>
-        <div class="landmark-location">
-          <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-          Castle Terrace · Saturdays
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <h3 class="landmark-name">Dean Village</h3>
+              <span class="landmark-type landmark-type-neighborhood">Neighborhood</span>
+            </div>
+            <div class="landmark-desc">A storybook cluster of old mill buildings tucked into a gorge, just minutes from the West End. Walk down from the bridge viewpoint for the best reveal. Connects to the Water of Leith path toward Stockbridge.</div>
+            <div class="landmark-location">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+              West End
+            </div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+          </div>
+          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
         </div>
       </div>
 
       <div class="landmark-card">
-        <div class="landmark-top">
-          <h3 class="landmark-name">The Meadows</h3>
-          <span class="landmark-type landmark-type-nature">Nature</span>
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <h3 class="landmark-name">Cockburn Street</h3>
+              <span class="landmark-type landmark-type-historic">Historic</span>
+            </div>
+            <div class="landmark-desc">A curving, cobbled street with colourful shopfronts dropping steeply from the Royal Mile to Waverley. One of Edinburgh's most photographed streets — and home to some great restaurants.</div>
+            <div class="landmark-location">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+              Old Town
+            </div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+          </div>
+          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
         </div>
-        <div class="landmark-desc">A sprawling green park south of Old Town, popular with runners, picnickers, and students. Beautiful tree-lined paths and a perfect spot to decompress after a day of sightseeing.</div>
-        <div class="landmark-location">
-          <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-          South of Old Town · Bruntsfield
+      </div>
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <h3 class="landmark-name">Royal Yacht Britannia</h3>
+              <span class="landmark-type landmark-type-historic">Historic</span>
+            </div>
+            <div class="landmark-desc">The Queen's former floating palace, now permanently docked at Ocean Terminal. The audio tour through the royal quarters and engine room is surprisingly fascinating — allow 2 hours.</div>
+            <div class="landmark-location">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+              Leith · Ocean Terminal
+            </div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+          </div>
+          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+        </div>
+      </div>
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <h3 class="landmark-name">Edinburgh Farmers' Market</h3>
+              <span class="landmark-type landmark-type-market">Market</span>
+            </div>
+            <div class="landmark-desc">Every Saturday at the foot of the Castle. Local producers selling Scottish cheeses, baked goods, seasonal veg, and street food. Some stalls have gluten-free options — worth asking.</div>
+            <div class="landmark-location">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+              Castle Terrace · Saturdays
+            </div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+          </div>
+          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+        </div>
+      </div>
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <h3 class="landmark-name">The Meadows</h3>
+              <span class="landmark-type landmark-type-nature">Nature</span>
+            </div>
+            <div class="landmark-desc">A sprawling green park south of Old Town, popular with runners, picnickers, and students. Beautiful tree-lined paths and a perfect spot to decompress after a day of sightseeing.</div>
+            <div class="landmark-location">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+              South of Old Town · Bruntsfield
+            </div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+          </div>
+          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
         </div>
       </div>
 
@@ -3115,7 +3664,7 @@
         L.marker(n.center, { icon: label, interactive: false }).addTo(nMap);
       });
 
-      // Hotel marker
+      // Hotel markers
       var hotelIcon = L.divIcon({
         className: '',
         html: '<div style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;background:#2A2018;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.25);"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 21V13h6v8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 21h22" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><rect x="7" y="8" width="3" height="3" rx="0.5" fill="#fff"/><rect x="14" y="8" width="3" height="3" rx="0.5" fill="#fff"/></svg></div>',
@@ -3124,7 +3673,10 @@
       });
       L.marker([55.9516, -3.2063], { icon: hotelIcon })
         .addTo(nMap)
-        .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">Kimpton Charlotte Square</strong><br><span style="font-size:11px;color:#5A5048;">Where I stayed</span></div>', { closeButton: false });
+        .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">Kimpton Charlotte Square Hotel</strong><br><span style="font-size:11px;color:#5A5048;">Where I stayed</span></div>', { closeButton: false });
+      L.marker([55.9498, -3.2073], { icon: hotelIcon })
+        .addTo(nMap)
+        .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">Waldorf Astoria Edinburgh — The Caledonian</strong><br><span style="font-size:11px;color:#5A5048;">Traveler recommended</span></div>', { closeButton: false });
     })();
     </script>
 
@@ -3175,7 +3727,7 @@
           <h3 class="neighborhood-name">Bruntsfield</h3>
           <span class="neighborhood-vibe">Leafy &amp; local</span>
         </div>
-        <div class="neighborhood-desc">A residential stretch south of the Meadows with independent cafés, brunch spots, and a neighbourhood feel. Where locals actually hang out. Honeycomb & Co. and LeftField are both here.</div>
+        <div class="neighborhood-desc">A residential stretch south of the Meadows with independent cafés, brunch spots, and a neighbourhood feel. Where locals actually hang out. Honeycomb &amp; Co. and LeftField are both here.</div>
       </div>
 
       <div class="neighborhood-item">
@@ -3183,7 +3735,7 @@
           <h3 class="neighborhood-name">Morningside</h3>
           <span class="neighborhood-vibe">Quiet &amp; charming</span>
         </div>
-        <div class="neighborhood-desc">A genteel suburb further south with a village high street, great bakeries, and a slower pace. Salt Café is the GF standout here. Worth the walk or quick bus ride if you want to escape the tourist areas.</div>
+        <div class="neighborhood-desc">A genteel suburb further south with a village high street, great bakeries, and a slower pace. Sugar Daddy's Bakery is the GF standout here. Worth the walk or quick bus ride if you want to escape the tourist areas.</div>
       </div>
 
     </div>
@@ -3207,18 +3759,11 @@
           </div>
           <div class="thing-desc">Descend into the Blair Street Vaults beneath the Old Town for a lantern-lit walk through Edinburgh's darkest history. Most tours end with a dram of Scotch in a candlelit cellar. Book the evening slot — it's creepier.</div>
           <div class="thing-meta">
-            <span class="thing-detail">
-              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
-              1–2 hours
-            </span>
-            <span class="thing-detail">
-              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-              Old Town
-            </span>
+            <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> 1–2 hours</span>
+            <span class="thing-detail"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Old Town</span>
           </div>
           <a href="#" class="thing-book" target="_blank" rel="noopener sponsored">
-            Book Tour
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            Book Tour <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
           </a>
         </div>
 
@@ -3229,18 +3774,11 @@
           </div>
           <div class="thing-desc">A barrel ride through the whisky-making process right at the top of the Royal Mile, followed by a guided tasting. The Silver tour covers the basics; the Gold and Platinum add rare drams and food pairings.</div>
           <div class="thing-meta">
-            <span class="thing-detail">
-              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
-              1 hour
-            </span>
-            <span class="thing-detail">
-              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-              Royal Mile · near Castle
-            </span>
+            <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> 1 hour</span>
+            <span class="thing-detail"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Royal Mile · near Castle</span>
           </div>
           <a href="#" class="thing-book" target="_blank" rel="noopener sponsored">
-            Book Experience
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            Book Experience <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
           </a>
         </div>
 
@@ -3251,18 +3789,11 @@
           </div>
           <div class="thing-desc">Full-day coach tours to the Highlands depart from Edinburgh daily. Rabbie's runs small-group trips to Glencoe, Loch Ness, and the Trossachs — pick based on how far north you want to go.</div>
           <div class="thing-meta">
-            <span class="thing-detail">
-              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
-              Full day
-            </span>
-            <span class="thing-detail">
-              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-              Departs city centre
-            </span>
+            <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> Full day</span>
+            <span class="thing-detail"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Departs city centre</span>
           </div>
           <a href="#" class="thing-book" target="_blank" rel="noopener sponsored">
-            Book Trip
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            Book Trip <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
           </a>
         </div>
 
@@ -3273,18 +3804,11 @@
           </div>
           <div class="thing-desc">A luxury rooftop bar and brasserie on St Andrew Square with panoramic views over the city. Worth booking for cocktails at sunset even if you're not staying at the hotel. Smart casual dress code.</div>
           <div class="thing-meta">
-            <span class="thing-detail">
-              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
-              Evening
-            </span>
-            <span class="thing-detail">
-              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-              New Town · St Andrew Square
-            </span>
+            <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> Evening</span>
+            <span class="thing-detail"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> New Town · St Andrew Square</span>
           </div>
           <a href="#" class="thing-visit" target="_blank" rel="noopener">
-            Visit website
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            Visit website <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
           </a>
         </div>
 
@@ -3303,18 +3827,11 @@
           </div>
           <div class="thing-desc">Eleven floors of exhibits from Dolly the Sheep to the Arthur's Seat coffins. The rooftop terrace has one of the best free views in the city. You could spend half a day here easily.</div>
           <div class="thing-meta">
-            <span class="thing-detail">
-              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
-              2–3 hours
-            </span>
-            <span class="thing-detail">
-              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-              Old Town · Chambers Street
-            </span>
+            <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> 2–3 hours</span>
+            <span class="thing-detail"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Old Town · Chambers Street</span>
           </div>
           <a href="#" class="thing-visit" target="_blank" rel="noopener">
-            Plan your visit
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            Plan your visit <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
           </a>
         </div>
 
@@ -3325,18 +3842,11 @@
           </div>
           <div class="thing-desc">A world-class collection from Titian to Monet in a gorgeous neoclassical building on the Mound. Small enough to see in an hour without feeling rushed. The café downstairs is solid too.</div>
           <div class="thing-meta">
-            <span class="thing-detail">
-              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
-              1–2 hours
-            </span>
-            <span class="thing-detail">
-              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-              The Mound · between Old &amp; New Town
-            </span>
+            <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> 1–2 hours</span>
+            <span class="thing-detail"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> The Mound · between Old &amp; New Town</span>
           </div>
           <a href="#" class="thing-visit" target="_blank" rel="noopener">
-            Plan your visit
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            Plan your visit <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
           </a>
         </div>
 
@@ -3347,18 +3857,11 @@
           </div>
           <div class="thing-desc">See the Crown Jewels, the Stone of Destiny, and the One O'Clock Gun. Book online to skip the queue — it gets very busy in summer. Allow at least 2 hours to explore properly.</div>
           <div class="thing-meta">
-            <span class="thing-detail">
-              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
-              2–3 hours
-            </span>
-            <span class="thing-detail">
-              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-              Old Town · top of Royal Mile
-            </span>
+            <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> 2–3 hours</span>
+            <span class="thing-detail"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Old Town · top of Royal Mile</span>
           </div>
           <a href="#" class="thing-book" target="_blank" rel="noopener sponsored">
-            Book Tickets
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            Book Tickets <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
           </a>
         </div>
 
@@ -3369,18 +3872,11 @@
           </div>
           <div class="thing-desc">The King's official Scottish residence at the foot of the Royal Mile. The audio tour through Mary Queen of Scots' chambers is fascinating. The gardens are lovely on a clear day.</div>
           <div class="thing-meta">
-            <span class="thing-detail">
-              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
-              1.5–2 hours
-            </span>
-            <span class="thing-detail">
-              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-              Old Town · bottom of Royal Mile
-            </span>
+            <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> 1.5–2 hours</span>
+            <span class="thing-detail"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Old Town · bottom of Royal Mile</span>
           </div>
           <a href="#" class="thing-book" target="_blank" rel="noopener sponsored">
-            Book Tickets
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            Book Tickets <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
           </a>
         </div>
 
@@ -3401,11 +3897,55 @@
       <li class="packing-item">
         <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
         <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">Edinburgh is all cobblestones and hills. Cushioned soles are non-negotiable — your feet will thank you by day two.</span>
+          <a href="#" class="packing-shop" target="_blank" rel="noopener sponsored">
+            Shop recommendation <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Celiac travel card</span>
+          <span class="packing-item-why">A printed card explaining celiac disease in English. Useful for communicating with kitchen staff — even in an English-speaking country, having it written down helps.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable gluten-free snacks</span>
+          <span class="packing-item-why">Edinburgh is great for GF dining, but you'll still want backup for long days hiking Arthur's Seat or riding coaches to the Highlands.</span>
+          <a href="#" class="packing-shop" target="_blank" rel="noopener sponsored">
+            Shop recommendation <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Universal power adapter (Type G)</span>
+          <span class="packing-item-why">UK uses Type G plugs (three big rectangular pins). If you're coming from the US or Europe, you'll need an adapter from day one.</span>
+          <a href="#" class="packing-shop" target="_blank" rel="noopener sponsored">
+            Shop recommendation <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
           <span class="packing-item-name">Packable rain jacket</span>
           <span class="packing-item-why">It will rain. Even in July. Scottish weather changes by the hour — a lightweight shell you can stuff in your bag is the move.</span>
           <a href="#" class="packing-shop" target="_blank" rel="noopener sponsored">
-            Shop recommendation
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            Shop recommendation <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
           </a>
         </div>
         <span class="packing-item-tag packing-tag-city">Edinburgh</span>
@@ -3418,58 +3958,6 @@
           <span class="packing-item-why">You'll go from sunshine to wind to drizzle in a single afternoon. Dress like an onion — t-shirt, light fleece, and that rain jacket.</span>
         </div>
         <span class="packing-item-tag packing-tag-city">Edinburgh</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Comfortable walking shoes</span>
-          <span class="packing-item-why">Edinburgh is all cobblestones and hills. Cushioned soles are non-negotiable — your feet will thank you by day two.</span>
-          <a href="#" class="packing-shop" target="_blank" rel="noopener sponsored">
-            Shop recommendation
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-          </a>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Portable gluten-free snacks</span>
-          <span class="packing-item-why">Edinburgh is great for GF dining, but you'll still want backup for long days hiking Arthur's Seat or riding coaches to the Highlands.</span>
-          <a href="#" class="packing-shop" target="_blank" rel="noopener sponsored">
-            Shop recommendation
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-          </a>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Travel card holder</span>
-          <span class="packing-item-why">Keep your contactless card handy for buses and trams. You'll be tapping on and off all day — digging through a bag gets old fast.</span>
-          <a href="#" class="packing-shop" target="_blank" rel="noopener sponsored">
-            Shop recommendation
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-          </a>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Universal power adapter</span>
-          <span class="packing-item-why">UK uses Type G plugs (three big rectangular pins). If you're coming from the US or Europe, you'll need an adapter from day one.</span>
-          <a href="#" class="packing-shop" target="_blank" rel="noopener sponsored">
-            Shop recommendation
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-          </a>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
       </li>
 
     </ul>
@@ -3522,24 +4010,6 @@
         <span class="tip-text">The Lothian Buses app is more accurate than Google Maps for bus times. Download it before you arrive.</span>
       </li>
     </ul>
-
-    <div class="tips-hindsight">
-      <div class="tips-hindsight-label">What I'd Do Differently</div>
-      <ul class="hindsight-list">
-        <li class="hindsight-item">
-          <svg class="hindsight-icon" width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M1 15L8 1L15 15H1Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
-          <span class="hindsight-text">"I'd spend a full day in Leith next time — we only passed through, but the waterfront and restaurant scene deserve more time."</span>
-        </li>
-        <li class="hindsight-item">
-          <svg class="hindsight-icon" width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M1 15L8 1L15 15H1Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
-          <span class="hindsight-text">"I'd book the ghost tour for the first evening. It's the perfect introduction to the Old Town and sets the mood for the rest of the trip."</span>
-        </li>
-        <li class="hindsight-item">
-          <svg class="hindsight-icon" width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M1 15L8 1L15 15H1Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/></svg>
-          <span class="hindsight-text">"I'd do Arthur's Seat at sunrise. We went midday and it was crowded — early morning would be magical and practically empty."</span>
-        </li>
-      </ul>
-    </div>
   </section>
 
   <footer class="page-footer">
