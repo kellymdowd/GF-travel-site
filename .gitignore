@@ -1,0 +1,8 @@
+node_modules/
+.venv/
+photos/
+map downloads/
+.DS_Store
+~$*
+*.HEIC
+.claude/settings.local.json

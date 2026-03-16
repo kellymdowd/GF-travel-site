@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kelly Wanders Around</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+  <style>
+    :root {
+      --cream:        #FFFFFF;
+      --cream-dark:   #F0F0F0;
+      --sand:         #D0D0D0;
+      --sand-border:  #BBBBBB;
+      --slate:        #C8717A;
+      --slate-dark:   #AD5D65;
+      --slate-light:  #D9979E;
+      --rose:         #B8907A;
+      --ink:          #2A2018;
+      --ink-mid:      #5A5048;
+      --ink-light:    #9A907A;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background-color: var(--cream);
+      color: var(--ink);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+      /* Subtle paper grain via pseudo-element */
+      position: relative;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 100;
+      opacity: 0.6;
+    }
+
+    /* ─── Layout ─────────────────────────────────────────────── */
+
+    .page {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      min-height: 100vh;
+      padding: 0 2.5rem;
+      padding-top: 52px;
+    }
+
+    /* ─── Header ─────────────────────────────────────────────── */
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      padding: 2.8rem 0 1.8rem;
+      opacity: 0;
+      transform: translateY(-16px);
+      animation: revealDown 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+    }
+
+    .title-block {}
+
+    .site-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(1.8rem, 3.5vw, 3rem);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 1;
+    }
+
+    .site-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(0.85rem, 1.3vw, 1rem);
+      color: var(--ink-light);
+      letter-spacing: 0.03em;
+      margin-top: 0.35rem;
+    }
+
+    /* ─── Divider ─────────────────────────────────────────────── */
+
+    .header-rule {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, var(--rose), transparent 60%);
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.9s forwards;
+    }
+
+    /* ─── Map ────────────────────────────────────────────────── */
+
+    .map-wrap {
+      position: relative;
+      width: 100%;
+      padding: 1.2rem 0;
+      opacity: 0;
+      animation: fadeIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+    }
+
+    #world-map {
+      width: 100%;
+      display: block;
+    }
+
+    #world-map svg {
+      width: 100%;
+      display: block;
+      overflow: visible;
+    }
+
+    /* Map path transitions */
+    .country-path {
+      transition: fill 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+                  filter 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .country-path.is-visited {
+      cursor: pointer;
+    }
+
+    .country-path.is-visited:hover {
+      fill: var(--slate-light) !important;
+      filter: drop-shadow(0 2px 8px rgba(200, 113, 122, 0.45));
+    }
+
+    /* ─── Tooltip ─────────────────────────────────────────────── */
+
+    #tooltip {
+      position: fixed;
+      pointer-events: none;
+      background: var(--ink);
+      color: var(--cream);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.45rem 0.85rem;
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateY(0);
+      transition: opacity 0.18s ease;
+      z-index: 200;
+    }
+
+    #tooltip::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-top: 5px solid var(--ink);
+    }
+
+    /* ─── Footer note ─────────────────────────────────────────── */
+
+    .footer {
+      padding: 0.8rem 0 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1.6s forwards;
+    }
+
+    .footer-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--rose);
+      flex-shrink: 0;
+    }
+
+    .footer-note {
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+    }
+
+    /* ─── Animations ─────────────────────────────────────────── */
+
+    @keyframes revealDown {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* ─── Nav bar ─────────────────────────────────────────────── */
+
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 52px;
+      background: var(--cream);
+      border-bottom: 1px solid rgba(42, 32, 24, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      z-index: 300;
+      opacity: 0;
+      animation: fadeIn 0.6s ease 0.1s forwards;
+    }
+
+    .nav-home {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 0.85rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-home:hover { color: var(--slate); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .nav-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      padding: 0;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s ease;
+    }
+    .nav-btn:hover { color: var(--ink); }
+    .nav-btn.is-active { color: var(--slate); }
+
+    .nav-btn-arrow {
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav-btn.is-active .nav-btn-arrow { transform: rotate(180deg); }
+
+    /* ─── Places panel ─────────────────────────────────────────── */
+
+    .places-overlay {
+      position: fixed;
+      top: 52px; left: 0; right: 0; bottom: 0;
+      background: rgba(42, 32, 24, 0.25);
+      z-index: 400;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .places-overlay.is-open { opacity: 1; pointer-events: all; }
+
+    .places-panel {
+      position: fixed;
+      top: 52px; left: 0; right: 0;
+      background: var(--cream);
+      border-bottom: 1px solid rgba(42, 32, 24, 0.08);
+      z-index: 450;
+      padding: 2.5rem;
+      max-height: calc(100vh - 52px);
+      overflow-y: auto;
+      transform: translateY(-8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  opacity 0.3s ease;
+    }
+    .places-panel.is-open {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .places-panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.8rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(42, 32, 24, 0.08);
+    }
+
+    .places-panel-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.1rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+    }
+
+    .places-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--ink-light);
+      padding: 0.2rem;
+      transition: color 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .places-close:hover { color: var(--ink); transform: rotate(90deg); }
+
+    .places-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.2rem 2rem;
+    }
+
+    .place-item { padding: 0.2rem 0; }
+
+    .place-country {
+      display: block;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      padding: 0.3rem 0;
+      transition: color 0.2s ease;
+    }
+    .place-country:hover { color: var(--slate); }
+
+    .place-cities {
+      padding-left: 0.8rem;
+      border-left: 1px solid rgba(184, 144, 122, 0.35);
+      margin-bottom: 0.4rem;
+    }
+
+    .place-city {
+      display: block;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 300;
+      letter-spacing: 0.1em;
+      color: var(--ink-light);
+      text-decoration: none;
+      padding: 0.18rem 0;
+      transition: color 0.2s ease;
+    }
+    .place-city:hover { color: var(--rose); }
+    .place-note { display: block; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-light); font-style: italic; margin-top: 0.25rem; }
+
+    /* ─── UK disambiguation popup ────────────────────────────── */
+
+    .uk-popup-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .uk-popup-overlay.is-open { opacity: 1; pointer-events: all; }
+
+    .uk-popup {
+      position: fixed;
+      z-index: 550;
+      background: var(--cream);
+      border: 1px solid rgba(42, 32, 24, 0.1);
+      box-shadow:
+        0 2px 8px rgba(200, 113, 122, 0.08),
+        0 12px 40px rgba(42, 32, 24, 0.12);
+      padding: 1.2rem 0 0.6rem;
+      min-width: 180px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(6px) scale(0.97);
+      transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .uk-popup.is-open {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0) scale(1);
+    }
+
+    .uk-popup-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      padding: 0 1.4rem 0.7rem;
+      border-bottom: 1px solid rgba(42, 32, 24, 0.06);
+      margin-bottom: 0.3rem;
+    }
+
+    .uk-popup-link {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.6rem 1.4rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+    .uk-popup-link:hover {
+      background: rgba(200, 113, 122, 0.07);
+      color: var(--slate-dark);
+    }
+    .uk-popup-link:focus-visible {
+      outline: 2px solid var(--slate);
+      outline-offset: -2px;
+    }
+    .uk-popup-link:active {
+      background: rgba(200, 113, 122, 0.13);
+    }
+
+    .uk-popup-link-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--rose);
+      flex-shrink: 0;
+    }
+
+    /* ─── Responsive ─────────────────────────────────────────── */
+
+    @media (max-width: 900px) {
+      .places-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      .page { padding: 0 1.2rem; }
+      .header { padding: 1.8rem 0 1.2rem; }
+      .count-number { font-size: 2.4rem; }
+      .site-nav { padding: 0 1.2rem; }
+      .places-panel { padding: 1.5rem 1.2rem; }
+      .places-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav bar -->
+  <nav class="site-nav">
+    <a href="index.html" class="nav-home">Somewhere I've Been</a>
+    <div class="nav-links">
+      <button class="nav-btn" id="places-btn">
+        Places
+        <svg class="nav-btn-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none">
+          <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <a href="gf-scoring.html" class="nav-btn">GF Scoring</a>
+      <a href="about.html" class="nav-btn">About Me</a>
+    </div>
+  </nav>
+
+  <!-- Places overlay -->
+  <div class="places-overlay" id="places-overlay"></div>
+
+  <!-- Places panel -->
+  <div class="places-panel" id="places-panel">
+    <div class="places-panel-header">
+      <span class="places-panel-title">Places I've Been</span>
+      <button class="places-close" id="places-close" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M2 2L14 14M14 2L2 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="places-grid" id="places-grid"></div>
+  </div>
+
+  <div class="page">
+
+    <header class="header">
+      <div class="title-block">
+        <h1 class="site-title">Somewhere I've Been</h1>
+        <p class="site-tagline">a gluten-free travel journal</p>
+      </div>
+    </header>
+
+    <div class="header-rule"></div>
+
+    <main class="map-wrap">
+      <div id="world-map"></div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-dot"></div>
+      <span class="footer-note">Click a highlighted country to explore</span>
+    </footer>
+
+  </div>
+
+  <div id="tooltip"></div>
+
+  <!-- UK disambiguation popup -->
+  <div class="uk-popup-overlay" id="uk-overlay"></div>
+  <div class="uk-popup" id="uk-popup">
+    <div class="uk-popup-title">United Kingdom</div>
+    <a href="countries/england.html" class="uk-popup-link">
+      <span class="uk-popup-link-dot"></span>England
+    </a>
+    <a href="countries/scotland.html" class="uk-popup-link">
+      <span class="uk-popup-link-dot"></span>Scotland
+    </a>
+  </div>
+
+  <script>
+    // ── Visited countries: ISO 3166-1 numeric → metadata ──────────
+    const VISITED = {
+      840: { name: 'United States',   slug: 'usa' },
+      276: { name: 'Germany',         slug: 'germany' },
+      756: { name: 'Switzerland',     slug: 'switzerland' },
+      554: { name: 'New Zealand',     slug: 'new-zealand' },
+      392: { name: 'Japan',           slug: 'japan' },
+      372: { name: 'Ireland',         slug: 'ireland' },
+      826: { name: 'United Kingdom',  slug: null },  // handled by popup
+      388: { name: 'Jamaica',         slug: 'jamaica' },
+      188: { name: 'Costa Rica',      slug: 'costa-rica' },
+      484: { name: 'Mexico',          slug: 'mexico' },
+      124: { name: 'Canada',          slug: 'canada' },
+      578: { name: 'Norway',          slug: 'norway' },
+      752: { name: 'Sweden',          slug: 'sweden' },
+      246: { name: 'Finland',         slug: 'finland' },
+      250: { name: 'France',          slug: 'france' },
+      724: { name: 'Spain',           slug: 'spain' },
+      380: { name: 'Italy',           slug: 'italy' },
+      438: { name: 'Liechtenstein',   slug: 'liechtenstein' },
+       40: { name: 'Austria',         slug: 'austria' },
+      203: { name: 'Czech Republic',  slug: 'czech-republic' },
+      703: { name: 'Slovakia',        slug: 'slovakia' },
+      348: { name: 'Hungary',         slug: 'hungary' },
+      462: { name: 'Maldives',        slug: 'maldives' },
+      356: { name: 'India',           slug: 'india' },
+    };
+
+    const COLORS = {
+      ocean:          '#F3F3F3',
+      land:           '#E0E0E0',
+      landBorder:     'rgba(170, 170, 170, 0.6)',
+      visited:        '#C8717A',
+      visitedBorder:  '#AD5D65',
+      borderLine:     'rgba(255, 255, 255, 0.8)',
+      graticule:      'rgba(190, 190, 190, 0.4)',
+    };
+
+    // ── Build SVG ──────────────────────────────────────────────────
+    const container = document.getElementById('world-map');
+
+    // Use a fixed aspect ratio; the SVG scales via CSS width: 100%
+    const W = 960;
+    const H = 500;
+
+    const svg = d3.select('#world-map')
+      .append('svg')
+      .attr('viewBox', `0 0 ${W} ${H}`)
+      .attr('preserveAspectRatio', 'xMidYMid meet');
+
+    // Define subtle drop shadow for visited hover (applied per-path via CSS filter)
+    const defs = svg.append('defs');
+
+    // ── Projection ─────────────────────────────────────────────────
+    const projection = d3.geoNaturalEarth1()
+      .scale(W / 6.28)
+      .translate([W / 2, H / 2]);
+
+    const path = d3.geoPath().projection(projection);
+
+    // ── Ocean background (sphere) ──────────────────────────────────
+    svg.append('path')
+      .datum({ type: 'Sphere' })
+      .attr('fill', COLORS.ocean)
+      .attr('d', path);
+
+    // ── Graticule ──────────────────────────────────────────────────
+    const graticule = d3.geoGraticule().step([20, 20]);
+    svg.append('path')
+      .datum(graticule())
+      .attr('fill', 'none')
+      .attr('stroke', COLORS.graticule)
+      .attr('stroke-width', 0.4)
+      .attr('d', path);
+
+    // ── Tooltip ────────────────────────────────────────────────────
+    const tooltip = document.getElementById('tooltip');
+
+    function showTooltip(event, name) {
+      tooltip.textContent = name;
+      tooltip.style.opacity = '1';
+      moveTooltip(event);
+    }
+
+    function moveTooltip(event) {
+      const x = event.clientX;
+      const y = event.clientY;
+      const w = tooltip.offsetWidth;
+      tooltip.style.left = (x - w / 2) + 'px';
+      tooltip.style.top  = (y - 46) + 'px';
+    }
+
+    function hideTooltip() {
+      tooltip.style.opacity = '0';
+    }
+
+    // ── Mainland bounds: per-polygon centroid check ────────────────
+    // France (and others) store mainland + overseas territories as a
+    // single MultiPolygon. We split it and check each polygon's centroid.
+    const MAINLAND_BOUNDS = {
+      250: { minLon: -10, maxLon: 15, minLat: 41, maxLat: 52 }, // France
+    };
+
+    function inBounds(lonLat, bounds) {
+      const [lon, lat] = lonLat;
+      return lon >= bounds.minLon && lon <= bounds.maxLon &&
+             lat >= bounds.minLat && lat <= bounds.maxLat;
+    }
+
+    // Expand MultiPolygon features into individual Polygon features
+    // so we can color each polygon independently.
+    function expandFeatures(features) {
+      const out = [];
+      for (const f of features) {
+        const id = +f.id;
+        const bounds = MAINLAND_BOUNDS[id];
+        if (bounds && f.geometry && f.geometry.type === 'MultiPolygon') {
+          for (const coords of f.geometry.coordinates) {
+            const poly = {
+              type: 'Feature',
+              id: f.id,
+              properties: f.properties,
+              geometry: { type: 'Polygon', coordinates: coords },
+            };
+            const centroid = d3.geoCentroid(poly);
+            poly._visited = inBounds(centroid, bounds) ? id : null;
+            out.push(poly);
+          }
+        } else {
+          f._visited = VISITED[id] ? id : null;
+          out.push(f);
+        }
+      }
+      return out;
+    }
+
+    // ── Load world topology ────────────────────────────────────────
+    fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json')
+      .then(res => res.json())
+      .then(world => {
+        const countries = topojson.feature(world, world.objects.countries);
+        const borders   = topojson.mesh(world,  world.objects.countries, (a, b) => a !== b);
+
+        const features = expandFeatures(countries.features);
+
+        // ── Country fills ─────────────────────────────────────────
+        svg.selectAll('.country-path')
+          .data(features)
+          .enter()
+          .append('path')
+          .attr('class', d => d._visited ? 'country-path is-visited' : 'country-path')
+          .attr('fill',         d => d._visited ? COLORS.visited      : COLORS.land)
+          .attr('stroke',       d => d._visited ? COLORS.visitedBorder : COLORS.landBorder)
+          .attr('stroke-width', d => d._visited ? 0.7 : 0.3)
+          .attr('d', path)
+          .on('mousemove', function(event, d) {
+            if (d._visited) showTooltip(event, VISITED[d._visited].name);
+          })
+          .on('mouseleave', function(event, d) {
+            if (d._visited) hideTooltip();
+          })
+          .on('click', function(event, d) {
+            if (d._visited) {
+              if (+d._visited === 826) {
+                showUkPopup(event);
+              } else {
+                window.location.href = `countries/${VISITED[d._visited].slug}.html`;
+              }
+            }
+          });
+
+        // ── Shared borders (crisp country edges) ──────────────────
+        svg.append('path')
+          .datum(borders)
+          .attr('fill', 'none')
+          .attr('stroke', COLORS.borderLine)
+          .attr('stroke-width', 0.5)
+          .attr('d', path);
+
+        // ── Sphere outline ────────────────────────────────────────
+        svg.append('path')
+          .datum({ type: 'Sphere' })
+          .attr('fill', 'none')
+          .attr('stroke', COLORS.landBorder)
+          .attr('stroke-width', 0.8)
+          .attr('d', path);
+
+        // ── Staggered reveal animation for visited countries ───────
+        svg.selectAll('.is-visited')
+          .style('opacity', 0)
+          .each(function(d, i) {
+            d3.select(this)
+              .transition()
+              .delay(600 + i * 60)
+              .duration(600)
+              .ease(d3.easeCubicOut)
+              .style('opacity', 1);
+          });
+      });
+
+    // ── UK disambiguation popup ────────────────────────────────────
+    const ukPopup   = document.getElementById('uk-popup');
+    const ukOverlay = document.getElementById('uk-overlay');
+
+    function showUkPopup(event) {
+      const x = event.clientX;
+      const y = event.clientY;
+      ukPopup.style.left = (x + 12) + 'px';
+      ukPopup.style.top  = (y - 20) + 'px';
+      ukPopup.classList.add('is-open');
+      ukOverlay.classList.add('is-open');
+      hideTooltip();
+
+      // Adjust if popup goes off-screen right
+      requestAnimationFrame(() => {
+        const rect = ukPopup.getBoundingClientRect();
+        if (rect.right > window.innerWidth - 12) {
+          ukPopup.style.left = (x - rect.width - 12) + 'px';
+        }
+        if (rect.bottom > window.innerHeight - 12) {
+          ukPopup.style.top = (y - rect.height + 20) + 'px';
+        }
+      });
+    }
+
+    function hideUkPopup() {
+      ukPopup.classList.remove('is-open');
+      ukOverlay.classList.remove('is-open');
+    }
+
+    ukOverlay.addEventListener('click', hideUkPopup);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') hideUkPopup(); });
+
+    // ── Places panel data ──────────────────────────────────────────
+    // Add cities array when a country page has city sub-pages built.
+    // Cities: { name, slug } — slug is relative to countries/[country]/
+    const PLACES = [
+      { name: 'Austria',         slug: 'austria',        cities: [
+        { name: 'Hallstatt', slug: 'hallstatt' },
+        { name: 'Innsbruck', slug: 'innsbruck' },
+        { name: 'Salzburg',  slug: 'salzburg'  },
+        { name: 'Vienna',    slug: 'vienna'    },
+      ]},
+      { name: 'Canada',          slug: 'canada',         cities: [
+        { name: 'Vancouver', slug: 'vancouver' },
+        { name: 'Victoria',  slug: 'victoria'  },
+      ]},
+      { name: 'Czech Republic',  slug: 'czech-republic', cities: [
+        { name: 'Prague', slug: 'prague' },
+      ]},
+      { name: 'Finland',         slug: 'finland',        cities: [
+        { name: 'Helsinki', slug: 'helsinki' },
+        { name: 'Tampere',  slug: 'tampere'  },
+      ]},
+      { name: 'France',          slug: 'france',         cities: [
+        { name: 'Paris', slug: 'paris' },
+      ]},
+      { name: 'Germany',         slug: 'germany',        cities: [
+        { name: 'Berlin',      slug: 'berlin'     },
+        { name: 'Cologne',     slug: 'cologne'    },
+        { name: 'Düsseldorf',  slug: 'dusseldorf' },
+        { name: 'Frankfurt',   slug: 'frankfurt'  },
+        { name: 'Munich',      slug: 'munich'     },
+        { name: 'Stuttgart',   slug: 'stuttgart'  },
+        { name: 'Dinslaken & Duisburg', slug: 'dinslaken-duisburg' },
+      ]},
+      { name: 'Hungary',         slug: 'hungary',        cities: [
+        { name: 'Budapest', slug: 'budapest' },
+      ]},
+      { name: 'India',           slug: 'india',          cities: [] },
+      { name: 'Ireland',         slug: 'ireland',        cities: [
+        { name: 'Dublin',    slug: 'dublin'    },
+        { name: 'Galway',    slug: 'galway'    },
+        { name: 'Killarney', slug: 'killarney' },
+      ]},
+      { name: 'Italy',           slug: 'italy',          cities: [
+        { name: 'Florence', slug: 'florence' },
+        { name: 'Rome',     slug: 'rome'     },
+      ]},
+      { name: 'Jamaica',         slug: 'jamaica',        cities: [
+        { name: 'Montego Bay', slug: 'montego-bay' },
+        { name: 'Ocho Rios',   slug: 'ocho-rios'   },
+      ]},
+      { name: 'Costa Rica',      slug: 'costa-rica',     cities: [
+        { name: 'Liberia', slug: 'liberia' },
+      ]},
+      { name: 'Japan',           slug: 'japan',          cities: [
+        { name: 'Hakone', slug: 'hakone' },
+        { name: 'Kyoto',  slug: 'kyoto'  },
+        { name: 'Nara',   slug: 'nara'   },
+        { name: 'Osaka',  slug: 'osaka'  },
+        { name: 'Tokyo',  slug: 'tokyo'  },
+      ]},
+      { name: 'Liechtenstein',   slug: 'liechtenstein',  cities: [
+        { name: 'Vaduz', slug: 'vaduz' },
+      ]},
+      { name: 'Maldives',        slug: 'maldives',       cities: [
+        { name: 'South Malé Atoll', slug: 'south-male-atoll' },
+      ]},
+      { name: 'Mexico',          slug: 'mexico',         cities: [] },
+      { name: 'New Zealand',     slug: 'new-zealand',    cities: [
+        { name: 'Auckland',    slug: 'auckland'    },
+        { name: 'Marlborough', slug: 'marlborough' },
+        { name: 'Mt Cook',     slug: 'mt-cook'     },
+        { name: 'Queenstown',  slug: 'queenstown'  },
+        { name: 'Wanaka',      slug: 'wanaka'      },
+        { name: 'Wellington',  slug: 'wellington'  },
+      ]},
+      { name: 'Norway',          slug: 'norway',         cities: [
+        { name: 'Bergen',    slug: 'bergen'    },
+        { name: 'Flåm',      slug: 'flam'      },
+        { name: 'Oslo',      slug: 'oslo'      },
+        { name: 'Stavanger', slug: 'stavanger' },
+      ]},
+      { name: 'Scotland',        slug: 'scotland',       cities: [
+        { name: 'Edinburgh',   slug: 'edinburgh'   },
+        { name: 'Glasgow',     slug: 'glasgow'     },
+        { name: 'Portree',     slug: 'portree'     },
+        { name: 'Fort William', slug: 'fort-william' },
+        { name: 'Inverness',   slug: 'inverness'   },
+      ]},
+      { name: 'Slovakia',        slug: 'slovakia',       cities: [
+        { name: 'Bratislava', slug: 'bratislava' },
+      ]},
+      { name: 'Spain',           slug: 'spain',          cities: [
+        { name: 'Barcelona', slug: 'barcelona' },
+        { name: 'Madrid',    slug: 'madrid'    },
+        { name: 'Valencia',  slug: 'valencia'  },
+      ]},
+      { name: 'Sweden',          slug: 'sweden',         cities: [
+        { name: 'Stockholm', slug: 'stockholm' },
+        { name: 'Uppsala',   slug: 'uppsala'   },
+      ]},
+      { name: 'Switzerland',     slug: 'switzerland',    cities: [
+        { name: 'Basel',      slug: 'basel'      },
+        { name: 'Geneva',     slug: 'geneva'     },
+        { name: 'Interlaken', slug: 'interlaken' },
+        { name: 'Lucerne',    slug: 'lucerne'    },
+        { name: 'Zermatt',    slug: 'zermatt'    },
+        { name: 'Zurich',     slug: 'zurich'     },
+      ]},
+      { name: 'England',         slug: 'england',        cities: [
+        { name: 'London', slug: 'london' },
+      ]},
+      { name: 'United States',   slug: 'usa',            cities: [], note: 'Maps coming soon' },
+    ];
+
+    // Build places grid
+    const grid = document.getElementById('places-grid');
+    PLACES.forEach(country => {
+      const item = document.createElement('div');
+      item.className = 'place-item';
+
+      const countryLink = document.createElement('a');
+      countryLink.className = 'place-country';
+      countryLink.href = `countries/${country.slug}.html`;
+      countryLink.textContent = country.name;
+      item.appendChild(countryLink);
+
+      if (country.cities.length > 0) {
+        const cityList = document.createElement('div');
+        cityList.className = 'place-cities';
+        country.cities.forEach(city => {
+          const cityLink = document.createElement('a');
+          cityLink.className = 'place-city';
+          cityLink.href = `countries/${country.slug}/${city.slug}.html`;
+          cityLink.textContent = city.name;
+          cityList.appendChild(cityLink);
+        });
+        item.appendChild(cityList);
+      } else if (country.note) {
+        const note = document.createElement('span');
+        note.className = 'place-note';
+        note.textContent = country.note;
+        item.appendChild(note);
+      }
+
+      grid.appendChild(item);
+    });
+
+    // ── Places panel toggle ────────────────────────────────────────
+    const placesBtn     = document.getElementById('places-btn');
+    const placesPanel   = document.getElementById('places-panel');
+    const placesOverlay = document.getElementById('places-overlay');
+    const placesClose   = document.getElementById('places-close');
+
+    function openPlaces() {
+      placesPanel.classList.add('is-open');
+      placesOverlay.classList.add('is-open');
+      placesBtn.classList.add('is-active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePlaces() {
+      placesPanel.classList.remove('is-open');
+      placesOverlay.classList.remove('is-open');
+      placesBtn.classList.remove('is-active');
+      document.body.style.overflow = '';
+    }
+
+    placesBtn.addEventListener('click', () => {
+      placesPanel.classList.contains('is-open') ? closePlaces() : openPlaces();
+    });
+    placesClose.addEventListener('click', closePlaces);
+    placesOverlay.addEventListener('click', closePlaces);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closePlaces(); });
+  </script>
+
+</body>
+</html>

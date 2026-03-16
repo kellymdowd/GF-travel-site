@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Somewhere I've Been</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream:      #FFFFFF;
+      --slate:      #C8717A;
+      --rose:       #B8907A;
+      --ink:        #2A2018;
+      --ink-mid:    #5A5048;
+      --ink-light:  #9A907A;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      padding-top: 52px;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 100;
+      opacity: 0.6;
+    }
+
+    /* ─── Nav ─────────────────────────────────────────────────── */
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 52px;
+      background: var(--cream);
+      border-bottom: 1px solid rgba(42, 32, 24, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      z-index: 300;
+    }
+
+    .nav-home {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 0.85rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-home:hover { color: var(--slate); }
+
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+
+    .nav-link {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-link:hover { color: var(--ink); }
+    .nav-link.is-active { color: var(--slate); }
+
+    /* ─── Content ─────────────────────────────────────────────── */
+    .page {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 4rem 2.5rem 6rem;
+    }
+
+    .page-header {
+      margin-bottom: 3rem;
+      opacity: 0;
+      transform: translateY(-14px);
+      animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .page-rule {
+      width: 3rem;
+      height: 1px;
+      background: var(--rose);
+      margin-top: 1.2rem;
+    }
+
+    /* ─── Stats row ───────────────────────────────────────────── */
+    .stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-bottom: 3rem;
+      padding: 1.8rem 0;
+      border-top: 1px solid rgba(42, 32, 24, 0.08);
+      border-bottom: 1px solid rgba(42, 32, 24, 0.08);
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.4s forwards;
+    }
+
+    .stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 2.8rem;
+      line-height: 1;
+      color: var(--slate);
+      letter-spacing: -0.02em;
+    }
+
+    .stat-label {
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+    }
+
+    /* ─── Body copy ───────────────────────────────────────────── */
+    .bio {
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.6s forwards;
+    }
+
+    .bio-section {
+      margin-bottom: 2rem;
+    }
+
+    .bio-section p {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--ink-mid);
+    }
+
+    .bio-section p + p {
+      margin-top: 1rem;
+    }
+
+    .bio-section em {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--ink);
+    }
+
+    .bio-rule {
+      width: 100%;
+      height: 1px;
+      background: rgba(42, 32, 24, 0.08);
+      margin: 2rem 0;
+    }
+
+    .bio-placeholder {
+      padding: 1.5rem;
+      border: 1px dashed rgba(200, 113, 122, 0.35);
+      background: rgba(200, 113, 122, 0.04);
+    }
+
+    .bio-placeholder p {
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      line-height: 1.6;
+    }
+
+    /* ─── Timeline ─────────────────────────────────────────────── */
+    .timeline-section {
+      margin-top: 1rem;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.8s forwards;
+    }
+
+    .timeline-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 0.8rem;
+    }
+
+    .timeline-rule {
+      width: 100%;
+      height: 1px;
+      background: rgba(42, 32, 24, 0.08);
+      margin-bottom: 2rem;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 2.4rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 6px;
+      bottom: 6px;
+      width: 1px;
+      background: rgba(42, 32, 24, 0.1);
+    }
+
+    .timeline-year {
+      position: relative;
+      margin-bottom: 1.8rem;
+    }
+
+    .timeline-year:last-child {
+      margin-bottom: 0;
+    }
+
+    .timeline-year-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 1.4rem;
+      color: var(--slate);
+      letter-spacing: 0.02em;
+      margin-bottom: 0.6rem;
+      position: relative;
+    }
+
+    .timeline-year-label::before {
+      content: '';
+      position: absolute;
+      left: -2.4rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: var(--cream);
+      border: 2px solid var(--slate);
+    }
+
+    .timeline-trip {
+      display: flex;
+      align-items: baseline;
+      gap: 0.8rem;
+      padding: 0.3rem 0;
+    }
+
+    .timeline-month {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.6rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      min-width: 2.8rem;
+      flex-shrink: 0;
+    }
+
+    .timeline-dest {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 300;
+      color: var(--ink-mid);
+      line-height: 1.5;
+    }
+
+    .timeline-dest a {
+      color: var(--ink-mid);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(42, 32, 24, 0.12);
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .timeline-dest a:hover {
+      color: var(--slate);
+      border-color: var(--slate);
+    }
+
+    .timeline-dest a:focus-visible {
+      outline: 1.5px solid var(--slate);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    .timeline-cities {
+      font-size: 0.72rem;
+      color: var(--ink-light);
+      font-weight: 300;
+    }
+
+    /* ─── Connect ──────────────────────────────────────────────── */
+    .connect-section {
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1s forwards;
+    }
+
+    .connect-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 1;
+      margin-bottom: 0.8rem;
+    }
+
+    .connect-rule {
+      width: 100%;
+      height: 1px;
+      background: rgba(42, 32, 24, 0.08);
+      margin-bottom: 1.4rem;
+    }
+
+    .connect-text {
+      font-size: 0.92rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--ink-mid);
+      margin-bottom: 1.2rem;
+    }
+
+    .connect-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(42, 32, 24, 0.12);
+      padding-bottom: 2px;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .connect-link:hover {
+      color: var(--slate);
+      border-color: var(--slate);
+    }
+
+    .connect-link:focus-visible {
+      outline: 1.5px solid var(--slate);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    .connect-link:active {
+      color: var(--rose);
+    }
+
+    .connect-link svg {
+      flex-shrink: 0;
+      opacity: 0.5;
+    }
+
+    /* ─── Animations ──────────────────────────────────────────── */
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    @media (max-width: 600px) {
+      .site-nav { padding: 0 1.2rem; }
+      .page { padding: 3rem 1.2rem 4rem; }
+      .stats { gap: 1.5rem; flex-wrap: wrap; }
+      .timeline { padding-left: 2rem; }
+      .timeline-year-label::before { left: -2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav">
+    <a href="index.html" class="nav-home">Somewhere I've Been</a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Places</a>
+      <a href="gf-scoring.html" class="nav-link">GF Scoring</a>
+      <a href="about.html" class="nav-link is-active">About Me</a>
+    </div>
+  </nav>
+
+  <main class="page">
+
+    <div class="page-header">
+      <h1 class="page-title">About Me</h1>
+      <div class="page-rule"></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-number">4</span>
+        <span class="stat-label">Continents</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">25</span>
+        <span class="stat-label">Countries Visited</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">63</span>
+        <span class="stat-label">Cities Explored</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">2009</span>
+        <span class="stat-label">Celiac Diagnosis</span>
+      </div>
+      <div class="stat">
+        <span class="stat-number">16+</span>
+        <span class="stat-label">Years GF Traveling</span>
+      </div>
+    </div>
+
+    <div class="bio">
+      <div class="bio-section">
+        <p>
+          I was diagnosed with Celiac disease in 2009 — back when gluten-free wasn't a trend,
+          it was a medical necessity that most restaurants had never heard of. There was no oat
+          milk latte in a dedicated GF café waiting for me. There was just me, a laminated card
+          in whatever language I was stumbling through, and a lot of hope.
+        </p>
+        <p>
+          That could have been the end of adventurous eating abroad. Instead, it became the
+          beginning of a different kind of travel — one where I had to dig deeper, ask more
+          questions, find the locals who actually knew what was in their food, and discover
+          hidden gems I never would have found otherwise.
+        </p>
+      </div>
+
+      <div class="bio-rule"></div>
+
+      <div class="bio-section">
+        <p>
+          <em>This site is my travel journal.</em> Every country on that map is somewhere I've
+          actually been, and every pin is a place I've eaten, stayed, or explored — with notes
+          on what was safe, what was spectacular, and occasionally what was both.
+        </p>
+        <p>
+          I built this for myself, but if you're a fellow Celiac traveler looking for real
+          recommendations from someone who's been there and eaten there (without getting sick),
+          I hope it's useful to you too.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="bio-rule"></div>
+
+    <div class="timeline-section">
+      <h2 class="timeline-title">Where I've Been</h2>
+      <div class="timeline-rule"></div>
+
+      <div class="timeline">
+
+        <div class="timeline-year">
+          <div class="timeline-year-label">2025</div>
+          <div class="timeline-trip">
+            <span class="timeline-month">Nov</span>
+            <span class="timeline-dest">New Zealand <span class="timeline-cities">— Auckland, Wellington, Marlborough, Wanaka, Mt. Cook, Queenstown</span></span>
+          </div>
+          <div class="timeline-trip">
+            <span class="timeline-month">Jul</span>
+            <span class="timeline-dest">India, Maldives <span class="timeline-cities">— South Malé Atoll</span></span>
+          </div>
+          <div class="timeline-trip">
+            <span class="timeline-month">Jun</span>
+            <span class="timeline-dest">Mexico <span class="timeline-cities">— Mexico City</span></span>
+          </div>
+          <div class="timeline-trip">
+            <span class="timeline-month">Mar</span>
+            <span class="timeline-dest">Japan <span class="timeline-cities">— Tokyo, Kyoto, Osaka, Nara, Hakone</span></span>
+          </div>
+        </div>
+
+        <div class="timeline-year">
+          <div class="timeline-year-label">2024</div>
+          <div class="timeline-trip">
+            <span class="timeline-month">Jul</span>
+            <span class="timeline-dest">Scotland <span class="timeline-cities">— Edinburgh, Glasgow, Portree, Fort William, Inverness</span></span>
+          </div>
+        </div>
+
+        <div class="timeline-year">
+          <div class="timeline-year-label">2023</div>
+          <div class="timeline-trip">
+            <span class="timeline-month">Nov</span>
+            <span class="timeline-dest">Austria, Slovakia, Hungary, Liechtenstein, Switzerland <span class="timeline-cities">— Vienna, Salzburg, Innsbruck, Hallstatt, Bratislava, Budapest, Vaduz, Zurich</span></span>
+          </div>
+          <div class="timeline-trip">
+            <span class="timeline-month">Aug</span>
+            <span class="timeline-dest">Costa Rica <span class="timeline-cities">— Liberia</span></span>
+          </div>
+          <div class="timeline-trip">
+            <span class="timeline-month">Mar</span>
+            <span class="timeline-dest">Ireland <span class="timeline-cities">— Dublin, Galway, Killarney</span></span>
+          </div>
+        </div>
+
+        <div class="timeline-year">
+          <div class="timeline-year-label">2022</div>
+          <div class="timeline-trip">
+            <span class="timeline-month">Dec</span>
+            <span class="timeline-dest">Germany <span class="timeline-cities">— Düsseldorf, Dinslaken-Duisburg</span></span>
+          </div>
+          <div class="timeline-trip">
+            <span class="timeline-month">Nov</span>
+            <span class="timeline-dest">Canada <span class="timeline-cities">— Vancouver, Victoria</span></span>
+          </div>
+          <div class="timeline-trip">
+            <span class="timeline-month">Oct</span>
+            <span class="timeline-dest">Switzerland <span class="timeline-cities">— Basel, Geneva, Interlaken, Lucerne, Zermatt</span></span>
+          </div>
+        </div>
+
+        <div class="timeline-year">
+          <div class="timeline-year-label">2021</div>
+          <div class="timeline-trip">
+            <span class="timeline-month">Dec</span>
+            <span class="timeline-dest">Germany, Switzerland <span class="timeline-cities">— Berlin, Cologne, Frankfurt, Munich, Zurich</span></span>
+          </div>
+        </div>
+
+        <div class="timeline-year">
+          <div class="timeline-year-label">2019</div>
+          <div class="timeline-trip">
+            <span class="timeline-month">Sep</span>
+            <span class="timeline-dest">Norway, Sweden, Finland <span class="timeline-cities">— Oslo, Bergen, Flåm, Stavanger, Stockholm, Uppsala, Helsinki, Tampere</span></span>
+          </div>
+        </div>
+
+        <div class="timeline-year">
+          <div class="timeline-year-label">2018</div>
+          <div class="timeline-trip">
+            <span class="timeline-month">May</span>
+            <span class="timeline-dest">Italy, Czech Republic, Germany <span class="timeline-cities">— Florence, Rome, Prague, Frankfurt, Berlin, Munich</span></span>
+          </div>
+        </div>
+
+        <div class="timeline-year">
+          <div class="timeline-year-label">2017</div>
+          <div class="timeline-trip">
+            <span class="timeline-month">Dec</span>
+            <span class="timeline-dest">Jamaica <span class="timeline-cities">— Montego Bay, Ocho Rios</span></span>
+          </div>
+        </div>
+
+        <div class="timeline-year">
+          <div class="timeline-year-label">2016</div>
+          <div class="timeline-trip">
+            <span class="timeline-month">Oct</span>
+            <span class="timeline-dest">Spain <span class="timeline-cities">— Barcelona, Madrid, Valencia</span></span>
+          </div>
+        </div>
+
+        <div class="timeline-year">
+          <div class="timeline-year-label">2014</div>
+          <div class="timeline-trip">
+            <span class="timeline-month">May</span>
+            <span class="timeline-dest">England, France <span class="timeline-cities">— London, Paris</span></span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="bio-rule"></div>
+
+    <div class="connect-section">
+      <h2 class="connect-title">Connect</h2>
+      <div class="connect-rule"></div>
+      <p class="connect-text">If you want to say hello outside of my travels — or just talk about the best GF restaurant you've found — I'd love to hear from you.</p>
+      <a href="https://www.linkedin.com/in/kellydowd" class="connect-link" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+    </div>
+
+  </main>
+
+</body>
+</html>

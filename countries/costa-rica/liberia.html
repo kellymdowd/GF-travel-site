@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liberia, Costa Rica — Somewhere I've Been</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --cream: #FFFFFF; --slate: #C8717A; --slate-bg: #FBF0F1; --rose: #B8907A; --ink: #2A2018; --ink-mid: #5A5048; --ink-light: #9A907A; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body { background: var(--cream); color: var(--ink); font-family: 'Jost', sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-direction: column; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 100; opacity: 0.6; }
+    .nav { padding: 1.6rem 2.5rem 0; display: flex; gap: 1rem; align-items: center; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards; }
+    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .back-link:hover { color: var(--slate); }
+    .back-link:hover svg { transform: translateX(-3px); }
+    .back-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .nav-sep { font-size: 0.68rem; color: rgba(154, 144, 122, 0.4); letter-spacing: 0.1em; }
+    .nav-current { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mid); }
+    .header { display: flex; justify-content: space-between; align-items: flex-end; padding: 1.4rem 2.5rem 1.2rem; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
+    .city-name { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1; }
+    .trip-date { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(0.85rem, 1.3vw, 1rem); color: var(--ink-light); letter-spacing: 0.04em; padding-bottom: 0.2rem; }
+    .header-rule { height: 1px; background: linear-gradient(to right, var(--rose), transparent 60%); margin: 0 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 0.6s forwards; }
+    .map-section { flex: 1; padding: 1.5rem 2.5rem 2rem; display: flex; flex-direction: column; opacity: 0; animation: fadeIn 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
+    .map-frame { width: 100%; flex: 1; min-height: 520px; border: none; }
+    .map-placeholder { width: 100%; flex: 1; min-height: 520px; background: var(--slate-bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; border: 1px dashed rgba(200, 113, 122, 0.35); }
+    .map-placeholder p { font-size: 0.72rem; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-light); }
+    
+    /* ─── City Snapshot ──────────────────────────────────────── */
+    .snapshot {
+      padding: 1.6rem 2.5rem 0;
+      opacity: 0;
+      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+    }
+
+    .snapshot-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 1rem;
+    }
+
+    .snapshot-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 0;
+      border-top: 1px solid rgba(42, 32, 24, 0.08);
+    }
+
+    .snapshot-item {
+      padding: 1rem 1.2rem 1rem 0;
+      border-bottom: 1px solid rgba(42, 32, 24, 0.08);
+    }
+
+    .snapshot-item-label {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 0.35rem;
+    }
+
+    .snapshot-item-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 1.05rem;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+
+    /* GF Score visual */
+    .snapshot-score {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .snapshot-score-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 1.05rem;
+      color: var(--ink);
+      letter-spacing: 0.02em;
+      line-height: 1;
+    }
+
+    .snapshot-score-bar {
+      display: flex;
+      gap: 3px;
+      align-items: center;
+    }
+
+    .snapshot-score-pip {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(42, 32, 24, 0.1);
+    }
+
+    .snapshot-score-pip.is-filled {
+      background: var(--slate);
+    }
+
+    /* ─── Table of Contents ─────────────────────────────────── */
+    .toc {
+      padding: 1.6rem 2.5rem 0;
+      opacity: 0;
+      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+    }
+
+    .toc-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+      margin-bottom: 1rem;
+    }
+
+    .toc-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+      border-top: 1px solid rgba(42, 32, 24, 0.08);
+    }
+
+    .toc-item {
+      border-bottom: 1px solid rgba(42, 32, 24, 0.08);
+    }
+
+    .toc-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.7rem 1.6rem 0.7rem 0;
+      font-family: 'Jost', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      color: var(--ink-mid);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .toc-link:hover {
+      color: var(--slate);
+    }
+
+    .toc-link:hover .toc-arrow {
+      transform: translateX(3px);
+      color: var(--slate);
+    }
+
+    .toc-link:focus-visible {
+      outline: 1.5px solid var(--slate);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+
+    .toc-link:active {
+      color: var(--rose);
+    }
+
+    .toc-arrow {
+      color: var(--ink-light);
+      opacity: 0.4;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { to { opacity: 1; } }
+    @media (max-width: 600px) { .nav, .header, .map-section, .snapshot, .toc { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a href="../costa-rica.html" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Costa Rica
+    </a>
+    <span class="nav-sep">/</span>
+    <span class="nav-current">Liberia</span>
+  </nav>
+  <header class="header">
+    <h1 class="city-name">Liberia</h1>
+    <span class="trip-date">Last traveled · August 2023</span>
+  </header>
+  <div class="header-rule"></div>
+
+  <section class="snapshot">
+    <div class="snapshot-label">City Snapshot</div>
+    <div class="snapshot-grid">
+      <div class="snapshot-item">
+        <div class="snapshot-item-label">Best Months</div>
+        <div class="snapshot-item-value">Dec–Apr</div>
+      </div>
+      <div class="snapshot-item">
+        <div class="snapshot-item-label">Ideal Stay</div>
+        <div class="snapshot-item-value">1–2 days</div>
+      </div>
+      <div class="snapshot-item">
+        <div class="snapshot-item-label">Gluten-Free</div>
+        <div class="snapshot-score">
+          <span class="snapshot-score-num">4/10</span>
+          <div class="snapshot-score-bar">
+            <span class="snapshot-score-pip is-filled"></span>
+            <span class="snapshot-score-pip is-filled"></span>
+            <span class="snapshot-score-pip is-filled"></span>
+            <span class="snapshot-score-pip is-filled"></span>
+            <span class="snapshot-score-pip"></span>
+            <span class="snapshot-score-pip"></span>
+            <span class="snapshot-score-pip"></span>
+            <span class="snapshot-score-pip"></span>
+            <span class="snapshot-score-pip"></span>
+            <span class="snapshot-score-pip"></span>
+          </div>
+        </div>
+      </div>
+      <div class="snapshot-item">
+        <div class="snapshot-item-label">English Spoken</div>
+        <div class="snapshot-item-value">Some</div>
+      </div>
+      <div class="snapshot-item">
+        <div class="snapshot-item-label">City Size</div>
+        <div class="snapshot-item-value">Compact</div>
+      </div>
+      <div class="snapshot-item">
+        <div class="snapshot-item-label">Walkability</div>
+        <div class="snapshot-item-value">Moderate</div>
+      </div>
+      <div class="snapshot-item">
+        <div class="snapshot-item-label">Public Transit</div>
+        <div class="snapshot-item-value">Limited</div>
+      </div>
+    </div>
+  </section>
+
+
+  <nav class="toc">
+    <div class="toc-label">Jump to</div>
+    <ul class="toc-list">
+      <li class="toc-item"><a href="#where-to-stay" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Where to stay</a></li>
+      <li class="toc-item"><a href="#gluten-free" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Gluten-free survival guide</a></li>
+      <li class="toc-item"><a href="#restaurants" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Restaurants</a></li>
+      <li class="toc-item"><a href="#getting-around" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Getting around</a></li>
+      <li class="toc-item"><a href="#landmarks" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Landmarks &amp; must-see spots</a></li>
+      <li class="toc-item"><a href="#neighborhoods" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Neighborhoods</a></li>
+      <li class="toc-item"><a href="#things-to-do" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Things to do</a></li>
+      <li class="toc-item"><a href="#what-to-pack" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>What to pack</a></li>
+      <li class="toc-item"><a href="#travel-tips" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Travel tips</a></li>
+    </ul>
+  </nav>
+
+  <section class="map-section" id="map-section">
+    <!-- <div class="map-placeholder"><p>Map coming soon</p></div> -->
+  </section>
+</body>
+</html>
