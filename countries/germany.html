@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Germany — Somewhere I've Been</title>
+  <title>Germany — GF Gone Global</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
@@ -264,11 +264,57 @@
       .header-rule { margin: 0 1.2rem; }
     }
   </style>
+
+  <!-- Google Analytics (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-64V5CSB1DT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-64V5CSB1DT');
+
+    // ─── Custom event tracking ─────────────────────────────
+    document.addEventListener('DOMContentLoaded', function() {
+
+      // Outbound link clicks (links with target="_blank")
+      document.querySelectorAll('a[target="_blank"]').forEach(function(link) {
+        link.addEventListener('click', function() {
+          gtag('event', 'outbound_click', {
+            event_category: 'engagement',
+            event_label: this.href,
+            transport_type: 'beacon'
+          });
+        });
+      });
+
+      // Section navigation (TOC / anchor links)
+      document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+        link.addEventListener('click', function() {
+          gtag('event', 'section_nav', {
+            event_category: 'navigation',
+            event_label: this.getAttribute('href')
+          });
+        });
+      });
+
+      // Map interactions — clicks on map containers, SVGs, and iframes
+      document.querySelectorAll('.map-container, [class*="map"], svg.map, iframe[src*="google.com/maps"]').forEach(function(el) {
+        el.addEventListener('click', function() {
+          gtag('event', 'map_interaction', {
+            event_category: 'engagement',
+            event_label: document.title
+          });
+        });
+      });
+
+    });
+  </script>
+  
 </head>
 <body>
 
   <nav class="site-nav">
-    <a href="../index.html" class="nav-home">Somewhere I've Been</a>
+    <a href="../index.html" class="nav-home">GF Gone Global</a>
     <div class="nav-links">
       <a href="../index.html" class="nav-link">Places</a>
       <a href="../about.html" class="nav-link">About Me</a>
