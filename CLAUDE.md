@@ -17,7 +17,9 @@
 - This indicator appears on both restaurant cards (between cuisine and GF score) and landmark cards (after location).
 
 ## Packing Section Order
-- Always list Essential items first, then city-specific items.
+- Always list Essential items first, then country-specific items (tagged with country name, e.g. "Japan", "Scotland"), then city-specific items (tagged with city name, e.g. "Tokyo", "Edinburgh").
+- Country-specific items are things relevant across the whole country: celiac dining card in the local language, power adapters, GF soy sauce packets for Japan, etc.
+- City-specific items are weather/season and locale-specific: layers for March weather, compact umbrella, etc.
 
 ## Brand Assets
 - Always check the `brand_assets/` folder before designing. It may contain logos, color guides, style guides, or images.
