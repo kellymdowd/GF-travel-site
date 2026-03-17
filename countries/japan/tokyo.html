@@ -20,8 +20,12 @@
     .back-link:hover svg { transform: translateX(-3px); }
     .back-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
     .nav-sep { font-size: 0.68rem; color: rgba(154, 144, 122, 0.4); letter-spacing: 0.1em; }
+    .nav-link { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .nav-link:hover { color: var(--slate); }
     .nav-current { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mid); }
     .header { display: flex; justify-content: space-between; align-items: flex-end; padding: 1.4rem 2.5rem 1.2rem; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
+    .header-left { display: flex; flex-direction: column; }
+    .country-label { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.25rem; }
     .city-name { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1; }
     .trip-date { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(0.85rem, 1.3vw, 1rem); color: var(--ink-light); letter-spacing: 0.04em; padding-bottom: 0.2rem; }
     .header-rule { height: 1px; background: linear-gradient(to right, var(--rose), transparent 60%); margin: 0 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 0.6s forwards; }
@@ -47,7 +51,7 @@
 
     .snapshot-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
       gap: 0;
       border-top: 1px solid rgba(42, 32, 24, 0.08);
     }
@@ -1696,6 +1700,11 @@
       color: #3a6080;
     }
 
+    .packing-tag-japan {
+      background: rgba(180, 60, 60, 0.08);
+      color: #8a3a3a;
+    }
+
     .packing-shop {
       display: inline-flex;
       align-items: center;
@@ -2090,7 +2099,87 @@
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
     @media (max-width: 600px) { .nav, .header, .snapshot, .toc, .gf-guide, .restaurants, .where-to-stay, .landmarks, .neighborhoods, .things-to-do, .packing, .travel-tips, .getting-around, .page-footer { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
-  
+
+    /* ─── Photo Lightbox ──────────────────────────────────────── */
+    .restaurant-photo,
+    .landmark-photo,
+    .hotel-image {
+      cursor: zoom-in;
+    }
+
+    .lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(10, 8, 6, 0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+      opacity: 0;
+      pointer-events: none;
+      transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .lightbox-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+      background: rgba(10, 8, 6, 0.85);
+    }
+
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 85vh;
+      border-radius: 6px;
+      object-fit: contain;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06);
+      transform: scale(0.92);
+      opacity: 0;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+    }
+
+    .lightbox-overlay.active .lightbox-img {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.4rem;
+      width: 36px;
+      height: 36px;
+      border: none;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .lightbox-close:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1);
+    }
+
+    .lightbox-close:focus-visible {
+      outline: 2px solid rgba(255, 255, 255, 0.5);
+      outline-offset: 2px;
+    }
+
+    .lightbox-close:active {
+      transform: scale(0.95);
+    }
+
+    .lightbox-close svg {
+      width: 16px;
+      height: 16px;
+      stroke: rgba(255, 255, 255, 0.8);
+      stroke-width: 2;
+    }
+
   </style>
 
   <!-- Google Analytics (gtag.js) -->
@@ -2144,14 +2233,19 @@
   <nav class="nav">
     <a href="../../index.html" class="back-link">
       <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8L10 13" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      All Cities
+      All Countries
     </a>
+    <span class="nav-sep">/</span>
+    <a href="../japan.html" class="nav-link">Japan</a>
     <span class="nav-sep">/</span>
     <span class="nav-current">Tokyo</span>
   </nav>
 
   <header class="header">
-    <h1 class="city-name">Tokyo</h1>
+    <div class="header-left">
+      <span class="country-label">Japan</span>
+      <h1 class="city-name">Tokyo</h1>
+    </div>
     <span class="trip-date">March 2025</span>
   </header>
   <div class="header-rule"></div>
@@ -2160,31 +2254,39 @@
     <div class="snapshot-label">City Snapshot</div>
     <div class="snapshot-grid">
       <div class="snapshot-item">
-        <div class="snapshot-item-label">Country</div>
-        <div class="snapshot-item-value">Japan</div>
+        <div class="snapshot-item-label">Best Months</div>
+        <div class="snapshot-item-value">Mar–May, Oct–Nov</div>
       </div>
       <div class="snapshot-item">
-        <div class="snapshot-item-label">Language</div>
-        <div class="snapshot-item-value">Japanese</div>
-      </div>
-      <div class="snapshot-item">
-        <div class="snapshot-item-label">Currency</div>
-        <div class="snapshot-item-value">Yen (¥)</div>
+        <div class="snapshot-item-label">Ideal Stay</div>
+        <div class="snapshot-item-value">5–7 days</div>
       </div>
       <div class="snapshot-item">
         <div class="snapshot-item-label">Best For</div>
         <div class="snapshot-item-value">Food, culture, temples</div>
       </div>
       <div class="snapshot-item">
-        <div class="snapshot-item-label">GF Difficulty</div>
+        <div class="snapshot-item-label">GF Friendliness</div>
         <div class="snapshot-score">
-          <span class="snapshot-score-num">7 / 10</span>
+          <span class="snapshot-score-num">7/10</span>
           <div class="snapshot-score-bar"><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span></div>
         </div>
       </div>
       <div class="snapshot-item">
-        <div class="snapshot-item-label">Verdict</div>
-        <div class="snapshot-item-value">Easy</div>
+        <div class="snapshot-item-label">Language</div>
+        <div class="snapshot-item-value">Japanese</div>
+      </div>
+      <div class="snapshot-item">
+        <div class="snapshot-item-label">English</div>
+        <div class="snapshot-item-value">Limited</div>
+      </div>
+      <div class="snapshot-item">
+        <div class="snapshot-item-label">City Size</div>
+        <div class="snapshot-item-value">Massive</div>
+      </div>
+      <div class="snapshot-item">
+        <div class="snapshot-item-label">Currency</div>
+        <div class="snapshot-item-value">Yen (¥)</div>
       </div>
     </div>
   </section>
@@ -2213,9 +2315,8 @@
 
     <div class="hotel-card">
       <div class="hotel-image-side">
-        <div class="landmark-photo-placeholder" style="position:absolute;inset:0;width:100%;height:100%;border-radius:0;display:flex;align-items:center;justify-content:center;background:rgba(42,32,24,0.03);border:1px dashed rgba(42,32,24,0.1);">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="1.5"/></svg>
-        </div>
+        <img src="../../photos/japan/tokyo/tokyu-stay-aoyama-premier/IMG_0527.jpeg" alt="Tokyu Stay Aoyama Premier" class="hotel-image" loading="lazy">
+        <div class="hotel-image-overlay"></div>
         <div class="hotel-badge">
           <span class="hotel-badge-dot"></span>
           Where I stayed
@@ -2226,15 +2327,15 @@
         <div class="hotel-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Aoyama · Omotesando area</div>
         <div class="hotel-why">
           <div class="hotel-why-label">Why Stay Here</div>
-          <!-- RESEARCHED --><div class="hotel-why-text">Located in the stylish Aoyama-Omotesando area with easy walking access to Shibuya and Harajuku. Rooms include washer-dryers and mini kitchenettes — perfect for travelers who want to prepare some meals. Steps from multiple subway lines.</div>
+          <!-- RESEARCHED --><div class="hotel-why-text">Located in the stylish Aoyama-Omotesando area with easy walking access to Shibuya and Harajuku. Some rooms include washer-dryers and mini kitchenettes — perfect for travelers who want to prepare some meals. Steps from multiple subway lines.</div>
         </div>
         <div class="hotel-features">
           <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Kitchenette</span>
           <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Washer-Dryer</span>
           <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Central Location</span>
         </div>
-        <a href="#" class="hotel-cta" target="_blank" rel="noopener sponsored">
-          Check Availability
+        <a href="https://hotelsapp.onelink.me/fSyN/zcci8hif" class="hotel-cta" target="_blank" rel="noopener sponsored">
+          Book on Hotels.com
           <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
         </a>
       </div>
@@ -2242,9 +2343,8 @@
 
     <div class="hotel-card" style="margin-top:1.6rem;">
       <div class="hotel-image-side">
-        <div class="landmark-photo-placeholder" style="position:absolute;inset:0;width:100%;height:100%;border-radius:0;display:flex;align-items:center;justify-content:center;background:rgba(42,32,24,0.03);border:1px dashed rgba(42,32,24,0.1);">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="1.5"/></svg>
-        </div>
+        <img src="../../photos/japan/tokyo/the-okura-tokyo/IMG_1254.jpeg" alt="View from The Okura Tokyo" class="hotel-image" loading="lazy">
+        <div class="hotel-image-overlay"></div>
         <div class="hotel-badge">
           <span class="hotel-badge-dot"></span>
           Where I stayed
@@ -2262,8 +2362,8 @@
           <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Spa &amp; Pool</span>
           <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Near GF Restaurants</span>
         </div>
-        <a href="#" class="hotel-cta" target="_blank" rel="noopener sponsored">
-          Check Availability
+        <a href="https://hotelsapp.onelink.me/fSyN/6p07h8f0" class="hotel-cta" target="_blank" rel="noopener sponsored">
+          Book on Hotels.com
           <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
         </a>
       </div>
@@ -2302,9 +2402,8 @@
         <div class="gf-info-group">
           <div class="gf-info-label"><!-- RESEARCHED -->Safe Local Foods</div>
           <ul class="gf-list">
-            <li>Sashimi (plain, no soy sauce)</li>
-            <li>Onigiri (check for soy sauce-based fillings)</li>
-            <li>Tamago (egg) — naturally GF</li>
+            <li>Sashimi (plain, no soy sauce - or bring your own!)</li>
+            <li>Onigiri (my personal fav, but check for soy sauce-based fillings)</li>
             <li>Yakitori with salt (shio), not tare sauce</li>
             <li>Edamame</li>
             <li>Mochi (check ingredients — most are GF)</li>
@@ -2440,6 +2539,8 @@
 
     <div class="restaurants-grid">
     <div class="restaurant-card">
+      <div class="restaurant-card-inner">
+      <div class="restaurant-card-content">
       <div class="restaurant-top">
         <h3 class="restaurant-name">Gluten Free T's Kitchen</h3>
         <div class="restaurant-tags">
@@ -2469,10 +2570,21 @@
           </div>
         </div>
       </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/gluten-free-ts-kitchen/6599429204869120" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+      </div>
+      <img src="../../photos/japan/tokyo/gluten-free-ts-kitchen/IMG_0543.jpeg" alt="Gluten Free T's Kitchen" class="restaurant-photo" loading="lazy">
+      </div>
     </div>
 
 
     <div class="restaurant-card">
+      <div class="restaurant-card-inner">
+      <div class="restaurant-card-content">
       <div class="restaurant-top">
         <h3 class="restaurant-name">Gluten Free Kushiage Su</h3>
         <div class="restaurant-tags">
@@ -2502,10 +2614,15 @@
           </div>
         </div>
       </div>
+      </div>
+      <img src="../../photos/japan/tokyo/gluten-free-kushiage-su/IMG_0445.jpeg" alt="Kushiage at Gluten Free Kushiage Su" class="restaurant-photo" loading="lazy">
+      </div>
     </div>
 
 
     <div class="restaurant-card">
+      <div class="restaurant-card-inner">
+      <div class="restaurant-card-content">
       <div class="restaurant-top">
         <h3 class="restaurant-name">SUSHI KORIN Nishiazabu</h3>
         <div class="restaurant-tags">
@@ -2540,6 +2657,9 @@
           See reviews on Find Me Gluten Free
           <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
         </a>
+      </div>
+      </div>
+      <img src="../../photos/japan/tokyo/sushi-korin-nishiazabu/IMG_0467.jpeg" alt="Sushi at SUSHI KORIN Nishiazabu" class="restaurant-photo" loading="lazy">
       </div>
     </div>
 
@@ -2740,6 +2860,8 @@
 
 
     <div class="restaurant-card">
+      <div class="restaurant-card-inner">
+      <div class="restaurant-card-content">
       <div class="restaurant-top">
         <h3 class="restaurant-name">Itamae Sushi Hanare</h3>
         <div class="restaurant-tags">
@@ -2774,6 +2896,8 @@
           See reviews on Find Me Gluten Free
           <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
         </a>
+      </div>
+      </div>
       </div>
     </div>
 
@@ -2857,6 +2981,8 @@
 
 
     <div class="restaurant-card">
+      <div class="restaurant-card-inner">
+      <div class="restaurant-card-content">
       <div class="restaurant-top">
         <h3 class="restaurant-name">BREIZH Café Crêperie</h3>
         <div class="restaurant-tags">
@@ -2891,6 +3017,9 @@
           See reviews on Find Me Gluten Free
           <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
         </a>
+      </div>
+      </div>
+      <img src="../../photos/japan/tokyo/breizh-café-crêperie-omotesando/IMG_0607.jpeg" alt="Buckwheat galette at BREIZH Café Crêperie" class="restaurant-photo" loading="lazy">
       </div>
     </div>
 
@@ -3124,6 +3253,8 @@
 
     
     <div class="restaurant-card">
+      <div class="restaurant-card-inner">
+      <div class="restaurant-card-content">
       <div class="restaurant-top">
         <h3 class="restaurant-name">KUROBOSHI SWEETS ASAKUSA</h3>
         <div class="restaurant-tags">
@@ -3133,7 +3264,7 @@
       <div class="restaurant-cuisine">Café / Sweets</div>
       <div class="restaurant-gf-score">
         <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
       </div>
       <div class="restaurant-details">
         <div class="restaurant-detail">
@@ -3152,16 +3283,15 @@
           </div>
         </div>
       </div>
-      <div class="restaurant-fmgf">
-        <a href="https://www.findmeglutenfree.com/biz/kuroboshi-sweets/4714867201802240" class="restaurant-fmgf-link" target="_blank" rel="noopener">
-          See reviews on Find Me Gluten Free
-          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-        </a>
+      </div>
+      <img src="../../photos/japan/tokyo/kuroboshi-sweets-asakusa/IMG_1272.jpeg" alt="KUROBOSHI SWEETS ASAKUSA" class="restaurant-photo" loading="lazy">
       </div>
     </div>
 
 
     <div class="restaurant-card">
+      <div class="restaurant-card-inner">
+      <div class="restaurant-card-content">
       <div class="restaurant-top">
         <h3 class="restaurant-name">Esoragoto Udon</h3>
         <div class="restaurant-tags">
@@ -3171,7 +3301,7 @@
       <div class="restaurant-cuisine">Udon</div>
       <div class="restaurant-gf-score">
         <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
       </div>
       <div class="restaurant-details">
         <div class="restaurant-detail">
@@ -3190,11 +3320,7 @@
           </div>
         </div>
       </div>
-      <div class="restaurant-fmgf">
-        <a href="https://www.findmeglutenfree.com/biz/esoragoto/6097653970108416" class="restaurant-fmgf-link" target="_blank" rel="noopener">
-          See reviews on Find Me Gluten Free
-          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-        </a>
+      </div>
       </div>
     </div>
 
@@ -3268,7 +3394,7 @@
   <section class="landmarks" id="landmarks">
     <div class="landmarks-header">
       <h2 class="landmarks-title">Landmarks &amp; Must-See Spots</h2>
-      <span class="landmarks-count">12 spots</span>
+      <span class="landmarks-count">9 spots</span>
     </div>
     <div class="landmarks-rule"></div>
     <div class="landmarks-grid">
@@ -3283,7 +3409,7 @@
           <!-- RESEARCHED --><p class="landmark-desc">Tokyo's oldest temple, dating to 645 AD. The iconic Kaminarimon (Thunder Gate) and Nakamise shopping street leading to the main hall are unmissable.</p>
           <div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Asakusa</div>
         </div>
-        <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="1.5"/></svg></div>
+
       </div>
     </div>
 
@@ -3297,7 +3423,7 @@
           <!-- RESEARCHED --><p class="landmark-desc">The primary residence of the Emperor of Japan, surrounded by moats and beautiful gardens. The East Gardens are free to visit.</p>
           <div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Chiyoda</div>
         </div>
-        <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="1.5"/></svg></div>
+
       </div>
     </div>
 
@@ -3311,7 +3437,7 @@
           <!-- RESEARCHED --><p class="landmark-desc">Serene Shinto shrine set in 170 acres of forest, dedicated to Emperor Meiji. Walk through the towering torii gate and see the consecrated sake barrels.</p>
           <div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Harajuku</div>
         </div>
-        <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="1.5"/></svg></div>
+        <img src="../../photos/japan/tokyo/meiji-jingu-consecrated-sake-barrels/IMG_0413.jpeg" alt="Meiji Jingu shrine" class="landmark-photo" loading="lazy">
       </div>
     </div>
 
@@ -3325,7 +3451,7 @@
           <!-- RESEARCHED --><p class="landmark-desc">The "lucky cat temple" — filled with thousands of maneki-neko (beckoning cat) figurines. A peaceful, less-touristy spot.</p>
           <div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Setagaya</div>
         </div>
-        <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="1.5"/></svg></div>
+        <img src="../../photos/japan/tokyo/gōtokuji-temple/IMG_0431.jpeg" alt="Maneki-neko figurines at Gōtokuji Temple" class="landmark-photo" loading="lazy">
       </div>
     </div>
 
@@ -3334,12 +3460,12 @@
         <div class="landmark-card-content">
           <div class="landmark-top">
             <h3 class="landmark-name">Shibuya Scramble Crossing</h3>
-            <span class="landmark-type landmark-type-neighborhood">Neighborhood</span>
+            <span class="landmark-type landmark-type-iconic">Iconic</span>
           </div>
           <!-- RESEARCHED --><p class="landmark-desc">The world's busiest pedestrian crossing. Watch from the Starbucks above or just dive in. Best at night when the neon lights up.</p>
           <div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Shibuya</div>
         </div>
-        <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="1.5"/></svg></div>
+        <img src="../../photos/japan/tokyo/shibuya-scramble-crossing/IMG_0555.jpeg" alt="Shibuya Scramble Crossing" class="landmark-photo" loading="lazy">
       </div>
     </div>
 
@@ -3353,23 +3479,10 @@
           <!-- RESEARCHED --><p class="landmark-desc">The famous statue of the loyal Akita dog who waited for his owner at Shibuya Station every day. A beloved meeting spot.</p>
           <div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Shibuya</div>
         </div>
-        <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="1.5"/></svg></div>
+        <img src="../../photos/japan/tokyo/hachikō-memorial-statue/IMG_0554.jpeg" alt="Hachikō Memorial Statue" class="landmark-photo" loading="lazy">
       </div>
     </div>
 
-    <div class="landmark-card">
-      <div class="landmark-card-inner">
-        <div class="landmark-card-content">
-          <div class="landmark-top">
-            <h3 class="landmark-name">Harajuku</h3>
-            <span class="landmark-type landmark-type-neighborhood">Neighborhood</span>
-          </div>
-          <!-- RESEARCHED --><p class="landmark-desc">Tokyo's street fashion and youth culture epicenter. Takeshita Street is packed with quirky shops, crêpe stands, and Instagrammable walls.</p>
-          <div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Harajuku</div>
-        </div>
-        <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="1.5"/></svg></div>
-      </div>
-    </div>
 
     <div class="landmark-card">
       <div class="landmark-card-inner">
@@ -3381,7 +3494,7 @@
           <!-- RESEARCHED --><p class="landmark-desc">The original fish market's outer market still thrives with fresh seafood stalls, street food, and kitchen supply shops. Great for sashimi on the go.</p>
           <div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Tsukiji</div>
         </div>
-        <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="1.5"/></svg></div>
+
       </div>
     </div>
 
@@ -3395,7 +3508,7 @@
           <!-- RESEARCHED --><p class="landmark-desc">At 634m, Japan's tallest structure. The observation decks at 350m and 450m offer stunning city panoramas.</p>
           <div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Sumida</div>
         </div>
-        <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="1.5"/></svg></div>
+
       </div>
     </div>
 
@@ -3409,35 +3522,7 @@
           <!-- RESEARCHED --><p class="landmark-desc">The 333m Eiffel-inspired tower, completed in 1958. Still iconic — especially beautiful lit up in orange at night.</p>
           <div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Minato</div>
         </div>
-        <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="1.5"/></svg></div>
-      </div>
-    </div>
 
-    <div class="landmark-card">
-      <div class="landmark-card-inner">
-        <div class="landmark-card-content">
-          <div class="landmark-top">
-            <h3 class="landmark-name">teamLab Borderless</h3>
-            <span class="landmark-type landmark-type-walk">Paid</span>
-          </div>
-          <!-- RESEARCHED --><p class="landmark-desc">Immersive digital art museum where rooms of light, color, and projection flow into each other. Book tickets in advance — they sell out.</p>
-          <div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Azabudai</div>
-        </div>
-        <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="1.5"/></svg></div>
-      </div>
-    </div>
-
-    <div class="landmark-card">
-      <div class="landmark-card-inner">
-        <div class="landmark-card-content">
-          <div class="landmark-top">
-            <h3 class="landmark-name">teamLab Planets</h3>
-            <span class="landmark-type landmark-type-walk">Paid</span>
-          </div>
-          <!-- RESEARCHED --><p class="landmark-desc">Walk barefoot through water and immersive installations. A more physical, sensory experience than Borderless.</p>
-          <div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Toyosu</div>
-        </div>
-        <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="13" r="4" stroke="currentColor" stroke-width="1.5"/></svg></div>
       </div>
     </div>
 
@@ -3495,6 +3580,9 @@
       L.marker([35.6689, 139.7169], { icon: hotelIcon })
         .addTo(nMap)
         .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">Tokyu Stay Aoyama Premier</strong><br><span style="font-size:11px;color:#5A5048;">Where I stayed</span></div>', { closeButton: false });
+      L.marker([35.6672, 139.7439], { icon: hotelIcon })
+        .addTo(nMap)
+        .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">The Okura Tokyo</strong><br><span style="font-size:11px;color:#5A5048;">Where I stayed</span></div>', { closeButton: false });
     })();
     </script>
 
@@ -3577,6 +3665,9 @@
           <div class="thing-meta">
             <div class="thing-detail"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Asakusa</div>
           </div>
+          <a href="https://www.viator.com/tours/Tokyo/Temari-Sushi-Experience/d334-217172P1" class="thing-book" target="_blank" rel="noopener sponsored">
+            Book Experience <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
         </div>
         <div class="thing-card">
           <div class="thing-top">
@@ -3600,13 +3691,29 @@
         </div>
         <div class="thing-card">
           <div class="thing-top">
-            <h3 class="thing-name">Meiji Jingu Sake Barrels</h3>
-            <span class="thing-tag thing-tag-free">Free</span>
+            <h3 class="thing-name">teamLab Borderless</h3>
+            <span class="thing-tag thing-tag-paid">Paid</span>
           </div>
-          <p class="thing-desc">Wall of beautifully decorated sake barrels (kazaridaru) at Meiji Shrine. A stunning photo opportunity on the walk to the main shrine.</p>
+          <!-- RESEARCHED --><p class="thing-desc">Immersive digital art museum where rooms of light, color, and projection flow into each other. Book tickets in advance — they sell out.</p>
           <div class="thing-meta">
-            <div class="thing-detail"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Harajuku</div>
+            <div class="thing-detail"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Azabudai</div>
           </div>
+          <a href="https://www.teamlab.art/e/tokyo/" class="thing-book" target="_blank" rel="noopener sponsored">
+            Book Tickets <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+        <div class="thing-card">
+          <div class="thing-top">
+            <h3 class="thing-name">teamLab Planets</h3>
+            <span class="thing-tag thing-tag-paid">Paid</span>
+          </div>
+          <!-- RESEARCHED --><p class="thing-desc">Walk barefoot through water and immersive installations. A more physical, sensory experience than Borderless.</p>
+          <div class="thing-meta">
+            <div class="thing-detail"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Toyosu</div>
+          </div>
+          <a href="https://www.teamlab.art/e/planets/" class="thing-book" target="_blank" rel="noopener sponsored">
+            Book Tickets <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
         </div>
       </div>
     </div>
@@ -3630,14 +3737,6 @@
       <li class="packing-item">
         <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
         <div class="packing-item-content">
-          <span class="packing-item-name">Celiac dining card in Japanese</span>
-          <span class="packing-item-why">Essential for communicating your needs at restaurants. Many staff don't speak English but will carefully read a Japanese card explaining celiac disease and wheat allergy.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
           <span class="packing-item-name">Portable GF snacks</span>
           <span class="packing-item-why">Convenience stores have limited safe options beyond onigiri and edamame. Pack bars, crackers, or other GF snacks for long days of sightseeing.</span>
         </div>
@@ -3650,6 +3749,26 @@
           <!-- RESEARCHED --><span class="packing-item-why">You'll use Google Maps constantly for subway navigation. Your phone battery will drain fast — a portable charger is a lifesaver.</span>
         </div>
         <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Celiac dining card in Japanese</span>
+          <span class="packing-item-why">Essential for communicating your needs at restaurants. Many staff don't speak English but will carefully read a Japanese card explaining celiac disease and wheat allergy.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-japan">Japan</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Gluten-free soy sauce — travel packets</span>
+          <span class="packing-item-why">Regular soy sauce contains wheat. Most restaurants won't have a GF alternative. Carry individual tamari packets so you always have safe soy sauce on hand.</span>
+          <a href="https://www.amazon.com/San-J-Organic-Specially-Individual-Portioned/dp/B06XS2P1XG?th=1" class="packing-shop" target="_blank" rel="noopener sponsored">
+            Shop recommendation
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+        <span class="packing-item-tag packing-tag-japan">Japan</span>
       </li>
       <li class="packing-item">
         <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
@@ -3677,7 +3796,7 @@
     <div class="tips-rule"></div>
     <ul class="tips-list">
       <li class="tip-item"><span class="tip-bullet"></span><span class="tip-text">Get a Suica card at the airport immediately upon arrival — it works on all trains, buses, and at convenience stores.</span></li>
-      <li class="tip-item"><span class="tip-bullet"></span><span class="tip-text">Download Google Translate with the Japanese language pack for offline use. The camera translation feature is a lifesaver for reading menus and labels.</span></li>
+      <li class="tip-item"><span class="tip-bullet"></span><span class="tip-text">Download Google Translate with the Japanese language pack for offline use. The camera translation feature is a lifesaver for reading menus and labels!</span></li>
       <li class="tip-item"><span class="tip-bullet"></span><span class="tip-text">Carry a celiac dining card in Japanese at all times. Even at GF-friendly restaurants, staff appreciate being able to read your needs clearly.</span></li>
       <li class="tip-item"><span class="tip-bullet"></span><span class="tip-text">Natural Lawson is your best friend for GF snacks — look for the green logo. Regular Lawson has fewer options.</span></li>
       <li class="tip-item"><span class="tip-bullet"></span><!-- RESEARCHED --><span class="tip-text">Reservations are essential for popular GF restaurants, especially Gluten Free Kushiage Su — bookings open one month in advance.</span></li>
@@ -3689,9 +3808,10 @@
     <div class="tips-hindsight">
       <div class="tips-hindsight-label">What I'd Do Differently</div>
       <ul class="hindsight-list">
-        <li class="hindsight-item"><span class="tip-bullet"></span><span class="tip-text">Would have made reservations earlier for Gluten Free Kushiage Su — it books up fast.</span></li>
+        <li class="hindsight-item"><span class="tip-bullet"></span><span class="tip-text">I'm typically not a big shopper when I travel, but Japan is a whole different story! I wish I would've brought a bigger suitcase or packed a collapsable duffel to have more space.</span></li>
         <li class="hindsight-item"><span class="tip-bullet"></span><span class="tip-text">Should have downloaded more offline maps for subway station navigation — underground signal can be spotty.</span></li>
         <li class="hindsight-item"><span class="tip-bullet"></span><span class="tip-text">Would have spent more time exploring Asakusa — the traditional atmosphere and GF-friendly spots made it a highlight.</span></li>
+        <li class="hindsight-icon"><span class="tip-bullet"></span><span class="tip-text">I wish I made it to Character Street!</span></li>
       </ul>
     </div>
   </section>
@@ -3699,6 +3819,47 @@
   <footer class="page-footer">
     <p class="page-disclosure">Some links on this page are affiliate links. If you book through them, I may earn a small commission at no extra cost to you. All opinions and GF assessments are my own.</p>
   </footer>
+
+  <!-- Photo Lightbox -->
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" aria-label="Close lightbox">
+      <svg viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="">
+  </div>
+  <script>
+  (function() {
+    var overlay = document.getElementById('lightbox');
+    var lbImg = document.getElementById('lightbox-img');
+
+    document.querySelectorAll('.restaurant-photo, .landmark-photo, .hotel-image').forEach(function(img) {
+      img.addEventListener('click', function(e) {
+        e.stopPropagation();
+        lbImg.src = this.src;
+        lbImg.alt = this.alt;
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLightbox() {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    overlay.addEventListener('click', closeLightbox);
+    overlay.querySelector('.lightbox-close').addEventListener('click', function(e) {
+      e.stopPropagation();
+      closeLightbox();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && overlay.classList.contains('active')) {
+        closeLightbox();
+      }
+    });
+  })();
+  </script>
 
 </body>
 </html>
