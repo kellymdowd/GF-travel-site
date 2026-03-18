@@ -191,11 +191,16 @@
       transition: opacity 0.15s ease;
       z-index: 200;
     }
+    .overview-section { padding: 1rem 2.5rem 0; opacity: 0; animation: fadeIn 0.8s ease 0.3s forwards; }
+    .overview-btn { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; border: 1px solid rgba(154, 144, 122, 0.35); padding: 0.45rem 0.9rem 0.45rem 0.75rem; transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease; }
+    .overview-btn:hover { color: var(--slate); border-color: var(--slate); background: rgba(200, 113, 122, 0.05); }
+    .overview-btn svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .overview-btn:hover svg { transform: translateX(2px); }
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
     @media (max-width: 600px) {
       .site-nav { padding: 0 1.2rem; }
-      .nav-sub, .header, .map-section, .cities-section { padding-left: 1.2rem; padding-right: 1.2rem; }
+      .nav-sub, .header, .overview-section, .map-section, .cities-section { padding-left: 1.2rem; padding-right: 1.2rem; }
       .header-rule { margin: 0 1.2rem; }
     }
   </style>
@@ -270,6 +275,16 @@
     <span class="trip-dates"><!-- Add trip dates when known --></span>
   </header>
   <div class="header-rule"></div>
+
+  <div class="overview-section">
+    <a class="overview-btn" href="https://www.google.com/maps/d/edit?mid=1nj0pjP7qL7TmoHGMPEq4LyBQqyxNMT0&usp=sharing" target="_blank" rel="noopener">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+        <path d="M6.5 1.5C4 1.5 2 3.5 2 6s2 4.5 4.5 4.5S11 8.5 11 6 9 1.5 6.5 1.5Z" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M8.5 11 11 8.5M8.5 11H11V8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Open full country map
+    </a>
+  </div>
 
   <section class="map-section">
     <div id="country-map"></div>
