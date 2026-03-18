@@ -15,6 +15,7 @@ photos/*
 photos/scotland/*
 !photos/scotland/fort-william/
 !photos/scotland/edinburgh/
+!photos/scotland/inverness/
 
 photos/scotland/fort-william/*
 !photos/scotland/fort-william/nevis-bank-inn-browns-restaurant/
@@ -59,6 +60,20 @@ photos/scotland/edinburgh/arthurs-seat/*
 !photos/scotland/edinburgh/arthurs-seat/IMG_9515.jpeg
 photos/scotland/edinburgh/greyfriars-bobbys-grave/*
 !photos/scotland/edinburgh/greyfriars-bobbys-grave/IMG_9547.jpeg
+
+photos/scotland/inverness/*
+!photos/scotland/inverness/pizza-express/
+!photos/scotland/inverness/bught-park-pitches-highland-games/
+!photos/scotland/inverness/the-redshank-victorian-market/
+!photos/scotland/inverness/loch-ness/
+photos/scotland/inverness/pizza-express/*
+!photos/scotland/inverness/pizza-express/IMG_9370.jpeg
+photos/scotland/inverness/bught-park-pitches-highland-games/*
+!photos/scotland/inverness/bught-park-pitches-highland-games/IMG_9380.jpeg
+photos/scotland/inverness/the-redshank-victorian-market/*
+!photos/scotland/inverness/the-redshank-victorian-market/IMG_9398.jpeg
+photos/scotland/inverness/loch-ness/*
+!photos/scotland/inverness/loch-ness/loch-ness-unsplash.jpg
 
 photos/japan/*
 !photos/japan/tokyo/
