@@ -7,6 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
     :root { --cream: #FFFFFF; --slate: #C8717A; --slate-bg: #FBF0F1; --rose: #B8907A; --ink: #2A2018; --ink-mid: #5A5048; --ink-light: #9A907A; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -19,358 +21,855 @@
     .back-link:hover svg { transform: translateX(-3px); }
     .back-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
     .nav-sep { font-size: 0.68rem; color: rgba(154, 144, 122, 0.4); letter-spacing: 0.1em; }
+    .nav-link { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .nav-link:hover { color: var(--slate); }
     .nav-current { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mid); }
     .header { display: flex; justify-content: space-between; align-items: flex-end; padding: 1.4rem 2.5rem 1.2rem; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
+    .header-left { display: flex; flex-direction: column; }
+    .country-label { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.25rem; }
     .city-name { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1; }
     .trip-date { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(0.85rem, 1.3vw, 1rem); color: var(--ink-light); letter-spacing: 0.04em; padding-bottom: 0.2rem; }
     .header-rule { height: 1px; background: linear-gradient(to right, var(--rose), transparent 60%); margin: 0 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 0.6s forwards; }
-    .map-section { flex: 1; padding: 1.5rem 2.5rem 2rem; display: flex; flex-direction: column; gap: 0; opacity: 0; animation: fadeIn 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
-    .map-frame { width: 100%; flex: 1; min-height: 520px; border: none; }
-    
-    /* ─── City Snapshot ──────────────────────────────────────── */
-    .snapshot {
-      padding: 1.6rem 2.5rem 0;
-      opacity: 0;
-      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
-    }
-
-    .snapshot-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 1rem;
-    }
-
-    .snapshot-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 0;
-      border-top: 1px solid rgba(42, 32, 24, 0.08);
-    }
-
-    .snapshot-item {
-      padding: 1rem 1.2rem 1rem 0;
-      border-bottom: 1px solid rgba(42, 32, 24, 0.08);
-    }
-
-    .snapshot-item-label {
-      font-family: 'Jost', sans-serif;
-      font-size: 0.58rem;
-      font-weight: 400;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 0.35rem;
-    }
-
-    .snapshot-item-value {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 400;
-      font-size: 1.05rem;
-      letter-spacing: 0.02em;
-      color: var(--ink);
-      line-height: 1.2;
-    }
-
-    /* GF Score visual */
-    .snapshot-score {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .snapshot-score-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 400;
-      font-size: 1.05rem;
-      color: var(--ink);
-      letter-spacing: 0.02em;
-      line-height: 1;
-    }
-
-    .snapshot-score-bar {
-      display: flex;
-      gap: 3px;
-      align-items: center;
-    }
-
-    .snapshot-score-pip {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: rgba(42, 32, 24, 0.1);
-    }
-
-    .snapshot-score-pip.is-filled {
-      background: var(--slate);
-    }
-
-    /* ─── Table of Contents ─────────────────────────────────── */
-    .toc {
-      padding: 1.6rem 2.5rem 0;
-      opacity: 0;
-      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
-    }
-
-    .toc-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 1rem;
-    }
-
-    .toc-list {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0;
-      border-top: 1px solid rgba(42, 32, 24, 0.08);
-    }
-
-    .toc-item {
-      border-bottom: 1px solid rgba(42, 32, 24, 0.08);
-    }
-
-    .toc-link {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.7rem 1.6rem 0.7rem 0;
-      font-family: 'Jost', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 300;
-      letter-spacing: 0.04em;
-      color: var(--ink-mid);
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-
-    .toc-link:hover {
-      color: var(--slate);
-    }
-
-    .toc-link:hover .toc-arrow {
-      transform: translateX(3px);
-      color: var(--slate);
-    }
-
-    .toc-link:focus-visible {
-      outline: 1.5px solid var(--slate);
-      outline-offset: 2px;
-      border-radius: 2px;
-    }
-
-    .toc-link:active {
-      color: var(--rose);
-    }
-
-    .toc-arrow {
-      color: var(--ink-light);
-      opacity: 0.4;
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
-      flex-shrink: 0;
-    }
-
+    .snapshot { padding: 1.6rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards; }
+    .snapshot-label { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .snapshot-item { padding: 1rem 1.2rem 1rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.08); }
+    .snapshot-item-label { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.35rem; }
+    .snapshot-item-value { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .snapshot-score { display: flex; align-items: center; gap: 0.6rem; }
+    .snapshot-score-num { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); letter-spacing: 0.02em; line-height: 1; }
+    .snapshot-score-bar { display: flex; gap: 3px; align-items: center; }
+    .snapshot-score-pip { width: 6px; height: 6px; border-radius: 50%; background: rgba(42, 32, 24, 0.1); }
+    .snapshot-score-pip.is-filled { background: var(--slate); }
+    .toc { padding: 1.6rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
+    .toc-label { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; }
+    .toc-list { list-style: none; display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .toc-item { border-bottom: 1px solid rgba(42, 32, 24, 0.08); }
+    .toc-link { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1.6rem 0.7rem 0; font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; letter-spacing: 0.04em; color: var(--ink-mid); text-decoration: none; transition: color 0.2s ease; }
+    .toc-link:hover { color: var(--slate); }
+    .toc-link:hover .toc-arrow { transform: translateX(3px); color: var(--slate); }
+    .toc-link:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .toc-link:active { color: var(--rose); }
+    .toc-arrow { color: var(--ink-light); opacity: 0.4; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease; flex-shrink: 0; }
+    .gf-guide { padding: 2.4rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards; }
+    .gf-guide-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.4rem; }
+    .gf-guide-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .gf-guide-difficulty { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.25rem 0.7rem 0.25rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; }
+    .gf-guide-difficulty .gf-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .gf-difficulty-easy { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .gf-difficulty-easy .gf-dot { background: #4c8c50; }
+    .gf-difficulty-moderate { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
+    .gf-difficulty-moderate .gf-dot { background: #b48c3c; }
+    .gf-difficulty-difficult { background: rgba(180, 70, 60, 0.08); color: #8a3a30; }
+    .gf-difficulty-difficult .gf-dot { background: #b4463c; }
+    .gf-guide-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.4rem; }
+    .gf-guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    .gf-info-group { margin-bottom: 1.6rem; }
+    .gf-info-group:last-child { margin-bottom: 0; }
+    .gf-info-label { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.5rem; }
+    .gf-info-value { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.6; letter-spacing: 0.01em; }
+    .gf-phrase { display: flex; justify-content: space-between; align-items: baseline; padding: 0.3rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.05); }
+    .gf-phrase:last-child { border-bottom: none; }
+    .gf-phrase-local { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; color: var(--ink); }
+    .gf-phrase-meaning { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-light); letter-spacing: 0.03em; }
+    .gf-list { list-style: none; }
+    .gf-list li { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); padding: 0.25rem 0; line-height: 1.4; }
+    .gf-list li::before { content: '\2014'; color: var(--ink-light); opacity: 0.4; margin-right: 0.5rem; }
+    .gf-score-section { padding-left: 2.5rem; border-left: 1px solid rgba(42, 32, 24, 0.08); }
+    .gf-score-title { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; }
+    .gf-score-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.05); }
+    .gf-score-row:first-of-type { border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .gf-score-category { font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; color: var(--ink-mid); letter-spacing: 0.02em; }
+    .gf-score-pips { display: flex; gap: 4px; align-items: center; }
+    .gf-score-pip { width: 8px; height: 8px; border-radius: 50%; background: rgba(42, 32, 24, 0.08); }
+    .gf-score-pip.is-filled { background: var(--slate); }
+    .gf-score-total { display: flex; align-items: baseline; gap: 0.5rem; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid rgba(42, 32, 24, 0.12); }
+    .gf-score-total-num { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 2.4rem; color: var(--ink); line-height: 1; letter-spacing: -0.02em; }
+    .gf-score-total-label { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .gf-score-verdict { margin-top: 0.8rem; }
+    @media (max-width: 768px) { .gf-guide-grid { grid-template-columns: 1fr; gap: 1.6rem; } .gf-score-section { padding-left: 0; border-left: none; padding-top: 1.2rem; border-top: 1px solid rgba(42, 32, 24, 0.08); } }
+    .restaurants { padding: 2.4rem 2.5rem 0; }
+    .restaurants-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .restaurants-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .restaurants-count { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .restaurants-rule { height: 1px; background: rgba(42, 32, 24, 0.08); }
+    .restaurants-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .restaurant-card { padding: 1.4rem 1.6rem 1.4rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .restaurant-card:nth-child(odd) { padding-right: 1.6rem; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .restaurant-card:nth-child(even) { padding-left: 1.6rem; padding-right: 0; }
+    .restaurant-card:nth-last-child(1), .restaurant-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    .restaurant-card-inner { display: flex; gap: 1.2rem; align-items: flex-start; }
+    .restaurant-card-content { flex: 1; min-width: 0; }
+    .restaurant-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 4px rgba(42, 32, 24, 0.1); margin-top: 0.3rem; cursor: zoom-in; }
+    .restaurant-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.4rem; }
+    .restaurant-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.15rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .restaurant-tags { display: flex; gap: 0.4rem; flex-shrink: 0; }
+    .restaurant-tag { display: inline-block; padding: 0.2rem 0.55rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
+    .restaurant-tag-gf { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .restaurant-tag-options { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
+    .restaurant-cuisine { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-light); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.4rem; }
+    .restaurant-source { display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 400; letter-spacing: 0.08em; margin-bottom: 0.9rem; }
+    .restaurant-source-dot { width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
+    .restaurant-source-visited { color: var(--rose); }
+    .restaurant-source-visited .restaurant-source-dot { background: var(--rose); }
+    .restaurant-source-researched { color: var(--ink-light); opacity: 0.7; }
+    .restaurant-source-researched .restaurant-source-dot { background: var(--ink-light); }
+    .restaurant-gf-score { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; }
+    .restaurant-gf-score-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .restaurant-gf-pips { display: flex; gap: 3px; align-items: center; }
+    .restaurant-gf-pip { width: 7px; height: 7px; border-radius: 50%; background: rgba(42, 32, 24, 0.08); }
+    .restaurant-gf-pip.is-filled { background: var(--slate); }
+    .restaurant-details { display: flex; flex-direction: column; gap: 0.6rem; }
+    .restaurant-detail-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.25rem; }
+    .restaurant-detail-value { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 0.95rem; color: var(--ink-mid); line-height: 1.5; letter-spacing: 0.01em; }
+    .restaurant-location-value { display: flex; align-items: baseline; gap: 0.4rem; }
+    .restaurant-location-value svg { flex-shrink: 0; color: var(--ink-light); opacity: 0.5; position: relative; top: 1px; }
+    .restaurant-fmgf { margin-top: 0.7rem; }
+    .restaurant-fmgf-link { display: inline-flex; align-items: center; gap: 0.4rem; font-family: 'Jost', sans-serif; font-size: 0.64rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .restaurant-fmgf-link:hover { color: var(--slate); }
+    .restaurant-fmgf-link:hover svg { transform: translateX(2px); }
+    .restaurant-fmgf-link:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .restaurant-fmgf-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; }
+    .restaurants-footer { padding-top: 1.2rem; margin-top: 0.4rem; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .restaurants-fmgf-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .restaurants-fmgf-link:hover { color: var(--slate); }
+    .restaurants-fmgf-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; }
+    .restaurants-fmgf-link:hover svg { transform: translateX(2px); }
+    @media (max-width: 768px) { .restaurants-grid { grid-template-columns: 1fr; } .restaurant-card:nth-child(odd) { border-right: none; padding-right: 0; } .restaurant-card:nth-child(even) { padding-left: 0; } .restaurant-card:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } }
+    .map-container { margin-bottom: 1.6rem; border-radius: 4px; overflow: hidden; border: 1px solid rgba(42, 32, 24, 0.08); }
+    .map-container .leaflet-container { height: 260px; width: 100%; }
+    .map-legend { display: flex; flex-wrap: wrap; gap: 0.8rem; padding: 0.8rem 0 0; }
+    .map-legend-item { display: flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.06em; color: var(--ink-light); }
+    .map-legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .landmarks { padding: 2.4rem 2.5rem 0; }
+    .landmarks-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .landmarks-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .landmarks-count { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .landmarks-rule { height: 1px; background: rgba(42, 32, 24, 0.08); }
+    .landmarks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .landmark-card { padding: 1.4rem 1.6rem 1.4rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .landmark-card:nth-child(odd) { padding-right: 1.6rem; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .landmark-card:nth-child(even) { padding-left: 1.6rem; padding-right: 0; }
+    .landmark-card:nth-last-child(1), .landmark-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    .landmark-card-inner { display: flex; gap: 1.2rem; align-items: flex-start; }
+    .landmark-card-content { flex: 1; min-width: 0; }
+    .landmark-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.3rem; }
+    .landmark-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.15rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .landmark-type { display: inline-block; padding: 0.2rem 0.55rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.52rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+    .landmark-type-historic { background: rgba(42, 32, 24, 0.04); color: var(--ink-mid); }
+    .landmark-desc { font-family: 'Jost', sans-serif; font-size: 0.74rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; margin-bottom: 0.5rem; }
+    .landmark-location { display: flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; color: var(--ink-light); letter-spacing: 0.04em; }
+    .landmark-location svg { flex-shrink: 0; opacity: 0.5; }
+    .landmark-source { display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.08em; margin-top: 0.5rem; }
+    .landmark-source-visited { color: var(--rose); }
+    .landmark-photo { width: 80px; height: 80px; border-radius: 4px; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 4px rgba(42, 32, 24, 0.1); cursor: zoom-in; }
+    @media (max-width: 768px) { .landmarks-grid { grid-template-columns: 1fr; } .landmark-card:nth-child(odd) { border-right: none; padding-right: 0; } .landmark-card:nth-child(even) { padding-left: 0; } }
+    .neighborhoods { padding: 2.4rem 2.5rem 0; }
+    .neighborhoods-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .neighborhoods-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .neighborhoods-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .neighborhood-list { display: flex; flex-direction: column; gap: 0; }
+    .neighborhood-item { display: grid; grid-template-columns: 140px 1fr; gap: 2rem; padding: 1.3rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); align-items: baseline; }
+    .neighborhood-item:first-child { padding-top: 0; }
+    .neighborhood-item:last-child { border-bottom: none; }
+    .neighborhood-name-col { display: flex; flex-direction: column; gap: 0.25rem; }
+    .neighborhood-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.15rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .neighborhood-vibe { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-light); }
+    .neighborhood-desc { font-family: 'Jost', sans-serif; font-size: 0.74rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; }
+    @media (max-width: 768px) { .neighborhood-item { grid-template-columns: 1fr; gap: 0.4rem; } }
+    .things-to-do { padding: 2.4rem 2.5rem 0; }
+    .things-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .things-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .things-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .things-category-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .things-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .thing-card { padding: 1.2rem 1.6rem 1.2rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .thing-card:nth-child(odd) { padding-right: 1.6rem; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .thing-card:nth-child(even) { padding-left: 1.6rem; padding-right: 0; }
+    .thing-card:nth-last-child(1), .thing-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    .thing-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.3rem; }
+    .thing-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.1rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .thing-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+    .thing-tag-free { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .thing-tag-paid { background: rgba(42, 32, 24, 0.04); color: var(--ink-mid); }
+    .thing-desc { font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; margin-bottom: 0.6rem; }
+    .thing-meta { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+    .thing-detail { display: flex; align-items: center; gap: 0.3rem; font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; color: var(--ink-light); letter-spacing: 0.04em; }
+    .thing-book { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.7rem; padding: 0.45rem 0.9rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 3px; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 6px rgba(200, 113, 122, 0.15); }
+    .thing-book:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200, 113, 122, 0.25); }
+    .thing-book:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; }
+    .thing-book:active { background: #a85a63; transform: translateY(0); }
+    .thing-book svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .thing-book:hover svg { transform: translateX(2px); }
+    @media (max-width: 768px) { .things-grid { grid-template-columns: 1fr; } .thing-card:nth-child(odd) { border-right: none; padding-right: 0; } .thing-card:nth-child(even) { padding-left: 0; } }
+    .getting-around { padding: 2.4rem 2.5rem 0; }
+    .getting-around-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .getting-around-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .getting-around-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .transport-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+    .transport-card { padding: 1.4rem 1.4rem 1.4rem 0; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .transport-card:last-child { border-right: none; padding-right: 0; }
+    .transport-card:first-child { padding-left: 0; }
+    .transport-card:not(:first-child) { padding-left: 1.4rem; }
+    .transport-icon { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(42, 32, 24, 0.03); color: var(--ink-mid); margin-bottom: 0.9rem; }
+    .transport-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.1rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; margin-bottom: 0.5rem; }
+    .transport-desc { font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; }
+    .transport-detail { display: flex; align-items: baseline; gap: 0.4rem; margin-top: 0.6rem; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); }
+    .transit-tip { margin-top: 1.6rem; padding: 1.2rem 1.4rem; background: var(--slate-bg); border-radius: 4px; border-left: 2px solid var(--slate); display: flex; gap: 0.8rem; align-items: flex-start; }
+    .transit-tip-icon { flex-shrink: 0; color: var(--slate); opacity: 0.7; position: relative; top: 1px; }
+    .transit-tip-content { flex: 1; min-width: 0; }
+    .transit-tip-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--slate); margin-bottom: 0.35rem; }
+    .transit-tip-text { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 0.98rem; color: var(--ink); line-height: 1.6; letter-spacing: 0.01em; }
+    @media (max-width: 768px) { .transport-grid { grid-template-columns: 1fr 1fr; } .transport-card { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } .transport-card:nth-child(2) { border-right: none; padding-right: 0; } .transport-card:nth-child(3) { padding-left: 0; } .transport-card:nth-child(3), .transport-card:nth-child(4) { border-bottom: none; } }
+    .packing { padding: 2.4rem 2.5rem 0; }
+    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .packing-item:last-child { border-bottom: none; }
+    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
+    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
+    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
+    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
+    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
+    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    .packing-tag-slovakia { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
+    @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
+    .travel-tips { padding: 2.4rem 2.5rem 0; }
+    .tips-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .tips-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .tips-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .tips-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .tip-item { display: flex; gap: 0.8rem; align-items: baseline; padding: 0.7rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .tip-item:last-child { border-bottom: none; }
+    .tip-bullet { width: 4px; height: 4px; border-radius: 50%; background: var(--slate); flex-shrink: 0; opacity: 0.5; position: relative; top: 0.35rem; }
+    .tip-text { font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; }
+    .tips-hindsight { margin-top: 1.8rem; }
+    .tips-hindsight-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.8rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .hindsight-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .hindsight-item { display: flex; gap: 0.8rem; align-items: baseline; padding: 0.7rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .hindsight-item:last-child { border-bottom: none; }
+    .hindsight-icon { flex-shrink: 0; color: var(--slate); opacity: 0.5; position: relative; top: 0.2rem; }
+    .hindsight-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.01em; }
+    .page-footer { padding: 2rem 2.5rem 2.5rem; text-align: center; }
+    .page-disclosure { font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 300; color: var(--ink-light); opacity: 0.5; letter-spacing: 0.03em; }
+    .lightbox-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(10, 8, 6, 0); display: flex; align-items: center; justify-content: center; cursor: zoom-out; opacity: 0; pointer-events: none; transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .lightbox-overlay.active { opacity: 1; pointer-events: auto; background: rgba(10, 8, 6, 0.85); }
+    .lightbox-img { max-width: 90vw; max-height: 85vh; border-radius: 6px; object-fit: contain; box-shadow: 0 20px 60px rgba(0,0,0,0.5); transform: scale(0.92); opacity: 0; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease; }
+    .lightbox-overlay.active .lightbox-img { transform: scale(1); opacity: 1; }
+    .lightbox-close { position: absolute; top: 1.2rem; right: 1.4rem; width: 36px; height: 36px; border: none; background: rgba(255,255,255,0.1); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .lightbox-close:hover { background: rgba(255,255,255,0.2); transform: scale(1.1); }
+    .lightbox-close svg { width: 16px; height: 16px; stroke: rgba(255,255,255,0.8); stroke-width: 2; }
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
-    @media (max-width: 600px) { .nav, .header, .map-section, .snapshot, .toc, .coming-soon-banner { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
-  
-    /* ─── Coming Soon Badge ────────────────────────────────── */
-    .coming-soon-banner {
-      padding: 2.5rem 2.5rem 0;
-      opacity: 0;
-      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
-    }
-
-    .coming-soon-inner {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1.2rem 1.6rem;
-      background: var(--slate-bg, #FBF0F1);
-      border-left: 2px solid var(--slate, #C8717A);
-    }
-
-    .coming-soon-icon {
-      flex-shrink: 0;
-      color: var(--slate, #C8717A);
-      opacity: 0.6;
-    }
-
-    .coming-soon-text {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-    }
-
-    .coming-soon-label {
-      font-family: 'Jost', sans-serif;
-      font-size: 0.62rem;
-      font-weight: 400;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--slate, #C8717A);
-    }
-
-    .coming-soon-desc {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.95rem;
-      font-weight: 300;
-      font-style: italic;
-      color: var(--ink-mid, #5A5048);
-      letter-spacing: 0.02em;
-      line-height: 1.4;
-    }
+    @media (max-width: 600px) { .nav, .header, .snapshot, .toc, .gf-guide, .restaurants, .landmarks, .neighborhoods, .things-to-do, .packing, .travel-tips, .getting-around, .page-footer { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
   </style>
-
-  <!-- Google Analytics (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-64V5CSB1DT"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-64V5CSB1DT');
-
-    // ─── Custom event tracking ─────────────────────────────
     document.addEventListener('DOMContentLoaded', function() {
-
-      // Outbound link clicks (links with target="_blank")
-      document.querySelectorAll('a[target="_blank"]').forEach(function(link) {
-        link.addEventListener('click', function() {
-          gtag('event', 'outbound_click', {
-            event_category: 'engagement',
-            event_label: this.href,
-            transport_type: 'beacon'
-          });
-        });
-      });
-
-      // Section navigation (TOC / anchor links)
-      document.querySelectorAll('a[href^="#"]').forEach(function(link) {
-        link.addEventListener('click', function() {
-          gtag('event', 'section_nav', {
-            event_category: 'navigation',
-            event_label: this.getAttribute('href')
-          });
-        });
-      });
-
-      // Map interactions — clicks on map containers, SVGs, and iframes
-      document.querySelectorAll('.map-container, [class*="map"], svg.map, iframe[src*="google.com/maps"]').forEach(function(el) {
-        el.addEventListener('click', function() {
-          gtag('event', 'map_interaction', {
-            event_category: 'engagement',
-            event_label: document.title
-          });
-        });
-      });
-
+      document.querySelectorAll('a[target="_blank"]').forEach(function(l) { l.addEventListener('click', function() { gtag('event', 'outbound_click', { event_category: 'engagement', event_label: this.href }); }); });
+      document.querySelectorAll('a[href^="#"]').forEach(function(l) { l.addEventListener('click', function() { gtag('event', 'section_nav', { event_category: 'navigation', event_label: this.getAttribute('href') }); }); });
     });
   </script>
-  
 </head>
 <body>
+
   <nav class="nav">
-    <a href="../slovakia.html" class="back-link">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      Slovakia
+    <a href="../../index.html" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      All Countries
     </a>
+    <span class="nav-sep">/</span>
+    <a href="../slovakia.html" class="nav-link">Slovakia</a>
     <span class="nav-sep">/</span>
     <span class="nav-current">Bratislava</span>
   </nav>
+
   <header class="header">
-    <h1 class="city-name">Bratislava</h1>
+    <div class="header-left">
+      <span class="country-label">Slovakia</span>
+      <h1 class="city-name">Bratislava</h1>
+    </div>
     <span class="trip-date">Last traveled · November 2023</span>
   </header>
   <div class="header-rule"></div>
 
-  <div class="coming-soon-banner">
-    <div class="coming-soon-inner">
-      <svg class="coming-soon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
-        <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.2"/>
-        <path d="M10 5.5V10.5L13 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <div class="coming-soon-text">
-        <span class="coming-soon-label">Coming Soon</span>
-        <span class="coming-soon-desc">Full guide with restaurants, hotels &amp; landmarks is on its way.</span>
-      </div>
-    </div>
-  </div>
-
   <section class="snapshot">
     <div class="snapshot-label">City Snapshot</div>
     <div class="snapshot-grid">
+      <div class="snapshot-item"><div class="snapshot-item-label">Best Months</div><div class="snapshot-item-value">Apr–Jun, Sep–Oct</div></div>
+      <div class="snapshot-item"><div class="snapshot-item-label">Ideal Stay</div><div class="snapshot-item-value">2–3 days</div></div>
+      <div class="snapshot-item"><div class="snapshot-item-label">Best For</div><div class="snapshot-item-value">Architecture, History</div></div>
       <div class="snapshot-item">
-        <div class="snapshot-item-label">Best Months</div>
-        <div class="snapshot-item-value">Apr–Jun, Sep–Oct</div>
-      </div>
-      <div class="snapshot-item">
-        <div class="snapshot-item-label">Ideal Stay</div>
-        <div class="snapshot-item-value">1–2 days</div>
-      </div>
-      <div class="snapshot-item">
-        <div class="snapshot-item-label">Gluten-Free</div>
-        <div class="snapshot-score">
-          <span class="snapshot-score-num">5/10</span>
-          <div class="snapshot-score-bar">
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip"></span>
-            <span class="snapshot-score-pip"></span>
-            <span class="snapshot-score-pip"></span>
-            <span class="snapshot-score-pip"></span>
-            <span class="snapshot-score-pip"></span>
+        <div class="snapshot-item-label">GF Friendliness</div>
+        <div class="snapshot-item-value">
+          <div class="snapshot-score">
+            <span class="snapshot-score-num">7/10</span>
+            <div class="snapshot-score-bar">
+              <span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span>
+            </div>
           </div>
         </div>
       </div>
-      <div class="snapshot-item">
-        <div class="snapshot-item-label">English Spoken</div>
-        <div class="snapshot-item-value">Some</div>
-      </div>
-      <div class="snapshot-item">
-        <div class="snapshot-item-label">City Size</div>
-        <div class="snapshot-item-value">Compact</div>
-      </div>
-      <div class="snapshot-item">
-        <div class="snapshot-item-label">Walkability</div>
-        <div class="snapshot-item-value">High</div>
-      </div>
-      <div class="snapshot-item">
-        <div class="snapshot-item-label">Public Transit</div>
-        <div class="snapshot-item-value">Good</div>
-      </div>
+      <div class="snapshot-item"><div class="snapshot-item-label">Language</div><div class="snapshot-item-value">Slovak</div></div>
+      <div class="snapshot-item"><div class="snapshot-item-label">English</div><div class="snapshot-item-value">Widely spoken</div></div>
+      <div class="snapshot-item"><div class="snapshot-item-label">City Size</div><div class="snapshot-item-value">Compact</div></div>
+      <div class="snapshot-item"><div class="snapshot-item-label">Currency</div><div class="snapshot-item-value">Euro (€)</div></div>
     </div>
   </section>
 
-
   <nav class="toc">
-    <div class="toc-label">Jump to</div>
+    <div class="toc-label">On this page</div>
     <ul class="toc-list">
-      <li class="toc-item"><a href="#where-to-stay" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Where to stay</a></li>
-      <li class="toc-item"><a href="#gluten-free" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Gluten-free survival guide</a></li>
+      <li class="toc-item"><a href="#gf-guide" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>GF survival guide</a></li>
       <li class="toc-item"><a href="#restaurants" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Restaurants</a></li>
-      <li class="toc-item"><a href="#getting-around" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Getting around</a></li>
       <li class="toc-item"><a href="#landmarks" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Landmarks &amp; must-see spots</a></li>
       <li class="toc-item"><a href="#neighborhoods" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Neighborhoods</a></li>
       <li class="toc-item"><a href="#things-to-do" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Things to do</a></li>
+      <li class="toc-item"><a href="#getting-around" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Getting around</a></li>
       <li class="toc-item"><a href="#what-to-pack" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>What to pack</a></li>
       <li class="toc-item"><a href="#travel-tips" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Travel tips</a></li>
     </ul>
   </nav>
 
-  <section class="map-section">
-    <!-- <iframe class="map-frame" src="https://www.google.com/maps/d/embed?mid=17ySQGExqIr4woLsznppqkIdYdCZZapg" allowfullscreen></iframe> -->
+  <!-- GF SURVIVAL GUIDE -->
+  <section class="gf-guide" id="gf-guide">
+    <div class="gf-guide-header">
+      <h2 class="gf-guide-title">GF Survival Guide</h2>
+      <span class="gf-guide-difficulty gf-difficulty-easy"><span class="gf-dot"></span>Easy</span>
+    </div>
+    <div class="gf-guide-rule"></div>
+    <div class="gf-guide-grid">
+      <div>
+        <div class="gf-info-group">
+          <div class="gf-info-label">Key Phrases</div>
+          <div class="gf-phrase"><span class="gf-phrase-local">Bez lepku</span><span class="gf-phrase-meaning">Gluten-free</span></div>
+          <div class="gf-phrase"><span class="gf-phrase-local">Mám celiakiu</span><span class="gf-phrase-meaning">I have celiac disease</span></div>
+          <div class="gf-phrase"><span class="gf-phrase-local">Neobsahuje lepok</span><span class="gf-phrase-meaning">Does not contain gluten</span></div>
+          <div class="gf-phrase"><span class="gf-phrase-local">Pšenica</span><span class="gf-phrase-meaning">Wheat</span></div>
+          <div class="gf-phrase"><span class="gf-phrase-local">Jačmeň</span><span class="gf-phrase-meaning">Barley</span></div>
+          <div class="gf-phrase"><span class="gf-phrase-local">Raž</span><span class="gf-phrase-meaning">Rye</span></div>
+        </div>
+        <!-- RESEARCHED -->
+        <div class="gf-info-group">
+          <div class="gf-info-label">GF Grocery Stores</div>
+          <ul class="gf-list">
+            <li>YEME — best option; has Zrnie, a 100% GF in-store bakery with breads &amp; pastries</li>
+            <li>Lidl — good own-brand GF range, one location walkable from Old Town</li>
+            <li>Billa — decent selection of local and imported GF products</li>
+            <li>Kaufland — wide selection including organic produce</li>
+          </ul>
+        </div>
+        <!-- RESEARCHED -->
+        <div class="gf-info-group">
+          <div class="gf-info-label">Safe Local Dishes</div>
+          <ul class="gf-list">
+            <li>Grilled meats and sausages (without breading)</li>
+            <li>Bryndza sheep cheese — naturally GF</li>
+            <li>Kapustnica sauerkraut soup — verify thickeners</li>
+            <li>Traditional halušky contains wheat flour — always ask for a GF version</li>
+          </ul>
+        </div>
+      </div>
+      <!-- RESEARCHED -->
+      <div class="gf-score-section">
+        <div class="gf-score-title">Score Breakdown</div>
+        <div class="gf-score-row"><span class="gf-score-category">Dedicated GF Restaurants</span><div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div></div>
+        <div class="gf-score-row"><span class="gf-score-category">Menu Labeling</span><div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div></div>
+        <div class="gf-score-row"><span class="gf-score-category">Staff Knowledge &amp; Safety</span><div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div></div>
+        <div class="gf-score-row"><span class="gf-score-category">Density of GF Dining</span><div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div></div>
+        <div class="gf-score-row"><span class="gf-score-category">Grocery Availability</span><div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div></div>
+        <div class="gf-score-total">
+          <span class="gf-score-total-num">7</span>
+          <span class="gf-score-total-label">out of 10</span>
+        </div>
+        <div class="gf-score-verdict">
+          <div class="gf-info-value">Bratislava punches above its size for celiac travellers. EU allergen labeling is mandatory, and the city has multiple dedicated GF establishments. Traditional Slovak dishes are wheat-heavy, but a growing health food scene means safe options are plentiful.</div>
+        </div>
+      </div>
+    </div>
   </section>
+
+  <!-- RESTAURANTS -->
+  <section class="restaurants" id="restaurants">
+    <div class="restaurants-header">
+      <h2 class="restaurants-title">Restaurants</h2>
+      <span class="restaurants-count">5 places</span>
+    </div>
+    <div class="restaurants-rule"></div>
+    <div class="restaurants-grid">
+
+      <!-- 1. Funki Punki — VISITED -->
+      <div class="restaurant-card">
+        <div class="restaurant-card-inner">
+          <div class="restaurant-card-content">
+            <div class="restaurant-top">
+              <h3 class="restaurant-name">Funki Punki Pancakes</h3>
+              <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div>
+            </div>
+            <div class="restaurant-cuisine">Crêpes · Pancakes</div>
+            <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
+            <div class="restaurant-gf-score">
+              <span class="restaurant-gf-score-label">GF Score</span>
+              <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div>
+            </div>
+            <div class="restaurant-details">
+              <div class="restaurant-detail">
+                <div class="restaurant-detail-label">Safety Notes</div>
+                <div class="restaurant-detail-value">SUCH a great place with amazing crepes. GF crepes made with buckwheat batter — all 20+ fillings are gluten-free. Small and cosy inside. Communicate your celiac needs clearly as wheat batters are also prepared.</div>
+              </div>
+              <div class="restaurant-detail">
+                <div class="restaurant-detail-label">What to Order</div>
+                <div class="restaurant-detail-value">The GF buckwheat crêpes — try sweet (Nutella, homemade caramel) and savoury (Slovak sheep cheese bryndza). Ask staff to confirm no cross-contamination.</div>
+              </div>
+              <div class="restaurant-detail">
+                <div class="restaurant-detail-label">Location</div>
+                <div class="restaurant-detail-value"><div class="restaurant-location-value"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.79 0 1 1.79 1 4c0 3 4 8 4 8s4-5 4-8c0-2.21-1.79-4-4-4zm0 5.5A1.5 1.5 0 115 2.5a1.5 1.5 0 010 3z" fill="currentColor"/></svg>Klariska 12, Old Town</div></div>
+              </div>
+            </div>
+            <div class="restaurant-fmgf">
+              <a href="https://www.findmeglutenfree.com/biz/funki-punki-pancakes/6414664555167744" class="restaurant-fmgf-link" target="_blank" rel="noopener">View on Find Me Gluten Free <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            </div>
+          </div>
+          <img class="restaurant-photo" src="../../photos/slovakia/bratislava/funki-punki-pancakes/IMG_7981.jpeg" alt="Funki Punki Pancakes">
+        </div>
+      </div>
+
+      <!-- 2. Pizzeria Primavera — RESEARCHED -->
+      <div class="restaurant-card">
+        <div class="restaurant-top">
+          <h3 class="restaurant-name">Pizzeria Primavera</h3>
+          <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div>
+        </div>
+        <div class="restaurant-cuisine">Italian · Pizza</div>
+        <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+        <div class="restaurant-gf-score">
+          <span class="restaurant-gf-score-label">GF Score</span>
+          <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
+        </div>
+        <div class="restaurant-details">
+          <div class="restaurant-detail">
+            <div class="restaurant-detail-label">Safety Notes</div>
+            <!-- RESEARCHED -->
+            <div class="restaurant-detail-value">Dedicated GF pizza oven and dedicated GF fryer. Staff trained on celiac needs, allergens clearly marked on menu. 5.0/5.0 on Find Me Gluten Free with 25+ ratings — multiple celiac reviewers report no reactions.</div>
+          </div>
+          <div class="restaurant-detail">
+            <div class="restaurant-detail-label">What to Order</div>
+            <!-- RESEARCHED -->
+            <div class="restaurant-detail-value">Any pizza on a GF base, GF pasta, risotto, burgers, schnitzel, fries, desserts. GF beer also available.</div>
+          </div>
+          <div class="restaurant-detail">
+            <div class="restaurant-detail-label">Location</div>
+            <div class="restaurant-detail-value"><div class="restaurant-location-value"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.79 0 1 1.79 1 4c0 3 4 8 4 8s4-5 4-8c0-2.21-1.79-4-4-4zm0 5.5A1.5 1.5 0 115 2.5a1.5 1.5 0 010 3z" fill="currentColor"/></svg>Radlinského 39, Staré Mesto</div></div>
+          </div>
+        </div>
+        <div class="restaurant-fmgf">
+          <a href="https://www.findmeglutenfree.com/biz/pizzeria-primavera/4869190564052992" class="restaurant-fmgf-link" target="_blank" rel="noopener">View on Find Me Gluten Free <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+
+      <!-- 3. Sweet Street — 100% GF RESEARCHED -->
+      <div class="restaurant-card">
+        <div class="restaurant-top">
+          <h3 class="restaurant-name">Sweet Street</h3>
+          <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-gf">100% GF</span></div>
+        </div>
+        <div class="restaurant-cuisine">Bakery · Desserts</div>
+        <!-- RESEARCHED -->
+        <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+        <div class="restaurant-gf-score">
+          <span class="restaurant-gf-score-label">GF Score</span>
+          <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
+        </div>
+        <div class="restaurant-details">
+          <div class="restaurant-detail">
+            <div class="restaurant-detail-label">Safety Notes</div>
+            <!-- RESEARCHED -->
+            <div class="restaurant-detail-value">Fully dedicated 100% gluten-free bakery. All desserts, cakes, pastries, and ice cream are GF. Some items also lactose-free. An entirely safe space for celiacs.</div>
+          </div>
+          <div class="restaurant-detail">
+            <div class="restaurant-detail-label">What to Order</div>
+            <!-- RESEARCHED -->
+            <div class="restaurant-detail-value">Everything is safe — choose freely. Worth the tram ride from Old Town for the rare luxury of a fully dedicated GF bakery.</div>
+          </div>
+          <div class="restaurant-detail">
+            <div class="restaurant-detail-label">Location</div>
+            <div class="restaurant-detail-value"><div class="restaurant-location-value"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.79 0 1 1.79 1 4c0 3 4 8 4 8s4-5 4-8c0-2.21-1.79-4-4-4zm0 5.5A1.5 1.5 0 115 2.5a1.5 1.5 0 010 3z" fill="currentColor"/></svg>Near Bratislava ZOO (~10 min by tram)</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. BEMBA — 100% GF RESEARCHED -->
+      <div class="restaurant-card">
+        <div class="restaurant-top">
+          <h3 class="restaurant-name">BEMBA</h3>
+          <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-gf">100% GF</span></div>
+        </div>
+        <div class="restaurant-cuisine">Plant-Based · Raw Food</div>
+        <!-- RESEARCHED -->
+        <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+        <div class="restaurant-gf-score">
+          <span class="restaurant-gf-score-label">GF Score</span>
+          <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
+        </div>
+        <div class="restaurant-details">
+          <div class="restaurant-detail">
+            <div class="restaurant-detail-label">Safety Notes</div>
+            <!-- RESEARCHED -->
+            <div class="restaurant-detail-value">100% gluten-free AND 100% plant-based restaurant. Bratislava's first raw food and plant-based restaurant — entirely dedicated GF facility with no cross-contamination risk.</div>
+          </div>
+          <div class="restaurant-detail">
+            <div class="restaurant-detail-label">What to Order</div>
+            <!-- RESEARCHED -->
+            <div class="restaurant-detail-value">Everything on the menu is safe for celiacs. Great for a healthy, creative meal — ideal if you want certainty without any negotiation.</div>
+          </div>
+          <div class="restaurant-detail">
+            <div class="restaurant-detail-label">Location</div>
+            <div class="restaurant-detail-value"><div class="restaurant-location-value"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.79 0 1 1.79 1 4c0 3 4 8 4 8s4-5 4-8c0-2.21-1.79-4-4-4zm0 5.5A1.5 1.5 0 115 2.5a1.5 1.5 0 010 3z" fill="currentColor"/></svg>Historic centre, ~10 min from Michael's Gate</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Veg Life — RESEARCHED -->
+      <div class="restaurant-card">
+        <div class="restaurant-top">
+          <h3 class="restaurant-name">Veg Life Pribinova</h3>
+          <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div>
+        </div>
+        <div class="restaurant-cuisine">Vegetarian · Health Food</div>
+        <!-- RESEARCHED -->
+        <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+        <div class="restaurant-gf-score">
+          <span class="restaurant-gf-score-label">GF Score</span>
+          <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+        </div>
+        <div class="restaurant-details">
+          <div class="restaurant-detail">
+            <div class="restaurant-detail-label">Safety Notes</div>
+            <!-- RESEARCHED -->
+            <div class="restaurant-detail-value">Self-service vegetarian restaurant with daily GF dishes, salads, juices, and healthy desserts. 8 locations across Bratislava. Weekday lunch only (11:00–15:00).</div>
+          </div>
+          <div class="restaurant-detail">
+            <div class="restaurant-detail-label">What to Order</div>
+            <!-- RESEARCHED -->
+            <div class="restaurant-detail-value">Check the daily menu for items marked GF. Happy hour from 14:00 with up to 40% off. Great for a quick, affordable weekday lunch.</div>
+          </div>
+          <div class="restaurant-detail">
+            <div class="restaurant-detail-label">Location</div>
+            <div class="restaurant-detail-value"><div class="restaurant-location-value"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.79 0 1 1.79 1 4c0 3 4 8 4 8s4-5 4-8c0-2.21-1.79-4-4-4zm0 5.5A1.5 1.5 0 115 2.5a1.5 1.5 0 010 3z" fill="currentColor"/></svg>Pribinova 19</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Restaurant Map -->
+    <!-- RESEARCHED -->
+    <div style="margin-top:1.6rem;">
+      <div class="map-container"><div id="restaurant-map" style="height:260px;"></div></div>
+      <div class="map-legend">
+        <div class="map-legend-item"><div class="map-legend-dot" style="background:#6a9a40;"></div>GF Score 4 — Funki Punki</div>
+        <div class="map-legend-item"><div class="map-legend-dot" style="background:#3d6e40;"></div>GF Score 5 — Pizzeria Primavera, Sweet Street, BEMBA</div>
+        <div class="map-legend-item"><div class="map-legend-dot" style="background:#c87a50;"></div>GF Score 2 — Veg Life</div>
+      </div>
+    </div>
+
+    <div class="restaurants-footer">
+      <a href="https://www.findmeglutenfree.com/sk/bratislava" class="restaurants-fmgf-link" target="_blank" rel="noopener">Find more GF spots on Find Me Gluten Free <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+  </section>
+
+  <!-- LANDMARKS -->
+  <section class="landmarks" id="landmarks">
+    <div class="landmarks-header">
+      <h2 class="landmarks-title">Landmarks &amp; Must-See Spots</h2>
+      <span class="landmarks-count">3 places</span>
+    </div>
+    <div class="landmarks-rule"></div>
+    <div class="landmarks-grid">
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <img class="landmark-photo" src="../../photos/slovakia/bratislava/main-square/IMG_7984.jpeg" alt="Main Square Bratislava">
+          <div class="landmark-card-content">
+            <div class="landmark-top"><h3 class="landmark-name">Main Square</h3><span class="landmark-type landmark-type-historic">Historic</span></div>
+            <p class="landmark-desc">The heart of Old Town — Gothic, Neo-Baroque, and Romanesque architecture surrounding the Roland Fountain (1572). Home to the Old Town Hall and Bratislava City Museum. Fun to explore.</p>
+            <div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.79 0 1 1.79 1 4c0 3 4 8 4 8s4-5 4-8c0-2.21-1.79-4-4-4zm0 5.5A1.5 1.5 0 115 2.5a1.5 1.5 0 010 3z" fill="currentColor"/></svg>Hlavné námestie, Staré Mesto</div>
+            <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot" style="background:var(--rose);width:4px;height:4px;border-radius:50%;display:inline-block;"></span> Went here</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <img class="landmark-photo" src="../../photos/slovakia/bratislava/the-blue-church-church-of-st-elizabeth/IMG_7998.jpeg" alt="Blue Church Bratislava">
+          <div class="landmark-card-content">
+            <div class="landmark-top"><h3 class="landmark-name">Blue Church</h3><span class="landmark-type landmark-type-historic">Historic</span></div>
+            <p class="landmark-desc">Art Nouveau gem built in 1913 — every surface painted in dreamy pastel blue. Such a cute, cool church! One of the most photographed buildings in Bratislava, about 10 minutes' walk from Main Square.</p>
+            <div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.79 0 1 1.79 1 4c0 3 4 8 4 8s4-5 4-8c0-2.21-1.79-4-4-4zm0 5.5A1.5 1.5 0 115 2.5a1.5 1.5 0 010 3z" fill="currentColor"/></svg>Bezručova 2, Staré Mesto</div>
+            <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot" style="background:var(--rose);width:4px;height:4px;border-radius:50%;display:inline-block;"></span> Went here</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <img class="landmark-photo" src="../../photos/slovakia/bratislava/čumil/IMG_8002.jpeg" alt="Čumil statue Bratislava">
+          <div class="landmark-card-content">
+            <div class="landmark-top"><h3 class="landmark-name">Čumil</h3><span class="landmark-type landmark-type-historic">Historic</span></div>
+            <p class="landmark-desc">Iconic bronze statue of a cheerful sewer worker peeking out of a manhole. Legend says touching his head while making a silent wish will make it come true.</p>
+            <div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.79 0 1 1.79 1 4c0 3 4 8 4 8s4-5 4-8c0-2.21-1.79-4-4-4zm0 5.5A1.5 1.5 0 115 2.5a1.5 1.5 0 010 3z" fill="currentColor"/></svg>Laurinská &amp; Panská streets</div>
+            <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot" style="background:var(--rose);width:4px;height:4px;border-radius:50%;display:inline-block;"></span> Went here</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- NEIGHBORHOODS -->
+  <section class="neighborhoods" id="neighborhoods">
+    <div class="neighborhoods-header">
+      <h2 class="neighborhoods-title">Neighborhoods</h2>
+    </div>
+    <div class="neighborhoods-rule"></div>
+    <!-- RESEARCHED -->
+    <div class="map-container" style="margin-bottom:1.6rem;"><div id="neighborhood-map" style="height:260px;"></div></div>
+    <div class="neighborhood-list">
+      <div class="neighborhood-item">
+        <div class="neighborhood-name-col"><span class="neighborhood-name">Staré Mesto</span><span class="neighborhood-vibe">Tourist hub</span></div>
+        <div class="neighborhood-desc">The pedestrian heart of Bratislava. Cobblestone streets, Baroque architecture, museums, cafes, and most sightseeing attractions. Home to Main Square, Blue Church, Čumil, and Michael's Gate. Where you'll spend the majority of your time.</div>
+      </div>
+      <div class="neighborhood-item">
+        <div class="neighborhood-name-col"><span class="neighborhood-name">Petržalka</span><span class="neighborhood-vibe">Panelák district</span></div>
+        <!-- RESEARCHED -->
+        <div class="neighborhood-desc">Bratislava's largest borough, south of the Danube. Rows of socialist-era 'panelák' housing — fascinating for architecture buffs. Budget-friendly with reliable tram links to the centre. The Vienna train arrives at Petržalka station.</div>
+      </div>
+      <div class="neighborhood-item">
+        <div class="neighborhood-name-col"><span class="neighborhood-name">Ružinov</span><span class="neighborhood-vibe">Families &amp; shopping</span></div>
+        <!-- RESEARCHED -->
+        <div class="neighborhood-desc">Home to Bratislava Airport and the Avion shopping center. Near Zlaté Piesky lake for swimming and sports. Green spaces and the Aquapark make it popular with families.</div>
+      </div>
+      <div class="neighborhood-item">
+        <div class="neighborhood-name-col"><span class="neighborhood-name">Nové Mesto</span><span class="neighborhood-vibe">Modern &amp; green</span></div>
+        <!-- RESEARCHED -->
+        <div class="neighborhood-desc">Modern district north of Old Town. Home to the Kamzík TV Tower observation deck and wooded hiking trails. More affordable than the centre with good transport links.</div>
+      </div>
+      <div class="neighborhood-item">
+        <div class="neighborhood-name-col"><span class="neighborhood-name">Karlova Ves</span><span class="neighborhood-vibe">Quiet &amp; residential</span></div>
+        <!-- RESEARCHED -->
+        <div class="neighborhood-desc">A former winemaking village west of Old Town with small-town charm. Green spaces, river access, and quick links to the centre. Popular with families and expats.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THINGS TO DO -->
+  <!-- RESEARCHED -->
+  <section class="things-to-do" id="things-to-do">
+    <div class="things-header"><h2 class="things-title">Things to Do</h2></div>
+    <div class="things-rule"></div>
+    <div class="things-category-label">Experiences &amp; Tours</div>
+    <div class="things-grid">
+
+      <div class="thing-card">
+        <div class="thing-top"><h3 class="thing-name">Bratislava Castle</h3><span class="thing-tag thing-tag-paid">Paid</span></div>
+        <p class="thing-desc">Historic fortress with 4,500 years of history and panoramic views over the Danube. Houses the Historical Museum of the Slovak National Museum. The grounds are free; museum entry is ticketed.</p>
+        <div class="thing-meta"><div class="thing-detail">~€14 museum admission</div></div>
+      </div>
+
+      <div class="thing-card">
+        <div class="thing-top"><h3 class="thing-name">UFO Observation Deck</h3><span class="thing-tag thing-tag-paid">Paid</span></div>
+        <p class="thing-desc">95-metre tower atop the SNP Bridge with 360-degree panoramic views, a restaurant, and a bar. An optional 'edge walk' takes you outside in a harness along the exterior windowsill.</p>
+        <div class="thing-meta"><div class="thing-detail">Daily 10:00–23:00</div></div>
+      </div>
+
+      <div class="thing-card">
+        <div class="thing-top"><h3 class="thing-name">Old Town Walking Tour</h3><span class="thing-tag thing-tag-paid">Paid</span></div>
+        <p class="thing-desc">Guided walk through the historic centre — Michael's Gate, St. Martin's Cathedral, Old Town Hall, and Main Square with a licensed local guide.</p>
+        <a href="https://www.getyourguide.com/bratislava-l765/bratislava-walking-tours-guides-classic-tour-t28754/" class="thing-book" target="_blank" rel="noopener sponsored">Book on GetYourGuide <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+
+      <div class="thing-card">
+        <div class="thing-top"><h3 class="thing-name">Bratislava Food Tasting Tour</h3><span class="thing-tag thing-tag-paid">Paid</span></div>
+        <p class="thing-desc">Sample traditional Slovak food and drinks across multiple restaurants while exploring Old Town highlights with a knowledgeable local guide.</p>
+        <a href="https://www.viator.com/tours/Bratislava/TRADITIONAL-FOOD-TOUR/d5561-88644P1" class="thing-book" target="_blank" rel="noopener sponsored">Book on Viator <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- GETTING AROUND -->
+  <!-- RESEARCHED -->
+  <section class="getting-around" id="getting-around">
+    <div class="getting-around-header"><h2 class="getting-around-title">Getting Around</h2></div>
+    <div class="getting-around-rule"></div>
+    <div class="transport-grid">
+      <div class="transport-card">
+        <div class="transport-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="5" r="2"/><path d="M12 7v7M9 10l3-3 3 3M9 18l3-2 3 2"/></svg></div>
+        <div class="transport-name">Walking</div>
+        <div class="transport-desc">Old Town is compact and entirely pedestrian. Most attractions within 15–20 minutes of each other on foot.</div>
+      </div>
+      <div class="transport-card">
+        <div class="transport-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="7" width="20" height="11" rx="2"/><path d="M7 7V5a2 2 0 012-2h6a2 2 0 012 2v2"/><circle cx="7" cy="15" r="1.5"/><circle cx="17" cy="15" r="1.5"/></svg></div>
+        <div class="transport-name">Trams</div>
+        <div class="transport-desc">Fastest and most reliable daytime transit. Runs approximately 05:00–23:30 across the city.</div>
+        <div class="transport-detail">From €0.70/ride</div>
+      </div>
+      <div class="transport-card">
+        <div class="transport-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="1" y="7" width="22" height="11" rx="2"/><path d="M1 11h22"/><circle cx="7" cy="15" r="1.5"/><circle cx="17" cy="15" r="1.5"/></svg></div>
+        <div class="transport-name">Buses</div>
+        <div class="transport-desc">Extensive network including night buses (prefix 'N'). Can get stuck in traffic during peak hours.</div>
+        <div class="transport-detail">24hr pass €3.50</div>
+      </div>
+      <div class="transport-card">
+        <div class="transport-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="8" width="20" height="10" rx="2"/><path d="M6 8V6a2 2 0 012-2h8a2 2 0 012 2v2"/><path d="M2 13h20"/></svg></div>
+        <div class="transport-name">Train from Vienna</div>
+        <div class="transport-desc">Under 1 hour city-to-city. Arrives at Petržalka station — take bus 80 to the centre.</div>
+        <div class="transport-detail">~€12–16</div>
+      </div>
+    </div>
+    <div class="transit-tip">
+      <div class="transit-tip-icon"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.3"/><path d="M8 7v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="5" r="0.7" fill="currentColor"/></svg></div>
+      <div class="transit-tip-content">
+        <div class="transit-tip-label">Ticket tip</div>
+        <div class="transit-tip-text">Buy tickets at yellow machines at stops or newspaper stands — you cannot buy from the driver. Validate immediately upon boarding. The Bratislava CARD includes free public transport, a guided walking tour, and discounts at 20+ attractions.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT TO PACK -->
+  <section class="packing" id="what-to-pack">
+    <div class="packing-header">
+      <h2 class="packing-title">What to Pack</h2>
+      <span class="packing-season">November</span>
+    </div>
+    <div class="packing-rule"></div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <div class="packing-check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/></svg></div>
+        <div class="packing-item-content"><div class="packing-item-name">GF snack bars</div><div class="packing-item-why">Long travel days between cities — always have a backup option</div></div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <div class="packing-check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/></svg></div>
+        <div class="packing-item-content"><div class="packing-item-name">Celiac dining card in Slovak</div><div class="packing-item-why">Download free from celiactravel.com or purchase from Equal Eats — essential for communicating with kitchen staff</div></div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <div class="packing-check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/></svg></div>
+        <div class="packing-item-content"><div class="packing-item-name">Reusable water bottle</div><div class="packing-item-why">Tap water is safe throughout Slovakia</div></div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <div class="packing-check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/></svg></div>
+        <div class="packing-item-content"><div class="packing-item-name">EU power adapter (Type C/E)</div><div class="packing-item-why">Standard European two-pin plug used throughout Slovakia</div></div>
+        <span class="packing-item-tag packing-tag-slovakia">Slovakia</span>
+      </li>
+      <li class="packing-item">
+        <div class="packing-check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/></svg></div>
+        <div class="packing-item-content"><div class="packing-item-name">Warm layers</div><div class="packing-item-why">November temperatures hover around 2–8°C — thermals and a warm coat essential</div></div>
+        <span class="packing-item-tag packing-tag-city">Bratislava</span>
+      </li>
+      <li class="packing-item">
+        <div class="packing-check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/></svg></div>
+        <div class="packing-item-content"><div class="packing-item-name">Comfortable walking shoes</div><div class="packing-item-why">Cobblestones everywhere in Old Town — flat soles essential</div></div>
+        <span class="packing-item-tag packing-tag-city">Bratislava</span>
+      </li>
+      <li class="packing-item">
+        <div class="packing-check"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1.1"/></svg></div>
+        <div class="packing-item-content"><div class="packing-item-name">Compact umbrella</div><div class="packing-item-why">November is one of the drier months but rain is still possible</div></div>
+        <span class="packing-item-tag packing-tag-city">Bratislava</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- TRAVEL TIPS -->
+  <section class="travel-tips" id="travel-tips">
+    <div class="tips-header"><h2 class="tips-title">Travel Tips</h2></div>
+    <div class="tips-rule"></div>
+    <ul class="tips-list">
+      <li class="tip-item"><div class="tip-bullet"></div><div class="tip-text">Bratislava is an easy day trip from Vienna (~1 hour by train) but deserves at least 2 nights to explore properly — the city has more to offer than a quick stop allows.</div></li>
+      <!-- RESEARCHED -->
+      <li class="tip-item"><div class="tip-bullet"></div><div class="tip-text">The Bratislava CARD includes free public transport, a guided walking tour, and discounts at 20+ sights — great value if you're spending 2+ days in the city.</div></li>
+      <!-- RESEARCHED -->
+      <li class="tip-item"><div class="tip-bullet"></div><div class="tip-text">EU allergen labeling law means allergen number 1 on Slovak menus indicates gluten-containing cereals (wheat, rye, barley, oats) — look for this numbering system on printed menus and chalkboards.</div></li>
+      <!-- RESEARCHED -->
+      <li class="tip-item"><div class="tip-bullet"></div><div class="tip-text">Most traditional Slovak dishes use wheat flour by default (halušky, pirohy, knedlíky, schnitzel) — always verify before ordering and ask for GF versions specifically.</div></li>
+      <li class="tip-item"><div class="tip-bullet"></div><div class="tip-text">English is widely spoken in tourist areas and restaurants throughout Old Town — communication is generally straightforward.</div></li>
+    </ul>
+    <div class="tips-hindsight">
+      <div class="tips-hindsight-label">What I'd do differently</div>
+      <ul class="hindsight-list">
+        <li class="hindsight-item">
+          <div class="hindsight-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M2 9l-1 1.5M2 9l1.5-1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <div class="hindsight-text">Allocate a full day just for Bratislava rather than squeezing it into a multi-country trip — there's genuinely more here than expected.</div>
+        </li>
+        <li class="hindsight-item">
+          <div class="hindsight-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M2 9l-1 1.5M2 9l1.5-1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          <div class="hindsight-text">Take the tram out to Sweet Street bakery — a dedicated 100% GF bakery is too rare to pass up, and the journey is short.</div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <footer class="page-footer">
+    <p class="page-disclosure">This page may contain affiliate links. If you book through these links, I may earn a small commission at no extra cost to you.</p>
+  </footer>
+
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" aria-label="Close lightbox"><svg viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18" stroke="currentColor"/><line x1="6" y1="6" x2="18" y2="18" stroke="currentColor"/></svg></button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="">
+  </div>
+
+  <script>
+  (function() {
+    // Lightbox
+    var overlay = document.getElementById('lightbox');
+    var lbImg = document.getElementById('lightbox-img');
+    document.querySelectorAll('.restaurant-photo, .landmark-photo').forEach(function(img) {
+      img.addEventListener('click', function(e) { e.stopPropagation(); lbImg.src = this.src; lbImg.alt = this.alt; overlay.classList.add('active'); document.body.style.overflow = 'hidden'; });
+    });
+    function closeLightbox() { overlay.classList.remove('active'); document.body.style.overflow = ''; }
+    overlay.addEventListener('click', closeLightbox);
+    document.querySelector('.lightbox-close').addEventListener('click', function(e) { e.stopPropagation(); closeLightbox(); });
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
+
+    // Restaurant Map
+    var rMap = L.map('restaurant-map', { zoomControl: true, scrollWheelZoom: false }).setView([48.148, 17.095], 13);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap &copy; CARTO', subdomains: 'abcd', maxZoom: 19 }).addTo(rMap);
+    [
+      { name: 'Funki Punki Pancakes', lat: 48.1442985, lon: 17.1054871, score: 4, color: '#6a9a40' },
+      { name: 'Pizzeria Primavera',   lat: 48.1546367, lon: 17.1190221, score: 5, color: '#3d6e40' },
+      { name: 'Sweet Street',         lat: 48.1510271, lon: 17.0612479, score: 5, color: '#3d6e40' },
+      { name: 'BEMBA',                lat: 48.1492866, lon: 17.1124613, score: 5, color: '#3d6e40' },
+      { name: 'Veg Life Pribinova',   lat: 48.1412886, lon: 17.1263297, score: 2, color: '#c87a50' }
+    ].forEach(function(r) {
+      L.circleMarker([r.lat, r.lon], { radius: 7, fillColor: r.color, color: '#fff', weight: 2, opacity: 1, fillOpacity: 0.9 }).addTo(rMap)
+        .bindTooltip(r.name + ' · ' + r.score + '/5', { permanent: false, direction: 'top' });
+    });
+
+    // Neighborhood Map
+    var nMap = L.map('neighborhood-map', { zoomControl: true, scrollWheelZoom: false }).setView([48.148, 17.107], 12);
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap &copy; CARTO', subdomains: 'abcd', maxZoom: 19 }).addTo(nMap);
+    [
+      { name: 'STARÉ MESTO', lat: 48.1440, lon: 17.1090 },
+      { name: 'PETRŽALKA',   lat: 48.1250, lon: 17.1150 },
+      { name: 'RUŽINOV',     lat: 48.1500, lon: 17.1700 },
+      { name: 'NOVÉ MESTO',  lat: 48.1650, lon: 17.1300 },
+      { name: 'KARLOVA VES', lat: 48.1550, lon: 17.0550 }
+    ].forEach(function(n) {
+      L.circleMarker([n.lat, n.lon], { radius: 5, fillColor: 'rgba(42,32,24,0.15)', color: 'rgba(42,32,24,0.4)', weight: 1.5, opacity: 1, fillOpacity: 1 }).addTo(nMap);
+      L.marker([n.lat, n.lon], { icon: L.divIcon({ className: '', html: '<span style="font-family:Jost,sans-serif;font-size:0.5rem;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(42,32,24,0.55);white-space:nowrap;">' + n.name + '</span>', iconAnchor: [0, -8] }) }).addTo(nMap);
+    });
+  })();
+  </script>
+
 </body>
 </html>
