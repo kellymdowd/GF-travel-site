@@ -50,6 +50,44 @@
     .overview-btn:hover { color: var(--slate); border-color: var(--slate); background: rgba(200, 113, 122, 0.05); }
     .overview-btn svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
     .overview-btn:hover svg { transform: translateX(2px); }
+    /* ─── GF Friendliness Section ─────────────────────────── */
+    .gf-section { padding: 0 2.5rem 2rem; opacity: 0; animation: fadeIn 0.8s ease 1.4s forwards; }
+    .gf-section-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.2rem; }
+    .gf-section-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .gf-verdict-tag { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.25rem 0.7rem 0.25rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; }
+    .gf-verdict-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .gf-verdict-easy { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .gf-verdict-easy .gf-verdict-dot { background: #4c8c50; }
+    .gf-verdict-moderate { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
+    .gf-verdict-moderate .gf-verdict-dot { background: #b48c3c; }
+    .gf-verdict-difficult { background: rgba(180, 70, 60, 0.08); color: #8a3a30; }
+    .gf-verdict-difficult .gf-verdict-dot { background: #b4463c; }
+    .gf-section-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.4rem; }
+    .gf-section-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    .gf-section-summary { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.01em; margin-bottom: 1.4rem; }
+    .gf-score-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.05); }
+    .gf-score-row:first-of-type { border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .gf-score-category { font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; color: var(--ink-mid); letter-spacing: 0.02em; }
+    .gf-score-pips { display: flex; gap: 4px; align-items: center; }
+    .gf-score-pip { width: 8px; height: 8px; border-radius: 50%; background: rgba(42, 32, 24, 0.08); }
+    .gf-score-pip.is-filled { background: var(--slate); }
+    .gf-score-total { display: flex; align-items: baseline; gap: 0.5rem; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid rgba(42, 32, 24, 0.12); }
+    .gf-score-total-num { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 2.4rem; color: var(--ink); line-height: 1; letter-spacing: -0.02em; }
+    .gf-score-total-label { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .gf-city-scores { margin-top: 1.4rem; }
+    .gf-city-scores-label { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.6rem; }
+    .gf-city-score-row { display: flex; justify-content: space-between; align-items: center; padding: 0.45rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.05); }
+    .gf-city-score-row:first-of-type { border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .gf-city-name { font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; color: var(--ink-mid); }
+    .gf-city-name a { color: var(--ink-mid); text-decoration: none; transition: color 0.2s ease; }
+    .gf-city-name a:hover { color: var(--slate); }
+    .gf-city-score-bar { display: flex; gap: 3px; align-items: center; }
+    .gf-city-pip { width: 6px; height: 6px; border-radius: 50%; background: rgba(42, 32, 24, 0.08); }
+    .gf-city-pip.is-filled { background: var(--slate); }
+    @media (max-width: 768px) {
+      .gf-section-grid { grid-template-columns: 1fr; gap: 1.6rem; }
+    }
+
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
     @media (max-width: 600px) { .site-nav { padding: 0 1.2rem; } .nav-sub, .header, .overview-section, .map-section, .cities-section { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
@@ -143,6 +181,72 @@
   <section class="cities-section">
     <div class="cities-rule"></div>
     <div class="cities-grid" id="city-chips"></div>
+  </section>
+
+  <!-- ═══════════════ GF FRIENDLINESS ═══════════════ -->
+  <section class="gf-section">
+    <div class="gf-section-header">
+      <h2 class="gf-section-title">GF Friendliness</h2>
+      <span class="gf-verdict-tag gf-verdict-easy"><span class="gf-verdict-dot"></span>GF Friendly</span>
+    </div>
+    <div class="gf-section-rule"></div>
+
+    <div class="gf-section-grid">
+      <div>
+        <p class="gf-section-summary">Scotland is one of the best countries in Europe for celiac travelers. Strong UK allergen laws (Natasha's Law) mean restaurants must declare allergens, and most do so willingly. Even small villages on remote islands offer GF bread, dedicated fryers, and staff who understand cross-contamination. Supermarkets across the country stock excellent free-from ranges.</p>
+
+        <div class="gf-city-scores">
+          <div class="gf-city-scores-label">City Scores</div>
+          <div class="gf-city-score-row">
+            <span class="gf-city-name"><a href="scotland/edinburgh.html">Edinburgh</a></span>
+            <div class="gf-city-score-bar"><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span></div>
+          </div>
+          <div class="gf-city-score-row">
+            <span class="gf-city-name"><a href="scotland/glasgow.html">Glasgow</a></span>
+            <div class="gf-city-score-bar"><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span></div>
+          </div>
+          <div class="gf-city-score-row">
+            <span class="gf-city-name"><a href="scotland/inverness.html">Inverness</a></span>
+            <div class="gf-city-score-bar"><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span></div>
+          </div>
+          <div class="gf-city-score-row">
+            <span class="gf-city-name"><a href="scotland/portree.html">Portree</a></span>
+            <div class="gf-city-score-bar"><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span></div>
+          </div>
+          <div class="gf-city-score-row">
+            <span class="gf-city-name"><a href="scotland/fort-william.html">Fort William</a></span>
+            <div class="gf-city-score-bar"><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">GF Culture &amp; Awareness</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Labeling &amp; Regulations</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Dining Options Nationwide</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Grocery &amp; Supermarket Access</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Naturally GF Cuisine</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div>
+        </div>
+        <div class="gf-score-total">
+          <span class="gf-score-total-num">9</span>
+          <span class="gf-score-total-label">out of 10</span>
+        </div>
+      </div>
+    </div>
   </section>
 
   <div id="map-tooltip"></div>
