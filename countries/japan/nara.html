@@ -7,6 +7,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
     :root { --cream: #FFFFFF; --slate: #C8717A; --slate-bg: #FBF0F1; --rose: #B8907A; --ink: #2A2018; --ink-mid: #5A5048; --ink-light: #9A907A; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -19,223 +21,296 @@
     .back-link:hover svg { transform: translateX(-3px); }
     .back-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
     .nav-sep { font-size: 0.68rem; color: rgba(154, 144, 122, 0.4); letter-spacing: 0.1em; }
+    .nav-link { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .nav-link:hover { color: var(--slate); }
     .nav-current { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mid); }
     .header { display: flex; justify-content: space-between; align-items: flex-end; padding: 1.4rem 2.5rem 1.2rem; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
+    .header-left { display: flex; flex-direction: column; }
+    .country-label { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.25rem; }
     .city-name { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1; }
     .trip-date { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(0.85rem, 1.3vw, 1rem); color: var(--ink-light); letter-spacing: 0.04em; padding-bottom: 0.2rem; }
     .header-rule { height: 1px; background: linear-gradient(to right, var(--rose), transparent 60%); margin: 0 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 0.6s forwards; }
-    .map-section { flex: 1; padding: 1.5rem 2.5rem 2rem; display: flex; flex-direction: column; gap: 0; opacity: 0; animation: fadeIn 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
-    .map-frame { width: 100%; flex: 1; min-height: 520px; border: none; }
-    .map-placeholder { width: 100%; flex: 1; min-height: 520px; background: var(--slate-bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; border: 1px dashed rgba(200, 113, 122, 0.35); }
-    .map-placeholder svg { color: var(--slate); opacity: 0.4; }
-    .map-placeholder-text { text-align: center; }
-    .map-placeholder-text p { font-size: 0.72rem; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-light); line-height: 1.8; }
-    
+
     /* ─── City Snapshot ──────────────────────────────────────── */
-    .snapshot {
-      padding: 1.6rem 2.5rem 0;
-      opacity: 0;
-      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
-    }
-
-    .snapshot-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 1rem;
-    }
-
-    .snapshot-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 0;
-      border-top: 1px solid rgba(42, 32, 24, 0.08);
-    }
-
-    .snapshot-item {
-      padding: 1rem 1.2rem 1rem 0;
-      border-bottom: 1px solid rgba(42, 32, 24, 0.08);
-    }
-
-    .snapshot-item-label {
-      font-family: 'Jost', sans-serif;
-      font-size: 0.58rem;
-      font-weight: 400;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 0.35rem;
-    }
-
-    .snapshot-item-value {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 400;
-      font-size: 1.05rem;
-      letter-spacing: 0.02em;
-      color: var(--ink);
-      line-height: 1.2;
-    }
-
-    /* GF Score visual */
-    .snapshot-score {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .snapshot-score-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 400;
-      font-size: 1.05rem;
-      color: var(--ink);
-      letter-spacing: 0.02em;
-      line-height: 1;
-    }
-
-    .snapshot-score-bar {
-      display: flex;
-      gap: 3px;
-      align-items: center;
-    }
-
-    .snapshot-score-pip {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: rgba(42, 32, 24, 0.1);
-    }
-
-    .snapshot-score-pip.is-filled {
-      background: var(--slate);
-    }
+    .snapshot { padding: 1.6rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards; }
+    .snapshot-label { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .snapshot-item { padding: 1rem 1.2rem 1rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.08); }
+    .snapshot-item-label { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.35rem; }
+    .snapshot-item-value { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .snapshot-score { display: flex; align-items: center; gap: 0.6rem; }
+    .snapshot-score-num { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); letter-spacing: 0.02em; line-height: 1; }
+    .snapshot-score-bar { display: flex; gap: 3px; align-items: center; }
+    .snapshot-score-pip { width: 6px; height: 6px; border-radius: 50%; background: rgba(42, 32, 24, 0.1); }
+    .snapshot-score-pip.is-filled { background: var(--slate); }
 
     /* ─── Table of Contents ─────────────────────────────────── */
-    .toc {
-      padding: 1.6rem 2.5rem 0;
-      opacity: 0;
-      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+    .toc { padding: 1.6rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
+    .toc-label { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; }
+    .toc-list { list-style: none; display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .toc-item { border-bottom: 1px solid rgba(42, 32, 24, 0.08); }
+    .toc-link { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1.6rem 0.7rem 0; font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; letter-spacing: 0.04em; color: var(--ink-mid); text-decoration: none; transition: color 0.2s ease; }
+    .toc-link:hover { color: var(--slate); }
+    .toc-link:hover .toc-arrow { transform: translateX(3px); color: var(--slate); }
+    .toc-link:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .toc-link:active { color: var(--rose); }
+    .toc-arrow { color: var(--ink-light); opacity: 0.4; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease; flex-shrink: 0; }
+
+    /* ─── Gluten-Free Survival Guide ────────────────────────── */
+    .gf-guide { padding: 2.4rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards; }
+    .gf-guide-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.4rem; }
+    .gf-guide-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .gf-guide-difficulty { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.25rem 0.7rem 0.25rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; }
+    .gf-guide-difficulty .gf-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .gf-difficulty-moderate { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
+    .gf-difficulty-moderate .gf-dot { background: #b48c3c; }
+    .gf-guide-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.4rem; }
+    .gf-guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    .gf-info-group { margin-bottom: 1.6rem; }
+    .gf-info-group:last-child { margin-bottom: 0; }
+    .gf-info-label { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.5rem; }
+    .gf-info-value { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.6; letter-spacing: 0.01em; }
+    .gf-phrase { display: flex; justify-content: space-between; align-items: baseline; padding: 0.3rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.05); gap: 1rem; }
+    .gf-phrase:last-child { border-bottom: none; }
+    .gf-phrase-local { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; color: var(--ink); }
+    .gf-phrase-meaning { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-light); letter-spacing: 0.03em; text-align: right; flex-shrink: 0; }
+    .gf-list { list-style: none; }
+    .gf-list li { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); padding: 0.25rem 0; line-height: 1.4; }
+    .gf-list li::before { content: '\2014'; color: var(--ink-light); opacity: 0.4; margin-right: 0.5rem; }
+    .gf-score-section { padding-left: 2.5rem; border-left: 1px solid rgba(42, 32, 24, 0.08); }
+    .gf-score-title { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; }
+    .gf-score-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.05); }
+    .gf-score-row:first-of-type { border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .gf-score-category { font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; color: var(--ink-mid); letter-spacing: 0.02em; }
+    .gf-score-pips { display: flex; gap: 4px; align-items: center; }
+    .gf-score-pip { width: 8px; height: 8px; border-radius: 50%; background: rgba(42, 32, 24, 0.08); }
+    .gf-score-pip.is-filled { background: var(--slate); }
+    .gf-score-total { display: flex; align-items: baseline; gap: 0.5rem; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid rgba(42, 32, 24, 0.12); }
+    .gf-score-total-num { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 2.4rem; color: var(--ink); line-height: 1; letter-spacing: -0.02em; }
+    .gf-score-total-label { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .gf-score-verdict { margin-top: 0.8rem; }
+    @media (max-width: 768px) {
+      .gf-guide-grid { grid-template-columns: 1fr; gap: 1.6rem; }
+      .gf-score-section { padding-left: 0; border-left: none; padding-top: 1.2rem; border-top: 1px solid rgba(42, 32, 24, 0.08); }
     }
 
-    .toc-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 1rem;
+    /* ─── Restaurants ────────────────────────────────────────── */
+    .restaurants { padding: 2.4rem 2.5rem 0; }
+    .restaurants-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .restaurants-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .restaurants-count { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .restaurants-rule { height: 1px; background: rgba(42, 32, 24, 0.08); }
+    .restaurants-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .restaurant-card { padding: 1.4rem 1.6rem 1.4rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .restaurant-card:nth-child(odd) { padding-right: 1.6rem; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .restaurant-card:nth-child(even) { padding-left: 1.6rem; padding-right: 0; }
+    .restaurant-card:nth-last-child(1), .restaurant-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    .restaurant-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.4rem; }
+    .restaurant-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.15rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .restaurant-tags { display: flex; gap: 0.4rem; flex-shrink: 0; }
+    .restaurant-tag { display: inline-block; padding: 0.2rem 0.55rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
+    .restaurant-tag-gf { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .restaurant-tag-options { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
+    .restaurant-cuisine { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-light); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.9rem; }
+    .restaurant-source { display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 400; letter-spacing: 0.08em; margin-bottom: 0.9rem; }
+    .restaurant-source-dot { width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
+    .restaurant-source-visited { color: var(--rose); }
+    .restaurant-source-visited .restaurant-source-dot { background: var(--rose); }
+    .restaurant-source-researched { color: var(--ink-light); opacity: 0.7; }
+    .restaurant-source-researched .restaurant-source-dot { background: var(--ink-light); }
+    .restaurant-gf-score { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.7rem; margin-bottom: 1rem; }
+    .restaurant-gf-score-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .restaurant-gf-pips { display: flex; gap: 3px; align-items: center; }
+    .restaurant-gf-pip { width: 7px; height: 7px; border-radius: 50%; background: rgba(42, 32, 24, 0.08); }
+    .restaurant-gf-pip.is-filled { background: var(--slate); }
+    .restaurant-details { display: flex; flex-direction: column; gap: 0.6rem; }
+    .restaurant-detail-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.25rem; }
+    .restaurant-detail-value { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 0.95rem; color: var(--ink-mid); line-height: 1.5; letter-spacing: 0.01em; }
+    .restaurant-location-value { display: flex; align-items: baseline; gap: 0.4rem; }
+    .restaurant-location-value svg { flex-shrink: 0; color: var(--ink-light); opacity: 0.5; position: relative; top: 1px; }
+    .restaurant-card-inner { display: flex; gap: 1.2rem; align-items: flex-start; }
+    .restaurant-card-content { flex: 1; min-width: 0; }
+    .restaurant-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 4px rgba(42, 32, 24, 0.1); margin-top: 0.3rem; cursor: zoom-in; }
+    .restaurant-fmgf { margin-top: 0.7rem; }
+    .restaurant-fmgf-link { display: inline-flex; align-items: center; gap: 0.4rem; font-family: 'Jost', sans-serif; font-size: 0.64rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .restaurant-fmgf-link:hover { color: var(--slate); }
+    .restaurant-fmgf-link:hover svg { transform: translateX(2px); }
+    .restaurant-fmgf-link:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .restaurant-fmgf-link:active { color: var(--rose); }
+    .restaurant-fmgf-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; }
+    .restaurants-footer { padding-top: 1.2rem; margin-top: 0.4rem; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .restaurants-fmgf-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .restaurants-fmgf-link:hover { color: var(--slate); }
+    .restaurants-fmgf-link:hover svg { transform: translateX(2px); }
+    .restaurants-fmgf-link:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .restaurants-fmgf-link:active { color: var(--rose); }
+    .restaurants-fmgf-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; }
+    @media (max-width: 768px) {
+      .restaurants-grid { grid-template-columns: 1fr; }
+      .restaurant-card:nth-child(odd) { border-right: none; padding-right: 0; }
+      .restaurant-card:nth-child(even) { padding-left: 0; }
+      .restaurant-card:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
     }
 
-    .toc-list {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0;
-      border-top: 1px solid rgba(42, 32, 24, 0.08);
+    /* ─── Getting Around ────────────────────────────────────── */
+    .getting-around { padding: 2.4rem 2.5rem 0; }
+    .getting-around-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .getting-around-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .getting-around-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .transport-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+    .transport-card { padding: 1.4rem 1.4rem 1.4rem 0; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .transport-card:last-child { border-right: none; padding-right: 0; }
+    .transport-card:first-child { padding-left: 0; }
+    .transport-card:not(:first-child) { padding-left: 1.4rem; }
+    .transport-icon { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(42, 32, 24, 0.03); color: var(--ink-mid); margin-bottom: 0.9rem; }
+    .transport-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.1rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; margin-bottom: 0.5rem; }
+    .transport-desc { font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; }
+    .transport-detail { display: flex; align-items: baseline; gap: 0.4rem; margin-top: 0.6rem; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); }
+    .transport-detail svg { flex-shrink: 0; position: relative; top: 1px; opacity: 0.5; }
+    .transit-tip { margin-top: 1.6rem; padding: 1.2rem 1.4rem; background: var(--slate-bg); border-radius: 4px; border-left: 2px solid var(--slate); display: flex; gap: 0.8rem; align-items: flex-start; }
+    .transit-tip-icon { flex-shrink: 0; color: var(--slate); opacity: 0.7; position: relative; top: 1px; }
+    .transit-tip-content { flex: 1; min-width: 0; }
+    .transit-tip-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--slate); margin-bottom: 0.35rem; }
+    .transit-tip-text { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 0.98rem; color: var(--ink); line-height: 1.6; letter-spacing: 0.01em; }
+    @media (max-width: 768px) {
+      .transport-grid { grid-template-columns: 1fr 1fr; }
+      .transport-card { border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+      .transport-card:nth-child(2) { border-right: none; padding-right: 0; }
+      .transport-card:nth-child(3) { padding-left: 0; }
+      .transport-card:nth-child(3), .transport-card:nth-child(4) { border-bottom: none; }
+    }
+    @media (max-width: 480px) {
+      .transport-grid { grid-template-columns: 1fr; }
+      .transport-card { border-right: none; padding-left: 0; padding-right: 0; }
+      .transport-card:last-child { border-bottom: none; }
     }
 
-    .toc-item {
-      border-bottom: 1px solid rgba(42, 32, 24, 0.08);
+    /* ─── Landmarks & Must-See Spots ─────────────────────────── */
+    .landmarks { padding: 2.4rem 2.5rem 0; }
+    .landmarks-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .landmarks-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .landmarks-count { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .landmarks-rule { height: 1px; background: rgba(42, 32, 24, 0.08); }
+    .landmarks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .landmark-card { padding: 1.4rem 1.6rem 1.4rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .landmark-card:nth-child(odd) { padding-right: 1.6rem; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .landmark-card:nth-child(even) { padding-left: 1.6rem; padding-right: 0; }
+    .landmark-card:nth-last-child(1), .landmark-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    .landmark-card-inner { display: flex; gap: 1.2rem; align-items: flex-start; }
+    .landmark-card-content { flex: 1; min-width: 0; }
+    .landmark-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.3rem; }
+    .landmark-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.15rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .landmark-type { display: inline-block; padding: 0.2rem 0.55rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.52rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+    .landmark-type-historic { background: rgba(42, 32, 24, 0.04); color: var(--ink-mid); }
+    .landmark-type-nature { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .landmark-desc { font-family: 'Jost', sans-serif; font-size: 0.74rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; margin-bottom: 0.5rem; }
+    .landmark-location { display: flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; color: var(--ink-light); letter-spacing: 0.04em; }
+    .landmark-location svg { flex-shrink: 0; opacity: 0.5; }
+    .landmark-photo { width: 80px; height: 80px; border-radius: 4px; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 4px rgba(42, 32, 24, 0.1); cursor: zoom-in; }
+    .landmark-photo-placeholder { width: 80px; height: 80px; border-radius: 4px; flex-shrink: 0; background: rgba(42, 32, 24, 0.03); border: 1px dashed rgba(42, 32, 24, 0.1); display: flex; align-items: center; justify-content: center; color: var(--ink-light); opacity: 0.4; }
+    .landmark-source { display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.08em; margin-top: 0.5rem; }
+    .landmark-source-visited { color: var(--rose); }
+    .landmark-source-visited .restaurant-source-dot { background: var(--rose); }
+    .landmark-source-researched { color: var(--ink-light); opacity: 0.7; }
+    .landmark-source-researched .restaurant-source-dot { background: var(--ink-light); }
+    @media (max-width: 768px) {
+      .landmarks-grid { grid-template-columns: 1fr; }
+      .landmark-card:nth-child(odd) { border-right: none; padding-right: 0; }
+      .landmark-card:nth-child(even) { padding-left: 0; }
+      .landmark-card:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
     }
 
-    .toc-link {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.7rem 1.6rem 0.7rem 0;
-      font-family: 'Jost', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 300;
-      letter-spacing: 0.04em;
-      color: var(--ink-mid);
-      text-decoration: none;
-      transition: color 0.2s ease;
+    /* ─── Things to Do ─────────────────────────────────────── */
+    .things-to-do { padding: 2.4rem 2.5rem 0; }
+    .things-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .things-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .things-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .things-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .thing-card { padding: 1.2rem 1.6rem 1.2rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .thing-card-inner { display: flex; align-items: flex-start; gap: 1rem; }
+    .thing-card-content { flex: 1; min-width: 0; }
+    .thing-photo { width: 80px; height: 80px; border-radius: 6px; object-fit: cover; flex-shrink: 0; cursor: pointer; transition: opacity 0.2s ease; }
+    .thing-photo:hover { opacity: 0.85; }
+    .thing-card:nth-child(odd) { padding-right: 1.6rem; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .thing-card:nth-child(even) { padding-left: 1.6rem; padding-right: 0; }
+    .thing-card:nth-last-child(1), .thing-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    .thing-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.3rem; }
+    .thing-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.1rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .thing-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+    .thing-tag-paid { background: rgba(42, 32, 24, 0.04); color: var(--ink-mid); }
+    .thing-desc { font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; margin-bottom: 0.6rem; }
+    .thing-meta { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+    .thing-detail { display: flex; align-items: center; gap: 0.3rem; font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; color: var(--ink-light); letter-spacing: 0.04em; }
+    .thing-detail svg { flex-shrink: 0; opacity: 0.5; }
+    .thing-book { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.7rem; padding: 0.45rem 0.9rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 3px; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 6px rgba(200, 113, 122, 0.15), 0 1px 2px rgba(200, 113, 122, 0.08); }
+    .thing-book:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200, 113, 122, 0.25), 0 2px 4px rgba(200, 113, 122, 0.12); }
+    .thing-book:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; }
+    .thing-book:active { background: #a85a63; transform: translateY(0); }
+    .thing-book svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .thing-book:hover svg { transform: translateX(2px); }
+    @media (max-width: 768px) {
+      .things-grid { grid-template-columns: 1fr; }
+      .thing-card:nth-child(odd) { border-right: none; padding-right: 0; }
+      .thing-card:nth-child(even) { padding-left: 0; }
+      .thing-card:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
     }
 
-    .toc-link:hover {
-      color: var(--slate);
+    /* ─── What to Pack ─────────────────────────────────────── */
+    .packing { padding: 2.4rem 2.5rem 0; }
+    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .packing-item:last-child { border-bottom: none; }
+    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
+    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
+    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
+    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
+    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
+    .packing-tag-japan { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
+    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    @media (max-width: 768px) {
+      .packing-item { grid-template-columns: 20px 1fr; }
+      .packing-item-tag { grid-column: 2; }
     }
 
-    .toc-link:hover .toc-arrow {
-      transform: translateX(3px);
-      color: var(--slate);
-    }
+    /* ─── Travel Tips ──────────────────────────────────────── */
+    .travel-tips { padding: 2.4rem 2.5rem 0; }
+    .tips-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .tips-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .tips-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .tips-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .tip-item { display: flex; gap: 0.8rem; align-items: baseline; padding: 0.7rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .tip-item:last-child { border-bottom: none; }
+    .tip-bullet { width: 4px; height: 4px; border-radius: 50%; background: var(--slate); flex-shrink: 0; opacity: 0.5; position: relative; top: 0.35rem; }
+    .tip-text { font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; }
 
-    .toc-link:focus-visible {
-      outline: 1.5px solid var(--slate);
-      outline-offset: 2px;
-      border-radius: 2px;
-    }
-
-    .toc-link:active {
-      color: var(--rose);
-    }
-
-    .toc-arrow {
-      color: var(--ink-light);
-      opacity: 0.4;
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
-      flex-shrink: 0;
-    }
-
-    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeIn { to { opacity: 1; } }
-    @media (max-width: 600px) { .nav, .header, .map-section, .snapshot, .toc, .coming-soon-banner { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
-  
-    /* ─── Coming Soon Badge ────────────────────────────────── */
-    .coming-soon-banner {
-      padding: 2.5rem 2.5rem 0;
-      opacity: 0;
-      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
-    }
-
-    .coming-soon-inner {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1.2rem 1.6rem;
-      background: var(--slate-bg, #FBF0F1);
-      border-left: 2px solid var(--slate, #C8717A);
-    }
-
-    .coming-soon-icon {
-      flex-shrink: 0;
-      color: var(--slate, #C8717A);
-      opacity: 0.6;
-    }
-
-    .coming-soon-text {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-    }
-
-    .coming-soon-label {
-      font-family: 'Jost', sans-serif;
-      font-size: 0.62rem;
-      font-weight: 400;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--slate, #C8717A);
-    }
-
-    .coming-soon-desc {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.95rem;
-      font-weight: 300;
-      font-style: italic;
-      color: var(--ink-mid, #5A5048);
-      letter-spacing: 0.02em;
-      line-height: 1.4;
-    }
-      .tip-cta { padding: 2.4rem 2.5rem; text-align: center; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    /* ─── Tip CTA & Footer ──────────────────────────────────── */
+    .tip-cta { padding: 2.4rem 2.5rem; text-align: center; border-top: 1px solid rgba(42, 32, 24, 0.08); }
     .tip-cta-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.2rem, 2vw, 1.5rem); letter-spacing: 0.04em; color: var(--ink); margin-bottom: 0.4rem; }
     .tip-cta-sub { font-family: 'Jost', sans-serif; font-size: 0.82rem; font-weight: 300; color: var(--ink-light); margin-bottom: 1.2rem; }
     .tip-cta-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--slate); text-decoration: none; border: 1px solid rgba(200, 113, 122, 0.3); padding: 0.6rem 1.4rem; border-radius: 100px; transition: background 0.2s ease, border-color 0.2s ease; }
     .tip-cta-link:hover { background: var(--slate-bg); border-color: var(--slate); }
+    .page-footer { padding: 2rem 2.5rem 2.5rem; text-align: center; }
+    .page-disclosure { font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 300; color: var(--ink-light); opacity: 0.5; letter-spacing: 0.03em; }
+
+    /* ─── Photo Lightbox ──────────────────────────────────────── */
+    .lightbox-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(10, 8, 6, 0); display: flex; align-items: center; justify-content: center; cursor: zoom-out; opacity: 0; pointer-events: none; transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .lightbox-overlay.active { opacity: 1; pointer-events: auto; background: rgba(10, 8, 6, 0.85); }
+    .lightbox-img { max-width: 90vw; max-height: 85vh; border-radius: 6px; object-fit: contain; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06); transform: scale(0.92); opacity: 0; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease; }
+    .lightbox-overlay.active .lightbox-img { transform: scale(1); opacity: 1; }
+    .lightbox-close { position: absolute; top: 1.2rem; right: 1.4rem; width: 36px; height: 36px; border: none; background: rgba(255, 255, 255, 0.1); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .lightbox-close:hover { background: rgba(255, 255, 255, 0.2); transform: scale(1.1); }
+    .lightbox-close:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.5); outline-offset: 2px; }
+    .lightbox-close:active { transform: scale(0.95); }
+    .lightbox-close svg { width: 16px; height: 16px; stroke: rgba(255, 255, 255, 0.8); stroke-width: 2; }
+
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { to { opacity: 1; } }
+    @media (max-width: 600px) { .nav, .header, .snapshot, .toc, .gf-guide, .restaurants, .landmarks, .things-to-do, .packing, .travel-tips, .getting-around, .page-footer, .tip-cta { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
   </style>
 
   <!-- Google Analytics (gtag.js) -->
@@ -248,151 +323,773 @@
 
     // ─── Custom event tracking ─────────────────────────────
     document.addEventListener('DOMContentLoaded', function() {
-
-      // Outbound link clicks (links with target="_blank")
       document.querySelectorAll('a[target="_blank"]').forEach(function(link) {
         link.addEventListener('click', function() {
-          gtag('event', 'outbound_click', {
-            event_category: 'engagement',
-            event_label: this.href,
-            transport_type: 'beacon'
-          });
+          gtag('event', 'outbound_click', { event_category: 'engagement', event_label: this.href, transport_type: 'beacon' });
         });
       });
-
-      // Section navigation (TOC / anchor links)
       document.querySelectorAll('a[href^="#"]').forEach(function(link) {
         link.addEventListener('click', function() {
-          gtag('event', 'section_nav', {
-            event_category: 'navigation',
-            event_label: this.getAttribute('href')
-          });
+          gtag('event', 'section_nav', { event_category: 'navigation', event_label: this.getAttribute('href') });
         });
       });
-
-      // Map interactions — clicks on map containers, SVGs, and iframes
       document.querySelectorAll('.map-container, [class*="map"], svg.map, iframe[src*="google.com/maps"]').forEach(function(el) {
         el.addEventListener('click', function() {
-          gtag('event', 'map_interaction', {
-            event_category: 'engagement',
-            event_label: document.title
-          });
+          gtag('event', 'map_interaction', { event_category: 'engagement', event_label: document.title });
         });
       });
-
     });
   </script>
-  
+
 </head>
 <body>
+
+  <!-- ═══════════════ BREADCRUMB NAV ═══════════════ -->
   <nav class="nav">
-    <a href="../japan.html" class="back-link">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      Japan
+    <a href="../../index.html" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      All Countries
     </a>
+    <span class="nav-sep">/</span>
+    <a href="../japan.html" class="nav-link">Japan</a>
     <span class="nav-sep">/</span>
     <span class="nav-current">Nara</span>
   </nav>
+
+  <!-- ═══════════════ HEADER ═══════════════ -->
   <header class="header">
-    <h1 class="city-name">Nara</h1>
-    <span class="trip-date">Last traveled · March 2025</span>
+    <div class="header-left">
+      <span class="country-label">Japan</span>
+      <h1 class="city-name">Nara</h1>
+    </div>
+    <span class="trip-date">Last traveled &middot; March 2025</span>
   </header>
   <div class="header-rule"></div>
 
-  <div class="coming-soon-banner">
-    <div class="coming-soon-inner">
-      <svg class="coming-soon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
-        <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.2"/>
-        <path d="M10 5.5V10.5L13 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <div class="coming-soon-text">
-        <span class="coming-soon-label">Coming Soon</span>
-        <span class="coming-soon-desc">Full guide with restaurants, hotels &amp; landmarks is on its way.</span>
-      </div>
-    </div>
-  </div>
-
+  <!-- ═══════════════ SNAPSHOT ═══════════════ -->
   <section class="snapshot">
     <div class="snapshot-label">City Snapshot</div>
     <div class="snapshot-grid">
       <div class="snapshot-item">
         <div class="snapshot-item-label">Best Months</div>
-        <div class="snapshot-item-value">Mar–May, Oct–Nov</div>
+        <div class="snapshot-item-value">Mar&ndash;May, Oct&ndash;Nov</div>
       </div>
       <div class="snapshot-item">
         <div class="snapshot-item-label">Ideal Stay</div>
-        <div class="snapshot-item-value">1 day</div>
+        <div class="snapshot-item-value">Day trip</div>
       </div>
       <div class="snapshot-item">
-        <div class="snapshot-item-label">Gluten-Free</div>
+        <div class="snapshot-item-label">Best For</div>
+        <div class="snapshot-item-value">Temples, deer, sake</div>
+      </div>
+      <div class="snapshot-item">
+        <div class="snapshot-item-label">GF Friendliness</div>
         <div class="snapshot-score">
-          <span class="snapshot-score-num">4/10</span>
+          <span class="snapshot-score-num">6/10</span>
           <div class="snapshot-score-bar">
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip"></span>
-            <span class="snapshot-score-pip"></span>
-            <span class="snapshot-score-pip"></span>
-            <span class="snapshot-score-pip"></span>
-            <span class="snapshot-score-pip"></span>
-            <span class="snapshot-score-pip"></span>
+            <span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span>
           </div>
         </div>
       </div>
       <div class="snapshot-item">
-        <div class="snapshot-item-label">English Spoken</div>
+        <div class="snapshot-item-label">Language</div>
+        <div class="snapshot-item-value">Japanese</div>
+      </div>
+      <div class="snapshot-item">
+        <div class="snapshot-item-label">English</div>
         <div class="snapshot-item-value">Limited</div>
       </div>
       <div class="snapshot-item">
         <div class="snapshot-item-label">City Size</div>
-        <div class="snapshot-item-value">Compact</div>
+        <div class="snapshot-item-value">Medium (350K)</div>
       </div>
       <div class="snapshot-item">
-        <div class="snapshot-item-label">Walkability</div>
-        <div class="snapshot-item-value">High</div>
-      </div>
-      <div class="snapshot-item">
-        <div class="snapshot-item-label">Public Transit</div>
-        <div class="snapshot-item-value">Good</div>
+        <div class="snapshot-item-label">Currency</div>
+        <div class="snapshot-item-value">Yen (&yen;)</div>
       </div>
     </div>
   </section>
 
-
+  <!-- ═══════════════ TABLE OF CONTENTS ═══════════════ -->
   <nav class="toc">
-    <div class="toc-label">Jump to</div>
+    <div class="toc-label">On this page</div>
     <ul class="toc-list">
-      <li class="toc-item"><a href="#where-to-stay" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Where to stay</a></li>
-      <li class="toc-item"><a href="#gluten-free" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Gluten-free survival guide</a></li>
+      <li class="toc-item"><a href="#gluten-free" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>GF survival guide</a></li>
       <li class="toc-item"><a href="#restaurants" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Restaurants</a></li>
       <li class="toc-item"><a href="#getting-around" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Getting around</a></li>
-      <li class="toc-item"><a href="#landmarks" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Landmarks &amp; must-see spots</a></li>
-      <li class="toc-item"><a href="#neighborhoods" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Neighborhoods</a></li>
+      <li class="toc-item"><a href="#landmarks" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Must-see spots</a></li>
       <li class="toc-item"><a href="#things-to-do" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Things to do</a></li>
       <li class="toc-item"><a href="#what-to-pack" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>What to pack</a></li>
       <li class="toc-item"><a href="#travel-tips" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Travel tips</a></li>
     </ul>
   </nav>
 
-  <section class="map-section" id="map-section"></section>
+  <!-- ═══════════════ GF SURVIVAL GUIDE ═══════════════ -->
+  <section class="gf-guide" id="gluten-free">
+    <div class="gf-guide-header">
+      <h2 class="gf-guide-title">Gluten-Free Survival Guide</h2>
+    </div>
+    <div class="gf-guide-rule"></div>
+    <div class="gf-guide-grid">
+      <div class="gf-guide-left">
+        <div class="gf-info-group">
+          <div class="gf-info-label">Key Phrases (Japanese)</div>
+          <div class="gf-phrase">
+            <span class="gf-phrase-local">私はセリアック病です。小麦、大麦、ライ麦を食べられません。</span>
+            <span class="gf-phrase-meaning">I have celiac disease</span>
+          </div>
+          <div class="gf-phrase">
+            <span class="gf-phrase-local">グルテンフリーのメニューはありますか？</span>
+            <span class="gf-phrase-meaning">Do you have a GF menu?</span>
+          </div>
+          <div class="gf-phrase">
+            <span class="gf-phrase-local">醤油は小麦が入っていますか？</span>
+            <span class="gf-phrase-meaning">Does soy sauce contain wheat?</span>
+          </div>
+        </div>
+        <div class="gf-info-group">
+          <div class="gf-info-label">Grocery Stores</div>
+          <ul class="gf-list">
+            <li>Supermarket under JR Nara Station &mdash; GF pasta, fresh sushi, salads</li>
+            <li>Seijo Ishii &mdash; imported GF products</li>
+            <li>Bio-Ral &mdash; organic/GF options</li>
+          </ul>
+        </div>
+        <div class="gf-info-group">
+          <div class="gf-info-label">Safe Cuisines</div>
+          <ul class="gf-list">
+            <li>Plain rice, onigiri (check fillings)</li>
+            <li>Sashimi (use GF tamari, not regular soy)</li>
+            <li>Yakitori with salt (shio) &mdash; skip tare</li>
+            <li>Mochi/dango (rice-based, but check for wheat flour)</li>
+            <li>Sake (naturally GF &mdash; Nara is birthplace of sake!)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="gf-score-section">
+        <div class="gf-score-title">Score Breakdown</div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Dedicated GF restaurants</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Menu labeling</span>
+          <div class="gf-score-pips"><span class="gf-score-pip"></span><span class="gf-score-pip"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Staff knowledge &amp; safety</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Density of GF dining</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Grocery availability</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
+        </div>
+        <div class="gf-score-total">
+          <span class="gf-score-total-num">6/10</span>
+          <span class="gf-score-total-label">Overall GF Score</span>
+        </div>
+        <div class="gf-score-verdict">
+          <span class="gf-guide-difficulty gf-difficulty-moderate"><span class="gf-dot"></span>Moderate</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ RESTAURANTS ═══════════════ -->
+  <section class="restaurants" id="restaurants">
+    <div class="restaurants-header">
+      <h2 class="restaurants-title">Restaurants</h2>
+      <span class="restaurants-count">3 spots</span>
+    </div>
+    <div class="restaurants-rule"></div>
+
+    <div id="gf-map" style="width:100%; min-height:260px; border-radius:4px; border:1px solid rgba(42,32,24,0.08); margin-bottom:1.6rem;"></div>
+    <div style="display:flex; align-items:center; gap:1.2rem; flex-wrap:wrap; margin-bottom:2.4rem; font-family:'Jost',sans-serif; font-size:0.58rem; font-weight:400; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-light);">
+      <span>GF Score</span>
+      <span style="display:inline-flex;align-items:center;gap:0.3rem;"><span style="width:10px;height:10px;border-radius:50%;background:#3d6e40;"></span> 5/5</span>
+      <span style="display:inline-flex;align-items:center;gap:0.3rem;"><span style="width:10px;height:10px;border-radius:50%;background:#b48c3c;"></span> 3/5</span>
+    </div>
+    <script>
+    (function(){
+      var map = L.map('gf-map', { scrollWheelZoom: false }).setView([34.6800, 135.832], 15);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap &copy; CARTO',
+        maxZoom: 18
+      }).addTo(map);
+
+      var colors = { 5:'#3d6e40', 3:'#b48c3c' };
+
+      var restaurants = [
+
+        { name:'Sarasojyu', score:5, tag:'100% GF', lat:34.6794437, lng:135.8290133 },
+        { name:'Naramachi Vegan Nabi', score:5, tag:'100% GF', lat:34.678553, lng:135.8277973 },
+        { name:'Ace Sushi', score:3, tag:'GF Options', lat:34.6822373, lng:135.8289547 }
+      ];
+
+      restaurants.forEach(function(r) {
+        var color = colors[r.score];
+        var icon = L.divIcon({
+          className: '',
+          html: '<div style="width:14px;height:14px;border-radius:50%;background:'+color+';border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.2);"></div>',
+          iconSize: [14, 14],
+          iconAnchor: [7, 7]
+        });
+        L.marker([r.lat, r.lng], { icon: icon })
+          .addTo(map)
+          .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">'+r.name+'</strong><br><span style="font-size:11px;color:#5A5048;">'+r.tag+' \u00b7 GF Score: '+r.score+'/5</span></div>', { closeButton: false });
+      });
+    })();
+    </script>
+
+    <div class="restaurants-grid">
+
+    <!-- RECOMMENDED: Sarasojyu -->
+    <div class="restaurant-card"> <!-- RESEARCHED -->
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Sarasojyu</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-gf">100% GF</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">GF Cafe / Rice Flour</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">100% dedicated GF cafe using domestic rice flour. All bread, pasta, cakes are GF. Cash only. Hours 11:30&ndash;17:00. Check Instagram @cafesarasojyu for opening days. Walk in only for lunch.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">Rice flour pasta lunch set (includes bread, salad, dessert). GF cheesecake and rice flour bread are standouts.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">20-19 Shimomikadocho, Naramachi</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/sarasojyu/5548120002396160" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- RECOMMENDED: Naramachi Vegan Nabi -->
+    <div class="restaurant-card"> <!-- RESEARCHED -->
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Naramachi Vegan Nabi</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-gf">100% GF</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Vegan Japanese</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">Every dish 100% vegan, GF, and nut-free. Chef&rsquo;s omakase course with seasonal ingredients. Staff explain every allergen. Reservations by phone/form only.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">The omakase course. Also takeout bento (&yen;1,800) and GF vegan ice cream.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">14-1 Higashijodocho, Naramachi</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/naramachi-vegan-nabi/4686059429036032" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- RECOMMENDED: Ace Sushi -->
+    <div class="restaurant-card"> <!-- RESEARCHED -->
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Ace Sushi</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Steamed Sushi</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">NOT dedicated GF &mdash; walk through ramen shop to enter. ~8 counter seats. GF soy sauce provided separately. All sushi is steamed. Owner Takuro speaks English, asks about allergies.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">Steamed sushi rolls and GF miso soup. Limited menu but unique steamed preparation.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">2 Higashimuki Minamimachi</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/ace-sushi/4866875770667008" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    </div><!-- /restaurants-grid -->
+
+    <div class="restaurants-footer">
+      <a href="https://www.findmeglutenfree.com/jp/nara" class="restaurants-fmgf-link" target="_blank" rel="noopener">
+        See all Nara reviews on Find Me Gluten Free
+        <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════ GETTING AROUND ═══════════════ -->
+  <!-- RESEARCHED -->
+  <section class="getting-around" id="getting-around">
+    <div class="getting-around-header">
+      <h2 class="getting-around-title">Getting Around</h2>
+    </div>
+    <div class="getting-around-rule"></div>
+
+    <div class="transport-grid">
+
+      <div class="transport-card">
+        <div class="transport-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6v12"/><path d="M16 6v12"/><path d="M2 10h20"/><path d="M2 14h20"/><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="6" cy="21" r="1.5"/><circle cx="18" cy="21" r="1.5"/></svg>
+        </div>
+        <div class="transport-name">Kintetsu Nara Line</div>
+        <div class="transport-desc">Fastest from Kyoto (35 min, &yen;1,280) or Osaka-Namba (36 min, &yen;680). Station steps from Kofuku-ji and Nara Park.</div>
+        <div class="transport-detail">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="3"/></svg>
+          Best for most visitors
+        </div>
+      </div>
+
+      <div class="transport-card">
+        <div class="transport-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6v12"/><path d="M16 6v12"/><path d="M2 10h20"/><path d="M2 14h20"/><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="6" cy="21" r="1.5"/><circle cx="18" cy="21" r="1.5"/></svg>
+        </div>
+        <div class="transport-name">JR Yamatoji Line</div>
+        <div class="transport-desc">From Kyoto (45 min, &yen;720) or Osaka (45 min, &yen;840). Covered by Japan Rail Pass. JR Nara Station 15&ndash;20 min walk from park.</div>
+        <div class="transport-detail">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="3"/></svg>
+          Best with JR Pass
+        </div>
+      </div>
+
+      <div class="transport-card">
+        <div class="transport-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M3 10h18"/><circle cx="7.5" cy="20" r="1.5"/><circle cx="16.5" cy="20" r="1.5"/><path d="M7.5 17v1.5"/><path d="M16.5 17v1.5"/></svg>
+        </div>
+        <div class="transport-name">Nara Loop Bus</div>
+        <div class="transport-desc">Runs frequently from both stations to main sights. Convenient if you want to save energy for temples.</div>
+        <div class="transport-detail">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="3"/></svg>
+          &yen;100&ndash;220/ride
+        </div>
+      </div>
+
+      <div class="transport-card">
+        <div class="transport-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h1"/><path d="M18 20h1a2 2 0 0 0 2-2V9.5L17 4h-4"/><circle cx="8" cy="20" r="2"/><circle cx="17" cy="20" r="2"/><path d="M4 12h16"/></svg>
+        </div>
+        <div class="transport-name">Walking</div>
+        <div class="transport-desc">Main sights clustered around Nara Park. Temple loop from Kintetsu Station is 5&ndash;7 km. Flat and pleasant.</div>
+        <div class="transport-detail">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="3"/></svg>
+          The best way
+        </div>
+      </div>
+
+    </div>
+
+    <div class="transit-tip">
+      <svg class="transit-tip-icon" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 1C4.13 1 1 4.13 1 8s3.13 7 7 7 7-3.13 7-7-3.13-7-7-7zm0 11.5a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5zM8.75 9.5h-1.5V4.75h1.5V9.5z" fill="currentColor"/></svg>
+      <div class="transit-tip-content">
+        <div class="transit-tip-label">Local Tip</div>
+        <div class="transit-tip-text">Take Kintetsu over JR unless you have a JR Pass &mdash; Kintetsu Nara Station is right next to the sights, while JR Nara is a 15&ndash;20 minute walk away.</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════ LANDMARKS ═══════════════ -->
+  <section class="landmarks" id="landmarks">
+    <div class="landmarks-header">
+      <h2 class="landmarks-title">Must-See Spots</h2>
+      <span class="landmarks-count">4 spots</span>
+    </div>
+    <div class="landmarks-rule"></div>
+
+    <div class="landmarks-grid">
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <h3 class="landmark-name">Todai-ji Temple</h3>
+              <span class="landmark-type landmark-type-historic">Historic / Temple</span>
+            </div>
+            <!-- RESEARCHED -->
+            <div class="landmark-desc">Home to Great Buddha (14.98m bronze, 752 CE). Main hall is largest wooden structure in world. Don&rsquo;t miss Nigatsu-do for city views. UNESCO.</div>
+            <div class="landmark-location">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+              East Nara Park
+            </div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+          </div>
+          <div class="landmark-photo-placeholder">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2.5 15L7.5 10L10 12.5L14 8.5L17.5 12V15C17.5 15.83 16.83 16.5 16 16.5H4C3.17 16.5 2.5 15.83 2.5 15Z" stroke="currentColor" stroke-width="1"/><circle cx="6.5" cy="6.5" r="1.5" stroke="currentColor" stroke-width="1"/><rect x="2.5" y="3.5" width="15" height="13" rx="1.5" stroke="currentColor" stroke-width="1"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <h3 class="landmark-name">Nara Park</h3>
+              <span class="landmark-type landmark-type-nature">Nature / Park</span>
+            </div>
+            <div class="landmark-desc">1,200+ wild deer, considered sacred. Buy shika senbei (&yen;200). Deer bow for treats! Some are aggressive and may bite.</div>
+            <div class="landmark-location">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+              Central Nara
+            </div>
+            <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
+          </div>
+          <img src="../../photos/japan/nara/nara-park/IMG_1220.jpeg" alt="Nara Park" class="landmark-photo" loading="lazy">
+        </div>
+      </div>
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <h3 class="landmark-name">Kofuku-ji</h3>
+              <span class="landmark-type landmark-type-historic">Historic / Temple</span>
+            </div>
+            <div class="landmark-desc">Ancient temple (669 CE), famous five-story pagoda. Beautifully lit at night. Steps from Kintetsu Nara Station.</div>
+            <div class="landmark-location">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+              Noborioji-cho
+            </div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+          </div>
+          <img src="../../photos/japan/nara/kofuku-ji/IMG_1150.jpeg" alt="Kofuku-ji" class="landmark-photo" loading="lazy">
+        </div>
+      </div>
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <h3 class="landmark-name">Kasuga Taisha Shrine</h3>
+              <span class="landmark-type landmark-type-historic">Historic / Shrine</span>
+            </div>
+            <!-- RESEARCHED -->
+            <div class="landmark-desc">Shinto shrine (768 CE), thousands of stone/bronze lanterns. All lit during Mantoro festivals (Feb &amp; Aug). Surrounded by 1,000-year-old Kasugayama Primeval Forest (UNESCO).</div>
+            <div class="landmark-location">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+              East end of Nara Park
+            </div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+          </div>
+          <div class="landmark-photo-placeholder">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M2.5 15L7.5 10L10 12.5L14 8.5L17.5 12V15C17.5 15.83 16.83 16.5 16 16.5H4C3.17 16.5 2.5 15.83 2.5 15Z" stroke="currentColor" stroke-width="1"/><circle cx="6.5" cy="6.5" r="1.5" stroke="currentColor" stroke-width="1"/><rect x="2.5" y="3.5" width="15" height="13" rx="1.5" stroke="currentColor" stroke-width="1"/></svg>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </section>
+
+  <!-- ═══════════════ THINGS TO DO ═══════════════ -->
+  <!-- RESEARCHED -->
+  <section class="things-to-do" id="things-to-do">
+    <div class="things-header">
+      <h2 class="things-title">Things to Do</h2>
+    </div>
+    <div class="things-rule"></div>
+
+    <div class="things-grid">
+
+      <div class="thing-card">
+        <div class="thing-card-inner">
+          <div class="thing-card-content">
+            <div class="thing-top">
+              <h3 class="thing-name">Nara Park Guided Walking Tour</h3>
+              <span class="thing-tag thing-tag-paid">Tour</span>
+            </div>
+            <!-- RESEARCHED -->
+            <div class="thing-desc">Half-day private tour: Todai-ji, Kasuga Taisha, deer, Naramachi. ~5 hours, ~10 km walking.</div>
+            <div class="thing-meta">
+              <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> 3&ndash;5 hours</span>
+              <span class="thing-detail">Walking: Moderate</span>
+            </div>
+            <a href="https://www.getyourguide.com/nara-l1707/nara-half-day-private-tour-of-4-must-see-spots-deer-park-t818770/" class="thing-book" target="_blank" rel="noopener sponsored">
+              Book
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+          <img src="../../photos/japan/nara/nara-park/IMG_1219.jpeg" alt="Deer bowing in Nara Park" class="thing-photo" loading="lazy">
+        </div>
+      </div>
+
+      <div class="thing-card">
+        <div class="thing-card-inner">
+          <div class="thing-card-content">
+            <div class="thing-top">
+              <h3 class="thing-name">Harushika Sake Brewery Tasting</h3>
+              <span class="thing-tag thing-tag-paid">Experience</span>
+            </div>
+            <div class="thing-desc">Flight of 5 seasonal sakes (&yen;500). Nara is birthplace of sake, Harushika since 1884. Keep tasting glass. Seasonal hours.</div>
+            <div class="thing-meta">
+              <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> 30&ndash;60 min</span>
+              <span class="thing-detail">Cost: &yen;500</span>
+            </div>
+          </div>
+          <img src="../../photos/japan/nara/harushika-sake-brewery-store/IMG_1233.jpeg" alt="Harushika Sake Brewery" class="thing-photo" loading="lazy">
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ═══════════════ WHAT TO PACK ═══════════════ -->
+  <section class="packing" id="what-to-pack">
+    <div class="packing-header">
+      <h2 class="packing-title">What to Pack</h2>
+      <span class="packing-season">March</span>
+    </div>
+    <div class="packing-rule"></div>
+
+    <ul class="packing-list">
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Celiac dining card in Japanese</span>
+          <span class="packing-item-why">Essential for communicating allergies at restaurants with limited English</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable GF snacks</span>
+          <span class="packing-item-why">Limited GF options outside dedicated restaurants &mdash; long temple walks need fuel</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Refillable water bottle</span>
+          <span class="packing-item-why">5&ndash;7 km of walking in Nara Park &mdash; stay hydrated</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">GF soy sauce packets</span>
+          <span class="packing-item-why">Regular soy sauce contains wheat &mdash; bring tamari for sushi and sashimi</span>
+        </div>
+        <span class="packing-item-tag packing-tag-japan">Japan</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Pocket Wi-Fi or eSIM</span>
+          <span class="packing-item-why">Essential for Google Maps navigation and translation apps</span>
+        </div>
+        <span class="packing-item-tag packing-tag-japan">Japan</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Cash in yen</span>
+          <span class="packing-item-why">Many spots cash only &mdash; Sarasojyu, deer crackers, temple admissions</span>
+        </div>
+        <span class="packing-item-tag packing-tag-japan">Japan</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">IC card (Suica/ICOCA) for trains/buses</span>
+          <span class="packing-item-why">Tap-and-go for Kintetsu, JR, and Nara Loop Bus</span>
+        </div>
+        <span class="packing-item-tag packing-tag-japan">Japan</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">5&ndash;7 km temple circuit with gravel paths and stone steps</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Nara</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Small crossbody bag</span>
+          <span class="packing-item-why">Deer nibble straps, bags, and paper &mdash; keep belongings secure</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Nara</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Layers for spring weather</span>
+          <span class="packing-item-why">March 8&ndash;18&deg;C &mdash; mornings cool, afternoons mild</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Nara</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Compact umbrella</span>
+          <span class="packing-item-why">Spring showers are common in Nara</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Nara</span>
+      </li>
+
+    </ul>
+
+    <!-- STOREFRONT: Uncomment when Amazon storefront URL is ready
+    <div class="packing-storefront">
+      <a href="STOREFRONT_URL_HERE" class="packing-storefront-link" target="_blank" rel="noopener sponsored">
+        Browse My Full Travel Storefront
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+    -->
+  </section>
+
+  <!-- ═══════════════ TRAVEL TIPS ═══════════════ -->
+  <section class="travel-tips" id="travel-tips">
+    <div class="tips-header">
+      <h2 class="tips-title">Travel Tips</h2>
+    </div>
+    <div class="tips-rule"></div>
+
+    <ul class="tips-list">
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text">Nara is best as a day trip from Kyoto (35 min) or Osaka (36 min) &mdash; 4&ndash;6 hours for highlights</span>
+      </li>
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text">Take Kintetsu over JR unless you have a JR Pass &mdash; Kintetsu station is much closer to sights</span>
+      </li>
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text">Visit Todai-ji first thing to beat tour groups</span>
+      </li>
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text">Buy deer crackers from official vendors only (&yen;200) &mdash; deer know who has them!</span>
+      </li>
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text">Walk through Naramachi after temples for quieter charming neighborhood</span>
+      </li>
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text">Sarasojyu and Naramachi Vegan Nabi are both in Naramachi &mdash; plan lunch there</span>
+      </li>
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text">Sake is naturally GF &mdash; Nara birthplace of sake, rare treat for celiac travelers</span>
+      </li>
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text">Most restaurants outside dedicated spots won&rsquo;t understand celiac &mdash; bring dining card and GF soy sauce</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ═══════════════ LIGHTBOX ═══════════════ -->
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" aria-label="Close lightbox">
+      <svg viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="">
+  </div>
   <script>
-    const MAP_URL = 'https://www.google.com/maps/d/embed?mid=17fwQ6iHIZkfOcmPM3Gcr_n_BqXjk2Y4';
-    const section = document.getElementById('map-section');
-    if (false) { // map temporarily hidden
-      const iframe = document.createElement('iframe');
-      iframe.src = MAP_URL;
-      iframe.className = 'map-frame';
-      iframe.allowFullscreen = true;
-      section.appendChild(iframe);
-    } else {
-      section.innerHTML = `<!-- <div class="map-placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><path d="M20 3C13.1 3 7.5 8.6 7.5 15.5C7.5 24.4 20 37 20 37C20 37 32.5 24.4 32.5 15.5C32.5 8.6 26.9 3 20 3ZM20 19.8C17.6 19.8 15.7 17.9 15.7 15.5C15.7 13.1 17.6 11.2 20 11.2C22.4 11.2 24.3 13.1 24.3 15.5C24.3 17.9 22.4 19.8 20 19.8Z" fill="currentColor"/></svg><div class="map-placeholder-text"><p>Google My Maps coming soon</p></div> --></div>`;
+  (function() {
+    var overlay = document.getElementById('lightbox');
+    var lbImg = document.getElementById('lightbox-img');
+    document.querySelectorAll('.restaurant-photo, .landmark-photo, .hotel-image, .thing-photo').forEach(function(img) {
+      img.addEventListener('click', function(e) {
+        e.stopPropagation();
+        lbImg.src = this.src;
+        lbImg.alt = this.alt;
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+    function closeLightbox() {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
     }
+    overlay.addEventListener('click', closeLightbox);
+    overlay.querySelector('.lightbox-close').addEventListener('click', function(e) {
+      e.stopPropagation();
+      closeLightbox();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && overlay.classList.contains('active')) closeLightbox();
+    });
+  })();
   </script>
 
+  <!-- ═══════════════ FOOTER ═══════════════ -->
   <!-- TIP CTA -->
   <div class="tip-cta">
     <div class="tip-cta-title">Have a tip or comment?</div>
@@ -402,6 +1099,10 @@
       Send a note
     </a>
   </div>
+
+  <footer class="page-footer">
+    <p class="page-disclosure">Some links on this page are affiliate links. I may earn a small commission if you book through them, at no extra cost to you. I only recommend places I've personally visited or thoroughly researched.</p>
+  </footer>
 
 </body>
 </html>

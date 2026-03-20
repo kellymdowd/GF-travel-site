@@ -871,17 +871,17 @@
     });
 
     // Neighborhood Map
-    var nMap = L.map('neighborhood-map', { zoomControl: true, scrollWheelZoom: false }).setView([48.148, 17.107], 12);
+    var nMap = L.map('neighborhood-map', { zoomControl: true, scrollWheelZoom: false }).setView([48.143, 17.105], 12);
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap &copy; CARTO', subdomains: 'abcd', maxZoom: 19 }).addTo(nMap);
     [
-      { name: 'STARÉ MESTO', lat: 48.1440, lon: 17.1090 },
-      { name: 'PETRŽALKA',   lat: 48.1250, lon: 17.1150 },
-      { name: 'RUŽINOV',     lat: 48.1500, lon: 17.1700 },
-      { name: 'NOVÉ MESTO',  lat: 48.1650, lon: 17.1300 },
-      { name: 'KARLOVA VES', lat: 48.1550, lon: 17.0550 }
+      { name: 'Staré Mesto', center: [48.1435, 17.1085], radius: 550  },
+      { name: 'Petržalka',   center: [48.1175, 17.1200], radius: 1700 },
+      { name: 'Ružinov',     center: [48.1480, 17.1680], radius: 1100 },
+      { name: 'Nové Mesto',  center: [48.1680, 17.1220], radius: 900  },
+      { name: 'Karlova Ves', center: [48.1570, 17.0600], radius: 850  }
     ].forEach(function(n) {
-      L.circleMarker([n.lat, n.lon], { radius: 5, fillColor: 'rgba(42,32,24,0.15)', color: 'rgba(42,32,24,0.4)', weight: 1.5, opacity: 1, fillOpacity: 1 }).addTo(nMap);
-      L.marker([n.lat, n.lon], { icon: L.divIcon({ className: '', html: '<span style="font-family:Jost,sans-serif;font-size:0.5rem;font-weight:400;letter-spacing:0.14em;text-transform:uppercase;color:rgba(42,32,24,0.55);white-space:nowrap;">' + n.name + '</span>', iconAnchor: [0, -8] }) }).addTo(nMap);
+      L.circle(n.center, { radius: n.radius, color: '#2A2018', weight: 1.2, fillColor: 'transparent', fillOpacity: 0, dashArray: '3 5', opacity: 0.35 }).addTo(nMap);
+      L.marker(n.center, { icon: L.divIcon({ className: '', html: '<div style="font-family:Jost,sans-serif;font-size:8.5px;font-weight:400;letter-spacing:0.2em;text-transform:uppercase;color:#2A2018;white-space:nowrap;text-align:center;opacity:0.6;">' + n.name + '</div>', iconSize: [0,0], iconAnchor: [0, 8] }), interactive: false }).addTo(nMap);
     });
   })();
   </script>
