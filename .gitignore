@@ -77,6 +77,7 @@ photos/scotland/inverness/loch-ness/*
 
 photos/japan/*
 !photos/japan/tokyo/
+!photos/japan/osaka/
 photos/japan/tokyo/*
 !photos/japan/tokyo/tokyu-stay-aoyama-premier/
 !photos/japan/tokyo/the-okura-tokyo/
@@ -111,3 +112,17 @@ photos/japan/tokyo/shibuya-scramble-crossing/*
 !photos/japan/tokyo/shibuya-scramble-crossing/IMG_0555.jpeg
 photos/japan/tokyo/hachikō-memorial-statue/*
 !photos/japan/tokyo/hachikō-memorial-statue/IMG_0554.jpeg
+
+photos/japan/osaka/*
+!photos/japan/osaka/comeconoco-gluten-free-laboratory-cafe-大阪天満橋店-グルテンフリー米粉専門店米粉菓子教室/
+!photos/japan/osaka/mercure-tokyu-stay/
+!photos/japan/osaka/namba-yasaka-jinja/
+!photos/japan/osaka/osaka-castle/
+photos/japan/osaka/comeconoco-gluten-free-laboratory-cafe-大阪天満橋店-グルテンフリー米粉専門店米粉菓子教室/*
+!photos/japan/osaka/comeconoco-gluten-free-laboratory-cafe-大阪天満橋店-グルテンフリー米粉専門店米粉菓子教室/IMG_1250.jpeg
+photos/japan/osaka/mercure-tokyu-stay/*
+!photos/japan/osaka/mercure-tokyu-stay/dotonbori-namba.jpeg
+photos/japan/osaka/namba-yasaka-jinja/*
+!photos/japan/osaka/namba-yasaka-jinja/namba-yasaka-shrine.jpeg
+photos/japan/osaka/osaka-castle/*
+!photos/japan/osaka/osaka-castle/osaka-castle.jpeg
