@@ -244,38 +244,204 @@
     gtag('js', new Date());
     gtag('config', 'G-64V5CSB1DT');
 
-    // ─── Custom event tracking ─────────────────────────────
+    // ─── Enhanced event tracking ──────────────────────────
+
+    // Helper: get page context
+    var pageCity = document.title.split('\u2014')[0].trim();
+    var pageCountry = document.title.split('\u2014')[1] ? document.title.split('\u2014')[1].trim() : '';
+
     document.addEventListener('DOMContentLoaded', function() {
 
-      // Outbound link clicks (links with target="_blank")
+      // ── 1. Scroll depth tracking (25%, 50%, 75%, 100%) ──
+      var scrollMarks = { 25: false, 50: false, 75: false, 100: false };
+      var ticking = false;
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            var scrollPct = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+            [25, 50, 75, 100].forEach(function(mark) {
+              if (scrollPct >= mark && !scrollMarks[mark]) {
+                scrollMarks[mark] = true;
+                gtag('event', 'scroll_depth', {
+                  event_category: 'engagement',
+                  event_label: mark + '%',
+                  page_title: document.title
+                });
+              }
+            });
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+
+      // ── 2. Section visibility tracking (Intersection Observer) ──
+      var sectionObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var sectionName = entry.target.querySelector('h2')
+              ? entry.target.querySelector('h2').textContent.trim()
+              : entry.target.className;
+            gtag('event', 'section_view', {
+              event_category: 'engagement',
+              event_label: sectionName,
+              page_title: document.title
+            });
+            sectionObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+
+      document.querySelectorAll('section, .gf-guide-section, .restaurants-section, .landmarks-section, .things-section, .neighborhoods-section, .getting-around-section, .packing-section, .tips-section').forEach(function(section) {
+        sectionObserver.observe(section);
+      });
+
+      // ── 3. Outbound link clicks (with link type classification) ──
       document.querySelectorAll('a[target="_blank"]').forEach(function(link) {
         link.addEventListener('click', function() {
+          var href = this.href;
+          var linkType = 'other';
+          if (href.includes('findmeglutenfree.com')) linkType = 'fmgf';
+          else if (href.includes('hotels.com')) linkType = 'hotel_booking';
+          else if (href.includes('viator.com')) linkType = 'activity_booking';
+          else if (href.includes('getyourguide.com')) linkType = 'activity_booking';
+          else if (href.includes('google.com/maps')) linkType = 'google_maps';
+
+          var context = this.closest('.restaurant-card') ? this.closest('.restaurant-card').querySelector('.restaurant-name').textContent.trim()
+            : this.closest('.thing-card') ? this.closest('.thing-card').querySelector('.thing-name').textContent.trim()
+            : this.closest('.hotel-card') ? 'hotel'
+            : 'page';
+
           gtag('event', 'outbound_click', {
             event_category: 'engagement',
-            event_label: this.href,
+            event_label: href,
+            link_type: linkType,
+            click_context: context,
             transport_type: 'beacon'
           });
         });
       });
 
-      // Section navigation (TOC / anchor links)
-      document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+      // ── 4. FMGF link clicks (high-value — tracks which restaurants) ──
+      document.querySelectorAll('.restaurant-fmgf-link').forEach(function(link) {
         link.addEventListener('click', function() {
-          gtag('event', 'section_nav', {
-            event_category: 'navigation',
-            event_label: this.getAttribute('href')
+          var restaurantName = this.closest('.restaurant-card')
+            ? this.closest('.restaurant-card').querySelector('.restaurant-name').textContent.trim()
+            : 'unknown';
+          gtag('event', 'fmgf_click', {
+            event_category: 'conversion',
+            event_label: restaurantName,
+            page_title: document.title,
+            transport_type: 'beacon'
           });
         });
       });
 
-      // Map interactions — clicks on map containers, SVGs, and iframes
-      document.querySelectorAll('.map-container, [class*="map"], svg.map, iframe[src*="google.com/maps"]').forEach(function(el) {
-        el.addEventListener('click', function() {
-          gtag('event', 'map_interaction', {
-            event_category: 'engagement',
-            event_label: document.title
+      // ── 5. Hotel booking clicks (affiliate conversion) ──
+      document.querySelectorAll('a[href*="hotels.com"]').forEach(function(link) {
+        link.addEventListener('click', function() {
+          var hotelName = this.closest('.hotel-card')
+            ? (this.closest('.hotel-card').querySelector('.hotel-name') || {}).textContent || 'unknown'
+            : 'unknown';
+          gtag('event', 'hotel_booking_click', {
+            event_category: 'conversion',
+            event_label: hotelName,
+            page_title: document.title,
+            transport_type: 'beacon'
           });
         });
+      });
+
+      // ── 6. Activity booking clicks (affiliate conversion) ──
+      document.querySelectorAll('.thing-book-btn, a[href*="viator.com"], a[href*="getyourguide.com"]').forEach(function(link) {
+        link.addEventListener('click', function() {
+          var activityName = this.closest('.thing-card')
+            ? this.closest('.thing-card').querySelector('.thing-name').textContent.trim()
+            : 'unknown';
+          gtag('event', 'activity_booking_click', {
+            event_category: 'conversion',
+            event_label: activityName,
+            page_title: document.title,
+            transport_type: 'beacon'
+          });
+        });
+      });
+
+      // ── 7. Photo lightbox opens (which photos interest people) ──
+      document.querySelectorAll('.restaurant-photo, .landmark-photo, .hotel-image, .thing-photo').forEach(function(img) {
+        img.addEventListener('click', function() {
+          var placeName = this.closest('.restaurant-card')
+            ? this.closest('.restaurant-card').querySelector('.restaurant-name').textContent.trim()
+            : this.closest('.landmark-card')
+            ? this.closest('.landmark-card').querySelector('.landmark-name').textContent.trim()
+            : this.alt || 'unknown';
+          gtag('event', 'photo_view', {
+            event_category: 'engagement',
+            event_label: placeName,
+            page_title: document.title
+          });
+        });
+      });
+
+      // ── 8. Section navigation (TOC clicks) ──
+      document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+        link.addEventListener('click', function() {
+          gtag('event', 'section_nav', {
+            event_category: 'navigation',
+            event_label: this.textContent.trim(),
+            page_title: document.title
+          });
+        });
+      });
+
+      // ── 9. Map interactions ──
+      document.querySelectorAll('.map-container, [class*="map-wrap"]').forEach(function(el) {
+        var tracked = false;
+        el.addEventListener('click', function() {
+          if (!tracked) {
+            tracked = true;
+            gtag('event', 'map_interaction', {
+              event_category: 'engagement',
+              event_label: el.id || 'map',
+              page_title: document.title
+            });
+          }
+        });
+      });
+
+      // ── 10. Tip CTA email clicks ──
+      document.querySelectorAll('a[href^="mailto:"]').forEach(function(link) {
+        link.addEventListener('click', function() {
+          gtag('event', 'tip_cta_click', {
+            event_category: 'conversion',
+            event_label: document.title,
+            transport_type: 'beacon'
+          });
+        });
+      });
+
+      // ── 11. Internal navigation (country page links, breadcrumbs) ──
+      document.querySelectorAll('.back-link, .nav-link, .nav-home').forEach(function(link) {
+        link.addEventListener('click', function() {
+          gtag('event', 'internal_nav', {
+            event_category: 'navigation',
+            event_label: this.textContent.trim(),
+            link_url: this.href
+          });
+        });
+      });
+
+      // ── 12. Time on page (fires at 30s, 60s, 120s, 300s) ──
+      [30, 60, 120, 300].forEach(function(seconds) {
+        setTimeout(function() {
+          if (!document.hidden) {
+            gtag('event', 'time_on_page', {
+              event_category: 'engagement',
+              event_label: seconds + 's',
+              page_title: document.title
+            });
+          }
+        }, seconds * 1000);
       });
 
     });
