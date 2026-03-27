@@ -2,241 +2,389 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="description" content="First-hand celiac travel guide to London, 9/10 safety score, and interactive maps. Visited May 2014.">
+  <meta name="description" content="First-hand celiac travel guide to London with 7 GF-rated restaurants, 8/10 safety score, hotel reviews, and interactive maps. Visited September 2024.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gluten-Free Restaurants & Celiac Guide to London, England | GF Gone Global</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
+    /* ─── Design Tokens ──────────────────────────────────────── */
     :root { --cream: #FFFFFF; --slate: #C8717A; --slate-bg: #FBF0F1; --rose: #B8907A; --ink: #2A2018; --ink-mid: #5A5048; --ink-light: #9A907A; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
     body { background: var(--cream); color: var(--ink); font-family: 'Jost', sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-direction: column; }
     body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 100; opacity: 0.6; }
+
+    /* ─── Site Nav ────────────────────────────────────────────── */
+    .site-nav { padding: 1.2rem 2.5rem 0; display: flex; gap: 1.6rem; align-items: center; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.05s forwards; }
+    .site-nav-link { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .site-nav-link:hover { color: var(--slate); }
+    .site-nav-link:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .site-nav-link:active { color: var(--rose); }
+
+    /* ─── Breadcrumb Nav ──────────────────────────────────────── */
     .nav { padding: 1.6rem 2.5rem 0; display: flex; gap: 1rem; align-items: center; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards; }
     .back-link { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
     .back-link:hover { color: var(--slate); }
     .back-link:hover svg { transform: translateX(-3px); }
     .back-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
     .nav-sep { font-size: 0.68rem; color: rgba(154, 144, 122, 0.4); letter-spacing: 0.1em; }
+    .nav-link { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .nav-link:hover { color: var(--slate); }
     .nav-current { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mid); }
+
+    /* ─── Header ──────────────────────────────────────────────── */
     .header { display: flex; justify-content: space-between; align-items: flex-end; padding: 1.4rem 2.5rem 1.2rem; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
+    .header-left { display: flex; flex-direction: column; }
+    .country-label { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.25rem; }
     .city-name { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1; }
     .trip-date { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(0.85rem, 1.3vw, 1rem); color: var(--ink-light); letter-spacing: 0.04em; padding-bottom: 0.2rem; }
     .header-rule { height: 1px; background: linear-gradient(to right, var(--rose), transparent 60%); margin: 0 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 0.6s forwards; }
-    .map-section { flex: 1; padding: 1.5rem 2.5rem 2rem; display: flex; flex-direction: column; gap: 0; opacity: 0; animation: fadeIn 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
-    .map-frame { width: 100%; flex: 1; min-height: 520px; border: none; }
-    .map-placeholder { width: 100%; flex: 1; min-height: 520px; background: var(--slate-bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; border: 1px dashed rgba(200, 113, 122, 0.35); }
-    .map-placeholder svg { color: var(--slate); opacity: 0.4; }
-    .map-placeholder-text { text-align: center; }
-    .map-placeholder-text p { font-size: 0.72rem; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-light); line-height: 1.8; }
-    
+
     /* ─── City Snapshot ──────────────────────────────────────── */
-    .snapshot {
-      padding: 1.6rem 2.5rem 0;
-      opacity: 0;
-      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
-    }
-
-    .snapshot-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 1rem;
-    }
-
-    .snapshot-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 0;
-      border-top: 1px solid rgba(42, 32, 24, 0.08);
-    }
-
-    .snapshot-item {
-      padding: 1rem 1.2rem 1rem 0;
-      border-bottom: 1px solid rgba(42, 32, 24, 0.08);
-    }
-
-    .snapshot-item-label {
-      font-family: 'Jost', sans-serif;
-      font-size: 0.58rem;
-      font-weight: 400;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 0.35rem;
-    }
-
-    .snapshot-item-value {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 400;
-      font-size: 1.05rem;
-      letter-spacing: 0.02em;
-      color: var(--ink);
-      line-height: 1.2;
-    }
-
-    /* GF Score visual */
-    .snapshot-score {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .snapshot-score-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 400;
-      font-size: 1.05rem;
-      color: var(--ink);
-      letter-spacing: 0.02em;
-      line-height: 1;
-    }
-
-    .snapshot-score-bar {
-      display: flex;
-      gap: 3px;
-      align-items: center;
-    }
-
-    .snapshot-score-pip {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: rgba(42, 32, 24, 0.1);
-    }
-
-    .snapshot-score-pip.is-filled {
-      background: var(--slate);
-    }
+    .snapshot { padding: 1.6rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards; }
+    .snapshot-label { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .snapshot-item { padding: 1rem 1.2rem 1rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.08); }
+    .snapshot-item-label { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.35rem; }
+    .snapshot-item-value { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .snapshot-score { display: flex; align-items: center; gap: 0.6rem; }
+    .snapshot-score-num { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); letter-spacing: 0.02em; line-height: 1; }
+    .snapshot-score-bar { display: flex; gap: 3px; align-items: center; }
+    .snapshot-score-pip { width: 6px; height: 6px; border-radius: 50%; background: rgba(42, 32, 24, 0.1); }
+    .snapshot-score-pip.is-filled { background: var(--slate); }
 
     /* ─── Table of Contents ─────────────────────────────────── */
-    .toc {
-      padding: 1.6rem 2.5rem 0;
-      opacity: 0;
-      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
-    }
+    .toc { padding: 1.6rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
+    .toc-label { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; }
+    .toc-list { list-style: none; display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .toc-item { border-bottom: 1px solid rgba(42, 32, 24, 0.08); }
+    .toc-link { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1.6rem 0.7rem 0; font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; letter-spacing: 0.04em; color: var(--ink-mid); text-decoration: none; transition: color 0.2s ease; }
+    .toc-link:hover { color: var(--slate); }
+    .toc-link:hover .toc-arrow { transform: translateX(3px); color: var(--slate); }
+    .toc-link:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .toc-link:active { color: var(--rose); }
+    .toc-arrow { color: var(--ink-light); opacity: 0.4; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease; flex-shrink: 0; }
 
-    .toc-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 1rem;
-    }
+    /* ─── Where to Stay ────────────────────────────────────── */
+    .where-to-stay { padding: 2.4rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.65s forwards; }
+    .stay-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .stay-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .stay-subtitle { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .stay-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .hotel-card { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid rgba(42, 32, 24, 0.08); border-radius: 4px; overflow: hidden; background: linear-gradient(135deg, rgba(251, 240, 241, 0.3) 0%, rgba(255, 255, 255, 0.6) 100%); transition: box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+    .hotel-card:hover { box-shadow: 0 4px 20px rgba(200, 113, 122, 0.08), 0 1px 6px rgba(42, 32, 24, 0.04); }
+    .hotel-image-side { position: relative; min-height: 280px; overflow: hidden; }
+    .hotel-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .hotel-image-overlay { position: absolute; inset: 0; background: linear-gradient(to right, transparent 50%, rgba(42, 32, 24, 0.04) 100%); mix-blend-mode: multiply; }
+    .hotel-badge { position: absolute; top: 1rem; left: 1rem; display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.3rem 0.7rem; background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(8px); border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mid); box-shadow: 0 1px 4px rgba(42, 32, 24, 0.08); }
+    .hotel-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--slate); }
+    .hotel-info-side { padding: 1.8rem 2rem; display: flex; flex-direction: column; justify-content: center; }
+    .hotel-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.4rem; letter-spacing: 0.03em; color: var(--ink); line-height: 1.2; margin-bottom: 0.15rem; }
+    .hotel-location { display: flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.64rem; font-weight: 300; color: var(--ink-light); letter-spacing: 0.04em; margin-bottom: 1.1rem; }
+    .hotel-location svg { flex-shrink: 0; opacity: 0.5; }
+    .hotel-why { margin-bottom: 1.3rem; }
+    .hotel-why-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.5rem; }
+    .hotel-why-text { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 0.98rem; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.01em; }
+    .hotel-features { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
+    .hotel-feature { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.2rem 0.55rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(42, 32, 24, 0.03); color: var(--ink-mid); }
+    .hotel-feature svg { flex-shrink: 0; opacity: 0.5; }
+    .hotel-cta { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1.4rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-radius: 3px; border: none; cursor: pointer; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 8px rgba(200, 113, 122, 0.2), 0 1px 3px rgba(200, 113, 122, 0.1); }
+    .hotel-cta:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(200, 113, 122, 0.3), 0 2px 5px rgba(200, 113, 122, 0.15); }
+    .hotel-cta:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; border-radius: 3px; }
+    .hotel-cta:active { background: #a85a63; transform: translateY(0); box-shadow: 0 1px 4px rgba(200, 113, 122, 0.15); }
+    .hotel-cta svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; }
+    .hotel-cta:hover svg { transform: translateX(2px); }
+    .hotel-image-placeholder { min-height: 280px; background: linear-gradient(135deg, rgba(251, 240, 241, 0.6) 0%, rgba(200, 113, 122, 0.08) 100%); display: flex; align-items: center; justify-content: center; color: var(--ink-light); opacity: 0.4; }
+    @media (max-width: 768px) { .hotel-card { grid-template-columns: 1fr; } .hotel-image-side { min-height: 200px; } }
 
-    .toc-list {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0;
-      border-top: 1px solid rgba(42, 32, 24, 0.08);
-    }
+    /* ─── Gluten-Free Survival Guide ────────────────────────── */
+    .gf-guide { padding: 2.4rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards; }
+    .gf-guide-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.4rem; }
+    .gf-guide-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .gf-guide-difficulty { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.25rem 0.7rem 0.25rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; }
+    .gf-guide-difficulty .gf-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .gf-difficulty-easy { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .gf-difficulty-easy .gf-dot { background: #4c8c50; }
+    .gf-difficulty-moderate { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
+    .gf-difficulty-moderate .gf-dot { background: #b48c3c; }
+    .gf-difficulty-difficult { background: rgba(180, 70, 60, 0.08); color: #8a3a30; }
+    .gf-difficulty-difficult .gf-dot { background: #b4463c; }
+    .gf-guide-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.4rem; }
+    .gf-guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    .gf-info-group { margin-bottom: 1.6rem; }
+    .gf-info-group:last-child { margin-bottom: 0; }
+    .gf-info-label { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.5rem; }
+    .gf-info-value { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.6; letter-spacing: 0.01em; }
+    .gf-phrase { display: flex; justify-content: space-between; align-items: baseline; padding: 0.3rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.05); }
+    .gf-phrase:last-child { border-bottom: none; }
+    .gf-phrase-local { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; color: var(--ink); }
+    .gf-phrase-meaning { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-light); letter-spacing: 0.03em; }
+    .gf-list { list-style: none; }
+    .gf-list li { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); padding: 0.25rem 0; line-height: 1.4; }
+    .gf-list li::before { content: '\2014'; color: var(--ink-light); opacity: 0.4; margin-right: 0.5rem; }
+    .gf-score-section { padding-left: 2.5rem; border-left: 1px solid rgba(42, 32, 24, 0.08); }
+    .gf-score-title { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; }
+    .gf-score-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.05); }
+    .gf-score-row:first-of-type { border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .gf-score-category { font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; color: var(--ink-mid); letter-spacing: 0.02em; }
+    .gf-score-pips { display: flex; gap: 4px; align-items: center; }
+    .gf-score-pip { width: 8px; height: 8px; border-radius: 50%; background: rgba(42, 32, 24, 0.08); }
+    .gf-score-pip.is-filled { background: var(--slate); }
+    .gf-score-total { display: flex; align-items: baseline; gap: 0.5rem; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid rgba(42, 32, 24, 0.12); }
+    .gf-score-total-num { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 2.4rem; color: var(--ink); line-height: 1; letter-spacing: -0.02em; }
+    .gf-score-total-label { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .gf-score-verdict { margin-top: 0.8rem; }
+    @media (max-width: 768px) { .gf-guide-grid { grid-template-columns: 1fr; gap: 1.6rem; } .gf-score-section { padding-left: 0; border-left: none; padding-top: 1.2rem; border-top: 1px solid rgba(42, 32, 24, 0.08); } }
 
-    .toc-item {
-      border-bottom: 1px solid rgba(42, 32, 24, 0.08);
-    }
+    /* ─── Restaurants ────────────────────────────────────────── */
+    .restaurants { padding: 2.4rem 2.5rem 0; }
+    .restaurants-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .restaurants-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .restaurants-count { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .restaurants-rule { height: 1px; background: rgba(42, 32, 24, 0.08); }
+    .restaurants-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .restaurant-card { padding: 1.4rem 1.6rem 1.4rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .restaurant-card:nth-child(odd) { padding-right: 1.6rem; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .restaurant-card:nth-child(even) { padding-left: 1.6rem; padding-right: 0; }
+    .restaurant-card:nth-last-child(1), .restaurant-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    .restaurant-card:nth-last-child(1):nth-child(even) ~ .restaurant-card { border-bottom: none; }
+    .restaurant-card-inner { display: flex; gap: 1.2rem; align-items: flex-start; }
+    .restaurant-card-content { flex: 1; min-width: 0; }
+    .restaurant-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 4px rgba(42, 32, 24, 0.1); margin-top: 0.3rem; }
+    .restaurant-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.4rem; }
+    .restaurant-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.15rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .restaurant-tags { display: flex; gap: 0.4rem; flex-shrink: 0; }
+    .restaurant-tag { display: inline-block; padding: 0.2rem 0.55rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
+    .restaurant-tag-gf { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .restaurant-tag-options { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
+    .restaurant-tag-closed { background: rgba(180, 60, 60, 0.08); color: #9a3030; }
+    .restaurant-cuisine { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-light); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.9rem; }
+    .restaurant-source { display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 400; letter-spacing: 0.08em; margin-bottom: 0.9rem; }
+    .restaurant-source-dot { width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
+    .restaurant-source-visited { color: var(--rose); }
+    .restaurant-source-visited .restaurant-source-dot { background: var(--rose); }
+    .restaurant-source-researched { color: var(--ink-light); opacity: 0.7; }
+    .restaurant-source-researched .restaurant-source-dot { background: var(--ink-light); }
+    .restaurant-gf-score { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.7rem; margin-bottom: 1rem; }
+    .restaurant-gf-score-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .restaurant-gf-pips { display: flex; gap: 3px; align-items: center; }
+    .restaurant-gf-pip { width: 7px; height: 7px; border-radius: 50%; background: rgba(42, 32, 24, 0.08); }
+    .restaurant-gf-pip.is-filled { background: var(--slate); }
+    .restaurant-details { display: flex; flex-direction: column; gap: 0.6rem; }
+    .restaurant-detail-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.25rem; }
+    .restaurant-detail-value { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 0.95rem; color: var(--ink-mid); line-height: 1.5; letter-spacing: 0.01em; }
+    .restaurant-location-value { display: flex; align-items: baseline; gap: 0.4rem; }
+    .restaurant-location-value svg { flex-shrink: 0; color: var(--ink-light); opacity: 0.5; position: relative; top: 1px; }
+    .restaurant-fmgf { margin-top: 0.7rem; }
+    .restaurant-fmgf-link { display: inline-flex; align-items: center; gap: 0.4rem; font-family: 'Jost', sans-serif; font-size: 0.64rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .restaurant-fmgf-link:hover { color: var(--slate); }
+    .restaurant-fmgf-link:hover svg { transform: translateX(2px); }
+    .restaurant-fmgf-link:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .restaurant-fmgf-link:active { color: var(--rose); }
+    .restaurant-fmgf-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; }
+    .restaurants-footer { padding-top: 1.2rem; margin-top: 0.4rem; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .restaurants-fmgf-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .restaurants-fmgf-link:hover { color: var(--slate); }
+    .restaurants-fmgf-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; }
+    .restaurants-fmgf-link:hover svg { transform: translateX(2px); }
+    @media (max-width: 768px) { .restaurants-grid { grid-template-columns: 1fr; } .restaurant-card:nth-child(odd) { border-right: none; padding-right: 0; } .restaurant-card:nth-child(even) { padding-left: 0; } .restaurant-card:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } }
 
-    .toc-link {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.7rem 1.6rem 0.7rem 0;
-      font-family: 'Jost', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 300;
-      letter-spacing: 0.04em;
-      color: var(--ink-mid);
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
+    /* ─── Restaurant & Neighborhood Map ─────────────────────── */
+    .map-container { margin-bottom: 1.6rem; border-radius: 4px; overflow: hidden; border: 1px solid rgba(42, 32, 24, 0.08); }
+    .map-container .leaflet-container { height: 260px; width: 100%; }
+    .map-legend { display: flex; flex-wrap: wrap; gap: 0.8rem; padding: 0.8rem 0 0; }
+    .map-legend-item { display: flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.06em; color: var(--ink-light); }
+    .map-legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
-    .toc-link:hover {
-      color: var(--slate);
-    }
+    /* ─── Getting Around ────────────────────────────────────── */
+    .getting-around { padding: 2.4rem 2.5rem 0; }
+    .getting-around-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .getting-around-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .getting-around-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .transport-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+    .transport-card { padding: 1.4rem 1.4rem 1.4rem 0; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .transport-card:last-child { border-right: none; padding-right: 0; }
+    .transport-card:first-child { padding-left: 0; }
+    .transport-card:not(:first-child) { padding-left: 1.4rem; }
+    .transport-icon { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(42, 32, 24, 0.03); color: var(--ink-mid); margin-bottom: 0.9rem; }
+    .transport-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.1rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; margin-bottom: 0.5rem; }
+    .transport-desc { font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; }
+    .transport-detail { display: flex; align-items: baseline; gap: 0.4rem; margin-top: 0.6rem; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); }
+    .transport-detail svg { flex-shrink: 0; position: relative; top: 1px; opacity: 0.5; }
+    .transit-tip { margin-top: 1.6rem; padding: 1.2rem 1.4rem; background: var(--slate-bg); border-radius: 4px; border-left: 2px solid var(--slate); display: flex; gap: 0.8rem; align-items: flex-start; }
+    .transit-tip-icon { flex-shrink: 0; color: var(--slate); opacity: 0.7; position: relative; top: 1px; }
+    .transit-tip-content { flex: 1; min-width: 0; }
+    .transit-tip-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--slate); margin-bottom: 0.35rem; }
+    .transit-tip-text { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 0.98rem; color: var(--ink); line-height: 1.6; letter-spacing: 0.01em; }
+    @media (max-width: 768px) { .transport-grid { grid-template-columns: 1fr 1fr; } .transport-card { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } .transport-card:nth-child(2) { border-right: none; padding-right: 0; } .transport-card:nth-child(3) { padding-left: 0; } .transport-card:nth-child(3), .transport-card:nth-child(4) { border-bottom: none; } }
+    @media (max-width: 480px) { .transport-grid { grid-template-columns: 1fr; } .transport-card { border-right: none; padding-left: 0; padding-right: 0; } .transport-card:last-child { border-bottom: none; } }
 
-    .toc-link:hover .toc-arrow {
-      transform: translateX(3px);
-      color: var(--slate);
-    }
+    /* ─── Landmarks & Must-See Spots ─────────────────────────── */
+    .landmarks { padding: 2.4rem 2.5rem 0; }
+    .landmarks-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .landmarks-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .landmarks-count { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .landmarks-rule { height: 1px; background: rgba(42, 32, 24, 0.08); }
+    .landmarks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .landmark-card { padding: 1.4rem 1.6rem 1.4rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .landmark-card:nth-child(odd) { padding-right: 1.6rem; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .landmark-card:nth-child(even) { padding-left: 1.6rem; padding-right: 0; }
+    .landmark-card:nth-last-child(1), .landmark-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    .landmark-card:nth-last-child(1):nth-child(even) ~ .landmark-card { border-bottom: none; }
+    .landmark-card-inner { display: flex; gap: 1.2rem; align-items: flex-start; }
+    .landmark-card-content { flex: 1; min-width: 0; }
+    .landmark-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.3rem; }
+    .landmark-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.15rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .landmark-type { display: inline-block; padding: 0.2rem 0.55rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.52rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+    .landmark-type-historic { background: rgba(42, 32, 24, 0.04); color: var(--ink-mid); }
+    .landmark-type-nature { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .landmark-type-walk { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    .landmark-type-neighborhood { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
+    .landmark-type-market { background: rgba(160, 90, 130, 0.08); color: #804068; }
+    .landmark-type-viewpoint { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    .landmark-desc { font-family: 'Jost', sans-serif; font-size: 0.74rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; margin-bottom: 0.5rem; }
+    .landmark-location { display: flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; color: var(--ink-light); letter-spacing: 0.04em; }
+    .landmark-location svg { flex-shrink: 0; opacity: 0.5; }
+    .landmark-source { display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.08em; margin-top: 0.5rem; }
+    .landmark-source-visited { color: var(--rose); }
+    .landmark-source-visited .restaurant-source-dot { background: var(--rose); }
+    .landmark-source-researched { color: var(--ink-light); opacity: 0.7; }
+    .landmark-source-researched .restaurant-source-dot { background: var(--ink-light); }
+    .landmark-photo { width: 80px; height: 80px; border-radius: 4px; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 4px rgba(42, 32, 24, 0.1); }
+    .landmark-photo-placeholder { width: 80px; height: 80px; border-radius: 4px; flex-shrink: 0; background: rgba(42, 32, 24, 0.03); border: 1px dashed rgba(42, 32, 24, 0.1); display: flex; align-items: center; justify-content: center; color: var(--ink-light); opacity: 0.4; }
+    @media (max-width: 768px) { .landmarks-grid { grid-template-columns: 1fr; } .landmark-card:nth-child(odd) { border-right: none; padding-right: 0; } .landmark-card:nth-child(even) { padding-left: 0; } .landmark-card:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } }
 
-    .toc-link:focus-visible {
-      outline: 1.5px solid var(--slate);
-      outline-offset: 2px;
-      border-radius: 2px;
-    }
+    /* ─── Neighborhoods ────────────────────────────────────── */
+    .neighborhoods { padding: 2.4rem 2.5rem 0; }
+    .neighborhoods-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .neighborhoods-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .neighborhoods-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .neighborhood-list { display: flex; flex-direction: column; gap: 0; }
+    .neighborhood-item { display: grid; grid-template-columns: 140px 1fr; gap: 2rem; padding: 1.3rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); align-items: baseline; }
+    .neighborhood-item:first-child { padding-top: 0; }
+    .neighborhood-item:last-child { border-bottom: none; }
+    .neighborhood-name-col { display: flex; flex-direction: column; gap: 0.25rem; }
+    .neighborhood-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.15rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .neighborhood-vibe { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-light); }
+    .neighborhood-desc { font-family: 'Jost', sans-serif; font-size: 0.74rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; }
+    @media (max-width: 768px) { .neighborhood-item { grid-template-columns: 1fr; gap: 0.4rem; } }
 
-    .toc-link:active {
-      color: var(--rose);
-    }
+    /* ─── Things to Do ─────────────────────────────────────── */
+    .things-to-do { padding: 2.4rem 2.5rem 0; }
+    .things-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .things-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .things-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .things-category-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .things-category + .things-category { margin-top: 2rem; }
+    .things-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .thing-card { padding: 1.2rem 1.6rem 1.2rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .thing-card:nth-child(odd) { padding-right: 1.6rem; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .thing-card:nth-child(even) { padding-left: 1.6rem; padding-right: 0; }
+    .thing-card:nth-last-child(1), .thing-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    .thing-card:nth-last-child(1):nth-child(even) ~ .thing-card { border-bottom: none; }
+    .thing-card-inner { display: flex; gap: 1.2rem; align-items: flex-start; }
+    .thing-card-content { flex: 1; min-width: 0; }
+    .thing-photo { width: 80px; height: 80px; border-radius: 6px; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 4px rgba(42, 32, 24, 0.1); }
+    .thing-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.3rem; }
+    .thing-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.1rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .thing-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+    .thing-tag-free { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .thing-tag-paid { background: rgba(42, 32, 24, 0.04); color: var(--ink-mid); }
+    .thing-desc { font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; margin-bottom: 0.6rem; }
+    .thing-meta { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+    .thing-detail { display: flex; align-items: center; gap: 0.3rem; font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; color: var(--ink-light); letter-spacing: 0.04em; }
+    .thing-detail svg { flex-shrink: 0; opacity: 0.5; }
+    .thing-book { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.7rem; padding: 0.45rem 0.9rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 3px; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 6px rgba(200, 113, 122, 0.15), 0 1px 2px rgba(200, 113, 122, 0.08); }
+    .thing-book:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200, 113, 122, 0.25), 0 2px 4px rgba(200, 113, 122, 0.12); }
+    .thing-book:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; }
+    .thing-book:active { background: #a85a63; transform: translateY(0); }
+    .thing-book svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .thing-book:hover svg { transform: translateX(2px); }
+    .thing-visit { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.7rem; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .thing-visit:hover { color: var(--slate); }
+    .thing-visit:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .thing-visit:active { color: var(--rose); }
+    .thing-visit svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .thing-visit:hover svg { transform: translateX(2px); }
+    @media (max-width: 768px) { .things-grid { grid-template-columns: 1fr; } .thing-card:nth-child(odd) { border-right: none; padding-right: 0; } .thing-card:nth-child(even) { padding-left: 0; } .thing-card:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } }
 
-    .toc-arrow {
-      color: var(--ink-light);
-      opacity: 0.4;
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
-      flex-shrink: 0;
-    }
+    /* ─── What to Pack ─────────────────────────────────────── */
+    .packing { padding: 2.4rem 2.5rem 0; }
+    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .packing-item:last-child { border-bottom: none; }
+    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
+    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
+    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
+    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
+    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
+    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    .packing-tag-england { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
+    .packing-storefront { margin-top: 1.4rem; padding-top: 1.2rem; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .packing-storefront-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1.1rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.64rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 3px; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 6px rgba(200, 113, 122, 0.15), 0 1px 2px rgba(200, 113, 122, 0.08); }
+    .packing-storefront-link:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200, 113, 122, 0.25), 0 2px 4px rgba(200, 113, 122, 0.12); }
+    .packing-storefront-link:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; }
+    .packing-storefront-link:active { background: #a85a63; transform: translateY(0); }
+    .packing-storefront-link svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .packing-storefront-link:hover svg { transform: translateX(2px); }
+    @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
 
-    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeIn { to { opacity: 1; } }
-    @media (max-width: 600px) { .nav, .header, .map-section, .snapshot, .toc, .coming-soon-banner { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
-  
-    /* ─── Coming Soon Badge ────────────────────────────────── */
-    .coming-soon-banner {
-      padding: 2.5rem 2.5rem 0;
-      opacity: 0;
-      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
-    }
+    /* ─── Travel Tips ──────────────────────────────────────── */
+    .travel-tips { padding: 2.4rem 2.5rem 0; }
+    .tips-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .tips-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .tips-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .tips-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .tip-item { display: flex; gap: 0.8rem; align-items: baseline; padding: 0.7rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .tip-item:last-child { border-bottom: none; }
+    .tip-bullet { width: 4px; height: 4px; border-radius: 50%; background: var(--slate); flex-shrink: 0; opacity: 0.5; position: relative; top: 0.35rem; }
+    .tip-text { font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; }
+    .tips-hindsight { margin-top: 1.8rem; }
+    .tips-hindsight-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.8rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .hindsight-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .hindsight-item { display: flex; gap: 0.8rem; align-items: baseline; padding: 0.7rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .hindsight-item:last-child { border-bottom: none; }
+    .hindsight-icon { flex-shrink: 0; color: var(--slate); opacity: 0.5; position: relative; top: 0.2rem; }
+    .hindsight-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.01em; }
 
-    .coming-soon-inner {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1.2rem 1.6rem;
-      background: var(--slate-bg, #FBF0F1);
-      border-left: 2px solid var(--slate, #C8717A);
-    }
-
-    .coming-soon-icon {
-      flex-shrink: 0;
-      color: var(--slate, #C8717A);
-      opacity: 0.6;
-    }
-
-    .coming-soon-text {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-    }
-
-    .coming-soon-label {
-      font-family: 'Jost', sans-serif;
-      font-size: 0.62rem;
-      font-weight: 400;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--slate, #C8717A);
-    }
-
-    .coming-soon-desc {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.95rem;
-      font-weight: 300;
-      font-style: italic;
-      color: var(--ink-mid, #5A5048);
-      letter-spacing: 0.02em;
-      line-height: 1.4;
-    }
-      .tip-cta { padding: 2.4rem 2.5rem; text-align: center; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    /* ─── Tip CTA ────────────────────────────────────────────── */
+    .tip-cta { padding: 2.4rem 2.5rem; text-align: center; border-top: 1px solid rgba(42, 32, 24, 0.08); }
     .tip-cta-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.2rem, 2vw, 1.5rem); letter-spacing: 0.04em; color: var(--ink); margin-bottom: 0.4rem; }
     .tip-cta-sub { font-family: 'Jost', sans-serif; font-size: 0.82rem; font-weight: 300; color: var(--ink-light); margin-bottom: 1.2rem; }
     .tip-cta-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--slate); text-decoration: none; border: 1px solid rgba(200, 113, 122, 0.3); padding: 0.6rem 1.4rem; border-radius: 100px; transition: background 0.2s ease, border-color 0.2s ease; }
     .tip-cta-link:hover { background: var(--slate-bg); border-color: var(--slate); }
+    .tip-cta-link:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; }
+    .tip-cta-link:active { background: rgba(200, 113, 122, 0.15); }
+
+    /* ─── Footer ────────────────────────────────────────────── */
+    .page-footer { padding: 2rem 2.5rem 2.5rem; text-align: center; }
+    .page-disclosure { font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 300; color: var(--ink-light); opacity: 0.5; letter-spacing: 0.03em; }
+
+    /* ─── Photo Lightbox ──────────────────────────────────────── */
+    .restaurant-photo, .landmark-photo, .hotel-image, .thing-photo { cursor: zoom-in; }
+    .lightbox-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(10, 8, 6, 0); display: flex; align-items: center; justify-content: center; cursor: zoom-out; opacity: 0; pointer-events: none; transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .lightbox-overlay.active { opacity: 1; pointer-events: auto; background: rgba(10, 8, 6, 0.85); }
+    .lightbox-img { max-width: 90vw; max-height: 85vh; border-radius: 6px; object-fit: contain; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06); transform: scale(0.92); opacity: 0; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease; }
+    .lightbox-overlay.active .lightbox-img { transform: scale(1); opacity: 1; }
+    .lightbox-close { position: absolute; top: 1.2rem; right: 1.4rem; width: 36px; height: 36px; border: none; background: rgba(255, 255, 255, 0.1); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .lightbox-close:hover { background: rgba(255, 255, 255, 0.2); transform: scale(1.1); }
+    .lightbox-close:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.5); outline-offset: 2px; }
+    .lightbox-close:active { transform: scale(0.95); }
+    .lightbox-close svg { width: 16px; height: 16px; stroke: rgba(255, 255, 255, 0.8); stroke-width: 2; }
+
+    /* ─── Animations & Global Responsive ──────────────────── */
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { to { opacity: 1; } }
+    @media (max-width: 600px) { .site-nav, .nav, .header, .snapshot, .toc, .gf-guide, .restaurants, .where-to-stay, .landmarks, .neighborhoods, .things-to-do, .packing, .travel-tips, .getting-around, .page-footer { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
   </style>
 
   <!-- Google Analytics (gtag.js) -->
@@ -246,212 +394,8 @@
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-64V5CSB1DT');
-
-    // ─── Enhanced event tracking ──────────────────────────
-
-    // Helper: get page context
-    var pageCity = document.title.split('\u2014')[0].trim();
-    var pageCountry = document.title.split('\u2014')[1] ? document.title.split('\u2014')[1].trim() : '';
-
-    document.addEventListener('DOMContentLoaded', function() {
-
-      // ── 1. Scroll depth tracking (25%, 50%, 75%, 100%) ──
-      var scrollMarks = { 25: false, 50: false, 75: false, 100: false };
-      var ticking = false;
-      window.addEventListener('scroll', function() {
-        if (!ticking) {
-          window.requestAnimationFrame(function() {
-            var scrollPct = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
-            [25, 50, 75, 100].forEach(function(mark) {
-              if (scrollPct >= mark && !scrollMarks[mark]) {
-                scrollMarks[mark] = true;
-                gtag('event', 'scroll_depth', {
-                  event_category: 'engagement',
-                  event_label: mark + '%',
-                  page_title: document.title
-                });
-              }
-            });
-            ticking = false;
-          });
-          ticking = true;
-        }
-      });
-
-      // ── 2. Section visibility tracking (Intersection Observer) ──
-      var sectionObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            var sectionName = entry.target.querySelector('h2')
-              ? entry.target.querySelector('h2').textContent.trim()
-              : entry.target.className;
-            gtag('event', 'section_view', {
-              event_category: 'engagement',
-              event_label: sectionName,
-              page_title: document.title
-            });
-            sectionObserver.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.3 });
-
-      document.querySelectorAll('section, .gf-guide-section, .restaurants-section, .landmarks-section, .things-section, .neighborhoods-section, .getting-around-section, .packing-section, .tips-section').forEach(function(section) {
-        sectionObserver.observe(section);
-      });
-
-      // ── 3. Outbound link clicks (with link type classification) ──
-      document.querySelectorAll('a[target="_blank"]').forEach(function(link) {
-        link.addEventListener('click', function() {
-          var href = this.href;
-          var linkType = 'other';
-          if (href.includes('findmeglutenfree.com')) linkType = 'fmgf';
-          else if (href.includes('hotels.com')) linkType = 'hotel_booking';
-          else if (href.includes('viator.com')) linkType = 'activity_booking';
-          else if (href.includes('getyourguide.com')) linkType = 'activity_booking';
-          else if (href.includes('google.com/maps')) linkType = 'google_maps';
-
-          var context = this.closest('.restaurant-card') ? this.closest('.restaurant-card').querySelector('.restaurant-name').textContent.trim()
-            : this.closest('.thing-card') ? this.closest('.thing-card').querySelector('.thing-name').textContent.trim()
-            : this.closest('.hotel-card') ? 'hotel'
-            : 'page';
-
-          gtag('event', 'outbound_click', {
-            event_category: 'engagement',
-            event_label: href,
-            link_type: linkType,
-            click_context: context,
-            transport_type: 'beacon'
-          });
-        });
-      });
-
-      // ── 4. FMGF link clicks (high-value — tracks which restaurants) ──
-      document.querySelectorAll('.restaurant-fmgf-link').forEach(function(link) {
-        link.addEventListener('click', function() {
-          var restaurantName = this.closest('.restaurant-card')
-            ? this.closest('.restaurant-card').querySelector('.restaurant-name').textContent.trim()
-            : 'unknown';
-          gtag('event', 'fmgf_click', {
-            event_category: 'conversion',
-            event_label: restaurantName,
-            page_title: document.title,
-            transport_type: 'beacon'
-          });
-        });
-      });
-
-      // ── 5. Hotel booking clicks (affiliate conversion) ──
-      document.querySelectorAll('a[href*="hotels.com"]').forEach(function(link) {
-        link.addEventListener('click', function() {
-          var hotelName = this.closest('.hotel-card')
-            ? (this.closest('.hotel-card').querySelector('.hotel-name') || {}).textContent || 'unknown'
-            : 'unknown';
-          gtag('event', 'hotel_booking_click', {
-            event_category: 'conversion',
-            event_label: hotelName,
-            page_title: document.title,
-            transport_type: 'beacon'
-          });
-        });
-      });
-
-      // ── 6. Activity booking clicks (affiliate conversion) ──
-      document.querySelectorAll('.thing-book-btn, a[href*="viator.com"], a[href*="getyourguide.com"]').forEach(function(link) {
-        link.addEventListener('click', function() {
-          var activityName = this.closest('.thing-card')
-            ? this.closest('.thing-card').querySelector('.thing-name').textContent.trim()
-            : 'unknown';
-          gtag('event', 'activity_booking_click', {
-            event_category: 'conversion',
-            event_label: activityName,
-            page_title: document.title,
-            transport_type: 'beacon'
-          });
-        });
-      });
-
-      // ── 7. Photo lightbox opens (which photos interest people) ──
-      document.querySelectorAll('.restaurant-photo, .landmark-photo, .hotel-image, .thing-photo').forEach(function(img) {
-        img.addEventListener('click', function() {
-          var placeName = this.closest('.restaurant-card')
-            ? this.closest('.restaurant-card').querySelector('.restaurant-name').textContent.trim()
-            : this.closest('.landmark-card')
-            ? this.closest('.landmark-card').querySelector('.landmark-name').textContent.trim()
-            : this.alt || 'unknown';
-          gtag('event', 'photo_view', {
-            event_category: 'engagement',
-            event_label: placeName,
-            page_title: document.title
-          });
-        });
-      });
-
-      // ── 8. Section navigation (TOC clicks) ──
-      document.querySelectorAll('a[href^="#"]').forEach(function(link) {
-        link.addEventListener('click', function() {
-          gtag('event', 'section_nav', {
-            event_category: 'navigation',
-            event_label: this.textContent.trim(),
-            page_title: document.title
-          });
-        });
-      });
-
-      // ── 9. Map interactions ──
-      document.querySelectorAll('.map-container, [class*="map-wrap"]').forEach(function(el) {
-        var tracked = false;
-        el.addEventListener('click', function() {
-          if (!tracked) {
-            tracked = true;
-            gtag('event', 'map_interaction', {
-              event_category: 'engagement',
-              event_label: el.id || 'map',
-              page_title: document.title
-            });
-          }
-        });
-      });
-
-      // ── 10. Tip CTA email clicks ──
-      document.querySelectorAll('a[href^="mailto:"]').forEach(function(link) {
-        link.addEventListener('click', function() {
-          gtag('event', 'tip_cta_click', {
-            event_category: 'conversion',
-            event_label: document.title,
-            transport_type: 'beacon'
-          });
-        });
-      });
-
-      // ── 11. Internal navigation (country page links, breadcrumbs) ──
-      document.querySelectorAll('.back-link, .nav-link, .nav-home').forEach(function(link) {
-        link.addEventListener('click', function() {
-          gtag('event', 'internal_nav', {
-            event_category: 'navigation',
-            event_label: this.textContent.trim(),
-            link_url: this.href
-          });
-        });
-      });
-
-      // ── 12. Time on page (fires at 30s, 60s, 120s, 300s) ──
-      [30, 60, 120, 300].forEach(function(seconds) {
-        setTimeout(function() {
-          if (!document.hidden) {
-            gtag('event', 'time_on_page', {
-              event_category: 'engagement',
-              event_label: seconds + 's',
-              page_title: document.title
-            });
-          }
-        }, seconds * 1000);
-      });
-
-    });
   </script>
-  
 
-  <!-- Structured data for search engines and AI systems -->
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -459,134 +403,121 @@
     {
       "@type": "Article",
       "headline": "Gluten-Free Restaurants & Celiac Guide to London, England",
-      "description": "First-hand celiac travel guide to London with 0 GF-rated restaurants, 9/10 GF friendliness score. Visited May 2014.",
-      "author": {
-        "@type": "Person",
-        "name": "Kelly"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "GF Gone Global"
-      },
-      "about": {
-        "@type": "City",
-        "name": "London",
-        "containedInPlace": {
-          "@type": "Country",
-          "name": "England"
-        }
-      }
+      "description": "First-hand celiac travel guide to London with 7 GF-rated restaurants, 8/10 GF friendliness score. Visited September 2024.",
+      "author": { "@type": "Person", "name": "Kelly" },
+      "publisher": { "@type": "Organization", "name": "GF Gone Global" },
+      "about": { "@type": "City", "name": "London", "containedInPlace": { "@type": "Country", "name": "England" } }
     },
+    { "@type": "Restaurant", "name": "Los Mochis London City", "servesCuisine": "Mexican-Japanese Fusion", "address": { "@type": "PostalAddress", "addressLocality": "London", "addressCountry": "GB" }, "review": { "@type": "Review", "reviewRating": { "@type": "Rating", "ratingValue": 5, "bestRating": 5 }, "author": { "@type": "Person", "name": "Kelly" } } },
+    { "@type": "Restaurant", "name": "Los Mochis Notting Hill", "servesCuisine": "Mexican-Japanese Fusion", "address": { "@type": "PostalAddress", "addressLocality": "London", "addressCountry": "GB" }, "review": { "@type": "Review", "reviewRating": { "@type": "Rating", "ratingValue": 5, "bestRating": 5 }, "author": { "@type": "Person", "name": "Kelly" } } },
+    { "@type": "Restaurant", "name": "Pizza Express Live Holborn", "servesCuisine": "Italian", "address": { "@type": "PostalAddress", "addressLocality": "London", "addressCountry": "GB" }, "review": { "@type": "Review", "reviewRating": { "@type": "Rating", "ratingValue": 4, "bestRating": 5 }, "author": { "@type": "Person", "name": "Kelly" } } },
+    { "@type": "Restaurant", "name": "Wicked Fish Spitalfields", "servesCuisine": "Fish & Chips", "address": { "@type": "PostalAddress", "addressLocality": "London", "addressCountry": "GB" }, "review": { "@type": "Review", "reviewRating": { "@type": "Rating", "ratingValue": 5, "bestRating": 5 }, "author": { "@type": "Person", "name": "Kelly" } } },
+    { "@type": "Restaurant", "name": "OATIS", "servesCuisine": "Brunch / Cafe", "address": { "@type": "PostalAddress", "addressLocality": "London", "addressCountry": "GB" }, "review": { "@type": "Review", "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5 }, "author": { "@type": "Person", "name": "Kelly" } } },
+    { "@type": "Restaurant", "name": "JOE & THE JUICE", "servesCuisine": "Cafe / Juice Bar", "address": { "@type": "PostalAddress", "addressLocality": "London", "addressCountry": "GB" }, "review": { "@type": "Review", "reviewRating": { "@type": "Rating", "ratingValue": 2, "bestRating": 5 }, "author": { "@type": "Person", "name": "Kelly" } } },
+    { "@type": "Restaurant", "name": "Black Sheep Coffee", "servesCuisine": "Coffee Shop", "address": { "@type": "PostalAddress", "addressLocality": "London", "addressCountry": "GB" }, "review": { "@type": "Review", "reviewRating": { "@type": "Rating", "ratingValue": 2, "bestRating": 5 }, "author": { "@type": "Person", "name": "Kelly" } } },
+    { "@type": "LodgingBusiness", "name": "Pan Pacific London", "address": { "@type": "PostalAddress", "addressLocality": "London", "addressCountry": "GB" } },
+    { "@type": "LodgingBusiness", "name": "The Voyage Hotel Paddington, Sonder", "address": { "@type": "PostalAddress", "addressLocality": "London", "addressCountry": "GB" } },
     {
       "@type": "FAQPage",
       "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Is London safe for celiacs?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "London scores 9/10 for GF friendliness (GF Friendly)."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can you find gluten-free food in London supermarkets?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Check the full guide for grocery recommendations and naturally gluten-free local dishes in London, England."
-          }
-        }
+        { "@type": "Question", "name": "Is London safe for celiacs?", "acceptedAnswer": { "@type": "Answer", "text": "London scores 8/10 for GF friendliness. UK allergen law (Natasha's Law) requires all food businesses to provide written allergen information. The city has multiple 100% dedicated GF restaurants including Los Mochis and Wicked Fish, plus widespread menu labeling at chain restaurants." } },
+        { "@type": "Question", "name": "What are the best gluten-free restaurants in London?", "acceptedAnswer": { "@type": "Answer", "text": "Los Mochis (London City and Notting Hill locations) is a 100% GF Mexican-Japanese fusion restaurant scoring 5/5. Wicked Fish Spitalfields is a completely GF fish & chip shop. Pizza Express offers Coeliac UK-accredited GF pizza bases." } },
+        { "@type": "Question", "name": "Can you find gluten-free food in London supermarkets?", "acceptedAnswer": { "@type": "Answer", "text": "Yes — Marks & Spencer has the best 'Made Without' range, Sainsbury's and Tesco have dedicated Free-From aisles, and Whole Foods in Kensington carries international GF brands. Look for the Crossed Grain symbol on products verified by Coeliac UK." } }
       ]
     }
   ]
 }
   </script>
+
 </head>
 <body>
+
+  <nav class="site-nav">
+    <a href="../../index.html" class="site-nav-link">Places</a>
+    <a href="../../gf-scoring.html" class="site-nav-link">GF Scoring</a>
+    <a href="../../about.html" class="site-nav-link">About Me</a>
+  </nav>
+
   <nav class="nav">
-    <a href="../england.html" class="back-link">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      England
+    <a href="../../index.html" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      All Countries
     </a>
+    <span class="nav-sep">/</span>
+    <a href="../england.html" class="nav-link">England</a>
     <span class="nav-sep">/</span>
     <span class="nav-current">London</span>
   </nav>
+
   <header class="header">
-    <h1 class="city-name">London</h1>
-    <span class="trip-date">Last traveled · May 2014</span>
+    <div class="header-left">
+      <span class="country-label">England</span>
+      <h1 class="city-name">London</h1>
+    </div>
+    <span class="trip-date">Last traveled · September 2024</span>
   </header>
   <div class="header-rule"></div>
-
-  <div class="coming-soon-banner">
-    <div class="coming-soon-inner">
-      <svg class="coming-soon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
-        <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.2"/>
-        <path d="M10 5.5V10.5L13 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <div class="coming-soon-text">
-        <span class="coming-soon-label">Coming Soon</span>
-        <span class="coming-soon-desc">Full guide with restaurants, hotels &amp; landmarks is on its way.</span>
-      </div>
-    </div>
-  </div>
 
   <section class="snapshot">
     <div class="snapshot-label">City Snapshot</div>
     <div class="snapshot-grid">
       <div class="snapshot-item">
         <div class="snapshot-item-label">Best Months</div>
-        <div class="snapshot-item-value">May–Sep</div>
+        <div class="snapshot-item-value">May – Sep</div>
       </div>
       <div class="snapshot-item">
         <div class="snapshot-item-label">Ideal Stay</div>
-        <div class="snapshot-item-value">3–4 days</div>
+        <div class="snapshot-item-value">4–5 days</div>
       </div>
       <div class="snapshot-item">
-        <div class="snapshot-item-label">Gluten-Free</div>
-        <div class="snapshot-score">
-          <span class="snapshot-score-num">9/10</span>
-          <div class="snapshot-score-bar">
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip"></span>
+        <div class="snapshot-item-label">Best For</div>
+        <div class="snapshot-item-value">History, food, football</div>
+      </div>
+      <div class="snapshot-item">
+        <div class="snapshot-item-label">GF Friendliness</div>
+        <div class="snapshot-item-value">
+          <div class="snapshot-score">
+            <span class="snapshot-score-num">8/10</span>
+            <div class="snapshot-score-bar">
+              <span class="snapshot-score-pip is-filled"></span>
+              <span class="snapshot-score-pip is-filled"></span>
+              <span class="snapshot-score-pip is-filled"></span>
+              <span class="snapshot-score-pip is-filled"></span>
+              <span class="snapshot-score-pip is-filled"></span>
+              <span class="snapshot-score-pip is-filled"></span>
+              <span class="snapshot-score-pip is-filled"></span>
+              <span class="snapshot-score-pip is-filled"></span>
+              <span class="snapshot-score-pip"></span>
+              <span class="snapshot-score-pip"></span>
+            </div>
           </div>
         </div>
       </div>
       <div class="snapshot-item">
-        <div class="snapshot-item-label">English Spoken</div>
-        <div class="snapshot-item-value">Widely</div>
+        <div class="snapshot-item-label">Language</div>
+        <div class="snapshot-item-value">English</div>
+      </div>
+      <div class="snapshot-item">
+        <div class="snapshot-item-label">English</div>
+        <div class="snapshot-item-value">Native</div>
       </div>
       <div class="snapshot-item">
         <div class="snapshot-item-label">City Size</div>
-        <div class="snapshot-item-value">Large</div>
+        <div class="snapshot-item-value">Megacity (9M+)</div>
       </div>
       <div class="snapshot-item">
-        <div class="snapshot-item-label">Walkability</div>
-        <div class="snapshot-item-value">High</div>
-      </div>
-      <div class="snapshot-item">
-        <div class="snapshot-item-label">Public Transit</div>
-        <div class="snapshot-item-value">Excellent</div>
+        <div class="snapshot-item-label">Currency</div>
+        <div class="snapshot-item-value">GBP (£)</div>
       </div>
     </div>
   </section>
 
-
   <nav class="toc">
-    <div class="toc-label">Jump to</div>
+    <div class="toc-label">On this page</div>
     <ul class="toc-list">
       <li class="toc-item"><a href="#where-to-stay" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Where to stay</a></li>
-      <li class="toc-item"><a href="#gluten-free" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Gluten-free survival guide</a></li>
-      <li class="toc-item"><a href="#restaurants" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Restaurants</a></li>
+      <li class="toc-item"><a href="#gf-guide" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Gluten-free survival guide</a></li>
+      <li class="toc-item"><a href="#restaurants" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>GF friendly restaurants</a></li>
       <li class="toc-item"><a href="#getting-around" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Getting around</a></li>
       <li class="toc-item"><a href="#landmarks" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Landmarks &amp; must-see spots</a></li>
       <li class="toc-item"><a href="#neighborhoods" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Neighborhoods</a></li>
@@ -596,20 +527,932 @@
     </ul>
   </nav>
 
-  <section class="map-section" id="map-section"></section>
-  <script>
-    const MAP_URL = 'https://www.google.com/maps/d/embed?mid=1P61P7k16VVmWHMCxRy7oYN3RsXcCb9A';
-    const section = document.getElementById('map-section');
-    if (false) { // map temporarily hidden
-      const iframe = document.createElement('iframe');
-      iframe.src = MAP_URL;
-      iframe.className = 'map-frame';
-      iframe.allowFullscreen = true;
-      section.appendChild(iframe);
-    } else {
-      section.innerHTML = `<!-- <div class="map-placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><path d="M20 3C13.1 3 7.5 8.6 7.5 15.5C7.5 24.4 20 37 20 37C20 37 32.5 24.4 32.5 15.5C32.5 8.6 26.9 3 20 3ZM20 19.8C17.6 19.8 15.7 17.9 15.7 15.5C15.7 13.1 17.6 11.2 20 11.2C22.4 11.2 24.3 13.1 24.3 15.5C24.3 17.9 22.4 19.8 20 19.8Z" fill="currentColor"/></svg><div class="map-placeholder-text"><p>Google My Maps coming soon</p></div> --></div>`;
-    }
-  </script>
+  <!-- ═══ WHERE TO STAY ═══ -->
+  <section class="where-to-stay" id="where-to-stay">
+    <div class="stay-header">
+      <h2 class="stay-title">Where to Stay</h2>
+      <span class="stay-subtitle">2 hotels</span>
+    </div>
+    <div class="stay-rule"></div>
+
+    <div class="hotel-card" style="margin-bottom: 1.6rem;">
+      <div class="hotel-image-side">
+        <div class="hotel-image-placeholder">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M9 21V13h6v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><rect x="7" y="8" width="3" height="3" rx="0.5" stroke="currentColor" stroke-width="1"/><rect x="14" y="8" width="3" height="3" rx="0.5" stroke="currentColor" stroke-width="1"/></svg>
+        </div>
+        <span class="hotel-badge"><span class="hotel-badge-dot"></span>Where I stayed</span>
+      </div>
+      <div class="hotel-info-side">
+        <h3 class="hotel-name">Pan Pacific London</h3>
+        <div class="hotel-location">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1C3.8 1 2 2.8 2 5c0 3 4 6 4 6s4-3 4-6c0-2.2-1.8-4-4-4z" stroke="currentColor" stroke-width="1"/></svg>
+          City of London, near Tower of London
+        </div>
+        <div class="hotel-why">
+          <div class="hotel-why-label">Why here</div>
+          <div class="hotel-why-text">Luxury eco-certified hotel with indoor pool, full-service spa, and Straits Kitchen restaurant serving Singaporean cuisine. Prime City location.</div>
+        </div>
+        <div class="hotel-features">
+          <span class="hotel-feature">Pool</span>
+          <span class="hotel-feature">Spa</span>
+          <span class="hotel-feature">24hr Gym</span>
+          <span class="hotel-feature">Restaurant</span>
+        </div>
+        <a href="https://www.hotels.com/ho2162317984/pan-pacific-london-london-united-kingdom/" target="_blank" rel="noopener sponsored" class="hotel-cta">
+          Book on Hotels.com
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="hotel-card">
+      <div class="hotel-image-side">
+        <div class="hotel-image-placeholder">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M9 21V13h6v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><rect x="7" y="8" width="3" height="3" rx="0.5" stroke="currentColor" stroke-width="1"/><rect x="14" y="8" width="3" height="3" rx="0.5" stroke="currentColor" stroke-width="1"/></svg>
+        </div>
+        <span class="hotel-badge"><span class="hotel-badge-dot"></span>Where I stayed</span>
+      </div>
+      <div class="hotel-info-side">
+        <h3 class="hotel-name">The Voyage Hotel Paddington, Sonder</h3>
+        <div class="hotel-location">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1C3.8 1 2 2.8 2 5c0 3 4 6 4 6s4-3 4-6c0-2.2-1.8-4-4-4z" stroke="currentColor" stroke-width="1"/></svg>
+          Paddington, 2-min walk from station
+        </div>
+        <div class="hotel-why">
+          <div class="hotel-why-label">Why here</div>
+          <div class="hotel-why-text">Contemporary hotel near Marble Arch and Kensington Gardens. Hyde Park is a 7-minute walk. Heathrow Express right next door.</div>
+        </div>
+        <div class="hotel-features">
+          <span class="hotel-feature">WiFi</span>
+          <span class="hotel-feature">Room Service</span>
+          <span class="hotel-feature">Central Location</span>
+        </div>
+        <a href="https://www.hotels.com/ho3029735360/sonder-the-voyage-london-united-kingdom/" target="_blank" rel="noopener sponsored" class="hotel-cta">
+          Book on Hotels.com
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ GF SURVIVAL GUIDE ═══ -->
+  <section class="gf-guide" id="gf-guide">
+    <div class="gf-guide-header">
+      <h2 class="gf-guide-title">Gluten-Free Survival Guide</h2>
+      <span class="gf-guide-difficulty gf-difficulty-easy"><span class="gf-dot"></span>Easy</span>
+    </div>
+    <div class="gf-guide-rule"></div>
+    <div class="gf-guide-grid">
+      <div>
+        <!-- RESEARCHED -->
+        <div class="gf-info-group">
+          <div class="gf-info-label">Key Phrases (UK Context)</div>
+          <div class="gf-phrase">
+            <span class="gf-phrase-local">"I have coeliac disease"</span>
+            <span class="gf-phrase-meaning">Taken more seriously than "gluten-free"</span>
+          </div>
+          <div class="gf-phrase">
+            <span class="gf-phrase-local">"Can I see the allergen binder?"</span>
+            <span class="gf-phrase-meaning">Required by UK law (Natasha's Law)</span>
+          </div>
+          <div class="gf-phrase">
+            <span class="gf-phrase-local">"Is the fryer dedicated?"</span>
+            <span class="gf-phrase-meaning">Critical for chips and fried items</span>
+          </div>
+          <div class="gf-phrase">
+            <span class="gf-phrase-local">"Does the gravy contain flour?"</span>
+            <span class="gf-phrase-meaning">Common hidden gluten source</span>
+          </div>
+        </div>
+
+        <div class="gf-info-group">
+          <div class="gf-info-label">GF Grocery Stores</div>
+          <ul class="gf-list">
+            <li>Marks &amp; Spencer — best overall, "Made Without" range</li>
+            <li>Sainsbury's — strong "Free From" own-brand range</li>
+            <li>Waitrose — premium, curated Free-From selection</li>
+            <li>Tesco — good range in larger stores</li>
+            <li>Whole Foods (Kensington) — US brands not found elsewhere</li>
+          </ul>
+        </div>
+
+        <div class="gf-info-group">
+          <div class="gf-info-label">Naturally GF Dishes</div>
+          <ul class="gf-list">
+            <li>Sunday roast (skip Yorkshire pud, ask about gravy)</li>
+            <li>Jacket potato with toppings</li>
+            <li>Full English (skip toast, check sausages for breadcrumbs)</li>
+            <li>Indian curries with rice (avoid naan, samosas)</li>
+            <li>Eton mess &amp; pavlova (meringue-based desserts)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="gf-score-section">
+        <div class="gf-score-title">City GF Score</div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Dedicated GF Restaurants</span>
+          <div class="gf-score-pips">
+            <span class="gf-score-pip is-filled"></span>
+            <span class="gf-score-pip is-filled"></span>
+          </div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Menu Labeling</span>
+          <div class="gf-score-pips">
+            <span class="gf-score-pip is-filled"></span>
+            <span class="gf-score-pip is-filled"></span>
+          </div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Staff Knowledge &amp; Safety</span>
+          <div class="gf-score-pips">
+            <span class="gf-score-pip is-filled"></span>
+            <span class="gf-score-pip is-filled"></span>
+          </div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Density of GF Dining</span>
+          <div class="gf-score-pips">
+            <span class="gf-score-pip is-filled"></span>
+            <span class="gf-score-pip"></span>
+          </div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Grocery Availability</span>
+          <div class="gf-score-pips">
+            <span class="gf-score-pip is-filled"></span>
+            <span class="gf-score-pip"></span>
+          </div>
+        </div>
+        <div class="gf-score-total">
+          <span class="gf-score-total-num">8</span>
+          <span class="gf-score-total-label">out of 10</span>
+        </div>
+        <div class="gf-score-verdict">
+          <span class="gf-guide-difficulty gf-difficulty-easy"><span class="gf-dot"></span>Easy</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ RESTAURANTS ═══ -->
+  <section class="restaurants" id="restaurants">
+    <div class="restaurants-header">
+      <h2 class="restaurants-title">GF Friendly Restaurants</h2>
+      <span class="restaurants-count">7 rated</span>
+    </div>
+    <div class="restaurants-rule"></div>
+
+    <div class="map-container" id="restaurant-map-container">
+      <div id="restaurant-map"></div>
+    </div>
+    <div class="map-legend">
+      <div class="map-legend-item"><span class="map-legend-dot" style="background:#3d6e40;"></span>5/5 GF Score</div>
+      <div class="map-legend-item"><span class="map-legend-dot" style="background:#6a9a40;"></span>4/5</div>
+      <div class="map-legend-item"><span class="map-legend-dot" style="background:#b48c3c;"></span>3/5</div>
+      <div class="map-legend-item"><span class="map-legend-dot" style="background:#c87a50;"></span>2/5</div>
+      <div class="map-legend-item"><span class="map-legend-dot" style="background:#2A2018;border-radius:50%;"></span>Hotel</div>
+    </div>
+
+    <div class="restaurants-grid">
+
+      <!-- 1. Los Mochis London City — VISITED, 5/5 -->
+      <div class="restaurant-card">
+        <div class="restaurant-card-content">
+          <div class="restaurant-top">
+            <span class="restaurant-name">Los Mochis London City</span>
+            <span class="restaurant-tag restaurant-tag-gf">100% GF</span>
+          </div>
+          <div class="restaurant-cuisine">Mexican-Japanese Fusion</div>
+          <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span>Went here</div>
+          <div class="restaurant-gf-score">
+            <span class="restaurant-gf-score-label">GF Score</span>
+            <div class="restaurant-gf-pips">
+              <span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span>
+              <span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span>
+              <span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span>
+              <span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span>
+              <span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span>
+            </div>
+          </div>
+          <div class="restaurant-details">
+            <div><div class="restaurant-detail-label">Safety Notes</div><div class="restaurant-detail-value">Entire menu GF, nut-free, and celery-free. Kitchen is 100% GF — zero cross-contamination risk.</div></div>
+            <div><div class="restaurant-detail-label">What to Order</div><div class="restaurant-detail-value">Incredible — must go! Fun Mexican-Japanese fusion. Try anything on the menu. Luna Omakase for a special GF experience.</div></div>
+            <div><div class="restaurant-detail-label">Location</div><div class="restaurant-detail-value restaurant-location-value"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>City of London, Liverpool Street</div></div>
+          </div>
+          <div class="restaurant-fmgf">
+            <a href="https://www.findmeglutenfree.com/biz/los-mochis/5682303363317760" target="_blank" rel="noopener" class="restaurant-fmgf-link">
+              View on Find Me Gluten Free
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Los Mochis Notting Hill — VISITED, 5/5 -->
+      <div class="restaurant-card">
+        <div class="restaurant-card-inner">
+        <div class="restaurant-card-content">
+          <div class="restaurant-top">
+            <span class="restaurant-name">Los Mochis Notting Hill</span>
+            <span class="restaurant-tag restaurant-tag-gf">100% GF</span>
+          </div>
+          <div class="restaurant-cuisine">Mexican-Japanese Fusion</div>
+          <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span>Went here</div>
+          <div class="restaurant-gf-score">
+            <span class="restaurant-gf-score-label">GF Score</span>
+            <div class="restaurant-gf-pips">
+              <span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span>
+              <span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span>
+              <span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span>
+              <span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span>
+              <span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span>
+            </div>
+          </div>
+          <div class="restaurant-details">
+            <div><div class="restaurant-detail-label">Safety Notes</div><div class="restaurant-detail-value">Entire menu GF. Also houses Juno Omakase — intimate 6-seat fully GF omakase hidden inside the restaurant.</div></div>
+            <div><div class="restaurant-detail-label">What to Order</div><div class="restaurant-detail-value">Incredible — must go! Tacos, sushi, churros, desserts — all safe.</div></div>
+            <div><div class="restaurant-detail-label">Location</div><div class="restaurant-detail-value restaurant-location-value"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>Notting Hill</div></div>
+          </div>
+          <div class="restaurant-fmgf">
+            <a href="https://www.findmeglutenfree.com/biz/los-mochis-restaurant/6076333531201536" target="_blank" rel="noopener" class="restaurant-fmgf-link">
+              View on Find Me Gluten Free
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+        <img class="restaurant-photo" src="../../photos/england/london/los-mochis-notting-hill/IMG_9788.jpeg" alt="GF churros at Los Mochis Notting Hill">
+        </div>
+      </div>
+
+      <!-- 3. Pizza Express Live Holborn — VISITED, 4/5 -->
+      <div class="restaurant-card">
+        <div class="restaurant-card-content">
+          <div class="restaurant-top">
+            <span class="restaurant-name">Pizza Express Live Holborn</span>
+            <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+          </div>
+          <div class="restaurant-cuisine">Italian (Pizza / Pasta)</div>
+          <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span>Went here</div>
+          <div class="restaurant-gf-score">
+            <span class="restaurant-gf-score-label">GF Score</span>
+            <div class="restaurant-gf-pips">
+              <span class="restaurant-gf-pip is-filled" style="background:#6a9a40;"></span>
+              <span class="restaurant-gf-pip is-filled" style="background:#6a9a40;"></span>
+              <span class="restaurant-gf-pip is-filled" style="background:#6a9a40;"></span>
+              <span class="restaurant-gf-pip is-filled" style="background:#6a9a40;"></span>
+              <span class="restaurant-gf-pip"></span>
+            </div>
+          </div>
+          <div class="restaurant-details">
+            <div><div class="restaurant-detail-label">Safety Notes</div><div class="restaurant-detail-value">Coeliac UK accredited. GF bases from dedicated GF bakery. Served on black tray with purple pizza cutter to signal safety.</div></div>
+            <div><div class="restaurant-detail-label">What to Order</div><div class="restaurant-detail-value">What an awesome place — GF pizza and dough balls are a must!</div></div>
+            <div><div class="restaurant-detail-label">Location</div><div class="restaurant-detail-value restaurant-location-value"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>Holborn</div></div>
+          </div>
+          <div class="restaurant-fmgf">
+            <a href="https://www.findmeglutenfree.com/chains/5133311626182656/pizza-express" target="_blank" rel="noopener" class="restaurant-fmgf-link">
+              View on Find Me Gluten Free
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. JOE & THE JUICE — VISITED, 2/5 -->
+      <div class="restaurant-card">
+        <div class="restaurant-card-content">
+          <div class="restaurant-top">
+            <span class="restaurant-name">JOE &amp; THE JUICE</span>
+            <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+          </div>
+          <div class="restaurant-cuisine">Cafe / Juice Bar</div>
+          <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span>Went here</div>
+          <div class="restaurant-gf-score">
+            <span class="restaurant-gf-score-label">GF Score</span>
+            <div class="restaurant-gf-pips">
+              <span class="restaurant-gf-pip is-filled" style="background:#c87a50;"></span>
+              <span class="restaurant-gf-pip is-filled" style="background:#c87a50;"></span>
+              <span class="restaurant-gf-pip"></span>
+              <span class="restaurant-gf-pip"></span>
+              <span class="restaurant-gf-pip"></span>
+            </div>
+          </div>
+          <div class="restaurant-details">
+            <div><div class="restaurant-detail-label">Safety Notes</div><div class="restaurant-detail-value">GF bread available, heated on separate grill. Small kitchens — cross-contamination risk varies by location.</div></div>
+            <div><div class="restaurant-detail-label">What to Order</div><div class="restaurant-detail-value">Phenomenal — must try the avocado sandwich. All juices and smoothies naturally GF.</div></div>
+            <div><div class="restaurant-detail-label">Location</div><div class="restaurant-detail-value restaurant-location-value"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>City of London, Liverpool Street</div></div>
+          </div>
+          <div class="restaurant-fmgf">
+            <a href="https://www.findmeglutenfree.com/biz/joe-and-the-juice/6031873342046208" target="_blank" rel="noopener" class="restaurant-fmgf-link">
+              View on Find Me Gluten Free
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Black Sheep Coffee — VISITED, 2/5 -->
+      <div class="restaurant-card">
+        <div class="restaurant-card-content">
+          <div class="restaurant-top">
+            <span class="restaurant-name">Black Sheep Coffee</span>
+            <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+          </div>
+          <div class="restaurant-cuisine">Coffee Shop / Cafe</div>
+          <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span>Went here</div>
+          <div class="restaurant-gf-score">
+            <span class="restaurant-gf-score-label">GF Score</span>
+            <div class="restaurant-gf-pips">
+              <span class="restaurant-gf-pip is-filled" style="background:#c87a50;"></span>
+              <span class="restaurant-gf-pip is-filled" style="background:#c87a50;"></span>
+              <span class="restaurant-gf-pip"></span>
+              <span class="restaurant-gf-pip"></span>
+              <span class="restaurant-gf-pip"></span>
+            </div>
+          </div>
+          <div class="restaurant-details">
+            <div><div class="restaurant-detail-label">Safety Notes</div><div class="restaurant-detail-value">Some labeled GF items but not a dedicated GF facility. Stick to coffee drinks and clearly labeled items.</div></div>
+            <div><div class="restaurant-detail-label">What to Order</div><div class="restaurant-detail-value">Coffee drinks, clearly labeled GF food items.</div></div>
+            <div><div class="restaurant-detail-label">Location</div><div class="restaurant-detail-value restaurant-location-value"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>City of London, Liverpool Street</div></div>
+          </div>
+          <div class="restaurant-fmgf">
+            <a href="https://www.findmeglutenfree.com/biz/black-sheep-coffee/5037307943583744" target="_blank" rel="noopener" class="restaurant-fmgf-link">
+              View on Find Me Gluten Free
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Wicked Fish Spitalfields — NOT VISITED, 5/5 -->
+      <div class="restaurant-card">
+        <div class="restaurant-card-content">
+          <!-- RESEARCHED -->
+          <div class="restaurant-top">
+            <span class="restaurant-name">Wicked Fish Spitalfields</span>
+            <span class="restaurant-tag restaurant-tag-gf">100% GF</span>
+          </div>
+          <div class="restaurant-cuisine">Fish &amp; Chips (British)</div>
+          <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span>Traveler recommended</div>
+          <div class="restaurant-gf-score">
+            <span class="restaurant-gf-score-label">GF Score</span>
+            <div class="restaurant-gf-pips">
+              <span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span>
+              <span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span>
+              <span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span>
+              <span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span>
+              <span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span>
+            </div>
+          </div>
+          <div class="restaurant-details">
+            <div><div class="restaurant-detail-label">Safety Notes</div><div class="restaurant-detail-value">Entirely GF fish &amp; chip shop — no gluten in any menu items. 5.0 stars with 228 FMGF ratings. Uses line-caught haddock in GF batter.</div></div>
+            <div><div class="restaurant-detail-label">What to Order</div><div class="restaurant-detail-value">Fish &amp; chips, calamari, fries — everything on the menu is safe.</div></div>
+            <div><div class="restaurant-detail-label">Location</div><div class="restaurant-detail-value restaurant-location-value"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>Spitalfields Market</div></div>
+          </div>
+          <div class="restaurant-fmgf">
+            <a href="https://www.findmeglutenfree.com/biz/wicked-fish/5779279859810304" target="_blank" rel="noopener" class="restaurant-fmgf-link">
+              View on Find Me Gluten Free
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. OATIS — NOT VISITED, 3/5 -->
+      <div class="restaurant-card">
+        <div class="restaurant-card-content">
+          <!-- RESEARCHED -->
+          <div class="restaurant-top">
+            <span class="restaurant-name">OATIS</span>
+            <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+          </div>
+          <div class="restaurant-cuisine">Brunch / Cafe (Oat-focused)</div>
+          <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span>Traveler recommended</div>
+          <div class="restaurant-gf-score">
+            <span class="restaurant-gf-score-label">GF Score</span>
+            <div class="restaurant-gf-pips">
+              <span class="restaurant-gf-pip is-filled" style="background:#b48c3c;"></span>
+              <span class="restaurant-gf-pip is-filled" style="background:#b48c3c;"></span>
+              <span class="restaurant-gf-pip is-filled" style="background:#b48c3c;"></span>
+              <span class="restaurant-gf-pip"></span>
+              <span class="restaurant-gf-pip"></span>
+            </div>
+          </div>
+          <div class="restaurant-details">
+            <div><div class="restaurant-detail-label">Safety Notes</div><div class="restaurant-detail-value">All oats certified GF. Pancakes GF as standard, cooked in dedicated pans. Dedicated GF toaster. Kitchen is not fully dedicated GF.</div></div>
+            <div><div class="restaurant-detail-label">What to Order</div><div class="restaurant-detail-value">Oat bowls, GF pancakes, acai bowls.</div></div>
+            <div><div class="restaurant-detail-label">Location</div><div class="restaurant-detail-value restaurant-location-value"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>Notting Hill / Queensway</div></div>
+          </div>
+          <div class="restaurant-fmgf">
+            <a href="https://www.findmeglutenfree.com/biz/oatis/6698670654881792" target="_blank" rel="noopener" class="restaurant-fmgf-link">
+              View on Find Me Gluten Free
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ GETTING AROUND ═══ -->
+  <section class="getting-around" id="getting-around">
+    <div class="getting-around-header">
+      <h2 class="getting-around-title">Getting Around</h2>
+    </div>
+    <div class="getting-around-rule"></div>
+    <!-- RESEARCHED -->
+    <div class="transport-grid">
+      <div class="transport-card">
+        <div class="transport-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="2" width="10" height="11" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M3 9h10" stroke="currentColor" stroke-width="1.2"/><circle cx="5.5" cy="11" r="0.8" fill="currentColor"/><circle cx="10.5" cy="11" r="0.8" fill="currentColor"/><path d="M5 14l-1 1M11 14l1 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="transport-name">Underground</div>
+        <div class="transport-desc">The Tube is London's backbone — 11 lines covering central and suburbs. Night Tube on Fri/Sat on select lines.</div>
+        <div class="transport-detail">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="3.5" stroke="currentColor" stroke-width="0.8"/><path d="M5 3v2.5l1.5 1" stroke="currentColor" stroke-width="0.8" stroke-linecap="round"/></svg>
+          Runs ~5am – midnight
+        </div>
+      </div>
+      <div class="transport-card">
+        <div class="transport-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="2" y="4" width="12" height="8" rx="2" stroke="currentColor" stroke-width="1.2"/><path d="M2 8h12" stroke="currentColor" stroke-width="1.2"/><circle cx="4.5" cy="13" r="1" stroke="currentColor" stroke-width="0.8"/><circle cx="11.5" cy="13" r="1" stroke="currentColor" stroke-width="0.8"/></svg>
+        </div>
+        <div class="transport-name">Bus</div>
+        <div class="transport-desc">Extensive 24-hour network. Cash NOT accepted — contactless only. "Hopper" fare: unlimited transfers within 1 hour.</div>
+        <div class="transport-detail">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 5h8M6 2l3 3-3 3" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          £1.75 flat fare, £5.25 daily cap
+        </div>
+      </div>
+      <div class="transport-card">
+        <div class="transport-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 10l3-6h6l3 6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 10h14" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M4 10v2M12 10v2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="transport-name">River Bus</div>
+        <div class="transport-desc">Thames Clippers serve 24 piers. Scenic way between Greenwich, Tower, Westminster, and Embankment.</div>
+        <div class="transport-detail">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 5h8M6 2l3 3-3 3" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Oyster / contactless accepted
+        </div>
+      </div>
+      <div class="transport-card">
+        <div class="transport-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="11" r="3" stroke="currentColor" stroke-width="1.2"/><path d="M8 2v5M6 4h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="transport-name">Santander Cycles</div>
+        <div class="transport-desc">£2 unlocks unlimited 30-minute rides. Docking stations near most major attractions and piers.</div>
+        <div class="transport-detail">
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 5h8M6 2l3 3-3 3" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Use the app or docking stations
+        </div>
+      </div>
+    </div>
+
+    <div class="transit-tip">
+      <svg class="transit-tip-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.2"/><path d="M7 4v3.5M7 9.5v0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <div class="transit-tip-content">
+        <div class="transit-tip-label">Visitor Tip</div>
+        <div class="transit-tip-text">Use contactless (Visa/Mastercard/Apple Pay) instead of buying an Oyster card — same fares with automatic daily capping at £8.90 for Zone 1. The Elizabeth Line runs Heathrow to Liverpool Street in ~40 minutes.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPLIT POINT -->
+
+  <!-- ═══ LANDMARKS ═══ -->
+  <section class="landmarks" id="landmarks">
+    <div class="landmarks-header">
+      <h2 class="landmarks-title">Landmarks &amp; Must-See Spots</h2>
+      <span class="landmarks-count">11 spots</span>
+    </div>
+    <div class="landmarks-rule"></div>
+    <div class="landmarks-grid">
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <span class="landmark-name">Big Ben</span>
+              <span class="landmark-type landmark-type-historic">Historic</span>
+            </div>
+            <div class="landmark-desc">The iconic Elizabeth Tower and its Great Bell — London's most recognizable landmark, standing at the north end of the Houses of Parliament.</div>
+            <div class="landmark-location"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>Westminster</div>
+            <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span>Went here</div>
+          </div>
+          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 13l4-5 3 3 2-2 3 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="5" cy="5" r="1.5" stroke="currentColor" stroke-width="1"/></svg></div>
+        </div>
+      </div>
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <span class="landmark-name">Tower Bridge</span>
+              <span class="landmark-type landmark-type-historic">Historic</span>
+            </div>
+            <div class="landmark-desc">Victorian bascule and suspension bridge over the Thames, with glass walkways offering panoramic views 42 meters above the river.</div>
+            <div class="landmark-location"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>City of London / South Bank</div>
+            <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span>Went here</div>
+          </div>
+          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 13l4-5 3 3 2-2 3 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="5" cy="5" r="1.5" stroke="currentColor" stroke-width="1"/></svg></div>
+        </div>
+      </div>
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <span class="landmark-name">Piccadilly Circus</span>
+              <span class="landmark-type landmark-type-historic">Historic</span>
+            </div>
+            <div class="landmark-desc">London's Times Square — a famous road junction and public space in the West End, ringed by neon signs and the Shaftesbury Memorial Fountain.</div>
+            <div class="landmark-location"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>West End</div>
+            <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span>Went here</div>
+          </div>
+          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 13l4-5 3 3 2-2 3 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="5" cy="5" r="1.5" stroke="currentColor" stroke-width="1"/></svg></div>
+        </div>
+      </div>
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <span class="landmark-name">Hyde Park</span>
+              <span class="landmark-type landmark-type-nature">Nature</span>
+            </div>
+            <div class="landmark-desc">350 acres of royal parkland in central London. Walk, cycle, or rent a pedalo on the Serpentine. Speakers' Corner on Sundays.</div>
+            <div class="landmark-location"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>Kensington / Westminster</div>
+            <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span>Went here</div>
+          </div>
+          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 13l4-5 3 3 2-2 3 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="5" cy="5" r="1.5" stroke="currentColor" stroke-width="1"/></svg></div>
+        </div>
+      </div>
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <span class="landmark-name">Buckingham Palace</span>
+              <span class="landmark-type landmark-type-historic">Historic</span>
+            </div>
+            <div class="landmark-desc">The official London residence of the reigning monarch. Watch the Changing of the Guard ceremony, held several times weekly.</div>
+            <div class="landmark-location"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>Westminster</div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span>Traveler recommended</div>
+          </div>
+          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 13l4-5 3 3 2-2 3 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="5" cy="5" r="1.5" stroke="currentColor" stroke-width="1"/></svg></div>
+        </div>
+      </div>
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <span class="landmark-name">Kensington Palace</span>
+              <span class="landmark-type landmark-type-historic">Historic</span>
+            </div>
+            <div class="landmark-desc">Historic royal residence set within Kensington Gardens. Childhood home of Queen Victoria and former home of Princess Diana.</div>
+            <div class="landmark-location"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>Kensington</div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span>Traveler recommended</div>
+          </div>
+          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 13l4-5 3 3 2-2 3 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="5" cy="5" r="1.5" stroke="currentColor" stroke-width="1"/></svg></div>
+        </div>
+      </div>
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <span class="landmark-name">London Bridge</span>
+              <span class="landmark-type landmark-type-historic">Historic</span>
+            </div>
+            <div class="landmark-desc">Connects the City to Southwark across the Thames. The current bridge replaced the famous medieval stone bridge in 1973.</div>
+            <div class="landmark-location"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>City of London / South Bank</div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span>Traveler recommended</div>
+          </div>
+          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 13l4-5 3 3 2-2 3 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="5" cy="5" r="1.5" stroke="currentColor" stroke-width="1"/></svg></div>
+        </div>
+      </div>
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <span class="landmark-name">Diana Memorial Walk</span>
+              <span class="landmark-type landmark-type-walk">Walk</span>
+            </div>
+            <div class="landmark-desc">A 7-mile walking trail through four of London's Royal Parks, passing places associated with Princess Diana's life.</div>
+            <div class="landmark-location"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>Kensington / Westminster</div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span>Traveler recommended</div>
+          </div>
+          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 13l4-5 3 3 2-2 3 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="5" cy="5" r="1.5" stroke="currentColor" stroke-width="1"/></svg></div>
+        </div>
+      </div>
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <span class="landmark-name">Spitalfields Market</span>
+              <span class="landmark-type landmark-type-market">Market</span>
+            </div>
+            <div class="landmark-desc">Covered market in East London with food stalls, vintage fashion, and artisan goods. GF options available from rice bowl and salad vendors.</div>
+            <div class="landmark-location"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>Shoreditch / East London</div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span>Traveler recommended</div>
+          </div>
+          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 13l4-5 3 3 2-2 3 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="5" cy="5" r="1.5" stroke="currentColor" stroke-width="1"/></svg></div>
+        </div>
+      </div>
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <span class="landmark-name">Borough Market</span>
+              <span class="landmark-type landmark-type-market">Market</span>
+            </div>
+            <div class="landmark-desc">London's oldest food market (since the 13th century). GF-friendly stalls include raclette, paella, and Neal's Yard Dairy cheese.</div>
+            <div class="landmark-location"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>Southwark / South Bank</div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span>Traveler recommended</div>
+          </div>
+          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 13l4-5 3 3 2-2 3 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="5" cy="5" r="1.5" stroke="currentColor" stroke-width="1"/></svg></div>
+        </div>
+      </div>
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <span class="landmark-name">The Notting Hill Bookshop</span>
+              <span class="landmark-type landmark-type-historic">Historic</span>
+            </div>
+            <div class="landmark-desc">The travel bookshop that inspired the shop in the Hugh Grant film. Browse shelves of travel literature on charming Blenheim Crescent.</div>
+            <div class="landmark-location"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>Notting Hill</div>
+            <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span>Went here</div>
+          </div>
+          <img class="landmark-photo" src="../../photos/england/london/the-notting-hill-bookshop/IMG_0952.jpeg" alt="The iconic blue door near The Notting Hill Bookshop">
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ NEIGHBORHOODS ═══ -->
+  <section class="neighborhoods" id="neighborhoods">
+    <div class="neighborhoods-header">
+      <h2 class="neighborhoods-title">Neighborhoods</h2>
+    </div>
+    <div class="neighborhoods-rule"></div>
+
+    <div class="map-container" id="neighborhood-map-container">
+      <div id="neighborhood-map"></div>
+    </div>
+
+    <!-- RESEARCHED -->
+    <div class="neighborhood-list">
+      <div class="neighborhood-item">
+        <div class="neighborhood-name-col">
+          <span class="neighborhood-name">City of London</span>
+          <span class="neighborhood-vibe">Financial &amp; Historic</span>
+        </div>
+        <div class="neighborhood-desc">The financial heart where medieval history meets skyscrapers. Home to the Pan Pacific hotel, Spitalfields Market, and Liverpool Street's restaurant cluster. Walk to the Tower of London and Tower Bridge.</div>
+      </div>
+      <div class="neighborhood-item">
+        <div class="neighborhood-name-col">
+          <span class="neighborhood-name">Westminster</span>
+          <span class="neighborhood-vibe">Monumental</span>
+        </div>
+        <div class="neighborhood-desc">London's monumental core — Big Ben, Houses of Parliament, Buckingham Palace. Cross Westminster Bridge to the South Bank for the London Eye, Borough Market, and The Shard. The best walking corridor in the city.</div>
+      </div>
+      <div class="neighborhood-item">
+        <div class="neighborhood-name-col">
+          <span class="neighborhood-name">Notting Hill</span>
+          <span class="neighborhood-vibe">Charming &amp; Leafy</span>
+        </div>
+        <div class="neighborhood-desc">Pastel Victorian townhouses, Portobello Road Market, and the famous bookshop. Los Mochis Notting Hill brings world-class GF dining. South into Kensington for Hyde Park and Kensington Palace.</div>
+      </div>
+      <div class="neighborhood-item">
+        <div class="neighborhood-name-col">
+          <span class="neighborhood-name">Paddington</span>
+          <span class="neighborhood-vibe">Transport Hub</span>
+        </div>
+        <div class="neighborhood-desc">Gateway to Heathrow via the Express (15 min) and the Elizabeth Line. The Voyage Hotel sits here. Walk to Little Venice for canal-side narrowboat cruises.</div>
+      </div>
+      <div class="neighborhood-item">
+        <div class="neighborhood-name-col">
+          <span class="neighborhood-name">Stratford</span>
+          <span class="neighborhood-vibe">Olympic &amp; Modern</span>
+        </div>
+        <div class="neighborhood-desc">Queen Elizabeth Olympic Park and London Stadium (West Ham). Modern, regenerated East London with excellent facilities and green space. 15 minutes from Liverpool Street on the Elizabeth Line.</div>
+      </div>
+      <div class="neighborhood-item">
+        <div class="neighborhood-name-col">
+          <span class="neighborhood-name">Chelsea</span>
+          <span class="neighborhood-vibe">Affluent &amp; Sporty</span>
+        </div>
+        <div class="neighborhood-desc">Home to Stamford Bridge (Chelsea FC), the King's Road for shopping, and riverside walks along Chelsea Embankment. Fulham Broadway station for the stadium.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ THINGS TO DO ═══ -->
+  <section class="things-to-do" id="things-to-do">
+    <div class="things-header">
+      <h2 class="things-title">Things to Do</h2>
+    </div>
+    <div class="things-rule"></div>
+
+    <div class="things-category">
+      <div class="things-category-label">Attractions &amp; Experiences</div>
+      <div class="things-grid">
+
+        <div class="thing-card">
+          <div class="thing-top">
+            <span class="thing-name">Tower of London &amp; Crown Jewels</span>
+            <span class="thing-tag thing-tag-paid">Paid</span>
+          </div>
+          <div class="thing-desc">UNESCO World Heritage Site housing 23,578 gems in the Crown Jewels collection. Beefeater-guided tours included with admission. Book in advance.</div>
+          <div class="thing-meta">
+            <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="3.5" stroke="currentColor" stroke-width="0.8"/><path d="M5 3v2.5l1.5 1" stroke="currentColor" stroke-width="0.8" stroke-linecap="round"/></svg>Half day</span>
+            <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>City of London</span>
+          </div>
+          <!-- RESEARCHED -->
+          <a href="https://www.getyourguide.com/tower-of-london-l2708/london-tower-of-london-and-crown-jewels-exhibition-ticket-t21253/" target="_blank" rel="noopener sponsored" class="thing-book">
+            Book tickets
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M6 3l2 2-2 2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+        <div class="thing-card">
+          <div class="thing-top">
+            <span class="thing-name">The Shard — Viewing Platform</span>
+            <span class="thing-tag thing-tag-paid">Paid</span>
+          </div>
+          <div class="thing-desc">72nd-floor open-air viewing platform, 300+ meters above London. Panoramic views up to 40 miles on a clear day. Champagne option available.</div>
+          <div class="thing-meta">
+            <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="3.5" stroke="currentColor" stroke-width="0.8"/><path d="M5 3v2.5l1.5 1" stroke="currentColor" stroke-width="0.8" stroke-linecap="round"/></svg>1–2 hours</span>
+            <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>London Bridge</span>
+          </div>
+          <!-- RESEARCHED -->
+          <a href="https://www.getyourguide.com/london-l57/the-view-from-the-shard-experience-t24625/" target="_blank" rel="noopener sponsored" class="thing-book">
+            Book tickets
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M6 3l2 2-2 2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+        <div class="thing-card">
+          <div class="thing-top">
+            <span class="thing-name">London Eye</span>
+            <span class="thing-tag thing-tag-paid">Paid</span>
+          </div>
+          <div class="thing-desc">Iconic 30-minute rotation offering sweeping views of Westminster, the Thames, and the city skyline. Standard and fast-track options.</div>
+          <div class="thing-meta">
+            <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="3.5" stroke="currentColor" stroke-width="0.8"/><path d="M5 3v2.5l1.5 1" stroke="currentColor" stroke-width="0.8" stroke-linecap="round"/></svg>30 minutes</span>
+            <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>South Bank</span>
+          </div>
+          <!-- RESEARCHED -->
+          <a href="https://www.getyourguide.com/the-london-eye-l2711/coca-cola-london-eye-standard-or-fast-track-admission-t170451/" target="_blank" rel="noopener sponsored" class="thing-book">
+            Book tickets
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M6 3l2 2-2 2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+        <div class="thing-card">
+          <div class="thing-top">
+            <span class="thing-name">London Stadium Tour</span>
+            <span class="thing-tag thing-tag-paid">Paid</span>
+          </div>
+          <div class="thing-desc">Go behind the scenes at West Ham United's home — player tunnel, dugout, changing rooms, and pitch-side multimedia exhibits.</div>
+          <div class="thing-meta">
+            <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="3.5" stroke="currentColor" stroke-width="0.8"/><path d="M5 3v2.5l1.5 1" stroke="currentColor" stroke-width="0.8" stroke-linecap="round"/></svg>~75 min</span>
+            <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>Stratford</span>
+          </div>
+          <!-- RESEARCHED -->
+          <a href="https://www.getyourguide.com/london-l57/london-stadium-multimedia-tour-t79506/" target="_blank" rel="noopener sponsored" class="thing-book">
+            Book tour
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M6 3l2 2-2 2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+
+        <div class="thing-card">
+          <div class="thing-card-inner">
+          <div class="thing-card-content">
+          <div class="thing-top">
+            <span class="thing-name">Stamford Bridge Tour</span>
+            <span class="thing-tag thing-tag-paid">Paid</span>
+          </div>
+          <div class="thing-desc">Chelsea FC stadium and museum tour — home and away dressing rooms, press room, players' tunnel, pitch-side access, and the club museum.</div>
+          <div class="thing-meta">
+            <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="3.5" stroke="currentColor" stroke-width="0.8"/><path d="M5 3v2.5l1.5 1" stroke="currentColor" stroke-width="0.8" stroke-linecap="round"/></svg>~1 hour + museum</span>
+            <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>Chelsea</span>
+          </div>
+          <!-- RESEARCHED -->
+          <a href="https://www.getyourguide.com/london-l57/chelsea-football-club-stadium-and-museum-1-hour-tour-t52605/" target="_blank" rel="noopener sponsored" class="thing-book">
+            Book tour
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M6 3l2 2-2 2" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          </div>
+          <img class="thing-photo" src="../../photos/england/london/stamford-bridge/IMG_9779.jpeg" alt="Chelsea Football Club East Stand at Stamford Bridge">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ WHAT TO PACK ═══ -->
+  <section class="packing" id="what-to-pack">
+    <div class="packing-header">
+      <h2 class="packing-title">What to Pack</h2>
+      <span class="packing-season">September</span>
+    </div>
+    <div class="packing-rule"></div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Coeliac UK dining card</span>
+          <span class="packing-item-why">Print or save digitally — explains celiac needs in clear English for restaurant staff</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">GF snacks for travel days</span>
+          <span class="packing-item-why">Airport and train station options can be limited</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable phone charger</span>
+          <span class="packing-item-why">Contactless payments and Citymapper drain battery fast</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">UK power adapter (Type G)</span>
+          <span class="packing-item-why">UK uses 3-prong rectangular pins — different from US and EU plugs</span>
+        </div>
+        <span class="packing-item-tag packing-tag-england">England</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Compact umbrella</span>
+          <span class="packing-item-why">London rain is frequent and unpredictable, even in September</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">London</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Layers for 14–20°C weather</span>
+          <span class="packing-item-why">September days are mild but evenings cool down quickly</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">London</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">London is a walking city — expect 15,000+ steps per day exploring</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">London</span>
+      </li>
+    </ul>
+
+    <!-- STOREFRONT: Uncomment when Amazon storefront URL is ready -->
+    <!-- <div class="packing-storefront">
+      <a href="STOREFRONT_URL_HERE" target="_blank" rel="noopener sponsored" class="packing-storefront-link">
+        Browse My Full Travel Storefront
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div> -->
+  </section>
+
+  <!-- ═══ TRAVEL TIPS ═══ -->
+  <section class="travel-tips" id="travel-tips">
+    <div class="tips-header">
+      <h2 class="tips-title">Travel Tips</h2>
+    </div>
+    <div class="tips-rule"></div>
+    <!-- RESEARCHED -->
+    <ul class="tips-list">
+      <li class="tip-item"><span class="tip-bullet"></span><span class="tip-text">Download the Coeliac UK GF Food Checker app — scan barcodes in any UK supermarket to check if a product is gluten-free.</span></li>
+      <li class="tip-item"><span class="tip-bullet"></span><span class="tip-text">Say "I'm coeliac" rather than "I'm gluten-free" — UK staff take the medical condition more seriously than what may seem like a dietary preference.</span></li>
+      <li class="tip-item"><span class="tip-bullet"></span><span class="tip-text">Chain restaurants (Nando's, Wagamama, Pizza Express, Leon) are often more reliable for allergen info than independents, thanks to centralized allergen matrices.</span></li>
+      <li class="tip-item"><span class="tip-bullet"></span><span class="tip-text">UK law requires every food business to provide allergen information — don't hesitate to ask for the allergen binder. It's your legal right under Natasha's Law.</span></li>
+      <li class="tip-item"><span class="tip-bullet"></span><span class="tip-text">Avoid rush hour on the Tube (7:30–9:30am and 5–7pm). Off-peak fares are cheaper and the trains are far more comfortable.</span></li>
+      <li class="tip-item"><span class="tip-bullet"></span><span class="tip-text">The Westminster-to-Tower-Bridge riverside walk is London's best free sightseeing route — about 45 minutes passing the Tate Modern, Shakespeare's Globe, and Borough Market.</span></li>
+      <li class="tip-item"><span class="tip-bullet"></span><span class="tip-text">M&S Food Halls at major stations (Paddington, King's Cross, Waterloo) are your best bet for GF grab-and-go meals when in a hurry.</span></li>
+    </ul>
+  </section>
 
   <!-- TIP CTA -->
   <div class="tip-cta">
@@ -620,6 +1463,208 @@
       Send a note
     </a>
   </div>
+
+  <!-- Footer -->
+  <footer class="page-footer">
+    <p class="page-disclosure">This page contains affiliate links. If you book through these links, I may earn a small commission at no extra cost to you. All recommendations are based on personal experience and research.</p>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" aria-label="Close lightbox"><svg viewBox="0 0 16 16" fill="none"><line x1="3" y1="3" x2="13" y2="13"/><line x1="13" y1="3" x2="3" y2="13"/></svg></button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="">
+  </div>
+
+  <script>
+    // Lightbox
+    (function() {
+      var overlay = document.getElementById('lightbox');
+      var lbImg = document.getElementById('lightbox-img');
+      document.querySelectorAll('.restaurant-photo, .landmark-photo, .hotel-image, .thing-photo').forEach(function(img) {
+        img.addEventListener('click', function() {
+          lbImg.src = this.src;
+          lbImg.alt = this.alt || '';
+          overlay.classList.add('active');
+        });
+      });
+      overlay.addEventListener('click', function(e) {
+        if (e.target !== lbImg) { overlay.classList.remove('active'); lbImg.src = ''; }
+      });
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && overlay.classList.contains('active')) { overlay.classList.remove('active'); lbImg.src = ''; }
+      });
+    })();
+
+    // Restaurant Map
+    (function() {
+      var map = L.map('restaurant-map', { scrollWheelZoom: false }).setView([51.512, -0.130], 12);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>',
+        maxZoom: 19
+      }).addTo(map);
+
+      var hotelIcon = L.divIcon({
+        className: '',
+        html: '<div style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;background:#2A2018;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.25);"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 21V13h6v8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 21h22" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><rect x="7" y="8" width="3" height="3" rx="0.5" fill="#fff"/><rect x="14" y="8" width="3" height="3" rx="0.5" fill="#fff"/></svg></div>',
+        iconSize: [22, 22],
+        iconAnchor: [11, 11]
+      });
+
+      function mkIcon(color) {
+        return L.divIcon({ className: '', html: '<div style="width:14px;height:14px;background:'+color+';border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.2);"></div>', iconSize: [14,14], iconAnchor: [7,7] });
+      }
+
+      // Hotels
+      L.marker([51.516429, -0.0803845], {icon: hotelIcon}).addTo(map).bindPopup('<strong>Pan Pacific London</strong><br>Where I stayed');
+      L.marker([51.5155836, -0.1733879], {icon: hotelIcon}).addTo(map).bindPopup('<strong>The Voyage Hotel Paddington</strong><br>Where I stayed');
+
+      // Restaurants
+      L.marker([51.5178587, -0.0835832], {icon: mkIcon('#3d6e40')}).addTo(map).bindPopup('<strong>Los Mochis London City</strong><br>5/5 · 100% GF');
+      L.marker([51.5085267, -0.1971206], {icon: mkIcon('#3d6e40')}).addTo(map).bindPopup('<strong>Los Mochis Notting Hill</strong><br>5/5 · 100% GF');
+      L.marker([51.5203364, -0.0766339], {icon: mkIcon('#3d6e40')}).addTo(map).bindPopup('<strong>Wicked Fish Spitalfields</strong><br>5/5 · 100% GF');
+      L.marker([51.51791, -0.1187016], {icon: mkIcon('#6a9a40')}).addTo(map).bindPopup('<strong>Pizza Express Live Holborn</strong><br>4/5 · Celiac-aware');
+      L.marker([51.5134793, -0.1878318], {icon: mkIcon('#b48c3c')}).addTo(map).bindPopup('<strong>OATIS</strong><br>3/5 · GF Options');
+      L.marker([51.5172289, -0.0819975], {icon: mkIcon('#c87a50')}).addTo(map).bindPopup('<strong>JOE &amp; THE JUICE</strong><br>2/5 · GF Options');
+      L.marker([51.5187695, -0.0800697], {icon: mkIcon('#c87a50')}).addTo(map).bindPopup('<strong>Black Sheep Coffee</strong><br>2/5 · GF Options');
+    })();
+
+    // Neighborhood Map
+    (function() {
+      var map = L.map('neighborhood-map', { scrollWheelZoom: false }).setView([51.508, -0.130], 12);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OSM &copy; CARTO', maxZoom: 19
+      }).addTo(map);
+
+      var hotelIcon = L.divIcon({
+        className: '',
+        html: '<div style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;background:#2A2018;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.25);"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 21V13h6v8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 21h22" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><rect x="7" y="8" width="3" height="3" rx="0.5" fill="#fff"/><rect x="14" y="8" width="3" height="3" rx="0.5" fill="#fff"/></svg></div>',
+        iconSize: [22, 22], iconAnchor: [11, 11]
+      });
+
+      L.marker([51.516429, -0.0803845], {icon: hotelIcon}).addTo(map).bindPopup('<strong>Pan Pacific London</strong><br>Where I stayed');
+      L.marker([51.5155836, -0.1733879], {icon: hotelIcon}).addTo(map).bindPopup('<strong>The Voyage Hotel Paddington</strong><br>Where I stayed');
+
+      var neighborhoods = [
+        { name: 'CITY OF LONDON', center: [51.515, -0.080], radius: 800 },
+        { name: 'WESTMINSTER', center: [51.501, -0.125], radius: 900 },
+        { name: 'NOTTING HILL', center: [51.510, -0.200], radius: 700 },
+        { name: 'PADDINGTON', center: [51.516, -0.175], radius: 500 },
+        { name: 'STRATFORD', center: [51.538, -0.016], radius: 700 },
+        { name: 'CHELSEA', center: [51.482, -0.190], radius: 700 }
+      ];
+
+      neighborhoods.forEach(function(n) {
+        L.circle(n.center, { radius: n.radius, color: '#2A2018', weight: 1.2, fillColor: 'transparent', fillOpacity: 0, dashArray: '3 5', opacity: 0.35 }).addTo(map);
+        L.marker(n.center, { icon: L.divIcon({ className: '', iconSize: [0,0], iconAnchor: [0,8], html: '<div style="font-family:Jost,sans-serif;font-size:8.5px;font-weight:400;letter-spacing:0.2em;text-transform:uppercase;color:#2A2018;white-space:nowrap;text-align:center;opacity:0.6;">'+n.name+'</div>' }), interactive: false }).addTo(map);
+      });
+    })();
+
+    // Enhanced GA4 event tracking
+    document.addEventListener('DOMContentLoaded', function() {
+      // 1. Scroll depth
+      var scrollThresholds = [25, 50, 75, 100];
+      var scrollFired = {};
+      window.addEventListener('scroll', function() {
+        var scrollPct = Math.round((window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100);
+        scrollThresholds.forEach(function(t) {
+          if (scrollPct >= t && !scrollFired[t]) {
+            scrollFired[t] = true;
+            gtag('event', 'scroll_depth', { event_category: 'engagement', event_label: t + '%', page_title: document.title });
+          }
+        });
+      });
+
+      // 2. Section views
+      var sectionObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            var sectionName = entry.target.id || entry.target.className.split(' ')[0];
+            gtag('event', 'section_view', { event_category: 'engagement', event_label: sectionName, page_title: document.title });
+            sectionObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+      document.querySelectorAll('section, .gf-guide-section, .restaurants-section, .landmarks-section, .things-section, .neighborhoods-section, .getting-around-section, .packing-section, .tips-section').forEach(function(section) { sectionObserver.observe(section); });
+
+      // 3. Outbound link clicks
+      document.querySelectorAll('a[target="_blank"]').forEach(function(link) {
+        link.addEventListener('click', function() {
+          var href = this.href;
+          var linkType = 'other';
+          if (href.includes('findmeglutenfree.com')) linkType = 'fmgf';
+          else if (href.includes('hotels.com')) linkType = 'hotel_booking';
+          else if (href.includes('viator.com')) linkType = 'activity_booking';
+          else if (href.includes('getyourguide.com')) linkType = 'activity_booking';
+          else if (href.includes('google.com/maps')) linkType = 'google_maps';
+          var context = this.closest('.restaurant-card') ? this.closest('.restaurant-card').querySelector('.restaurant-name').textContent.trim()
+            : this.closest('.thing-card') ? this.closest('.thing-card').querySelector('.thing-name').textContent.trim()
+            : this.closest('.hotel-card') ? 'hotel' : 'page';
+          gtag('event', 'outbound_click', { event_category: 'engagement', event_label: href, link_type: linkType, click_context: context, transport_type: 'beacon' });
+        });
+      });
+
+      // 4. FMGF clicks
+      document.querySelectorAll('.restaurant-fmgf-link').forEach(function(link) {
+        link.addEventListener('click', function() {
+          var restaurantName = this.closest('.restaurant-card') ? this.closest('.restaurant-card').querySelector('.restaurant-name').textContent.trim() : 'unknown';
+          gtag('event', 'fmgf_click', { event_category: 'conversion', event_label: restaurantName, page_title: document.title, transport_type: 'beacon' });
+        });
+      });
+
+      // 5. Hotel booking clicks
+      document.querySelectorAll('a[href*="hotels.com"]').forEach(function(link) {
+        link.addEventListener('click', function() {
+          var hotelName = this.closest('.hotel-card') ? (this.closest('.hotel-card').querySelector('.hotel-name') || {}).textContent || 'unknown' : 'unknown';
+          gtag('event', 'hotel_booking_click', { event_category: 'conversion', event_label: hotelName, page_title: document.title, transport_type: 'beacon' });
+        });
+      });
+
+      // 6. Activity booking clicks
+      document.querySelectorAll('.thing-book, a[href*="viator.com"], a[href*="getyourguide.com"]').forEach(function(link) {
+        link.addEventListener('click', function() {
+          var activityName = this.closest('.thing-card') ? this.closest('.thing-card').querySelector('.thing-name').textContent.trim() : 'unknown';
+          gtag('event', 'activity_booking_click', { event_category: 'conversion', event_label: activityName, page_title: document.title, transport_type: 'beacon' });
+        });
+      });
+
+      // 7. Photo lightbox opens
+      document.querySelectorAll('.restaurant-photo, .landmark-photo, .hotel-image, .thing-photo').forEach(function(img) {
+        img.addEventListener('click', function() {
+          var placeName = this.closest('.restaurant-card') ? this.closest('.restaurant-card').querySelector('.restaurant-name').textContent.trim()
+            : this.closest('.landmark-card') ? this.closest('.landmark-card').querySelector('.landmark-name').textContent.trim() : this.alt || 'unknown';
+          gtag('event', 'photo_view', { event_category: 'engagement', event_label: placeName, page_title: document.title });
+        });
+      });
+
+      // 8. Section navigation (TOC clicks)
+      document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+        link.addEventListener('click', function() { gtag('event', 'section_nav', { event_category: 'navigation', event_label: this.textContent.trim(), page_title: document.title }); });
+      });
+
+      // 9. Map interactions
+      document.querySelectorAll('.map-container').forEach(function(el) {
+        var tracked = false;
+        el.addEventListener('click', function() {
+          if (!tracked) { tracked = true; gtag('event', 'map_interaction', { event_category: 'engagement', event_label: el.id || 'map', page_title: document.title }); }
+        });
+      });
+
+      // 10. Tip CTA email clicks
+      document.querySelectorAll('a[href^="mailto:"]').forEach(function(link) {
+        link.addEventListener('click', function() { gtag('event', 'tip_cta_click', { event_category: 'conversion', event_label: document.title, transport_type: 'beacon' }); });
+      });
+
+      // 11. Internal navigation
+      document.querySelectorAll('.back-link, .nav-link, .site-nav-link').forEach(function(link) {
+        link.addEventListener('click', function() { gtag('event', 'internal_nav', { event_category: 'navigation', event_label: this.textContent.trim(), link_url: this.href }); });
+      });
+
+      // 12. Time on page
+      [30, 60, 120, 300].forEach(function(seconds) {
+        setTimeout(function() { if (!document.hidden) { gtag('event', 'time_on_page', { event_category: 'engagement', event_label: seconds + 's', page_title: document.title }); } }, seconds * 1000);
+      });
+    });
+  </script>
 
 </body>
 </html>
