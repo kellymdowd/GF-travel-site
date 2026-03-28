@@ -28,7 +28,7 @@
       font-family: 'Jost', sans-serif;
       font-weight: 300;
       min-height: 100vh;
-      display: flex;
+      padding-top: 52px; display: flex;
       flex-direction: column;
     }
 
@@ -43,6 +43,11 @@
     }
 
     /* ─── Nav ─────────────────────────────────────────────────── */
+    /* ─── Site Nav Bar ────────────────────────────────────── */
+    .site-nav { position: fixed; top: 0; left: 0; right: 0; height: 52px; background: var(--cream); border-bottom: 1px solid rgba(42, 32, 24, 0.08); display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; z-index: 300; }
+    .nav-home { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.85rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); text-decoration: none; transition: color 0.2s ease; }
+    .nav-home:hover { color: var(--slate); }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
     .nav {
       padding: 1.6rem 2.5rem 0;
       display: flex;
@@ -331,8 +336,7 @@
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
 
-    @media (max-width: 600px) {
-      .nav, .header, .map-section, .snapshot, .toc, .coming-soon-banner { padding-left: 1.2rem; padding-right: 1.2rem; }
+    @media (max-width: 600px) { .site-nav, .nav, .header, .map-section, .snapshot, .toc, .coming-soon-banner { padding-left: 1.2rem; padding-right: 1.2rem; }
       .header-rule { margin: 0 1.2rem; }
     }
   
@@ -394,6 +398,13 @@
       .nav { flex-wrap: wrap; gap: 0.4rem 0.6rem; }
       .header { flex-direction: column; align-items: flex-start; gap: 0.2rem; }
       .trip-date { padding-bottom: 0; }
+    }
+  
+    /* ─── Mobile: Site nav bar ────────────────────────────── */
+    @media (max-width: 480px) {
+      .site-nav { padding: 0 1.2rem; }
+      .nav-links { gap: 0.8rem; }
+      .nav-home { font-size: 0.72rem; letter-spacing: 0.1em; }
     }
   </style>
 
@@ -662,7 +673,16 @@
 </head>
 <body>
 
-  <nav class="nav">
+    <nav class="site-nav">
+    <a href="../../index.html" class="nav-home">GF Gone Global</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="nav-link">Places</a>
+      <a href="../../gf-scoring.html" class="nav-link">GF Scoring</a>
+      <a href="../../about.html" class="nav-link">About Me</a>
+    </div>
+  </nav>
+
+<nav class="nav">
     <a href="../germany.html" class="back-link">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
         <path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

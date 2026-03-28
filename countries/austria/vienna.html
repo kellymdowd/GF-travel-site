@@ -2,248 +2,402 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="description" content="First-hand celiac travel guide to Vienna, 6/10 safety score, and interactive maps. Visited November 2023.">
+  <meta name="description" content="First-hand celiac travel guide to Vienna with 9 GF-rated restaurants, 8/10 safety score, hotel reviews, and interactive maps. Visited November 2023.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gluten-Free Restaurants & Celiac Guide to Vienna, Austria | GF Gone Global</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <!-- Leaflet CSS — needed for restaurant and neighborhood maps -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
+    /* ─── Design Tokens ──────────────────────────────────────── */
     :root { --cream: #FFFFFF; --slate: #C8717A; --slate-bg: #FBF0F1; --rose: #B8907A; --ink: #2A2018; --ink-mid: #5A5048; --ink-light: #9A907A; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
-    body { background: var(--cream); color: var(--ink); font-family: 'Jost', sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-direction: column; }
+    body { background: var(--cream); color: var(--ink); font-family: 'Jost', sans-serif; font-weight: 300; min-height: 100vh; padding-top: 52px; display: flex; flex-direction: column; }
     body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 100; opacity: 0.6; }
+
+    /* ─── Site Nav ────────────────────────────────────────────── */
+    .site-nav { padding: 1.2rem 2.5rem 0; display: flex; gap: 1.6rem; align-items: center; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.05s forwards; }
+    .site-nav-link { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .site-nav-link:hover { color: var(--slate); }
+    .site-nav-link:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .site-nav-link:active { color: var(--rose); }
+
+    /* ─── Breadcrumb Nav ──────────────────────────────────────── */
     .nav { padding: 1.6rem 2.5rem 0; display: flex; gap: 1rem; align-items: center; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards; }
     .back-link { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
     .back-link:hover { color: var(--slate); }
     .back-link:hover svg { transform: translateX(-3px); }
     .back-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
     .nav-sep { font-size: 0.68rem; color: rgba(154, 144, 122, 0.4); letter-spacing: 0.1em; }
+    .nav-link { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .nav-link:hover { color: var(--slate); }
     .nav-current { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mid); }
+
+    /* ─── Header ──────────────────────────────────────────────── */
     .header { display: flex; justify-content: space-between; align-items: flex-end; padding: 1.4rem 2.5rem 1.2rem; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
+    .header-left { display: flex; flex-direction: column; }
+    .country-label { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.25rem; }
     .city-name { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1; }
     .trip-date { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(0.85rem, 1.3vw, 1rem); color: var(--ink-light); letter-spacing: 0.04em; padding-bottom: 0.2rem; }
     .header-rule { height: 1px; background: linear-gradient(to right, var(--rose), transparent 60%); margin: 0 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 0.6s forwards; }
-    .map-section { flex: 1; padding: 1.5rem 2.5rem 2rem; display: flex; flex-direction: column; gap: 0; opacity: 0; animation: fadeIn 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
-    .map-frame { width: 100%; flex: 1; min-height: 520px; border: none; }
-    .map-placeholder { width: 100%; flex: 1; min-height: 520px; background: var(--slate-bg); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; border: 1px dashed rgba(200, 113, 122, 0.35); }
-    .map-placeholder svg { color: var(--slate); opacity: 0.4; }
-    .map-placeholder-text { text-align: center; }
-    .map-placeholder-text p { font-size: 0.72rem; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-light); line-height: 1.8; }
-    
+
     /* ─── City Snapshot ──────────────────────────────────────── */
-    .snapshot {
-      padding: 1.6rem 2.5rem 0;
-      opacity: 0;
-      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
-    }
-
-    .snapshot-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 1rem;
-    }
-
-    .snapshot-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 0;
-      border-top: 1px solid rgba(42, 32, 24, 0.08);
-    }
-
-    .snapshot-item {
-      padding: 1rem 1.2rem 1rem 0;
-      border-bottom: 1px solid rgba(42, 32, 24, 0.08);
-    }
-
-    .snapshot-item-label {
-      font-family: 'Jost', sans-serif;
-      font-size: 0.58rem;
-      font-weight: 400;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 0.35rem;
-    }
-
-    .snapshot-item-value {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 400;
-      font-size: 1.05rem;
-      letter-spacing: 0.02em;
-      color: var(--ink);
-      line-height: 1.2;
-    }
-
-    /* GF Score visual */
-    .snapshot-score {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .snapshot-score-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 400;
-      font-size: 1.05rem;
-      color: var(--ink);
-      letter-spacing: 0.02em;
-      line-height: 1;
-    }
-
-    .snapshot-score-bar {
-      display: flex;
-      gap: 3px;
-      align-items: center;
-    }
-
-    .snapshot-score-pip {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: rgba(42, 32, 24, 0.1);
-    }
-
-    .snapshot-score-pip.is-filled {
-      background: var(--slate);
-    }
+    .snapshot { padding: 1.6rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards; }
+    .snapshot-label { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .snapshot-item { padding: 1rem 1.2rem 1rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.08); }
+    .snapshot-item-label { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.35rem; }
+    .snapshot-item-value { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .snapshot-score { display: flex; align-items: center; gap: 0.6rem; }
+    .snapshot-score-num { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); letter-spacing: 0.02em; line-height: 1; }
+    .snapshot-score-bar { display: flex; gap: 3px; align-items: center; }
+    .snapshot-score-pip { width: 6px; height: 6px; border-radius: 50%; background: rgba(42, 32, 24, 0.1); }
+    .snapshot-score-pip.is-filled { background: var(--slate); }
 
     /* ─── Table of Contents ─────────────────────────────────── */
-    .toc {
-      padding: 1.6rem 2.5rem 0;
-      opacity: 0;
-      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
-    }
+    .toc { padding: 1.6rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
+    .toc-label { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; }
+    .toc-list { list-style: none; display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .toc-item { border-bottom: 1px solid rgba(42, 32, 24, 0.08); }
+    .toc-link { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1.6rem 0.7rem 0; font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; letter-spacing: 0.04em; color: var(--ink-mid); text-decoration: none; transition: color 0.2s ease; }
+    .toc-link:hover { color: var(--slate); }
+    .toc-link:hover .toc-arrow { transform: translateX(3px); color: var(--slate); }
+    .toc-link:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .toc-link:active { color: var(--rose); }
+    .toc-arrow { color: var(--ink-light); opacity: 0.4; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease; flex-shrink: 0; }
 
-    .toc-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 1rem;
-    }
+    /* ─── Where to Stay ────────────────────────────────────── */
+    .where-to-stay { padding: 2.4rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.65s forwards; }
+    .stay-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .stay-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .stay-subtitle { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .stay-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .hotel-card { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid rgba(42, 32, 24, 0.08); border-radius: 4px; overflow: hidden; background: linear-gradient(135deg, rgba(251, 240, 241, 0.3) 0%, rgba(255, 255, 255, 0.6) 100%); transition: box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+    .hotel-card:hover { box-shadow: 0 4px 20px rgba(200, 113, 122, 0.08), 0 1px 6px rgba(42, 32, 24, 0.04); }
+    .hotel-card + .hotel-card { margin-top: 1.6rem; }
+    .hotel-image-side { position: relative; min-height: 280px; overflow: hidden; }
+    .hotel-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .hotel-image-overlay { position: absolute; inset: 0; background: linear-gradient(to right, transparent 50%, rgba(42, 32, 24, 0.04) 100%); mix-blend-mode: multiply; }
+    .hotel-badge { position: absolute; top: 1rem; left: 1rem; display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.3rem 0.7rem; background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(8px); border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mid); box-shadow: 0 1px 4px rgba(42, 32, 24, 0.08); }
+    .hotel-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--slate); }
+    .hotel-info-side { padding: 1.8rem 2rem; display: flex; flex-direction: column; justify-content: center; }
+    .hotel-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.4rem; letter-spacing: 0.03em; color: var(--ink); line-height: 1.2; margin-bottom: 0.15rem; }
+    .hotel-location { display: flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.64rem; font-weight: 300; color: var(--ink-light); letter-spacing: 0.04em; margin-bottom: 1.1rem; }
+    .hotel-location svg { flex-shrink: 0; opacity: 0.5; }
+    .hotel-why { margin-bottom: 1.3rem; }
+    .hotel-why-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.5rem; }
+    .hotel-why-text { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 0.98rem; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.01em; }
+    .hotel-features { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
+    .hotel-feature { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.2rem 0.55rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(42, 32, 24, 0.03); color: var(--ink-mid); }
+    .hotel-feature svg { flex-shrink: 0; opacity: 0.5; }
+    .hotel-cta { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1.4rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-radius: 3px; border: none; cursor: pointer; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 8px rgba(200, 113, 122, 0.2), 0 1px 3px rgba(200, 113, 122, 0.1); }
+    .hotel-cta:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(200, 113, 122, 0.3), 0 2px 5px rgba(200, 113, 122, 0.15); }
+    .hotel-cta:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; border-radius: 3px; }
+    .hotel-cta:active { background: #a85a63; transform: translateY(0); box-shadow: 0 1px 4px rgba(200, 113, 122, 0.15); }
+    .hotel-cta svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; }
+    .hotel-cta:hover svg { transform: translateX(2px); }
+    /* Hotel placeholder (no photo) */
+    .hotel-image-placeholder { min-height: 280px; background: linear-gradient(135deg, rgba(251, 240, 241, 0.6) 0%, rgba(200, 113, 122, 0.08) 100%); display: flex; align-items: center; justify-content: center; color: var(--ink-light); opacity: 0.4; }
+    @media (max-width: 768px) { .hotel-card { grid-template-columns: 1fr; } .hotel-image-side { min-height: 200px; } }
 
-    .toc-list {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0;
-      border-top: 1px solid rgba(42, 32, 24, 0.08);
-    }
+    /* ─── Gluten-Free Survival Guide ────────────────────────── */
+    .gf-guide { padding: 2.4rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards; }
+    .gf-guide-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.4rem; }
+    .gf-guide-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .gf-guide-difficulty { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.25rem 0.7rem 0.25rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; }
+    .gf-guide-difficulty .gf-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .gf-difficulty-easy { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .gf-difficulty-easy .gf-dot { background: #4c8c50; }
+    .gf-difficulty-moderate { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
+    .gf-difficulty-moderate .gf-dot { background: #b48c3c; }
+    .gf-difficulty-difficult { background: rgba(180, 70, 60, 0.08); color: #8a3a30; }
+    .gf-difficulty-difficult .gf-dot { background: #b4463c; }
+    .gf-guide-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.4rem; }
+    .gf-guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    .gf-info-group { margin-bottom: 1.6rem; }
+    .gf-info-group:last-child { margin-bottom: 0; }
+    .gf-info-label { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.5rem; }
+    .gf-info-value { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.6; letter-spacing: 0.01em; }
+    .gf-phrase { display: flex; justify-content: space-between; align-items: baseline; padding: 0.3rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.05); }
+    .gf-phrase:last-child { border-bottom: none; }
+    .gf-phrase-local { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; color: var(--ink); }
+    .gf-phrase-meaning { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-light); letter-spacing: 0.03em; }
+    .gf-list { list-style: none; }
+    .gf-list li { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); padding: 0.25rem 0; line-height: 1.4; }
+    .gf-list li::before { content: '\2014'; color: var(--ink-light); opacity: 0.4; margin-right: 0.5rem; }
+    .gf-score-section { padding-left: 2.5rem; border-left: 1px solid rgba(42, 32, 24, 0.08); }
+    .gf-score-title { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; }
+    .gf-score-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.05); }
+    .gf-score-row:first-of-type { border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .gf-score-category { font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; color: var(--ink-mid); letter-spacing: 0.02em; }
+    .gf-score-pips { display: flex; gap: 4px; align-items: center; }
+    .gf-score-pip { width: 8px; height: 8px; border-radius: 50%; background: rgba(42, 32, 24, 0.08); }
+    .gf-score-pip.is-filled { background: var(--slate); }
+    .gf-score-total { display: flex; align-items: baseline; gap: 0.5rem; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid rgba(42, 32, 24, 0.12); }
+    .gf-score-total-num { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 2.4rem; color: var(--ink); line-height: 1; letter-spacing: -0.02em; }
+    .gf-score-total-label { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .gf-score-verdict { margin-top: 0.8rem; }
+    @media (max-width: 768px) { .gf-guide-grid { grid-template-columns: 1fr; gap: 1.6rem; } .gf-score-section { padding-left: 0; border-left: none; padding-top: 1.2rem; border-top: 1px solid rgba(42, 32, 24, 0.08); } }
 
-    .toc-item {
-      border-bottom: 1px solid rgba(42, 32, 24, 0.08);
-    }
+    /* ─── Restaurants ────────────────────────────────────────── */
+    .restaurants { padding: 2.4rem 2.5rem 0; }
+    .restaurants-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .restaurants-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .restaurants-count { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .restaurants-rule { height: 1px; background: rgba(42, 32, 24, 0.08); }
+    .restaurants-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .restaurant-card { padding: 1.4rem 1.6rem 1.4rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .restaurant-card:nth-child(odd) { padding-right: 1.6rem; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .restaurant-card:nth-child(even) { padding-left: 1.6rem; padding-right: 0; }
+    .restaurant-card:nth-last-child(1), .restaurant-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    .restaurant-card:nth-last-child(1):nth-child(even) ~ .restaurant-card { border-bottom: none; }
+    .restaurant-card-inner { display: flex; gap: 1.2rem; align-items: flex-start; }
+    .restaurant-card-content { flex: 1; min-width: 0; }
+    .restaurant-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 4px rgba(42, 32, 24, 0.1); margin-top: 0.3rem; }
+    .restaurant-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.4rem; }
+    .restaurant-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.15rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .restaurant-tags { display: flex; gap: 0.4rem; flex-shrink: 0; }
+    .restaurant-tag { display: inline-block; padding: 0.2rem 0.55rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
+    .restaurant-tag-gf { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .restaurant-tag-options { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
+    .restaurant-tag-closed { background: rgba(180, 60, 60, 0.08); color: #9a3030; }
+    .restaurant-cuisine { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-light); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.9rem; }
+    .restaurant-source { display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 400; letter-spacing: 0.08em; margin-bottom: 0.9rem; }
+    .restaurant-source-dot { width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
+    .restaurant-source-visited { color: var(--rose); }
+    .restaurant-source-visited .restaurant-source-dot { background: var(--rose); }
+    .restaurant-source-researched { color: var(--ink-light); opacity: 0.7; }
+    .restaurant-source-researched .restaurant-source-dot { background: var(--ink-light); }
+    .restaurant-gf-score { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.7rem; margin-bottom: 1rem; }
+    .restaurant-gf-score-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .restaurant-gf-pips { display: flex; gap: 3px; align-items: center; }
+    .restaurant-gf-pip { width: 7px; height: 7px; border-radius: 50%; background: rgba(42, 32, 24, 0.08); }
+    .restaurant-gf-pip.is-filled { background: var(--slate); }
+    .restaurant-details { display: flex; flex-direction: column; gap: 0.6rem; }
+    .restaurant-detail-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.25rem; }
+    .restaurant-detail-value { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 0.95rem; color: var(--ink-mid); line-height: 1.5; letter-spacing: 0.01em; }
+    .restaurant-location-value { display: flex; align-items: baseline; gap: 0.4rem; }
+    .restaurant-location-value svg { flex-shrink: 0; color: var(--ink-light); opacity: 0.5; position: relative; top: 1px; }
+    .restaurant-fmgf { margin-top: 0.7rem; }
+    .restaurant-fmgf-link { display: inline-flex; align-items: center; gap: 0.4rem; font-family: 'Jost', sans-serif; font-size: 0.64rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .restaurant-fmgf-link:hover { color: var(--slate); }
+    .restaurant-fmgf-link:hover svg { transform: translateX(2px); }
+    .restaurant-fmgf-link:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .restaurant-fmgf-link:active { color: var(--rose); }
+    .restaurant-fmgf-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; }
+    .restaurants-footer { padding-top: 1.2rem; margin-top: 0.4rem; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .restaurants-fmgf-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .restaurants-fmgf-link:hover { color: var(--slate); }
+    .restaurants-fmgf-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; }
+    .restaurants-fmgf-link:hover svg { transform: translateX(2px); }
+    @media (max-width: 768px) { .restaurants-grid { grid-template-columns: 1fr; } .restaurant-card:nth-child(odd) { border-right: none; padding-right: 0; } .restaurant-card:nth-child(even) { padding-left: 0; } .restaurant-card:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } }
 
-    .toc-link {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.7rem 1.6rem 0.7rem 0;
-      font-family: 'Jost', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 300;
-      letter-spacing: 0.04em;
-      color: var(--ink-mid);
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
+    /* ─── Restaurant & Neighborhood Map ─────────────────────── */
+    .map-container { margin-bottom: 1.6rem; border-radius: 4px; overflow: hidden; border: 1px solid rgba(42, 32, 24, 0.08); }
+    .map-container .leaflet-container { height: 260px; width: 100%; }
+    .map-legend { display: flex; flex-wrap: wrap; gap: 0.8rem; padding: 0.8rem 0 0; }
+    .map-legend-item { display: flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.06em; color: var(--ink-light); }
+    .map-legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
-    .toc-link:hover {
-      color: var(--slate);
-    }
+    /* ─── Getting Around ────────────────────────────────────── */
+    .getting-around { padding: 2.4rem 2.5rem 0; }
+    .getting-around-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .getting-around-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .getting-around-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .transport-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+    .transport-card { padding: 1.4rem 1.4rem 1.4rem 0; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .transport-card:last-child { border-right: none; padding-right: 0; }
+    .transport-card:first-child { padding-left: 0; }
+    .transport-card:not(:first-child) { padding-left: 1.4rem; }
+    .transport-icon { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(42, 32, 24, 0.03); color: var(--ink-mid); margin-bottom: 0.9rem; }
+    .transport-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.1rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; margin-bottom: 0.5rem; }
+    .transport-desc { font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; }
+    .transport-detail { display: flex; align-items: baseline; gap: 0.4rem; margin-top: 0.6rem; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); }
+    .transport-detail svg { flex-shrink: 0; position: relative; top: 1px; opacity: 0.5; }
+    .transit-tip { margin-top: 1.6rem; padding: 1.2rem 1.4rem; background: var(--slate-bg); border-radius: 4px; border-left: 2px solid var(--slate); display: flex; gap: 0.8rem; align-items: flex-start; }
+    .transit-tip-icon { flex-shrink: 0; color: var(--slate); opacity: 0.7; position: relative; top: 1px; }
+    .transit-tip-content { flex: 1; min-width: 0; }
+    .transit-tip-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--slate); margin-bottom: 0.35rem; }
+    .transit-tip-text { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 0.98rem; color: var(--ink); line-height: 1.6; letter-spacing: 0.01em; }
+    @media (max-width: 768px) { .transport-grid { grid-template-columns: 1fr 1fr; } .transport-card { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } .transport-card:nth-child(2) { border-right: none; padding-right: 0; } .transport-card:nth-child(3) { padding-left: 0; } .transport-card:nth-child(3), .transport-card:nth-child(4) { border-bottom: none; } }
+    @media (max-width: 480px) { .transport-grid { grid-template-columns: 1fr; } .transport-card { border-right: none; padding-left: 0; padding-right: 0; } .transport-card:last-child { border-bottom: none; } }
 
-    .toc-link:hover .toc-arrow {
-      transform: translateX(3px);
-      color: var(--slate);
-    }
+    /* ─── Landmarks & Must-See Spots ─────────────────────────── */
+    .landmarks { padding: 2.4rem 2.5rem 0; }
+    .landmarks-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .landmarks-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .landmarks-count { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .landmarks-rule { height: 1px; background: rgba(42, 32, 24, 0.08); }
+    .landmarks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .landmark-card { padding: 1.4rem 1.6rem 1.4rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .landmark-card:nth-child(odd) { padding-right: 1.6rem; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .landmark-card:nth-child(even) { padding-left: 1.6rem; padding-right: 0; }
+    .landmark-card:nth-last-child(1), .landmark-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    .landmark-card:nth-last-child(1):nth-child(even) ~ .landmark-card { border-bottom: none; }
+    .landmark-card-inner { display: flex; gap: 1.2rem; align-items: flex-start; }
+    .landmark-card-content { flex: 1; min-width: 0; }
+    .landmark-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.3rem; }
+    .landmark-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.15rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .landmark-type { display: inline-block; padding: 0.2rem 0.55rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.52rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+    .landmark-type-historic { background: rgba(42, 32, 24, 0.04); color: var(--ink-mid); }
+    .landmark-type-nature { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .landmark-type-walk { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    .landmark-type-neighborhood { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
+    .landmark-type-market { background: rgba(160, 90, 130, 0.08); color: #804068; }
+    .landmark-desc { font-family: 'Jost', sans-serif; font-size: 0.74rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; margin-bottom: 0.5rem; }
+    .landmark-location { display: flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; color: var(--ink-light); letter-spacing: 0.04em; }
+    .landmark-location svg { flex-shrink: 0; opacity: 0.5; }
+    .landmark-source { display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.08em; margin-top: 0.5rem; }
+    .landmark-source-visited { color: var(--rose); }
+    .landmark-source-visited .restaurant-source-dot { background: var(--rose); }
+    .landmark-source-researched { color: var(--ink-light); opacity: 0.7; }
+    .landmark-source-researched .restaurant-source-dot { background: var(--ink-light); }
+    .landmark-photo { width: 80px; height: 80px; border-radius: 4px; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 4px rgba(42, 32, 24, 0.1); }
+    .landmark-photo-placeholder { width: 80px; height: 80px; border-radius: 4px; flex-shrink: 0; background: rgba(42, 32, 24, 0.03); border: 1px dashed rgba(42, 32, 24, 0.1); display: flex; align-items: center; justify-content: center; color: var(--ink-light); opacity: 0.4; }
+    @media (max-width: 768px) { .landmarks-grid { grid-template-columns: 1fr; } .landmark-card:nth-child(odd) { border-right: none; padding-right: 0; } .landmark-card:nth-child(even) { padding-left: 0; } .landmark-card:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } }
 
-    .toc-link:focus-visible {
-      outline: 1.5px solid var(--slate);
-      outline-offset: 2px;
-      border-radius: 2px;
-    }
+    /* ─── Neighborhoods ────────────────────────────────────── */
+    .neighborhoods { padding: 2.4rem 2.5rem 0; }
+    .neighborhoods-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .neighborhoods-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .neighborhoods-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .neighborhood-list { display: flex; flex-direction: column; gap: 0; }
+    .neighborhood-item { display: grid; grid-template-columns: 140px 1fr; gap: 2rem; padding: 1.3rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); align-items: baseline; }
+    .neighborhood-item:first-child { padding-top: 0; }
+    .neighborhood-item:last-child { border-bottom: none; }
+    .neighborhood-name-col { display: flex; flex-direction: column; gap: 0.25rem; }
+    .neighborhood-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.15rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .neighborhood-vibe { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-light); }
+    .neighborhood-desc { font-family: 'Jost', sans-serif; font-size: 0.74rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; }
+    @media (max-width: 768px) { .neighborhood-item { grid-template-columns: 1fr; gap: 0.4rem; } }
 
-    .toc-link:active {
-      color: var(--rose);
-    }
+    /* ─── Things to Do ─────────────────────────────────────── */
+    .things-to-do { padding: 2.4rem 2.5rem 0; }
+    .things-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .things-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .things-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .things-category-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .things-category + .things-category { margin-top: 2rem; }
+    .things-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .thing-card { padding: 1.2rem 1.6rem 1.2rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .thing-card:nth-child(odd) { padding-right: 1.6rem; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .thing-card:nth-child(even) { padding-left: 1.6rem; padding-right: 0; }
+    .thing-card:nth-last-child(1), .thing-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    .thing-card:nth-last-child(1):nth-child(even) ~ .thing-card { border-bottom: none; }
+    .thing-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.3rem; }
+    .thing-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.1rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .thing-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+    .thing-tag-free { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .thing-tag-paid { background: rgba(42, 32, 24, 0.04); color: var(--ink-mid); }
+    .thing-desc { font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; margin-bottom: 0.6rem; }
+    .thing-meta { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+    .thing-detail { display: flex; align-items: center; gap: 0.3rem; font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; color: var(--ink-light); letter-spacing: 0.04em; }
+    .thing-detail svg { flex-shrink: 0; opacity: 0.5; }
+    .thing-book { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.7rem; padding: 0.45rem 0.9rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 3px; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 6px rgba(200, 113, 122, 0.15), 0 1px 2px rgba(200, 113, 122, 0.08); }
+    .thing-book:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200, 113, 122, 0.25), 0 2px 4px rgba(200, 113, 122, 0.12); }
+    .thing-book:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; }
+    .thing-book:active { background: #a85a63; transform: translateY(0); }
+    .thing-book svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .thing-book:hover svg { transform: translateX(2px); }
+    .thing-photo { width: 80px; height: 80px; border-radius: 6px; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 4px rgba(42, 32, 24, 0.1); cursor: pointer; }
+    .thing-card-inner { display: flex; gap: 1rem; align-items: flex-start; }
+    .thing-card-content { flex: 1; min-width: 0; }
+    .thing-visit { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.7rem; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .thing-visit:hover { color: var(--slate); }
+    .thing-visit:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .thing-visit:active { color: var(--rose); }
+    .thing-visit svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .thing-visit:hover svg { transform: translateX(2px); }
+    @media (max-width: 768px) { .things-grid { grid-template-columns: 1fr; } .thing-card:nth-child(odd) { border-right: none; padding-right: 0; } .thing-card:nth-child(even) { padding-left: 0; } .thing-card:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } }
 
-    .toc-arrow {
-      color: var(--ink-light);
-      opacity: 0.4;
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
-      flex-shrink: 0;
-    }
+    /* ─── What to Pack ─────────────────────────────────────── */
+    .packing { padding: 2.4rem 2.5rem 0; }
+    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .packing-item:last-child { border-bottom: none; }
+    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
+    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
+    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
+    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
+    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
+    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    .packing-tag-austria { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
+    .packing-storefront { margin-top: 1.4rem; padding-top: 1.2rem; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .packing-storefront-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1.1rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.64rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 3px; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 6px rgba(200, 113, 122, 0.15), 0 1px 2px rgba(200, 113, 122, 0.08); }
+    .packing-storefront-link:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200, 113, 122, 0.25), 0 2px 4px rgba(200, 113, 122, 0.12); }
+    .packing-storefront-link:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; }
+    .packing-storefront-link:active { background: #a85a63; transform: translateY(0); }
+    .packing-storefront-link svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .packing-storefront-link:hover svg { transform: translateX(2px); }
+    @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
 
-    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeIn { to { opacity: 1; } }
-    @media (max-width: 600px) { .nav, .header, .map-section, .snapshot, .toc, .coming-soon-banner { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
-  
-    /* ─── Coming Soon Badge ────────────────────────────────── */
-    .coming-soon-banner {
-      padding: 2.5rem 2.5rem 0;
-      opacity: 0;
-      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
-    }
+    /* ─── Travel Tips ──────────────────────────────────────── */
+    .travel-tips { padding: 2.4rem 2.5rem 0; }
+    .tips-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .tips-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .tips-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .tips-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .tip-item { display: flex; gap: 0.8rem; align-items: baseline; padding: 0.7rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .tip-item:last-child { border-bottom: none; }
+    .tip-bullet { width: 4px; height: 4px; border-radius: 50%; background: var(--slate); flex-shrink: 0; opacity: 0.5; position: relative; top: 0.35rem; }
+    .tip-text { font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; }
+    .tips-hindsight { margin-top: 1.8rem; }
+    .tips-hindsight-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.8rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .hindsight-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .hindsight-item { display: flex; gap: 0.8rem; align-items: baseline; padding: 0.7rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .hindsight-item:last-child { border-bottom: none; }
+    .hindsight-icon { flex-shrink: 0; color: var(--slate); opacity: 0.5; position: relative; top: 0.2rem; }
+    .hindsight-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.01em; }
 
-    .coming-soon-inner {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1.2rem 1.6rem;
-      background: var(--slate-bg, #FBF0F1);
-      border-left: 2px solid var(--slate, #C8717A);
-    }
-
-    .coming-soon-icon {
-      flex-shrink: 0;
-      color: var(--slate, #C8717A);
-      opacity: 0.6;
-    }
-
-    .coming-soon-text {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-    }
-
-    .coming-soon-label {
-      font-family: 'Jost', sans-serif;
-      font-size: 0.62rem;
-      font-weight: 400;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--slate, #C8717A);
-    }
-
-    .coming-soon-desc {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.95rem;
-      font-weight: 300;
-      font-style: italic;
-      color: var(--ink-mid, #5A5048);
-      letter-spacing: 0.02em;
-      line-height: 1.4;
-    }
-      .tip-cta { padding: 2.4rem 2.5rem; text-align: center; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    /* ─── Tip CTA ────────────────────────────────────────────── */
+    .tip-cta { padding: 2.4rem 2.5rem; text-align: center; border-top: 1px solid rgba(42, 32, 24, 0.08); }
     .tip-cta-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.2rem, 2vw, 1.5rem); letter-spacing: 0.04em; color: var(--ink); margin-bottom: 0.4rem; }
     .tip-cta-sub { font-family: 'Jost', sans-serif; font-size: 0.82rem; font-weight: 300; color: var(--ink-light); margin-bottom: 1.2rem; }
     .tip-cta-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--slate); text-decoration: none; border: 1px solid rgba(200, 113, 122, 0.3); padding: 0.6rem 1.4rem; border-radius: 100px; transition: background 0.2s ease, border-color 0.2s ease; }
     .tip-cta-link:hover { background: var(--slate-bg); border-color: var(--slate); }
-  
+
+    /* ─── Footer ────────────────────────────────────────────── */
+    .page-footer { padding: 2rem 2.5rem 2.5rem; text-align: center; }
+    .page-disclosure { font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 300; color: var(--ink-light); opacity: 0.5; letter-spacing: 0.03em; }
+
+    /* ─── Photo Lightbox ──────────────────────────────────────── */
+    .restaurant-photo, .landmark-photo, .hotel-image { cursor: zoom-in; }
+    .lightbox-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(10, 8, 6, 0); display: flex; align-items: center; justify-content: center; cursor: zoom-out; opacity: 0; pointer-events: none; transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .lightbox-overlay.active { opacity: 1; pointer-events: auto; background: rgba(10, 8, 6, 0.85); }
+    .lightbox-img { max-width: 90vw; max-height: 85vh; border-radius: 6px; object-fit: contain; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06); transform: scale(0.92); opacity: 0; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease; }
+    .lightbox-overlay.active .lightbox-img { transform: scale(1); opacity: 1; }
+    .lightbox-close { position: absolute; top: 1.2rem; right: 1.4rem; width: 36px; height: 36px; border: none; background: rgba(255, 255, 255, 0.1); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .lightbox-close:hover { background: rgba(255, 255, 255, 0.2); transform: scale(1.1); }
+    .lightbox-close:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.5); outline-offset: 2px; }
+    .lightbox-close:active { transform: scale(0.95); }
+    .lightbox-close svg { width: 16px; height: 16px; stroke: rgba(255, 255, 255, 0.8); stroke-width: 2; }
+
+    /* ─── Animations & Global Responsive ──────────────────── */
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { to { opacity: 1; } }
+    @media (max-width: 600px) { .site-nav, .nav, .header, .snapshot, .toc, .gf-guide, .restaurants, .where-to-stay, .landmarks, .neighborhoods, .things-to-do, .packing, .travel-tips, .getting-around, .page-footer { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
 
     /* ─── Mobile: Breadcrumb nav ──────────────────────────── */
     @media (max-width: 480px) {
       .nav { flex-wrap: wrap; gap: 0.4rem 0.6rem; }
       .header { flex-direction: column; align-items: flex-start; gap: 0.2rem; }
       .trip-date { padding-bottom: 0; }
+    }
+  
+    /* ─── Mobile: Site nav bar ────────────────────────────── */
+    @media (max-width: 480px) {
+      .site-nav { padding: 0 1.2rem; }
+      .nav-links { gap: 0.8rem; }
+      .nav-home { font-size: 0.72rem; letter-spacing: 0.1em; }
     }
   </style>
 
@@ -457,7 +611,6 @@
 
     });
   </script>
-  
 
   <!-- Structured data for search engines and AI systems -->
   <script type="application/ld+json">
@@ -467,7 +620,7 @@
     {
       "@type": "Article",
       "headline": "Gluten-Free Restaurants & Celiac Guide to Vienna, Austria",
-      "description": "First-hand celiac travel guide to Vienna with 0 GF-rated restaurants, 6/10 GF friendliness score. Visited November 2023.",
+      "description": "First-hand celiac travel guide to Vienna with 9 GF-rated restaurants, 8/10 GF friendliness score. Visited November 2023.",
       "author": {
         "@type": "Person",
         "name": "GF Gone Global"
@@ -486,6 +639,179 @@
       }
     },
     {
+      "@type": "Restaurant",
+      "name": "Gasthaus Zum Wohl",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Stumpergasse 61",
+        "addressLocality": "Vienna",
+        "addressCountry": "AT"
+      },
+      "servesCuisine": "Austrian",
+      "review": {
+        "@type": "Review",
+        "author": { "@type": "Person", "name": "GF Gone Global" },
+        "reviewRating": { "@type": "Rating", "ratingValue": 5, "bestRating": 5, "worstRating": 0 },
+        "reviewBody": "100% dedicated GF kitchen, fryer, and equipment. Everything on the menu is gluten-free including draft beer."
+      }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "Allergiker Caf\u00e9",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Wiedner Hauptstra\u00dfe 35",
+        "addressLocality": "Vienna",
+        "addressCountry": "AT"
+      },
+      "servesCuisine": "Viennese caf\u00e9",
+      "review": {
+        "@type": "Review",
+        "author": { "@type": "Person", "name": "GF Gone Global" },
+        "reviewRating": { "@type": "Rating", "ratingValue": 5, "bestRating": 5, "worstRating": 0 },
+        "reviewBody": "100% GF, soy-free, lactose-free. Owner has celiac disease. All allergens transparently labeled."
+      }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "Pizzeria Scarabocchio",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Florianigasse 3",
+        "addressLocality": "Vienna",
+        "addressCountry": "AT"
+      },
+      "servesCuisine": "Italian",
+      "review": {
+        "@type": "Review",
+        "author": { "@type": "Person", "name": "GF Gone Global" },
+        "reviewRating": { "@type": "Rating", "ratingValue": 4, "bestRating": 5, "worstRating": 0 },
+        "reviewBody": "GF flour used on all pizza bottoms, separate section in oven. Not a dedicated GF facility. Staff knowledgeable."
+      }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "Nestroy Gasthaus & Biergarten",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Weintraubengasse 7",
+        "addressLocality": "Vienna",
+        "addressCountry": "AT"
+      },
+      "servesCuisine": "Austrian",
+      "review": {
+        "@type": "Review",
+        "author": { "@type": "Person", "name": "GF Gone Global" },
+        "reviewRating": { "@type": "Rating", "ratingValue": 4, "bestRating": 5, "worstRating": 0 },
+        "reviewBody": "Separate GF menu, dedicated GF fryer, GF food prepared in separate kitchen area. 12+ years of GF experience."
+      }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "Gasthaus am Predigtstuhl",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Oberwiedenstra\u00dfe 34",
+        "addressLocality": "Vienna",
+        "addressCountry": "AT"
+      },
+      "servesCuisine": "Austrian / Oriental fusion",
+      "review": {
+        "@type": "Review",
+        "author": { "@type": "Person", "name": "GF Gone Global" },
+        "reviewRating": { "@type": "Rating", "ratingValue": 4, "bestRating": 5, "worstRating": 0 },
+        "reviewBody": "Dedicated GF fryer, separate kitchen. Owner/family member has celiac. Most items available GF (+\u20ac2)."
+      }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "Restaurant F\u00fchrich",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "F\u00fchrichgasse 6",
+        "addressLocality": "Vienna",
+        "addressCountry": "AT"
+      },
+      "servesCuisine": "Austrian / Viennese",
+      "review": {
+        "@type": "Review",
+        "author": { "@type": "Person", "name": "GF Gone Global" },
+        "reviewRating": { "@type": "Rating", "ratingValue": 4, "bestRating": 5, "worstRating": 0 },
+        "reviewBody": "Dedicated GF fryer, extensive GF labeling on menu. Nearly entire menu available GF. TripAdvisor Travelers\u2019 Choice 2025."
+      }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "Caf\u00e9 Schopenhauer",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Staudgasse 1",
+        "addressLocality": "Vienna",
+        "addressCountry": "AT"
+      },
+      "servesCuisine": "Viennese caf\u00e9",
+      "review": {
+        "@type": "Review",
+        "author": { "@type": "Person", "name": "GF Gone Global" },
+        "reviewRating": { "@type": "Rating", "ratingValue": 4, "bestRating": 5, "worstRating": 0 },
+        "reviewBody": "Everything can be made GF \u2014 GF bread for breakfast, GF cakes usually available. Staff understands cross-contamination."
+      }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "Caf\u00e9 Mozart",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Albertinaplatz 2",
+        "addressLocality": "Vienna",
+        "addressCountry": "AT"
+      },
+      "servesCuisine": "Viennese caf\u00e9",
+      "review": {
+        "@type": "Review",
+        "author": { "@type": "Person", "name": "GF Gone Global" },
+        "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5, "worstRating": 0 },
+        "reviewBody": "GF menu with labeled GF cakes. Signature GF Rehr\u00fccken cake. CAUTION: GF cakes in same display case as regular cakes \u2014 cross-contamination risk."
+      }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "blueorange - coffee & bagel",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Margaretenstra\u00dfe 9",
+        "addressLocality": "Vienna",
+        "addressCountry": "AT"
+      },
+      "servesCuisine": "Caf\u00e9",
+      "review": {
+        "@type": "Review",
+        "author": { "@type": "Person", "name": "GF Gone Global" },
+        "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5, "worstRating": 0 },
+        "reviewBody": "GF bagels (+\u20ac1.40), uses separate toaster. Staff asks about cross-contamination. Not fully safe for sensitive celiacs."
+      }
+    },
+    {
+      "@type": "LodgingBusiness",
+      "name": "Hotel Grand Ferdinand Wien",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Schubertring 10-12",
+        "addressLocality": "Vienna",
+        "addressCountry": "AT"
+      }
+    },
+    {
+      "@type": "LodgingBusiness",
+      "name": "Motel One Wien-Staatsoper",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Elisabethstra\u00dfe 5",
+        "addressLocality": "Vienna",
+        "addressCountry": "AT"
+      }
+    },
+    {
       "@type": "FAQPage",
       "mainEntity": [
         {
@@ -493,7 +819,15 @@
           "name": "Is Vienna safe for celiacs?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Vienna scores 6/10 for GF friendliness (Manageable)."
+            "text": "Vienna scores 8/10 for GF friendliness (Easy). There are 9 restaurants with GF options, including 2 fully dedicated GF venues. Austrian menus use EU allergen codes \u2014 \u201cA\u201d = gluten."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the best gluten-free restaurants in Vienna?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Gasthaus Zum Wohl (5/5 GF score, 100% dedicated GF Austrian); Allergiker Caf\u00e9 (5/5 GF score, 100% dedicated GF caf\u00e9); Nestroy Gasthaus & Biergarten (4/5 GF score, Austrian with 12+ years GF experience)."
           }
         },
         {
@@ -501,7 +835,7 @@
           "name": "Can you find gluten-free food in Vienna supermarkets?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Check the full guide for grocery recommendations and naturally gluten-free local dishes in Vienna, Austria."
+            "text": "Billa/Billa Plus has a strong \u201cfrei von\u201d section, Spar/Interspar has excellent GF private label products, and DM Drogerie carries GF snacks, baking mixes, and Sch\u00e4r brand. All major chains carry Sch\u00e4r widely."
           }
         }
       ]
@@ -509,92 +843,88 @@
   ]
 }
   </script>
+
 </head>
 <body>
-  <nav class="nav">
-    <a href="../austria.html" class="back-link">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      Austria
+
+    <nav class="site-nav">
+    <a href="../../index.html" class="nav-home">GF Gone Global</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="nav-link">Places</a>
+      <a href="../../gf-scoring.html" class="nav-link">GF Scoring</a>
+      <a href="../../about.html" class="nav-link">About Me</a>
+    </div>
+  </nav>
+
+<nav class="nav">
+    <a href="../../index.html" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      All Countries
     </a>
+    <span class="nav-sep">/</span>
+    <a href="../austria.html" class="nav-link">Austria</a>
     <span class="nav-sep">/</span>
     <span class="nav-current">Vienna</span>
   </nav>
+
   <header class="header">
-    <h1 class="city-name">Vienna</h1>
-    <span class="trip-date">Last traveled · November 2023</span>
+    <div class="header-left">
+      <span class="country-label">Austria</span>
+      <h1 class="city-name">Vienna</h1>
+    </div>
+    <span class="trip-date">Last traveled &middot; November 2023</span>
   </header>
   <div class="header-rule"></div>
-
-  <div class="coming-soon-banner">
-    <div class="coming-soon-inner">
-      <svg class="coming-soon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
-        <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.2"/>
-        <path d="M10 5.5V10.5L13 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <div class="coming-soon-text">
-        <span class="coming-soon-label">Coming Soon</span>
-        <span class="coming-soon-desc">Full guide with restaurants, hotels &amp; landmarks is on its way.</span>
-      </div>
-    </div>
-  </div>
 
   <section class="snapshot">
     <div class="snapshot-label">City Snapshot</div>
     <div class="snapshot-grid">
       <div class="snapshot-item">
         <div class="snapshot-item-label">Best Months</div>
-        <div class="snapshot-item-value">Apr–Jun, Sep–Oct</div>
+        <div class="snapshot-item-value">Apr&ndash;Jun, Sep&ndash;Oct</div>
       </div>
       <div class="snapshot-item">
         <div class="snapshot-item-label">Ideal Stay</div>
-        <div class="snapshot-item-value">2–3 days</div>
+        <div class="snapshot-item-value">3&ndash;4 days</div>
       </div>
       <div class="snapshot-item">
-        <div class="snapshot-item-label">Gluten-Free</div>
+        <div class="snapshot-item-label">Best For</div>
+        <div class="snapshot-item-value">Imperial history, caf&eacute; culture, classical music</div>
+      </div>
+      <div class="snapshot-item">
+        <div class="snapshot-item-label">GF Friendliness</div>
         <div class="snapshot-score">
-          <span class="snapshot-score-num">6/10</span>
+          <span class="snapshot-score-num">8/10</span>
           <div class="snapshot-score-bar">
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip"></span>
-            <span class="snapshot-score-pip"></span>
-            <span class="snapshot-score-pip"></span>
-            <span class="snapshot-score-pip"></span>
+            <span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span>
           </div>
         </div>
       </div>
       <div class="snapshot-item">
-        <div class="snapshot-item-label">English Spoken</div>
-        <div class="snapshot-item-value">Widely</div>
+        <div class="snapshot-item-label">Language</div>
+        <div class="snapshot-item-value">German</div>
+      </div>
+      <div class="snapshot-item">
+        <div class="snapshot-item-label">English</div>
+        <div class="snapshot-item-value">Widely spoken</div>
       </div>
       <div class="snapshot-item">
         <div class="snapshot-item-label">City Size</div>
-        <div class="snapshot-item-value">Large</div>
+        <div class="snapshot-item-value">Large (1.9M)</div>
       </div>
       <div class="snapshot-item">
-        <div class="snapshot-item-label">Walkability</div>
-        <div class="snapshot-item-value">High</div>
-      </div>
-      <div class="snapshot-item">
-        <div class="snapshot-item-label">Public Transit</div>
-        <div class="snapshot-item-value">Excellent</div>
+        <div class="snapshot-item-label">Currency</div>
+        <div class="snapshot-item-value">EUR (&euro;)</div>
       </div>
     </div>
   </section>
 
-
   <nav class="toc">
-    <div class="toc-label">Jump to</div>
+    <div class="toc-label">On this page</div>
     <ul class="toc-list">
       <li class="toc-item"><a href="#where-to-stay" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Where to stay</a></li>
       <li class="toc-item"><a href="#gluten-free" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Gluten-free survival guide</a></li>
-      <li class="toc-item"><a href="#restaurants" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Restaurants</a></li>
+      <li class="toc-item"><a href="#restaurants" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>GF friendly restaurants</a></li>
       <li class="toc-item"><a href="#getting-around" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Getting around</a></li>
       <li class="toc-item"><a href="#landmarks" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Landmarks &amp; must-see spots</a></li>
       <li class="toc-item"><a href="#neighborhoods" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Neighborhoods</a></li>
@@ -604,30 +934,1243 @@
     </ul>
   </nav>
 
-  <section class="map-section" id="map-section"></section>
-  <script>
-    const MAP_URL = 'https://www.google.com/maps/d/embed?mid=13XSldG7SbCLmrflooG_qLuAxbrAa-3Y';
-    const section = document.getElementById('map-section');
-    if (false) { // map temporarily hidden
-      const iframe = document.createElement('iframe');
-      iframe.src = MAP_URL;
-      iframe.className = 'map-frame';
-      iframe.allowFullscreen = true;
-      section.appendChild(iframe);
-    } else {
-      section.innerHTML = `<!-- <div class="map-placeholder"><svg width="40" height="40" viewBox="0 0 40 40" fill="none"><path d="M20 3C13.1 3 7.5 8.6 7.5 15.5C7.5 24.4 20 37 20 37C20 37 32.5 24.4 32.5 15.5C32.5 8.6 26.9 3 20 3ZM20 19.8C17.6 19.8 15.7 17.9 15.7 15.5C15.7 13.1 17.6 11.2 20 11.2C22.4 11.2 24.3 13.1 24.3 15.5C24.3 17.9 22.4 19.8 20 19.8Z" fill="currentColor"/></svg><div class="map-placeholder-text"><p>Google My Maps coming soon</p></div> --></div>`;
-    }
-  </script>
+  <!-- ═══════════════ WHERE TO STAY ═══════════════ -->
+  <section class="where-to-stay" id="where-to-stay">
+    <div class="stay-header">
+      <h2 class="stay-title">Where to Stay</h2>
+      <span class="stay-subtitle">Recommended</span>
+    </div>
+    <div class="stay-rule"></div>
 
-  <!-- TIP CTA -->
+    <div class="hotel-card">
+      <div class="hotel-image-side">
+        <!-- Photo: Pierre Blaché, Wikimedia Commons, CC0 -->
+        <img src="../../photos/austria/vienna/vienna-cityscape/vienna-sunset.jpeg" alt="Vienna skyline at sunset" class="hotel-image" loading="lazy">
+        <div class="hotel-image-overlay"></div>
+        <div class="hotel-badge">
+          <span class="hotel-badge-dot"></span>
+          Where I stayed
+        </div>
+      </div>
+      <div class="hotel-info-side">
+        <h3 class="hotel-name">Hotel Grand Ferdinand Wien</h3>
+        <div class="hotel-location">
+          <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+          Schubertring 10-12, Innere Stadt &middot; 1st district
+        </div>
+
+        <div class="hotel-why">
+          <div class="hotel-why-label">Why Stay Here</div>
+          <div class="hotel-why-text">Boutique 4.5-star hotel on the Ringstra&szlig;e, steps from Musikverein and State Opera. Rooftop pool, spa, 3 restaurants. Breakfast served on 8th floor with panoramic views. Provides warm GF bread rolls at breakfast buffet.</div>
+        </div>
+
+        <div class="hotel-features">
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> GF Breakfast</span>
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Rooftop Pool</span>
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Ringstra&szlig;e Location</span>
+        </div>
+
+        <a href="https://www.hotels.com/ho543528/grand-ferdinand-vienna-your-hotel-in-the-city-center-vienna-austria/" class="hotel-cta" target="_blank" rel="noopener sponsored">
+          Book on Hotels.com
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="hotel-card">
+      <div class="hotel-image-side">
+        <!-- Photo: Dietmar Rabich, Wikimedia Commons, CC BY-SA 4.0 -->
+        <img src="../../photos/austria/vienna/vienna-cityscape/vienna-rooftops.jpeg" alt="Vienna rooftop panorama" class="hotel-image" loading="lazy">
+        <div class="hotel-image-overlay"></div>
+        <div class="hotel-badge" style="background: rgba(42, 32, 24, 0.06); box-shadow: none;">
+          <span class="hotel-badge-dot" style="background: var(--ink-light);"></span>
+          Traveler recommended
+        </div>
+      </div>
+      <div class="hotel-info-side">
+        <h3 class="hotel-name">Motel One Wien-Staatsoper</h3>
+        <div class="hotel-location">
+          <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+          Elisabethstra&szlig;e 5, Innere Stadt &middot; 1st district
+        </div>
+
+        <div class="hotel-why">
+          <div class="hotel-why-label">Why Stay Here</div>
+          <div class="hotel-why-text">Stylish budget-design 3-star hotel in a protected 19th-century building, 100 feet from the Ringstra&szlig;e. Opera-themed interiors with ballerina chairs and tutu lamps. 400 rooms with premium bedding and Hansgrohe raindance showers. No specific GF dining info; breakfast buffet available for surcharge.</div>
+        </div>
+
+        <div class="hotel-features">
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Budget-Design</span>
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Central Location</span>
+        </div>
+
+        <a href="https://www.hotels.com/ho471683/motel-one-wien-staatsoper-vienna-austria/" class="hotel-cta" target="_blank" rel="noopener sponsored">
+          Book on Hotels.com
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════ GLUTEN-FREE SURVIVAL GUIDE ═══════════════ -->
+  <section class="gf-guide" id="gluten-free">
+    <div class="gf-guide-header">
+      <h2 class="gf-guide-title">Gluten-Free Survival Guide</h2>
+    </div>
+    <div class="gf-guide-rule"></div>
+    <div class="gf-guide-grid">
+      <div class="gf-guide-left">
+        <div class="gf-info-group">
+          <div class="gf-info-label">Key Phrases (German)</div>
+          <div class="gf-phrase">
+            <span class="gf-phrase-local">&ldquo;Ich habe Z&ouml;liakie&rdquo;</span>
+            <span class="gf-phrase-meaning">I have celiac disease</span>
+          </div>
+          <div class="gf-phrase">
+            <span class="gf-phrase-local">&ldquo;Ist das glutenfrei?&rdquo;</span>
+            <span class="gf-phrase-meaning">Is this gluten-free?</span>
+          </div>
+          <div class="gf-phrase">
+            <span class="gf-phrase-local">&ldquo;Ohne Semmelbr&ouml;sel, bitte&rdquo;</span>
+            <span class="gf-phrase-meaning">Without breadcrumbs, please</span>
+          </div>
+          <div class="gf-phrase">
+            <span class="gf-phrase-local">&ldquo;Kreuzkontamination&rdquo;</span>
+            <span class="gf-phrase-meaning">Cross-contamination</span>
+          </div>
+        </div>
+        <div class="gf-info-group">
+          <div class="gf-info-label">Grocery Stores</div>
+          <ul class="gf-list">
+            <li>Billa/Billa Plus &mdash; strong &ldquo;frei von&rdquo; section with wide GF range</li>
+            <li>Spar/Interspar &mdash; excellent GF private label products</li>
+            <li>DM Drogerie &mdash; GF snacks, baking mixes, Sch&auml;r brand</li>
+          </ul>
+        </div>
+        <div class="gf-info-group">
+          <div class="gf-info-label">Safe Austrian Dishes</div>
+          <ul class="gf-list">
+            <li>Tafelspitz &mdash; boiled beef (confirm sauces are GF)</li>
+            <li>Erd&auml;pfelsalat &mdash; potato salad, naturally GF</li>
+            <li>Grilled meats without breading</li>
+            <li>Salads with K&uuml;rbiskern&ouml;l (pumpkin seed oil)</li>
+          </ul>
+        </div>
+        <div class="gf-info-group">
+          <div class="gf-info-label">Avoid (unless GF version)</div>
+          <ul class="gf-list">
+            <li>Wiener Schnitzel (traditional breaded)</li>
+            <li>Kaiserschmarrn, Kn&ouml;del, Palatschinken</li>
+            <li>Sachertorte (unless confirmed GF)</li>
+          </ul>
+        </div>
+        <div class="gf-info-group">
+          <div class="gf-info-label">Pro Tip</div>
+          <div class="gf-info-value">Austrian menus use EU allergen codes &mdash; &ldquo;A&rdquo; = gluten. Look for dishes without &ldquo;A&rdquo; listed.</div>
+        </div>
+      </div>
+      <div class="gf-score-section">
+        <div class="gf-score-title">Score Breakdown</div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Dedicated GF restaurants</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Menu labeling</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Staff knowledge &amp; safety</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Density of GF dining</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Grocery availability</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
+        </div>
+        <div class="gf-score-total">
+          <span class="gf-score-total-num">8/10</span>
+          <span class="gf-score-total-label">Overall GF Score</span>
+        </div>
+        <div class="gf-score-verdict">
+          <span class="gf-guide-difficulty gf-difficulty-easy"><span class="gf-dot"></span>Easy</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ GF FRIENDLY RESTAURANTS ═══════════════ -->
+  <section class="restaurants" id="restaurants">
+    <div class="restaurants-header">
+      <h2 class="restaurants-title">GF Friendly Restaurants</h2>
+      <span class="restaurants-count">9 spots</span>
+    </div>
+    <div class="restaurants-rule"></div>
+
+    <div id="gf-map" style="width:100%; min-height:260px; border-radius:4px; border:1px solid rgba(42,32,24,0.08); margin-bottom:1.6rem;"></div>
+    <div style="display:flex; align-items:center; gap:1.2rem; flex-wrap:wrap; margin-bottom:2.4rem; font-family:'Jost',sans-serif; font-size:0.58rem; font-weight:400; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-light);">
+      <span>GF Score</span>
+      <span style="display:inline-flex;align-items:center;gap:0.3rem;"><span style="width:10px;height:10px;border-radius:50%;background:#3d6e40;"></span> 5/5</span>
+      <span style="display:inline-flex;align-items:center;gap:0.3rem;"><span style="width:10px;height:10px;border-radius:50%;background:#6a9a40;"></span> 4/5</span>
+      <span style="display:inline-flex;align-items:center;gap:0.3rem;"><span style="width:10px;height:10px;border-radius:50%;background:#b48c3c;"></span> 3/5</span>
+      <span style="display:inline-flex;align-items:center;gap:0.3rem;"><span style="width:10px;height:10px;border-radius:50%;background:#2A2018;"></span> Hotel</span>
+    </div>
+    <script>
+    (function(){
+      var map = L.map('gf-map', { scrollWheelZoom: false }).setView([48.205, 16.37], 13);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap &copy; CARTO',
+        maxZoom: 18
+      }).addTo(map);
+
+      var colors = { 5:'#3d6e40', 4:'#6a9a40', 3:'#b48c3c' };
+
+      var restaurants = [
+        { name:'Gasthaus Zum Wohl', score:5, tag:'100% GF', lat:48.1956735, lng:16.3424139 },
+        { name:'Allergiker Caf\u00e9', score:5, tag:'100% GF', lat:48.1945765, lng:16.3673384 },
+        { name:'Pizzeria Scarabocchio', score:4, tag:'GF Options', lat:48.212228, lng:16.3547226 },
+        { name:'Nestroy Gasthaus & Biergarten', score:4, tag:'GF Options', lat:48.2187, lng:16.3807 },
+        { name:'Gasthaus am Predigtstuhl', score:4, tag:'GF Options', lat:48.2242558, lng:16.2932421 },
+        { name:'Restaurant F\u00fchrich', score:4, tag:'GF Options', lat:48.204889, lng:16.369948 },
+        { name:'Caf\u00e9 Schopenhauer', score:4, tag:'GF Options', lat:48.2235871, lng:16.3466975 },
+        { name:'Caf\u00e9 Mozart', score:3, tag:'GF Options', lat:48.2042832, lng:16.3694552 },
+        { name:'blueorange - coffee & bagel', score:3, tag:'GF Options', lat:48.1970073, lng:16.3657799 }
+      ];
+
+      // Hotel markers
+      var hotelIcon = L.divIcon({
+        className: '',
+        html: '<div style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;background:#2A2018;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.25);"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 21V13h6v8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 21h22" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><rect x="7" y="8" width="3" height="3" rx="0.5" fill="#fff"/><rect x="14" y="8" width="3" height="3" rx="0.5" fill="#fff"/></svg></div>',
+        iconSize: [22, 22],
+        iconAnchor: [11, 11]
+      });
+      L.marker([48.202242, 16.374934], { icon: hotelIcon })
+        .addTo(map)
+        .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">Hotel Grand Ferdinand Wien</strong><br><span style="font-size:11px;color:#5A5048;">Where I stayed</span></div>', { closeButton: false });
+      L.marker([48.201796, 16.3679555], { icon: hotelIcon })
+        .addTo(map)
+        .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">Motel One Wien-Staatsoper</strong><br><span style="font-size:11px;color:#5A5048;">Traveler recommended</span></div>', { closeButton: false });
+
+      restaurants.forEach(function(r) {
+        var color = colors[r.score];
+        var icon = L.divIcon({
+          className: '',
+          html: '<div style="width:14px;height:14px;border-radius:50%;background:'+color+';border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.2);"></div>',
+          iconSize: [14, 14],
+          iconAnchor: [7, 7]
+        });
+        L.marker([r.lat, r.lng], { icon: icon })
+          .addTo(map)
+          .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">'+r.name+'</strong><br><span style="font-size:11px;color:#5A5048;">'+r.tag+' \u00b7 GF Score: '+r.score+'/5</span></div>', { closeButton: false });
+      });
+    })();
+    </script>
+
+    <div class="restaurants-grid">
+
+    <!-- 1. Gasthaus Zum Wohl — 5/5 --> <!-- RESEARCHED -->
+    <div class="restaurant-card">
+      <div class="restaurant-card-inner">
+        <div class="restaurant-card-content">
+          <div class="restaurant-top">
+            <h3 class="restaurant-name">Gasthaus Zum Wohl</h3>
+            <div class="restaurant-tags">
+              <span class="restaurant-tag restaurant-tag-gf">100% GF</span>
+            </div>
+          </div>
+          <div class="restaurant-cuisine">Austrian (traditional)</div>
+          <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+          <div class="restaurant-gf-score">
+            <span class="restaurant-gf-score-label">GF Score</span>
+            <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
+          </div>
+          <div class="restaurant-details">
+            <div class="restaurant-detail">
+              <div class="restaurant-detail-label">Safety Notes</div>
+              <div class="restaurant-detail-value">Dedicated GF kitchen, fryer, and equipment. Everything on the menu is GF including draft beer.</div>
+            </div>
+            <div class="restaurant-detail">
+              <div class="restaurant-detail-label">What to Order</div>
+              <div class="restaurant-detail-value">Wiener Schnitzel, Kaiserschmarrn, apple strudel, GF draft beer.</div>
+            </div>
+            <div class="restaurant-detail restaurant-location">
+              <div class="restaurant-detail-label">Location</div>
+              <div class="restaurant-detail-value restaurant-location-value">
+                <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+                <span class="restaurant-detail-value">Stumpergasse 61, 6th district</span>
+              </div>
+            </div>
+          </div>
+          <div class="restaurant-fmgf">
+            <a href="https://www.findmeglutenfree.com/biz/gasthaus-zum-wohl/4583962772242432" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+              See reviews on Find Me Gluten Free
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+        <img src="../../photos/austria/vienna/gasthaus-zum-wohl/IMG_8037.jpeg" alt="Gasthaus Zum Wohl" class="restaurant-photo" loading="lazy">
+      </div>
+    </div>
+
+    <!-- 2. Allergiker Café — 5/5 --> <!-- RESEARCHED -->
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Allergiker Caf&eacute;</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-gf">100% GF</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Viennese Caf&eacute;</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">100% GF, soy-free, lactose-free. Owner has celiac disease. All allergens transparently labeled.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">Homemade Sacher Torte, waffles, sandwiches, daily lunch special. Cash only.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Wiedner Hauptstra&szlig;e 35, 4th district</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/allergiker-cafe/6132547131801600" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 3. Pizzeria Scarabocchio — 4/5 --> <!-- RESEARCHED -->
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Pizzeria Scarabocchio</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Italian (pizza, pasta)</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">GF flour used on all pizza bottoms, separate section in oven. Not a dedicated GF facility. Staff knowledgeable.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">GF pizza, pasta, tiramisu, GF beer. Cash only.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Florianigasse 3, 8th district</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/pizzeria-scarabocchio/5274653701439488" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 4. Nestroy Gasthaus & Biergarten — 4/5 --> <!-- RESEARCHED -->
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Nestroy Gasthaus &amp; Biergarten</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Austrian (traditional)</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">Separate GF menu, dedicated GF fryer, GF food prepared in separate kitchen area. 12+ years of GF experience.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">Schnitzel, Cordon Bleu, Kaiserschmarrn, GF beer (Gusswerk). Reservations required.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Weintraubengasse 7, 2nd district</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/gasthaus-nestroy/5596020377518080" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 5. Gasthaus am Predigtstuhl — 4/5 --> <!-- RESEARCHED -->
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Gasthaus am Predigtstuhl</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Austrian / Oriental fusion</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">Dedicated GF fryer, separate kitchen. Owner/family member has celiac. Most items available GF (+&euro;2). Weekend only (Sat&ndash;Sun from 11am).</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">Corn-battered fried chicken, schnitzels, Sachertorte, GF beer.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Oberwiedenstra&szlig;e 34, 17th district</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/gasthaus-am-predigtstuhl/6462631235551232" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 6. Restaurant Führich — 4/5 --> <!-- RESEARCHED -->
+    <div class="restaurant-card">
+      <div class="restaurant-card-inner">
+        <div class="restaurant-card-content">
+          <div class="restaurant-top">
+            <h3 class="restaurant-name">Restaurant F&uuml;hrich</h3>
+            <div class="restaurant-tags">
+              <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+            </div>
+          </div>
+          <div class="restaurant-cuisine">Austrian / Viennese</div>
+          <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+          <div class="restaurant-gf-score">
+            <span class="restaurant-gf-score-label">GF Score</span>
+            <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div>
+          </div>
+          <div class="restaurant-details">
+            <div class="restaurant-detail">
+              <div class="restaurant-detail-label">Safety Notes</div>
+              <div class="restaurant-detail-value">Dedicated GF fryer, extensive GF labeling on menu. Nearly entire menu available GF. TripAdvisor Travelers&rsquo; Choice 2025.</div>
+            </div>
+            <div class="restaurant-detail">
+              <div class="restaurant-detail-label">What to Order</div>
+              <div class="restaurant-detail-value">GF schnitzel, desserts, GF beer, soup, bread, potato salad.</div>
+            </div>
+            <div class="restaurant-detail restaurant-location">
+              <div class="restaurant-detail-label">Location</div>
+              <div class="restaurant-detail-value restaurant-location-value">
+                <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+                <span class="restaurant-detail-value">F&uuml;hrichgasse 6, 1st district</span>
+              </div>
+            </div>
+          </div>
+          <div class="restaurant-fmgf">
+            <a href="https://www.findmeglutenfree.com/biz/restaurant-fuhrich/5832353936834560" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+              See reviews on Find Me Gluten Free
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+        <img src="../../photos/austria/vienna/restaurant-führich/IMG_7941.jpeg" alt="Restaurant Führich" class="restaurant-photo" loading="lazy">
+      </div>
+    </div>
+
+    <!-- 7. Café Schopenhauer — 4/5 --> <!-- RESEARCHED -->
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Caf&eacute; Schopenhauer</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Viennese Caf&eacute; (pastries, breakfast)</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">Everything can be made GF &mdash; GF bread for breakfast, GF cakes usually available. Staff understands cross-contamination. Also a bookstore with live music.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">GF pastries, breakfast with GF bread, cakes.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Staudgasse 1, 18th district</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/cafe-schopenhauer/6117738810048512" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 8. Café Mozart — 3/5 --> <!-- RESEARCHED -->
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Caf&eacute; Mozart</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Viennese Caf&eacute; (pastries, cocktails)</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">GF menu with labeled GF cakes. Signature GF Rehr&uuml;cken cake. CAUTION: GF cakes in same display case as regular cakes &mdash; cross-contamination risk.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">GF Rehr&uuml;cken (chocolate almond cake), GF pastries, cocktails.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Albertinaplatz 2, 1st district</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/cafe-mozart/5618378187210752" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 9. blueorange - coffee & bagel — 3/5 --> <!-- RESEARCHED -->
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">blueorange - coffee &amp; bagel</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Caf&eacute; (bagels, breakfast)</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">GF bagels (+&euro;1.40), uses separate toaster. Staff asks about cross-contamination. Not fully safe for sensitive celiacs.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">GF bagels, omelets, GF cakes.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Margaretenstra&szlig;e 9, 4th district</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/blueorange/5141490989793280" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    </div><!-- /restaurants-grid -->
+
+    <div class="restaurants-footer">
+      <a href="https://www.findmeglutenfree.com/at/vienna" class="restaurants-fmgf-link" target="_blank" rel="noopener">
+        See all Vienna reviews on Find Me Gluten Free
+        <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════ GETTING AROUND ═══════════════ -->
+  <!-- RESEARCHED -->
+  <section class="getting-around" id="getting-around">
+    <div class="getting-around-header">
+      <h2 class="getting-around-title">Getting Around</h2>
+    </div>
+    <div class="getting-around-rule"></div>
+
+    <div class="transport-grid">
+
+      <div class="transport-card">
+        <div class="transport-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M12 2v4"/><path d="M12 18v4"/><path d="M2 12h4"/><path d="M18 12h4"/></svg>
+        </div>
+        <div class="transport-name">U-Bahn</div>
+        <div class="transport-desc">5 lines covering the city. 24h service Friday and Saturday nights. Fast and efficient.</div>
+        <div class="transport-detail">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="3"/></svg>
+          Metro
+        </div>
+      </div>
+
+      <div class="transport-card">
+        <div class="transport-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M3 10h18"/><circle cx="7.5" cy="20" r="1.5"/><circle cx="16.5" cy="20" r="1.5"/><path d="M7.5 17v1.5"/><path d="M16.5 17v1.5"/></svg>
+        </div>
+        <div class="transport-name">Tram</div>
+        <div class="transport-desc">Extensive network, especially in inner districts. Ring Tram circles the Ringstra&szlig;e.</div>
+        <div class="transport-detail">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="3"/></svg>
+          Tram
+        </div>
+      </div>
+
+      <div class="transport-card">
+        <div class="transport-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6v12"/><path d="M16 6v12"/><path d="M2 10h20"/><path d="M2 14h20"/><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="6" cy="21" r="1.5"/><circle cx="18" cy="21" r="1.5"/></svg>
+        </div>
+        <div class="transport-name">Bus</div>
+        <div class="transport-desc">Night buses after midnight on weekdays. Complements U-Bahn and tram routes.</div>
+        <div class="transport-detail">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="3"/></svg>
+          Bus
+        </div>
+      </div>
+
+      <div class="transport-card">
+        <div class="transport-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h1"/><path d="M18 20h1a2 2 0 0 0 2-2V9.5L17 4h-4"/><circle cx="8" cy="20" r="2"/><circle cx="17" cy="20" r="2"/><path d="M4 12h16"/></svg>
+        </div>
+        <div class="transport-name">Walking</div>
+        <div class="transport-desc">Innere Stadt is compact and best explored on foot. Most landmarks within walking distance.</div>
+        <div class="transport-detail">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor" style="color:#3d6e40;"><circle cx="4" cy="4" r="3"/></svg>
+          <span style="color:#3d6e40;">Free</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="transit-tip">
+      <svg class="transit-tip-icon" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M8 1C4.13 1 1 4.13 1 8s3.13 7 7 7 7-3.13 7-7-3.13-7-7-7zm0 11.5a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5zM8.75 9.5h-1.5V4.75h1.5V9.5z" fill="currentColor"/></svg>
+      <div class="transit-tip-content">
+        <div class="transit-tip-label">Local Tip</div>
+        <div class="transit-tip-text">Get the Vienna City Card (24h/48h/72h) for unlimited transit plus museum discounts. The 72h pass is &euro;17.10 for transit-only, or ~&euro;29 with the City Card perks.</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════ LANDMARKS & MUST-SEE SPOTS ═══════════════ -->
+  <section class="landmarks" id="landmarks">
+    <div class="landmarks-header">
+      <h2 class="landmarks-title">Landmarks &amp; Must-See Spots</h2>
+      <span class="landmarks-count">6 spots</span>
+    </div>
+    <div class="landmarks-rule"></div>
+
+    <div class="landmarks-grid">
+
+      <div class="landmark-card" data-lat="48.1845" data-lng="16.3122">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <h3 class="landmark-name">Sch&ouml;nbrunn Palace</h3>
+              <span class="landmark-type landmark-type-historic">Historic</span>
+            </div>
+            <!-- RESEARCHED -->
+            <div class="landmark-desc">Former imperial summer residence with 1,441 rooms, stunning baroque gardens, the world&rsquo;s oldest zoo, and panoramic views from the Gloriette.</div>
+            <div class="landmark-location">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+              13th district
+            </div>
+            <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
+          </div>
+          <!-- Photo: Wikimedia Commons, CC BY-SA 4.0 -->
+          <img src="../../photos/austria/vienna/schonbrunn-palace/schonbrunn-palace.jpeg" alt="Schönbrunn Palace" class="landmark-photo" loading="lazy">
+        </div>
+      </div>
+
+      <div class="landmark-card" data-lat="48.2034306" data-lng="16.3692034">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <h3 class="landmark-name">Vienna Opera House</h3>
+              <span class="landmark-type landmark-type-historic">Historic</span>
+            </div>
+            <!-- RESEARCHED -->
+            <div class="landmark-desc">One of the world&rsquo;s leading opera houses. Standing-room tickets from &euro;4&ndash;15 available by queuing.</div>
+            <div class="landmark-location">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+              Innere Stadt, 1st district
+            </div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+          </div>
+          <!-- Photo: Wikimedia Commons, CC BY-SA 4.0 -->
+          <img src="../../photos/austria/vienna/vienna-opera-house/vienna-opera-house.jpeg" alt="Vienna Opera House" class="landmark-photo" loading="lazy">
+        </div>
+      </div>
+
+      <div class="landmark-card" data-lat="48.2088774" data-lng="16.3697428">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <h3 class="landmark-name">Innere Stadt</h3>
+              <span class="landmark-type landmark-type-neighborhood">Neighborhood</span>
+            </div>
+            <div class="landmark-desc">Vienna&rsquo;s UNESCO-listed historic center encircled by the Ringstra&szlig;e. Home to St. Stephen&rsquo;s Cathedral, the Hofburg, and the pedestrian Graben.</div>
+            <div class="landmark-location">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+              1st district
+            </div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+          </div>
+          <img src="../../photos/austria/vienna/innere-stadt/IMG_7944.jpeg" alt="Innere Stadt" class="landmark-photo" loading="lazy">
+        </div>
+      </div>
+
+      <div class="landmark-card" data-lat="48.2109437" data-lng="16.3565084">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <h3 class="landmark-name">Rathaus der Stadt Wien</h3>
+              <span class="landmark-type landmark-type-historic">Historic</span>
+            </div>
+            <!-- RESEARCHED -->
+            <div class="landmark-desc">Neo-Gothic city hall on the Ringstra&szlig;e. Hosts the famous Wiener Christkindlmarkt (Christmas market) in winter with hundreds of stalls and mulled wine.</div>
+            <div class="landmark-location">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+              1st district
+            </div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+          </div>
+          <img src="../../photos/austria/vienna/rathaus-der-stadt-wien/IMG_7964.jpeg" alt="Rathaus der Stadt Wien" class="landmark-photo" loading="lazy">
+        </div>
+      </div>
+
+      <div class="landmark-card" data-lat="48.1985627" data-lng="16.3716999">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <h3 class="landmark-name">St. Charles&rsquo;s Church (Karlskirche)</h3>
+              <span class="landmark-type landmark-type-historic">Historic</span>
+            </div>
+            <!-- RESEARCHED -->
+            <div class="landmark-desc">Stunning baroque church with a panoramic elevator to the dome for city views. The reflecting pool in front makes for iconic photos.</div>
+            <div class="landmark-location">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+              4th district, Karlsplatz
+            </div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+          </div>
+          <!-- Photo: Der Wolf im Wald, Wikimedia Commons, CC BY-SA 3.0 DE -->
+          <img src="../../photos/austria/vienna/st-charles-church/st-charles-church.jpeg" alt="Karlskirche" class="landmark-photo" loading="lazy">
+        </div>
+      </div>
+
+      <div class="landmark-card" data-lat="48.2047335" data-lng="16.3796601">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <h3 class="landmark-name">Stadtpark (City Park)</h3>
+              <span class="landmark-type landmark-type-nature">Nature</span>
+            </div>
+            <!-- RESEARCHED -->
+            <div class="landmark-desc">Vienna&rsquo;s first public park, home to the famous gilded Johann Strauss monument. A peaceful escape from the city with winding paths along the Wien River.</div>
+            <div class="landmark-location">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+              Innere Stadt / Landstra&szlig;e border
+            </div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+          </div>
+          <!-- Photo: Diego Delso, Wikimedia Commons, CC BY-SA 4.0 -->
+          <img src="../../photos/austria/vienna/stadtpark/stadtpark.jpeg" alt="Stadtpark Johann Strauss monument" class="landmark-photo" loading="lazy">
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════ NEIGHBORHOODS ═══════════════ -->
+  <!-- RESEARCHED -->
+  <section class="neighborhoods" id="neighborhoods">
+    <div class="neighborhoods-header">
+      <h2 class="neighborhoods-title">Neighborhoods</h2>
+    </div>
+    <div class="neighborhoods-rule"></div>
+
+    <div id="neighborhood-map" style="width:100%; min-height:260px; border-radius:4px; border:1px solid rgba(42,32,24,0.08); margin-bottom:2.4rem;"></div>
+    <script>
+    (function(){
+      var nMap = L.map('neighborhood-map', { scrollWheelZoom: false }).setView([48.207, 16.370], 13);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap &copy; CARTO',
+        maxZoom: 18
+      }).addTo(nMap);
+
+      var neighborhoods = [
+        { name: 'Innere Stadt', center: [48.2088, 16.3697], radius: 600 },
+        { name: 'Leopoldstadt', center: [48.2187, 16.3807], radius: 550 },
+        { name: 'Landstra\u00dfe', center: [48.1970, 16.3950], radius: 550 },
+        { name: 'Neubau', center: [48.2030, 16.3500], radius: 400 },
+        { name: 'Josefstadt', center: [48.2120, 16.3450], radius: 350 }
+      ];
+
+      neighborhoods.forEach(function(n) {
+        L.circle(n.center, {
+          radius: n.radius,
+          color: '#2A2018',
+          weight: 1.2,
+          fillColor: 'transparent',
+          fillOpacity: 0,
+          dashArray: '3 5',
+          opacity: 0.35
+        }).addTo(nMap);
+
+        var label = L.divIcon({
+          className: '',
+          html: '<div style="font-family:Jost,sans-serif;font-size:8.5px;font-weight:400;letter-spacing:0.2em;text-transform:uppercase;color:#2A2018;white-space:nowrap;text-align:center;opacity:0.6;">'+n.name+'</div>',
+          iconSize: [0, 0],
+          iconAnchor: [0, 8]
+        });
+        L.marker(n.center, { icon: label, interactive: false }).addTo(nMap);
+      });
+
+      // Hotel markers
+      var hotelIcon = L.divIcon({
+        className: '',
+        html: '<div style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;background:#2A2018;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.25);"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 21V13h6v8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 21h22" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><rect x="7" y="8" width="3" height="3" rx="0.5" fill="#fff"/><rect x="14" y="8" width="3" height="3" rx="0.5" fill="#fff"/></svg></div>',
+        iconSize: [22, 22],
+        iconAnchor: [11, 11]
+      });
+      L.marker([48.202242, 16.374934], { icon: hotelIcon })
+        .addTo(nMap)
+        .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">Hotel Grand Ferdinand Wien</strong><br><span style="font-size:11px;color:#5A5048;">Where I stayed</span></div>', { closeButton: false });
+      L.marker([48.201796, 16.3679555], { icon: hotelIcon })
+        .addTo(nMap)
+        .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">Motel One Wien-Staatsoper</strong><br><span style="font-size:11px;color:#5A5048;">Traveler recommended</span></div>', { closeButton: false });
+    })();
+    </script>
+
+    <div class="neighborhood-list">
+
+      <div class="neighborhood-item">
+        <div class="neighborhood-name-col">
+          <h3 class="neighborhood-name">Innere Stadt (1st)</h3>
+          <span class="neighborhood-vibe">Old Town / Historic Center</span>
+        </div>
+        <div class="neighborhood-desc">Imperial architecture, St. Stephen&rsquo;s Cathedral, Hofburg, the Graben, classic coffeehouses (Caf&eacute; Central, Demel). UNESCO World Heritage.</div>
+      </div>
+
+      <div class="neighborhood-item">
+        <div class="neighborhood-name-col">
+          <h3 class="neighborhood-name">Leopoldstadt (2nd)</h3>
+          <span class="neighborhood-vibe">Prater &amp; Karmelitermarkt</span>
+        </div>
+        <div class="neighborhood-desc">Home to the Prater amusement park and giant Ferris wheel. Karmelitermarkt area is one of Vienna&rsquo;s trendiest &mdash; Jewish heritage, creative energy, excellent caf&eacute;s.</div>
+      </div>
+
+      <div class="neighborhood-item">
+        <div class="neighborhood-name-col">
+          <h3 class="neighborhood-name">Landstra&szlig;e (3rd)</h3>
+          <span class="neighborhood-vibe">Belvedere &amp; Hundertwasser</span>
+        </div>
+        <div class="neighborhood-desc">The Belvedere Palace (Klimt&rsquo;s The Kiss), the eccentric Hundertwasserhaus, and Kunst Haus Wien. Quiet, residential, leafy streets.</div>
+      </div>
+
+      <div class="neighborhood-item">
+        <div class="neighborhood-name-col">
+          <h3 class="neighborhood-name">Neubau (7th)</h3>
+          <span class="neighborhood-vibe">Creative Quarter</span>
+        </div>
+        <div class="neighborhood-desc">Vienna&rsquo;s hipster quarter &mdash; independent boutiques, vintage shops, street art, third-wave coffee. The Spittelberg area has charming cobblestoned streets and a beloved Christmas market.</div>
+      </div>
+
+      <div class="neighborhood-item">
+        <div class="neighborhood-name-col">
+          <h3 class="neighborhood-name">Josefstadt (8th)</h3>
+          <span class="neighborhood-vibe">Theater &amp; Antiques</span>
+        </div>
+        <div class="neighborhood-desc">Vienna&rsquo;s smallest district with Gr&uuml;nderzeit architecture, the Theater in der Josefstadt, antique shops, and an intellectual, understated atmosphere.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════ THINGS TO DO ═══════════════ -->
+  <!-- RESEARCHED -->
+  <section class="things-to-do" id="things-to-do">
+    <div class="things-header">
+      <h2 class="things-title">Things to Do</h2>
+    </div>
+    <div class="things-rule"></div>
+
+    <div class="things-category">
+      <div class="things-category-label">Activities &amp; Experiences</div>
+      <div class="things-grid">
+
+        <div class="thing-card" data-lat="48.1619487" data-lng="16.386845">
+          <div class="thing-top">
+            <h3 class="thing-name">Generali-Arena (FK Austria Wien)</h3>
+            <div>
+              <span class="thing-tag thing-tag-paid">Paid</span>
+              <span class="thing-tag thing-tag-paid">Sport</span>
+            </div>
+          </div>
+          <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+          <div class="thing-card-inner">
+            <div class="thing-card-content">
+              <div class="thing-desc">Home of FK Austria Wien. Catch a match for an authentic Viennese sports experience &mdash; the passionate fans and pyro displays create an electric atmosphere.</div>
+              <a href="https://www.fk-austria.at/en/" class="thing-visit" target="_blank" rel="noopener">
+            Visit website <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+              </a>
+            </div>
+            <img src="../../photos/austria/vienna/generali-arena/IMG_8013.jpeg" alt="Generali-Arena" class="thing-photo" loading="lazy">
+          </div>
+        </div>
+
+        <div class="thing-card" data-lat="48.211076" data-lng="16.393286">
+          <div class="thing-top">
+            <h3 class="thing-name">Kunst Haus Wien &mdash; Museum Hundertwasser</h3>
+            <div>
+              <span class="thing-tag thing-tag-paid">Paid</span>
+              <span class="thing-tag thing-tag-paid">Museum</span>
+            </div>
+          </div>
+          <!-- RESEARCHED -->
+          <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+          <div class="thing-desc">Museum by Friedensreich Hundertwasser with undulating floors, irregular windows, and trees growing from balconies. The building itself is the main attraction. Plan 1.5&ndash;2 hours.</div>
+          <a href="https://www.kunsthauswien.com/en/" class="thing-book" target="_blank" rel="noopener">
+            Book
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+
+        <div class="thing-card" data-lat="48.1436023" data-lng="16.4008216">
+          <div class="thing-top">
+            <h3 class="thing-name">Therme Wien</h3>
+            <div>
+              <span class="thing-tag thing-tag-paid">Paid</span>
+              <span class="thing-tag thing-tag-free">Relaxation</span>
+            </div>
+          </div>
+          <!-- RESEARCHED -->
+          <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+          <div class="thing-desc">Vienna&rsquo;s largest thermal spa complex fed by natural springs. Over 26 pools (indoor and outdoor), saunas, and relaxation zones. Textile-free sauna area is standard. Plan 3&ndash;4 hours.</div>
+          <a href="https://www.thermewien.at/en/" class="thing-book" target="_blank" rel="noopener">
+            Book
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════ WHAT TO PACK ═══════════════ -->
+  <section class="packing" id="what-to-pack">
+    <div class="packing-header">
+      <h2 class="packing-title">What to Pack</h2>
+      <span class="packing-season">November</span>
+    </div>
+    <div class="packing-rule"></div>
+
+    <ul class="packing-list">
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Passport &amp; travel insurance docs</span>
+          <span class="packing-item-why">Always carry copies, digital and physical</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Phone charger &amp; portable battery</span>
+          <span class="packing-item-why">Full days of navigation and photos drain battery fast</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">Cobblestones in the old town and long days on foot</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Reusable water bottle</span>
+          <span class="packing-item-why">Vienna&rsquo;s tap water is alpine spring water &mdash; refill everywhere</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Ziplock bags for GF snacks</span>
+          <span class="packing-item-why">Keep snacks fresh and separated from other food</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">German celiac dining card</span>
+          <span class="packing-item-why">Print or save to phone &mdash; explains celiac disease in German for restaurant staff</span>
+        </div>
+        <span class="packing-item-tag packing-tag-austria">Austria</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">EU power adapter (Type C/F, 230V)</span>
+          <span class="packing-item-why">Standard European plug &mdash; different from UK and US</span>
+        </div>
+        <span class="packing-item-tag packing-tag-austria">Austria</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sch&auml;r GF snacks</span>
+          <span class="packing-item-why">Bring from home or buy at any Billa/Spar supermarket</span>
+        </div>
+        <span class="packing-item-tag packing-tag-austria">Austria</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">GF soy sauce packets</span>
+          <span class="packing-item-why">For Japanese restaurants that may not stock tamari</span>
+        </div>
+        <span class="packing-item-tag packing-tag-austria">Austria</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Layers for November weather</span>
+          <span class="packing-item-why">Temps range 2&ndash;10&deg;C &mdash; mornings and evenings are cold</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Vienna</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Warm waterproof jacket</span>
+          <span class="packing-item-why">November rain and wind are common</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Vienna</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Scarf and gloves</span>
+          <span class="packing-item-why">Essential for Christmas markets and evening walks</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Vienna</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Compact umbrella</span>
+          <span class="packing-item-why">November averages 15+ rainy days</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Vienna</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Dressier outfit for concerts/opera</span>
+          <span class="packing-item-why">Vienna&rsquo;s cultural venues expect smart-casual at minimum</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Vienna</span>
+      </li>
+
+    </ul>
+
+    <!-- STOREFRONT: Uncomment when Amazon storefront URL is ready
+    <div class="packing-storefront">
+      <a href="STOREFRONT_URL_HERE" class="packing-storefront-link" target="_blank" rel="noopener sponsored">
+        Browse My Full Travel Storefront
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+    -->
+  </section>
+
+  <!-- ═══════════════ TRAVEL TIPS ═══════════════ -->
+  <section class="travel-tips" id="travel-tips">
+    <div class="tips-header">
+      <h2 class="tips-title">Travel Tips</h2>
+    </div>
+    <div class="tips-rule"></div>
+
+    <ul class="tips-list">
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text">Austrian menus list EU allergen codes &mdash; &ldquo;A&rdquo; means gluten. Look for dishes without &ldquo;A&rdquo; listed. This legal requirement is a huge advantage for celiacs.</span>
+      </li>
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text">The word &ldquo;Mehlspeise&rdquo; (flour dish) refers to the entire pastry/dessert tradition. Skip this section unless marked GF.</span>
+      </li>
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text">Heurigen (wine taverns) in the outskirts serve cold buffets &mdash; cold cuts, cheeses, and salads are often naturally GF, but watch for breaded items.</span>
+      </li>
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text">Vienna&rsquo;s tap water comes from alpine springs and is some of the best in Europe. Refill your bottle everywhere.</span>
+      </li>
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text">Christmas markets run Nov&ndash;Dec. The Rathausplatz market is the biggest, but Spittelberg (7th district) is cozier and more charming.</span>
+      </li>
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text">The Vienna City Card includes transit + museum discounts and is worth it for most visitors.</span>
+      </li>
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text">Book Nestroy Gasthaus in advance &mdash; they require reservations for GF meals.</span>
+      </li>
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text">Cash-only warning: Both Pizzeria Scarabocchio and Allergiker Caf&eacute; only accept cash.</span>
+      </li>
+    </ul>
+
+    <div class="tips-hindsight">
+      <div class="tips-hindsight-label">What I'd Do Differently</div>
+      <ul class="hindsight-list">
+        <li class="hindsight-item">
+          <svg class="hindsight-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L6 1L11 11H1Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>
+          <span class="hindsight-text">Would book at least two GF restaurant dinners in advance &mdash; Vienna&rsquo;s best GF spots fill up</span>
+        </li>
+        <li class="hindsight-item">
+          <svg class="hindsight-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L6 1L11 11H1Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>
+          <span class="hindsight-text">Would spend a full day at Therme Wien to recover from all the walking</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════ TIP CTA ═══════════════ -->
   <div class="tip-cta">
-    <div class="tip-cta-title">Have a tip or comment?</div>
-    <div class="tip-cta-sub">Found a great GF spot in Vienna? I'd love to hear from you.</div>
-    <a href="mailto:gfgoneglobal@gmail.com?subject=Tip for Vienna" class="tip-cta-link">
-      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="2.5" width="11" height="8" rx="1.5" stroke="currentColor" stroke-width="1.1"/><path d="M1 4l5.5 3.5L12 4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-      Send a note
+    <h3 class="tip-cta-title">Know a GF spot in Vienna I missed?</h3>
+    <p class="tip-cta-sub">Help fellow celiac travelers eat safely.</p>
+    <a href="mailto:hello@gfgoneglobal.com?subject=Vienna GF Tip" class="tip-cta-link">
+      Send a Tip
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
   </div>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="page-footer">
+    <p class="page-disclosure">This page contains affiliate links. If you book through these links, I may earn a small commission at no extra cost to you. All GF ratings and reviews are based on independent research and personal experience.</p>
+  </footer>
+
+  <!-- ═══════════════ LIGHTBOX ═══════════════ -->
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="">
+  </div>
+  <script>
+  (function(){
+    var overlay = document.getElementById('lightbox');
+    var lbImg = document.getElementById('lightbox-img');
+    document.querySelectorAll('.restaurant-photo, .landmark-photo, .hotel-image, .thing-photo').forEach(function(img){
+      img.addEventListener('click', function(){
+        lbImg.src = this.src;
+        lbImg.alt = this.alt
+          || (this.closest('.landmark-card') ? this.closest('.landmark-card').querySelector('.landmark-name').textContent.trim() : '')
+          || (this.closest('.thing-card') ? this.closest('.thing-card').querySelector('.thing-name').textContent.trim() : '');
+        overlay.classList.add('active');
+      });
+    });
+    overlay.addEventListener('click', function(e){
+      if(e.target === overlay || e.target.closest('.lightbox-close')){
+        overlay.classList.remove('active');
+      }
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape') overlay.classList.remove('active');
+    });
+  })();
+  </script>
 
 </body>
 </html>
