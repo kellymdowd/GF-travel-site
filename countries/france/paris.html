@@ -471,6 +471,14 @@
     @keyframes fadeIn { to { opacity: 1; } }
     @media (max-width: 600px) { .site-nav, .nav, .header, .snapshot, .toc, .gf-guide, .restaurants, .where-to-stay, .landmarks, .neighborhoods, .things-to-do, .packing, .travel-tips, .getting-around, .page-footer { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
   
+  
+
+    /* ─── Mobile: Breadcrumb nav ──────────────────────────── */
+    @media (max-width: 480px) {
+      .nav { flex-wrap: wrap; gap: 0.4rem 0.6rem; }
+      .header { flex-direction: column; align-items: flex-start; gap: 0.2rem; }
+      .trip-date { padding-bottom: 0; }
+    }
   </style>
 
   <!-- Google Analytics (gtag.js) -->
