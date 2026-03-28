@@ -2,332 +2,388 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="description" content="First-hand celiac travel guide to Flåm, 4/10 safety score, and interactive maps. Visited September 2019.">
+  <meta name="description" content="First-hand celiac travel guide to Flåm with 1 GF-rated restaurant, 3/10 safety score, hotel reviews, and interactive maps. Visited September 2019.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gluten-Free Restaurants & Celiac Guide to Flåm, Norway | GF Gone Global</title>
+  <title>Gluten-Free Restaurants &amp; Celiac Guide to Flåm, Norway | GF Gone Global</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
-    :root {
-      --cream:      #FFFFFF;
-      --slate:      #C8717A;
-      --slate-bg:   #FBF0F1;
-      --rose:       #B8907A;
-      --ink:        #2A2018;
-      --ink-mid:    #5A5048;
-      --ink-light:  #9A907A;
-    }
+
+    /* ─── Design Tokens ──────────────────────────────────────── */
+    :root { --cream: #FFFFFF; --slate: #C8717A; --slate-bg: #FBF0F1; --rose: #B8907A; --ink: #2A2018; --ink-mid: #5A5048; --ink-light: #9A907A; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
-    body {
-      background: var(--cream);
-      color: var(--ink);
-      font-family: 'Jost', sans-serif;
-      font-weight: 300;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 100;
-      opacity: 0.6;
-    }
-    .nav {
-      padding: 1.6rem 2.5rem 0;
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-      opacity: 0;
-      transform: translateY(-12px);
-      animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
-    }
-    .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.68rem;
-      font-weight: 400;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
+    body { background: var(--cream); color: var(--ink); font-family: 'Jost', sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-direction: column; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 100; opacity: 0.6; }
+
+    /* ─── Site Nav ────────────────────────────────────────────── */
+    .site-nav { padding: 1.2rem 2.5rem 0; display: flex; gap: 1.6rem; align-items: center; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.05s forwards; }
+    .site-nav-link { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .site-nav-link:hover { color: var(--slate); }
+    .site-nav-link:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .site-nav-link:active { color: var(--rose); }
+
+    /* ─── Breadcrumb Nav ──────────────────────────────────────── */
+    .nav { padding: 1.6rem 2.5rem 0; display: flex; gap: 1rem; align-items: center; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards; }
+    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
     .back-link:hover { color: var(--slate); }
     .back-link:hover svg { transform: translateX(-3px); }
     .back-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
     .nav-sep { font-size: 0.68rem; color: rgba(154, 144, 122, 0.4); letter-spacing: 0.1em; }
+    .nav-link { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .nav-link:hover { color: var(--slate); }
     .nav-current { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mid); }
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      padding: 1.4rem 2.5rem 1.2rem;
-      opacity: 0;
-      transform: translateY(-12px);
-      animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
-    }
-    .city-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      line-height: 1;
-    }
-    .trip-date {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: clamp(0.85rem, 1.3vw, 1rem);
-      color: var(--ink-light);
-      letter-spacing: 0.04em;
-      padding-bottom: 0.2rem;
-    }
-    .header-rule {
-      height: 1px;
-      background: linear-gradient(to right, var(--rose), transparent 60%);
-      margin: 0 2.5rem;
-      opacity: 0;
-      animation: fadeIn 0.8s ease 0.6s forwards;
-    }
-    .map-section {
-      flex: 1;
-      padding: 1.5rem 2.5rem 2rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      opacity: 0;
-      animation: fadeIn 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
-    }
-    .map-frame { width: 100%; flex: 1; min-height: 520px; border: none; }
-    .map-placeholder {
-      width: 100%; flex: 1; min-height: 520px;
-      background: var(--slate-bg);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 1rem; border: 1px dashed rgba(200, 113, 122, 0.35);
-    }
-    .map-placeholder svg { color: var(--slate); opacity: 0.4; }
-    .map-placeholder-text { text-align: center; }
-    .map-placeholder-text p { font-size: 0.72rem; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-light); line-height: 1.8; }
-    .map-placeholder-text code { font-family: 'Jost', monospace; font-size: 0.65rem; background: rgba(200, 113, 122, 0.1); padding: 0.2rem 0.5rem; color: var(--slate); letter-spacing: 0.05em; text-transform: none; }
-    
+
+    /* ─── Header ──────────────────────────────────────────────── */
+    .header { display: flex; justify-content: space-between; align-items: flex-end; padding: 1.4rem 2.5rem 1.2rem; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
+    .header-left { display: flex; flex-direction: column; }
+    .country-label { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.25rem; }
+    .city-name { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1; }
+    .trip-date { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(0.85rem, 1.3vw, 1rem); color: var(--ink-light); letter-spacing: 0.04em; padding-bottom: 0.2rem; }
+    .header-rule { height: 1px; background: linear-gradient(to right, var(--rose), transparent 60%); margin: 0 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 0.6s forwards; }
+
     /* ─── City Snapshot ──────────────────────────────────────── */
-    .snapshot {
-      padding: 1.6rem 2.5rem 0;
-      opacity: 0;
-      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
-    }
-
-    .snapshot-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 1rem;
-    }
-
-    .snapshot-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 0;
-      border-top: 1px solid rgba(42, 32, 24, 0.08);
-    }
-
-    .snapshot-item {
-      padding: 1rem 1.2rem 1rem 0;
-      border-bottom: 1px solid rgba(42, 32, 24, 0.08);
-    }
-
-    .snapshot-item-label {
-      font-family: 'Jost', sans-serif;
-      font-size: 0.58rem;
-      font-weight: 400;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 0.35rem;
-    }
-
-    .snapshot-item-value {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 400;
-      font-size: 1.05rem;
-      letter-spacing: 0.02em;
-      color: var(--ink);
-      line-height: 1.2;
-    }
-
-    /* GF Score visual */
-    .snapshot-score {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .snapshot-score-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 400;
-      font-size: 1.05rem;
-      color: var(--ink);
-      letter-spacing: 0.02em;
-      line-height: 1;
-    }
-
-    .snapshot-score-bar {
-      display: flex;
-      gap: 3px;
-      align-items: center;
-    }
-
-    .snapshot-score-pip {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: rgba(42, 32, 24, 0.1);
-    }
-
-    .snapshot-score-pip.is-filled {
-      background: var(--slate);
-    }
+    .snapshot { padding: 1.6rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards; }
+    .snapshot-label { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .snapshot-item { padding: 1rem 1.2rem 1rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.08); }
+    .snapshot-item-label { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.35rem; }
+    .snapshot-item-value { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .snapshot-score { display: flex; align-items: center; gap: 0.6rem; }
+    .snapshot-score-num { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); letter-spacing: 0.02em; line-height: 1; }
+    .snapshot-score-bar { display: flex; gap: 3px; align-items: center; }
+    .snapshot-score-pip { width: 6px; height: 6px; border-radius: 50%; background: rgba(42, 32, 24, 0.1); }
+    .snapshot-score-pip.is-filled { background: var(--slate); }
 
     /* ─── Table of Contents ─────────────────────────────────── */
-    .toc {
-      padding: 1.6rem 2.5rem 0;
-      opacity: 0;
-      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
-    }
+    .toc { padding: 1.6rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
+    .toc-label { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; }
+    .toc-list { list-style: none; display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .toc-item { border-bottom: 1px solid rgba(42, 32, 24, 0.08); }
+    .toc-link { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1.6rem 0.7rem 0; font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; letter-spacing: 0.04em; color: var(--ink-mid); text-decoration: none; transition: color 0.2s ease; }
+    .toc-link:hover { color: var(--slate); }
+    .toc-link:hover .toc-arrow { transform: translateX(3px); color: var(--slate); }
+    .toc-link:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .toc-link:active { color: var(--rose); }
+    .toc-arrow { color: var(--ink-light); opacity: 0.4; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease; flex-shrink: 0; }
 
-    .toc-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 1rem;
-    }
+    /* ─── Gluten-Free Survival Guide ────────────────────────── */
+    .gf-guide { padding: 2.4rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards; }
+    .gf-guide-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.4rem; }
+    .gf-guide-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .gf-guide-difficulty { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.25rem 0.7rem 0.25rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; }
+    .gf-guide-difficulty .gf-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .gf-difficulty-easy { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .gf-difficulty-easy .gf-dot { background: #4c8c50; }
+    .gf-difficulty-moderate { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
+    .gf-difficulty-moderate .gf-dot { background: #b48c3c; }
+    .gf-difficulty-difficult { background: rgba(180, 70, 60, 0.08); color: #8a3a30; }
+    .gf-difficulty-difficult .gf-dot { background: #b4463c; }
+    .gf-guide-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.4rem; }
+    .gf-guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    .gf-info-group { margin-bottom: 1.6rem; }
+    .gf-info-group:last-child { margin-bottom: 0; }
+    .gf-info-label { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.5rem; }
+    .gf-info-value { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.6; letter-spacing: 0.01em; }
+    .gf-phrase { display: flex; justify-content: space-between; align-items: baseline; padding: 0.3rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.05); }
+    .gf-phrase:last-child { border-bottom: none; }
+    .gf-phrase-local { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; color: var(--ink); }
+    .gf-phrase-meaning { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-light); letter-spacing: 0.03em; }
+    .gf-list { list-style: none; }
+    .gf-list li { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); padding: 0.25rem 0; line-height: 1.4; }
+    .gf-list li::before { content: '\2014'; color: var(--ink-light); opacity: 0.4; margin-right: 0.5rem; }
+    .gf-score-section { padding-left: 2.5rem; border-left: 1px solid rgba(42, 32, 24, 0.08); }
+    .gf-score-title { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; }
+    .gf-score-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.05); }
+    .gf-score-row:first-of-type { border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .gf-score-category { font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; color: var(--ink-mid); letter-spacing: 0.02em; }
+    .gf-score-pips { display: flex; gap: 4px; align-items: center; }
+    .gf-score-pip { width: 8px; height: 8px; border-radius: 50%; background: rgba(42, 32, 24, 0.08); }
+    .gf-score-pip.is-filled { background: var(--slate); }
+    .gf-score-total { display: flex; align-items: baseline; gap: 0.5rem; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid rgba(42, 32, 24, 0.12); }
+    .gf-score-total-num { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 2.4rem; color: var(--ink); line-height: 1; letter-spacing: -0.02em; }
+    .gf-score-total-label { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .gf-score-verdict { margin-top: 0.8rem; }
+    @media (max-width: 768px) { .gf-guide-grid { grid-template-columns: 1fr; gap: 1.6rem; } .gf-score-section { padding-left: 0; border-left: none; padding-top: 1.2rem; border-top: 1px solid rgba(42, 32, 24, 0.08); } }
 
-    .toc-list {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0;
-      border-top: 1px solid rgba(42, 32, 24, 0.08);
-    }
+    /* ─── Where to Stay ────────────────────────────────────── */
+    .where-to-stay { padding: 2.4rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.65s forwards; }
+    .stay-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .stay-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .stay-subtitle { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .stay-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .hotel-card { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid rgba(42, 32, 24, 0.08); border-radius: 4px; overflow: hidden; background: linear-gradient(135deg, rgba(251, 240, 241, 0.3) 0%, rgba(255, 255, 255, 0.6) 100%); transition: box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+    .hotel-card:hover { box-shadow: 0 4px 20px rgba(200, 113, 122, 0.08), 0 1px 6px rgba(42, 32, 24, 0.04); }
+    .hotel-image-side { position: relative; min-height: 280px; overflow: hidden; }
+    .hotel-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .hotel-image-overlay { position: absolute; inset: 0; background: linear-gradient(to right, transparent 50%, rgba(42, 32, 24, 0.04) 100%); mix-blend-mode: multiply; }
+    .hotel-badge { position: absolute; top: 1rem; left: 1rem; display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.3rem 0.7rem; background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(8px); border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mid); box-shadow: 0 1px 4px rgba(42, 32, 24, 0.08); }
+    .hotel-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--slate); }
+    .hotel-info-side { padding: 1.8rem 2rem; display: flex; flex-direction: column; justify-content: center; }
+    .hotel-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.4rem; letter-spacing: 0.03em; color: var(--ink); line-height: 1.2; margin-bottom: 0.15rem; }
+    .hotel-location { display: flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.64rem; font-weight: 300; color: var(--ink-light); letter-spacing: 0.04em; margin-bottom: 1.1rem; }
+    .hotel-location svg { flex-shrink: 0; opacity: 0.5; }
+    .hotel-why { margin-bottom: 1.3rem; }
+    .hotel-why-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.5rem; }
+    .hotel-why-text { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 0.98rem; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.01em; }
+    .hotel-features { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
+    .hotel-feature { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.2rem 0.55rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(42, 32, 24, 0.03); color: var(--ink-mid); }
+    .hotel-feature svg { flex-shrink: 0; opacity: 0.5; }
+    .hotel-cta { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1.4rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-radius: 3px; border: none; cursor: pointer; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 8px rgba(200, 113, 122, 0.2), 0 1px 3px rgba(200, 113, 122, 0.1); }
+    .hotel-cta:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(200, 113, 122, 0.3), 0 2px 5px rgba(200, 113, 122, 0.15); }
+    .hotel-cta:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; border-radius: 3px; }
+    .hotel-cta:active { background: #a85a63; transform: translateY(0); box-shadow: 0 1px 4px rgba(200, 113, 122, 0.15); }
+    .hotel-cta svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; }
+    .hotel-cta:hover svg { transform: translateX(2px); }
+    /* Hotel placeholder (no photo) */
+    .hotel-image-placeholder { min-height: 280px; background: linear-gradient(135deg, rgba(251, 240, 241, 0.6) 0%, rgba(200, 113, 122, 0.08) 100%); display: flex; align-items: center; justify-content: center; color: var(--ink-light); opacity: 0.4; }
+    @media (max-width: 768px) { .hotel-card { grid-template-columns: 1fr; } .hotel-image-side { min-height: 200px; } }
 
-    .toc-item {
-      border-bottom: 1px solid rgba(42, 32, 24, 0.08);
-    }
+    /* ─── Restaurants ────────────────────────────────────────── */
+    .restaurants { padding: 2.4rem 2.5rem 0; }
+    .restaurants-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .restaurants-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .restaurants-count { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .restaurants-rule { height: 1px; background: rgba(42, 32, 24, 0.08); }
+    .restaurants-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .restaurant-card { padding: 1.4rem 1.6rem 1.4rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .restaurant-card:nth-child(odd) { padding-right: 1.6rem; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .restaurant-card:nth-child(even) { padding-left: 1.6rem; padding-right: 0; }
+    .restaurant-card:nth-last-child(1), .restaurant-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    .restaurant-card:nth-last-child(1):nth-child(even) ~ .restaurant-card { border-bottom: none; }
+    .restaurant-card-inner { display: flex; gap: 1.2rem; align-items: flex-start; }
+    .restaurant-card-content { flex: 1; min-width: 0; }
+    .restaurant-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 4px rgba(42, 32, 24, 0.1); margin-top: 0.3rem; }
+    .restaurant-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.4rem; }
+    .restaurant-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.15rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .restaurant-tags { display: flex; gap: 0.4rem; flex-shrink: 0; }
+    .restaurant-tag { display: inline-block; padding: 0.2rem 0.55rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
+    .restaurant-tag-gf { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .restaurant-tag-options { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
+    .restaurant-tag-closed { background: rgba(180, 60, 60, 0.08); color: #9a3030; }
+    .restaurant-cuisine { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-light); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.9rem; }
+    .restaurant-source { display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 400; letter-spacing: 0.08em; margin-bottom: 0.9rem; }
+    .restaurant-source-dot { width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
+    .restaurant-source-visited { color: var(--rose); }
+    .restaurant-source-visited .restaurant-source-dot { background: var(--rose); }
+    .restaurant-source-researched { color: var(--ink-light); opacity: 0.7; }
+    .restaurant-source-researched .restaurant-source-dot { background: var(--ink-light); }
+    .restaurant-gf-score { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.7rem; margin-bottom: 1rem; }
+    .restaurant-gf-score-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .restaurant-gf-pips { display: flex; gap: 3px; align-items: center; }
+    .restaurant-gf-pip { width: 7px; height: 7px; border-radius: 50%; background: rgba(42, 32, 24, 0.08); }
+    .restaurant-gf-pip.is-filled { background: var(--slate); }
+    .restaurant-details { display: flex; flex-direction: column; gap: 0.6rem; }
+    .restaurant-detail-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.25rem; }
+    .restaurant-detail-value { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 0.95rem; color: var(--ink-mid); line-height: 1.5; letter-spacing: 0.01em; }
+    .restaurant-location-value { display: flex; align-items: baseline; gap: 0.4rem; }
+    .restaurant-location-value svg { flex-shrink: 0; color: var(--ink-light); opacity: 0.5; position: relative; top: 1px; }
+    .restaurant-fmgf { margin-top: 0.7rem; }
+    .restaurant-fmgf-link { display: inline-flex; align-items: center; gap: 0.4rem; font-family: 'Jost', sans-serif; font-size: 0.64rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .restaurant-fmgf-link:hover { color: var(--slate); }
+    .restaurant-fmgf-link:hover svg { transform: translateX(2px); }
+    .restaurant-fmgf-link:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .restaurant-fmgf-link:active { color: var(--rose); }
+    .restaurant-fmgf-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; }
+    .restaurants-footer { padding-top: 1.2rem; margin-top: 0.4rem; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .restaurants-fmgf-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .restaurants-fmgf-link:hover { color: var(--slate); }
+    .restaurants-fmgf-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; }
+    .restaurants-fmgf-link:hover svg { transform: translateX(2px); }
+    @media (max-width: 768px) { .restaurants-grid { grid-template-columns: 1fr; } .restaurant-card:nth-child(odd) { border-right: none; padding-right: 0; } .restaurant-card:nth-child(even) { padding-left: 0; } .restaurant-card:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } }
 
-    .toc-link {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.7rem 1.6rem 0.7rem 0;
-      font-family: 'Jost', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 300;
-      letter-spacing: 0.04em;
-      color: var(--ink-mid);
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
+    /* ─── Restaurant & Neighborhood Map ─────────────────────── */
+    .map-container { margin-bottom: 1.6rem; border-radius: 4px; overflow: hidden; border: 1px solid rgba(42, 32, 24, 0.08); }
+    .map-container .leaflet-container { height: 260px; width: 100%; }
+    .map-legend { display: flex; flex-wrap: wrap; gap: 0.8rem; padding: 0.8rem 0 0; }
+    .map-legend-item { display: flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.06em; color: var(--ink-light); }
+    .map-legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
-    .toc-link:hover {
-      color: var(--slate);
-    }
+    /* ─── Landmarks & Must-See Spots ─────────────────────────── */
+    .landmarks { padding: 2.4rem 2.5rem 0; }
+    .landmarks-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .landmarks-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .landmarks-count { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .landmarks-rule { height: 1px; background: rgba(42, 32, 24, 0.08); }
+    .landmarks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .landmark-card { padding: 1.4rem 1.6rem 1.4rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .landmark-card:nth-child(odd) { padding-right: 1.6rem; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .landmark-card:nth-child(even) { padding-left: 1.6rem; padding-right: 0; }
+    .landmark-card:nth-last-child(1), .landmark-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    .landmark-card:nth-last-child(1):nth-child(even) ~ .landmark-card { border-bottom: none; }
+    .landmark-card-inner { display: flex; gap: 1.2rem; align-items: flex-start; }
+    .landmark-card-content { flex: 1; min-width: 0; }
+    .landmark-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.3rem; }
+    .landmark-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.15rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .landmark-type { display: inline-block; padding: 0.2rem 0.55rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.52rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+    .landmark-type-historic { background: rgba(42, 32, 24, 0.04); color: var(--ink-mid); }
+    .landmark-type-nature { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .landmark-type-walk { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    .landmark-type-neighborhood { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
+    .landmark-type-market { background: rgba(160, 90, 130, 0.08); color: #804068; }
+    .landmark-desc { font-family: 'Jost', sans-serif; font-size: 0.74rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; margin-bottom: 0.5rem; }
+    .landmark-location { display: flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; color: var(--ink-light); letter-spacing: 0.04em; }
+    .landmark-location svg { flex-shrink: 0; opacity: 0.5; }
+    .landmark-source { display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.08em; margin-top: 0.5rem; }
+    .landmark-source-visited { color: var(--rose); }
+    .landmark-source-visited .restaurant-source-dot { background: var(--rose); }
+    .landmark-source-researched { color: var(--ink-light); opacity: 0.7; }
+    .landmark-source-researched .restaurant-source-dot { background: var(--ink-light); }
+    .landmark-photo { width: 80px; height: 80px; border-radius: 4px; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 4px rgba(42, 32, 24, 0.1); }
+    .landmark-photo-placeholder { width: 80px; height: 80px; border-radius: 4px; flex-shrink: 0; background: rgba(42, 32, 24, 0.03); border: 1px dashed rgba(42, 32, 24, 0.1); display: flex; align-items: center; justify-content: center; color: var(--ink-light); opacity: 0.4; }
+    @media (max-width: 768px) { .landmarks-grid { grid-template-columns: 1fr; } .landmark-card:nth-child(odd) { border-right: none; padding-right: 0; } .landmark-card:nth-child(even) { padding-left: 0; } .landmark-card:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } }
 
-    .toc-link:hover .toc-arrow {
-      transform: translateX(3px);
-      color: var(--slate);
-    }
+    /* ─── Neighborhoods ────────────────────────────────────── */
+    .neighborhoods { padding: 2.4rem 2.5rem 0; }
+    .neighborhoods-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .neighborhoods-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .neighborhoods-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .neighborhood-list { display: flex; flex-direction: column; gap: 0; }
+    .neighborhood-item { display: grid; grid-template-columns: 140px 1fr; gap: 2rem; padding: 1.3rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); align-items: baseline; }
+    .neighborhood-item:first-child { padding-top: 0; }
+    .neighborhood-item:last-child { border-bottom: none; }
+    .neighborhood-name-col { display: flex; flex-direction: column; gap: 0.25rem; }
+    .neighborhood-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.15rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .neighborhood-vibe { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-light); }
+    .neighborhood-desc { font-family: 'Jost', sans-serif; font-size: 0.74rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; }
+    @media (max-width: 768px) { .neighborhood-item { grid-template-columns: 1fr; gap: 0.4rem; } }
 
-    .toc-link:focus-visible {
-      outline: 1.5px solid var(--slate);
-      outline-offset: 2px;
-      border-radius: 2px;
-    }
+    /* ─── Things to Do ─────────────────────────────────────── */
+    .things-to-do { padding: 2.4rem 2.5rem 0; }
+    .things-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .things-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .things-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .things-category-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .things-category + .things-category { margin-top: 2rem; }
+    .things-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .thing-card { padding: 1.2rem 1.6rem 1.2rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .thing-card:nth-child(odd) { padding-right: 1.6rem; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .thing-card:nth-child(even) { padding-left: 1.6rem; padding-right: 0; }
+    .thing-card:nth-last-child(1), .thing-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    .thing-card:nth-last-child(1):nth-child(even) ~ .thing-card { border-bottom: none; }
+    .thing-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.3rem; }
+    .thing-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.1rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .thing-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+    .thing-tag-free { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .thing-tag-paid { background: rgba(42, 32, 24, 0.04); color: var(--ink-mid); }
+    .thing-desc { font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; margin-bottom: 0.6rem; }
+    .thing-meta { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+    .thing-detail { display: flex; align-items: center; gap: 0.3rem; font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; color: var(--ink-light); letter-spacing: 0.04em; }
+    .thing-detail svg { flex-shrink: 0; opacity: 0.5; }
+    .thing-book { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.7rem; padding: 0.45rem 0.9rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 3px; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 6px rgba(200, 113, 122, 0.15), 0 1px 2px rgba(200, 113, 122, 0.08); }
+    .thing-book:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200, 113, 122, 0.25), 0 2px 4px rgba(200, 113, 122, 0.12); }
+    .thing-book:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; }
+    .thing-book:active { background: #a85a63; transform: translateY(0); }
+    .thing-book svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .thing-book:hover svg { transform: translateX(2px); }
+    .thing-visit { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.7rem; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .thing-visit:hover { color: var(--slate); }
+    .thing-visit:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .thing-visit:active { color: var(--rose); }
+    .thing-visit svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .thing-visit:hover svg { transform: translateX(2px); }
+    @media (max-width: 768px) { .things-grid { grid-template-columns: 1fr; } .thing-card:nth-child(odd) { border-right: none; padding-right: 0; } .thing-card:nth-child(even) { padding-left: 0; } .thing-card:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } }
 
-    .toc-link:active {
-      color: var(--rose);
-    }
+    /* ─── Getting Around ────────────────────────────────────── */
+    .getting-around { padding: 2.4rem 2.5rem 0; }
+    .getting-around-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .getting-around-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .getting-around-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .transport-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+    .transport-card { padding: 1.4rem 1.4rem 1.4rem 0; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .transport-card:last-child { border-right: none; padding-right: 0; }
+    .transport-card:first-child { padding-left: 0; }
+    .transport-card:not(:first-child) { padding-left: 1.4rem; }
+    .transport-icon { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(42, 32, 24, 0.03); color: var(--ink-mid); margin-bottom: 0.9rem; }
+    .transport-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.1rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; margin-bottom: 0.5rem; }
+    .transport-desc { font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; }
+    .transport-detail { display: flex; align-items: baseline; gap: 0.4rem; margin-top: 0.6rem; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); }
+    .transport-detail svg { flex-shrink: 0; position: relative; top: 1px; opacity: 0.5; }
+    .transit-tip { margin-top: 1.6rem; padding: 1.2rem 1.4rem; background: var(--slate-bg); border-radius: 4px; border-left: 2px solid var(--slate); display: flex; gap: 0.8rem; align-items: flex-start; }
+    .transit-tip-icon { flex-shrink: 0; color: var(--slate); opacity: 0.7; position: relative; top: 1px; }
+    .transit-tip-content { flex: 1; min-width: 0; }
+    .transit-tip-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--slate); margin-bottom: 0.35rem; }
+    .transit-tip-text { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 0.98rem; color: var(--ink); line-height: 1.6; letter-spacing: 0.01em; }
+    @media (max-width: 768px) { .transport-grid { grid-template-columns: 1fr 1fr; } .transport-card { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } .transport-card:nth-child(2) { border-right: none; padding-right: 0; } .transport-card:nth-child(3) { padding-left: 0; } .transport-card:nth-child(3), .transport-card:nth-child(4) { border-bottom: none; } }
+    @media (max-width: 480px) { .transport-grid { grid-template-columns: 1fr; } .transport-card { border-right: none; padding-left: 0; padding-right: 0; } .transport-card:last-child { border-bottom: none; } }
 
-    .toc-arrow {
-      color: var(--ink-light);
-      opacity: 0.4;
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
-      flex-shrink: 0;
-    }
+    /* ─── What to Pack ─────────────────────────────────────── */
+    .packing { padding: 2.4rem 2.5rem 0; }
+    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .packing-item:last-child { border-bottom: none; }
+    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
+    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
+    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
+    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
+    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
+    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    /* Add .packing-tag-{{country}} with background: rgba(60, 90, 160, 0.08); color: #3a5080; */
+    .packing-storefront { margin-top: 1.4rem; padding-top: 1.2rem; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .packing-storefront-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1.1rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.64rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 3px; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 6px rgba(200, 113, 122, 0.15), 0 1px 2px rgba(200, 113, 122, 0.08); }
+    .packing-storefront-link:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200, 113, 122, 0.25), 0 2px 4px rgba(200, 113, 122, 0.12); }
+    .packing-storefront-link:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; }
+    .packing-storefront-link:active { background: #a85a63; transform: translateY(0); }
+    .packing-storefront-link svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .packing-storefront-link:hover svg { transform: translateX(2px); }
+    @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
 
-    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeIn { to { opacity: 1; } }
-    @media (max-width: 600px) {
-      .nav, .header, .map-section, .snapshot, .toc, .coming-soon-banner { padding-left: 1.2rem; padding-right: 1.2rem; }
-      .header-rule { margin: 0 1.2rem; }
-    }
-  
-    /* ─── Coming Soon Badge ────────────────────────────────── */
-    .coming-soon-banner {
-      padding: 2.5rem 2.5rem 0;
-      opacity: 0;
-      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
-    }
+    /* ─── Travel Tips ──────────────────────────────────────── */
+    .travel-tips { padding: 2.4rem 2.5rem 0; }
+    .tips-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .tips-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .tips-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .tips-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .tip-item { display: flex; gap: 0.8rem; align-items: baseline; padding: 0.7rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .tip-item:last-child { border-bottom: none; }
+    .tip-bullet { width: 4px; height: 4px; border-radius: 50%; background: var(--slate); flex-shrink: 0; opacity: 0.5; position: relative; top: 0.35rem; }
+    .tip-text { font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; }
+    .tips-hindsight { margin-top: 1.8rem; }
+    .tips-hindsight-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.8rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .hindsight-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .hindsight-item { display: flex; gap: 0.8rem; align-items: baseline; padding: 0.7rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .hindsight-item:last-child { border-bottom: none; }
+    .hindsight-icon { flex-shrink: 0; color: var(--slate); opacity: 0.5; position: relative; top: 0.2rem; }
+    .hindsight-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.01em; }
 
-    .coming-soon-inner {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1.2rem 1.6rem;
-      background: var(--slate-bg, #FBF0F1);
-      border-left: 2px solid var(--slate, #C8717A);
-    }
-
-    .coming-soon-icon {
-      flex-shrink: 0;
-      color: var(--slate, #C8717A);
-      opacity: 0.6;
-    }
-
-    .coming-soon-text {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-    }
-
-    .coming-soon-label {
-      font-family: 'Jost', sans-serif;
-      font-size: 0.62rem;
-      font-weight: 400;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--slate, #C8717A);
-    }
-
-    .coming-soon-desc {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.95rem;
-      font-weight: 300;
-      font-style: italic;
-      color: var(--ink-mid, #5A5048);
-      letter-spacing: 0.02em;
-      line-height: 1.4;
-    }
-      .tip-cta { padding: 2.4rem 2.5rem; text-align: center; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    /* ─── Tip CTA ────────────────────────────────────────────── */
+    .tip-cta { padding: 2.4rem 2.5rem; text-align: center; border-top: 1px solid rgba(42, 32, 24, 0.08); }
     .tip-cta-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.2rem, 2vw, 1.5rem); letter-spacing: 0.04em; color: var(--ink); margin-bottom: 0.4rem; }
     .tip-cta-sub { font-family: 'Jost', sans-serif; font-size: 0.82rem; font-weight: 300; color: var(--ink-light); margin-bottom: 1.2rem; }
     .tip-cta-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--slate); text-decoration: none; border: 1px solid rgba(200, 113, 122, 0.3); padding: 0.6rem 1.4rem; border-radius: 100px; transition: background 0.2s ease, border-color 0.2s ease; }
     .tip-cta-link:hover { background: var(--slate-bg); border-color: var(--slate); }
+
+    /* ─── Footer ────────────────────────────────────────────── */
+    .page-footer { padding: 2rem 2.5rem 2.5rem; text-align: center; }
+    .page-disclosure { font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 300; color: var(--ink-light); opacity: 0.5; letter-spacing: 0.03em; }
+
+    /* ─── Photo Lightbox ──────────────────────────────────────── */
+    .restaurant-photo, .landmark-photo, .hotel-image { cursor: zoom-in; }
+    .lightbox-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(10, 8, 6, 0); display: flex; align-items: center; justify-content: center; cursor: zoom-out; opacity: 0; pointer-events: none; transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .lightbox-overlay.active { opacity: 1; pointer-events: auto; background: rgba(10, 8, 6, 0.85); }
+    .lightbox-img { max-width: 90vw; max-height: 85vh; border-radius: 6px; object-fit: contain; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06); transform: scale(0.92); opacity: 0; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease; }
+    .lightbox-overlay.active .lightbox-img { transform: scale(1); opacity: 1; }
+    .lightbox-close { position: absolute; top: 1.2rem; right: 1.4rem; width: 36px; height: 36px; border: none; background: rgba(255, 255, 255, 0.1); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .lightbox-close:hover { background: rgba(255, 255, 255, 0.2); transform: scale(1.1); }
+    .lightbox-close:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.5); outline-offset: 2px; }
+    .lightbox-close:active { transform: scale(0.95); }
+    .lightbox-close svg { width: 16px; height: 16px; stroke: rgba(255, 255, 255, 0.8); stroke-width: 2; }
+
+    /* ─── Animations & Global Responsive ──────────────────── */
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { to { opacity: 1; } }
+    @media (max-width: 600px) { .site-nav, .nav, .header, .snapshot, .toc, .gf-guide, .restaurants, .where-to-stay, .landmarks, .neighborhoods, .things-to-do, .packing, .travel-tips, .getting-around, .page-footer { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
+  
   </style>
 
-  <!-- Google Analytics (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-64V5CSB1DT"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -537,9 +593,8 @@
 
     });
   </script>
-  
+  </script>
 
-  <!-- Structured data for search engines and AI systems -->
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -547,43 +602,28 @@
     {
       "@type": "Article",
       "headline": "Gluten-Free Restaurants & Celiac Guide to Flåm, Norway",
-      "description": "First-hand celiac travel guide to Flåm with 0 GF-rated restaurants, 4/10 GF friendliness score. Visited September 2019.",
-      "author": {
-        "@type": "Person",
-        "name": "GF Gone Global"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "GF Gone Global"
-      },
-      "about": {
-        "@type": "City",
-        "name": "Flåm",
-        "containedInPlace": {
-          "@type": "Country",
-          "name": "Norway"
-        }
-      }
+      "description": "First-hand celiac travel guide to Flåm with 1 GF-rated restaurant, 3/10 safety score, hotel reviews, and interactive maps. Visited September 2019.",
+      "author": { "@type": "Person", "name": "GF Gone Global" },
+      "publisher": { "@type": "Organization", "name": "GF Gone Global" }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "Ægir BryggeriPub",
+      "servesCuisine": "Brewpub / Viking Nordic",
+      "address": { "@type": "PostalAddress", "addressLocality": "Flåm", "addressCountry": "Norway" },
+      "review": { "@type": "Review", "reviewRating": { "@type": "Rating", "ratingValue": "3", "bestRating": "5" }, "author": { "@type": "Person", "name": "GF Gone Global" } }
+    },
+    {
+      "@type": "LodgingBusiness",
+      "name": "Flåmsbrygga Hotel",
+      "address": { "@type": "PostalAddress", "addressLocality": "Flåm", "addressCountry": "Norway" }
     },
     {
       "@type": "FAQPage",
       "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Is Flåm safe for celiacs?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Flåm scores 4/10 for GF friendliness (Challenging)."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Can you find gluten-free food in Flåm supermarkets?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Check the full guide for grocery recommendations and naturally gluten-free local dishes in Flåm, Norway."
-          }
-        }
+        { "@type": "Question", "name": "Is Flåm safe for celiacs?", "acceptedAnswer": { "@type": "Answer", "text": "Flåm is difficult for celiacs with only one restaurant (Ægir BryggeriPub) that can accommodate GF needs. Pack your own food — this is a tiny village of 350 people with almost no grocery options." } },
+        { "@type": "Question", "name": "What are the best gluten-free restaurants in Flåm?", "acceptedAnswer": { "@type": "Answer", "text": "Ægir BryggeriPub is the main GF-friendly option, with a GF beer and allergen-marked menu. The Flåmsbrygga Hotel breakfast buffet also labels allergens and offers GF bread." } },
+        { "@type": "Question", "name": "Can you find gluten-free food in Flåm supermarkets?", "acceptedAnswer": { "@type": "Answer", "text": "The village shop (Flåm Nærbutikk) has very limited GF options — perhaps rice cakes and basic items. Stock up in Bergen or Oslo before arriving." } }
       ]
     }
   ]
@@ -591,133 +631,300 @@
   </script>
 </head>
 <body>
+
+  <nav class="site-nav">
+    <a href="../../index.html" class="site-nav-link">Places</a>
+    <a href="../../gf-scoring.html" class="site-nav-link">GF Scoring</a>
+    <a href="../../about.html" class="site-nav-link">About Me</a>
+  </nav>
+
   <nav class="nav">
-    <a href="../norway.html" class="back-link">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      Norway
+    <a href="../../index.html" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      All Countries
     </a>
+    <span class="nav-sep">/</span>
+    <a href="../norway.html" class="nav-link">Norway</a>
     <span class="nav-sep">/</span>
     <span class="nav-current">Flåm</span>
   </nav>
+
   <header class="header">
-    <h1 class="city-name">Flåm</h1>
-    <span class="trip-date">Last traveled · September 2019</span>
+    <div class="header-left">
+      <span class="country-label">Norway</span>
+      <h1 class="city-name">Flåm</h1>
+    </div>
+    <span class="trip-date">Last traveled &middot; September 2019</span>
   </header>
   <div class="header-rule"></div>
-
-  <div class="coming-soon-banner">
-    <div class="coming-soon-inner">
-      <svg class="coming-soon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
-        <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.2"/>
-        <path d="M10 5.5V10.5L13 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <div class="coming-soon-text">
-        <span class="coming-soon-label">Coming Soon</span>
-        <span class="coming-soon-desc">Full guide with restaurants, hotels &amp; landmarks is on its way.</span>
-      </div>
-    </div>
-  </div>
 
   <section class="snapshot">
     <div class="snapshot-label">City Snapshot</div>
     <div class="snapshot-grid">
-      <div class="snapshot-item">
-        <div class="snapshot-item-label">Best Months</div>
-        <div class="snapshot-item-value">Jun–Aug</div>
-      </div>
-      <div class="snapshot-item">
-        <div class="snapshot-item-label">Ideal Stay</div>
-        <div class="snapshot-item-value">1 day</div>
-      </div>
-      <div class="snapshot-item">
-        <div class="snapshot-item-label">Gluten-Free</div>
-        <div class="snapshot-score">
-          <span class="snapshot-score-num">4/10</span>
-          <div class="snapshot-score-bar">
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip"></span>
-            <span class="snapshot-score-pip"></span>
-            <span class="snapshot-score-pip"></span>
-            <span class="snapshot-score-pip"></span>
-            <span class="snapshot-score-pip"></span>
-            <span class="snapshot-score-pip"></span>
-          </div>
-        </div>
-      </div>
-      <div class="snapshot-item">
-        <div class="snapshot-item-label">English Spoken</div>
-        <div class="snapshot-item-value">Widely</div>
-      </div>
-      <div class="snapshot-item">
-        <div class="snapshot-item-label">City Size</div>
-        <div class="snapshot-item-value">Compact</div>
-      </div>
-      <div class="snapshot-item">
-        <div class="snapshot-item-label">Walkability</div>
-        <div class="snapshot-item-value">High</div>
-      </div>
-      <div class="snapshot-item">
-        <div class="snapshot-item-label">Public Transit</div>
-        <div class="snapshot-item-value">Limited</div>
-      </div>
+      <div class="snapshot-item"><div class="snapshot-item-label">Best Months</div><div class="snapshot-item-value">May – Sep</div></div>
+      <div class="snapshot-item"><div class="snapshot-item-label">Ideal Stay</div><div class="snapshot-item-value">1–2 days</div></div>
+      <div class="snapshot-item"><div class="snapshot-item-label">Best For</div><div class="snapshot-item-value">Flåm Railway, fjords, scenery</div></div>
+      <div class="snapshot-item"><div class="snapshot-item-label">GF Friendliness</div><div class="snapshot-item-value"><div class="snapshot-score"><span class="snapshot-score-num">3/10</span><div class="snapshot-score-bar"><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span></div></div></div></div>
+      <div class="snapshot-item"><div class="snapshot-item-label">Language</div><div class="snapshot-item-value">Norwegian</div></div>
+      <div class="snapshot-item"><div class="snapshot-item-label">English</div><div class="snapshot-item-value">Good</div></div>
+      <div class="snapshot-item"><div class="snapshot-item-label">City Size</div><div class="snapshot-item-value">Village (~350)</div></div>
+      <div class="snapshot-item"><div class="snapshot-item-label">Currency</div><div class="snapshot-item-value">NOK (kr)</div></div>
     </div>
   </section>
 
-
   <nav class="toc">
-    <div class="toc-label">Jump to</div>
+    <div class="toc-label">On this page</div>
     <ul class="toc-list">
+      <li class="toc-item"><a href="#gf-guide" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>GF survival guide</a></li>
       <li class="toc-item"><a href="#where-to-stay" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Where to stay</a></li>
-      <li class="toc-item"><a href="#gluten-free" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Gluten-free survival guide</a></li>
       <li class="toc-item"><a href="#restaurants" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Restaurants</a></li>
       <li class="toc-item"><a href="#getting-around" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Getting around</a></li>
-      <li class="toc-item"><a href="#landmarks" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Landmarks &amp; must-see spots</a></li>
-      <li class="toc-item"><a href="#neighborhoods" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Neighborhoods</a></li>
+      <li class="toc-item"><a href="#landmarks" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Landmarks & must-see spots</a></li>
       <li class="toc-item"><a href="#things-to-do" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Things to do</a></li>
       <li class="toc-item"><a href="#what-to-pack" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>What to pack</a></li>
       <li class="toc-item"><a href="#travel-tips" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Travel tips</a></li>
     </ul>
   </nav>
 
-  <section class="map-section" id="map-section"></section>
-  <script>
-    const MAP_URL = 'https://www.google.com/maps/d/embed?mid=10r6bhSpXVmf015N8BF1jWK0QYmKPN4c';
-    const section = document.getElementById('map-section');
-    if (false) { // map temporarily hidden
-      const iframe = document.createElement('iframe');
-      iframe.src = MAP_URL;
-      iframe.className = 'map-frame';
-      iframe.allowFullscreen = true;
-      section.appendChild(iframe);
-    } else {
-      section.innerHTML = `
-        <!-- <div class="map-placeholder">
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-            <path d="M20 3C13.1 3 7.5 8.6 7.5 15.5C7.5 24.4 20 37 20 37C20 37 32.5 24.4 32.5 15.5C32.5 8.6 26.9 3 20 3ZM20 19.8C17.6 19.8 15.7 17.9 15.7 15.5C15.7 13.1 17.6 11.2 20 11.2C22.4 11.2 24.3 13.1 24.3 15.5C24.3 17.9 22.4 19.8 20 19.8Z" fill="currentColor"/>
-          </svg>
-          <div class="map-placeholder-text">
-            <p>Google My Maps coming soon</p>
-            <p>Set <code>MAP_URL</code> in this file to embed your map</p>
-          </div> -->
+  <section class="gf-guide" id="gf-guide">
+    <div class="gf-guide-header">
+      <h2 class="gf-guide-title">Gluten-Free Survival Guide</h2>
+      <span class="gf-guide-difficulty gf-difficulty-difficult"><span class="gf-dot"></span> Difficult</span>
+    </div>
+    <div class="gf-guide-rule"></div>
+    <div class="gf-guide-grid">
+      <div>
+        <div class="gf-info-group">
+          <div class="gf-info-label">Key Phrases</div>
+          <div class="gf-info-value">
+            <div class="gf-phrase"><span class="gf-phrase-local">Jeg har cøliaki</span><span class="gf-phrase-meaning">I have celiac disease</span></div>
+            <div class="gf-phrase"><span class="gf-phrase-local">Glutenfri</span><span class="gf-phrase-meaning">Gluten-free</span></div>
+            <div class="gf-phrase"><span class="gf-phrase-local">Inneholder dette gluten?</span><span class="gf-phrase-meaning">Does this contain gluten?</span></div>
+            <div class="gf-phrase"><span class="gf-phrase-local">Jeg blir veldig syk av gluten</span><span class="gf-phrase-meaning">I get very sick from gluten</span></div>
+          </div>
         </div>
-      `;
-    }
-  </script>
+        <div class="gf-info-group">
+          <div class="gf-info-label">Safe Local Foods</div>
+          <ul class="gf-list">
+            <li>Fresh fish & seafood</li>
+            <li>Brunost (brown cheese)</li>
+            <li>Grilled meats</li>
+            <li>Boiled potatoes</li>
+            <li>Cloudberries with cream</li>
+          </ul>
+        </div>
+        <div class="gf-info-group">
+          <div class="gf-info-label">GF Grocery Stores</div>
+          <ul class="gf-list">
+            <li>Flåm Nærbutikk — tiny village shop, minimal GF selection. Stock up in Bergen or Oslo before arriving.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="gf-score-section">
+        <div class="gf-score-title">GF Friendliness Breakdown</div>
+        <div class="gf-score-row"><span class="gf-score-category">Dedicated GF Restaurants</span><div class="gf-score-pips"><span class="gf-score-pip"></span><span class="gf-score-pip"></span></div></div>
+        <div class="gf-score-row"><span class="gf-score-category">Menu Labeling</span><div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div></div>
+        <div class="gf-score-row"><span class="gf-score-category">Staff Knowledge & Safety</span><div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div></div>
+        <div class="gf-score-row"><span class="gf-score-category">Density of GF Dining</span><div class="gf-score-pips"><span class="gf-score-pip"></span><span class="gf-score-pip"></span></div></div>
+        <div class="gf-score-row"><span class="gf-score-category">Grocery Availability</span><div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div></div>
+        <div class="gf-score-total"><span class="gf-score-total-num">3</span><span class="gf-score-total-label">out of 10</span></div>
+        <div class="gf-score-verdict"><span class="gf-guide-difficulty gf-difficulty-difficult"><span class="gf-dot"></span> Difficult</span></div>
+      </div>
+    </div>
+  </section>
 
-  <!-- TIP CTA -->
+  <section class="where-to-stay" id="where-to-stay">
+    <div class="stay-header"><h2 class="stay-title">Where to Stay</h2><span class="stay-subtitle">Recommended</span></div>
+    <div class="stay-rule"></div>
+    <div class="hotel-card">
+      <div class="hotel-image-side">
+        <div class="hotel-image-placeholder"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14"/><path d="M9 21V13h6v8"/><path d="M1 21h22"/><rect x="7" y="8" width="3" height="3" rx="0.5"/><rect x="14" y="8" width="3" height="3" rx="0.5"/></svg></div>
+        <span class="hotel-badge"><span class="hotel-badge-dot"></span> Where I stayed</span>
+      </div>
+      <div class="hotel-info-side">
+        <h3 class="hotel-name">Flåmsbrygga Hotel</h3>
+        <div class="hotel-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Flåm Harbor</div>
+        <div class="hotel-why"><div class="hotel-why-label">Why This Hotel</div><div class="hotel-why-text">Right on the harbor with fjord views. Includes Ægir BrewPub and Flåmstova restaurant. Breakfast buffet with GF bread and labeled allergens.</div></div>
+        <div class="hotel-features"><span class="hotel-feature">Fjord Views</span>
+          <span class="hotel-feature">On-Site BrewPub</span>
+          <span class="hotel-feature">Central Location</span>
+          <span class="hotel-feature">Free WiFi</span></div>
+        <a href="https://en.flamsbrygga.no/hotell" class="hotel-cta" target="_blank" rel="noopener sponsored">Book on Hotels.com <svg width="8" height="8" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="restaurants" id="restaurants">
+    <div class="restaurants-header"><h2 class="restaurants-title">GF Friendly Restaurants</h2><span class="restaurants-count">1 place</span></div>
+    <div class="restaurants-rule"></div>
+    <div class="restaurants-grid">
+    <div class="restaurant-card"> <!-- RESEARCHED -->
+      <div class="restaurant-top"><h3 class="restaurant-name">Ægir BryggeriPub</h3><div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div></div>
+      <div class="restaurant-cuisine">Brewpub / Viking Nordic</div>
+      <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
+      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail"><div class="restaurant-detail-label">Safety Notes</div><div class="restaurant-detail-value">Viking longhouse-style brewpub. Brews a GF Blonde beer. Menu well-marked for allergens. Staff knowledgeable about gluten. Many dishes adaptable to GF. Not dedicated GF — cross-contamination risk from brewery environment.</div></div>
+        <div class="restaurant-detail"><div class="restaurant-detail-label">What to Order</div><div class="restaurant-detail-value">GF Blonde beer, grilled meats, fish dishes. Ask about the Viking Plank — courses can be adapted for GF.</div></div>
+        <div class="restaurant-detail restaurant-location"><div class="restaurant-detail-label">Location</div><div class="restaurant-detail-value restaurant-location-value"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg><span class="restaurant-detail-value">Harbor</span></div></div>
+      </div>
+      <div class="restaurant-fmgf"><a href="https://www.findmeglutenfree.com/biz/aegir-microbrewery/6560667855618048" class="restaurant-fmgf-link" target="_blank" rel="noopener">See reviews on Find Me Gluten Free <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg></a></div>
+    </div>
+    </div>
+  </section>
+
+  <section class="getting-around" id="getting-around">
+    <div class="getting-around-header"><h2 class="getting-around-title">Getting Around</h2></div>
+    <div class="getting-around-rule"></div>
+    <div class="transport-grid">
+      <div class="transport-card"><div class="transport-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="5" r="2"/><path d="M10 10l-1.5 8.5M14 10l1.5 8.5M10.5 14h3M9 21l1.5-4.5M15 21l-1.5-4.5"/></svg></div><div class="transport-name">Walking</div><div class="transport-desc">Flåm village is tiny — everything within a 10-minute walk of the station and harbor.</div></div>
+      <div class="transport-card"><div class="transport-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><rect x="4" y="3" width="16" height="16" rx="3"/><path d="M4 11h16M12 3v8M8.5 15.5h.01M15.5 15.5h.01M6 19l2 2M18 19l-2 2"/></svg></div><div class="transport-name">Flåm Railway</div><div class="transport-desc">The main attraction AND transport. Connects Flåm to Myrdal on the Bergen–Oslo mainline.</div></div>
+      <div class="transport-card"><div class="transport-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 20s2-1 4-1 4 2 6 2 4-2 6-2 4 1 4 1"/><path d="M4 17l1-5h14l1 5"/><path d="M12 7v5M8 12l4-5 4 5"/></svg></div><div class="transport-name">Fjord Ferry</div><div class="transport-desc">Boats to Gudvangen, Bergen, and other fjord towns. Electric vessels by The Fjords.</div></div>
+    </div>
+    <div class="transit-tip">
+      <svg class="transit-tip-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M7 4.5V7.5M7 9.5h.01" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+      <div class="transit-tip-content"><div class="transit-tip-label">Transit Tip</div><div class="transit-tip-text">Flåm has no local bus network — it's a walking village. Book Flåm Railway tickets in advance, especially in summer when slots sell out.</div></div>
+    </div>
+  </section>
+
+  <section class="landmarks" id="landmarks">
+    <div class="landmarks-header"><h2 class="landmarks-title">Landmarks &amp; Must-See Spots</h2><span class="landmarks-count">3 spots</span></div>
+    <div class="landmarks-rule"></div>
+    <div class="landmarks-grid">
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top"><h3 class="landmark-name">Flam Railway Museum</h3><span class="landmark-type landmark-type-historic">Historic</span></div>
+            <div class="landmark-desc">Small museum at the station telling the remarkable story of how the Flåm Railway was built through 20 tunnels in steep mountain terrain. Free entry.</div>
+            <div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Flåm Station</div>
+            <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
+          </div>
+          <div class="landmark-photo-placeholder"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+        </div>
+      </div>
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top"><h3 class="landmark-name">Viking Valley (Njardarheimr)</h3><span class="landmark-type landmark-type-historic">Historic</span></div>
+            <div class="landmark-desc">Reconstructed Viking village with interactive exhibits on Viking life, crafts, and combat. A unique cultural experience in the fjord landscape.</div>
+            <div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Gudvangen</div>
+            <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
+          </div>
+          <div class="landmark-photo-placeholder"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+        </div>
+      </div>
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top"><h3 class="landmark-name">Brekkefossen Waterfall</h3><span class="landmark-type landmark-type-nature">Nature</span></div>
+            <div class="landmark-desc">Dramatic cascading waterfall visible from the Flåm Railway. The train pauses here for photos. Also accessible on foot from the village.</div>
+            <div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Flåm Railway route</div>
+            <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
+          </div>
+          <div class="landmark-photo-placeholder"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="things-to-do" id="things-to-do">
+    <div class="things-header"><h2 class="things-title">Things to Do</h2></div>
+    <div class="things-rule"></div>
+    <div class="things-grid">
+      <div class="thing-card"> <!-- RESEARCHED -->
+        <div class="thing-top"><h3 class="thing-name">Flåm Railway (Flåmsbana)</h3><span class="thing-tag thing-tag-paid">Paid</span></div>
+        <div class="thing-desc">One of the world's most scenic train rides. 20km from sea level to 867m with 20 tunnels and jaw-dropping views of waterfalls and mountains.</div>
+        <div class="thing-meta"><span class="thing-detail"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1"/><path d="M5 3v4M3.5 5h3" stroke="currentColor" stroke-width="0.8"/></svg> ~NOK 560 return</span><span class="thing-detail"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1"/><path d="M5 3v2.5l1.5 1" stroke="currentColor" stroke-width="0.8" stroke-linecap="round"/></svg> ~1 hour each way</span></div>
+        <a href="https://en.flamsbana.no/billettkjop" class="thing-book" target="_blank" rel="noopener sponsored">Book tickets <svg width="8" height="8" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <div class="thing-card"> <!-- RESEARCHED -->
+        <div class="thing-top"><h3 class="thing-name">Norway in a Nutshell</h3><span class="thing-tag thing-tag-paid">Paid</span></div>
+        <div class="thing-desc">Famous self-guided route combining the Flåm Railway, Nærøyfjord cruise, bus, and Bergen Line. A full day of Norway's most spectacular scenery.</div>
+        <div class="thing-meta"><span class="thing-detail"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1"/><path d="M5 3v4M3.5 5h3" stroke="currentColor" stroke-width="0.8"/></svg> From ~$200</span><span class="thing-detail"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1"/><path d="M5 3v2.5l1.5 1" stroke="currentColor" stroke-width="0.8" stroke-linecap="round"/></svg> Full day</span></div>
+        <a href="https://www.fjordtours.com/en/norway/tours/norway-in-a-nutshell" class="thing-book" target="_blank" rel="noopener sponsored">Book tour <svg width="8" height="8" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+      <div class="thing-card"> <!-- RESEARCHED -->
+        <div class="thing-top"><h3 class="thing-name">Nærøyfjord Cruise</h3><span class="thing-tag thing-tag-paid">Paid</span></div>
+        <div class="thing-desc">UNESCO World Heritage fjord cruise from Flåm to Gudvangen through one of the world's narrowest fjords. Electric/hybrid vessels.</div>
+        <div class="thing-meta"><span class="thing-detail"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1"/><path d="M5 3v4M3.5 5h3" stroke="currentColor" stroke-width="0.8"/></svg> ~NOK 400</span><span class="thing-detail"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><circle cx="5" cy="5" r="4" stroke="currentColor" stroke-width="1"/><path d="M5 3v2.5l1.5 1" stroke="currentColor" stroke-width="0.8" stroke-linecap="round"/></svg> ~2 hours</span></div>
+        <a href="https://www.visitflam.com/en/se-og-gjore/aktiviteter/fjordcruise-naeroyfjorden/" class="thing-book" target="_blank" rel="noopener sponsored">Book cruise <svg width="8" height="8" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 3l3 3-3 3" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="packing" id="what-to-pack">
+    <div class="packing-header"><h2 class="packing-title">What to Pack</h2><span class="packing-season">September 2019</span></div>
+    <div class="packing-rule"></div>
+    <ul class="packing-list">
+      <li class="packing-item"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" class="packing-check"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1" opacity="0.3"/></svg><div class="packing-item-content"><span class="packing-item-name">GF snack bars & packed lunches</span><span class="packing-item-why">Critical — Flåm has essentially one restaurant and a tiny shop</span></div><span class="packing-item-tag packing-tag-essential">Essential</span></li>
+      <li class="packing-item"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" class="packing-check"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1" opacity="0.3"/></svg><div class="packing-item-content"><span class="packing-item-name">Celiac dining card (Norwegian)</span><span class="packing-item-why">Show restaurant staff when communicating needs</span></div><span class="packing-item-tag packing-tag-essential">Essential</span></li>
+      <li class="packing-item"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" class="packing-check"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1" opacity="0.3"/></svg><div class="packing-item-content"><span class="packing-item-name">Reusable water bottle</span><span class="packing-item-why">Norwegian tap water is excellent and safe to drink everywhere</span></div><span class="packing-item-tag packing-tag-essential">Essential</span></li>
+      <li class="packing-item"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" class="packing-check"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1" opacity="0.3"/></svg><div class="packing-item-content"><span class="packing-item-name">Norwegian celiac card from NCF</span><span class="packing-item-why">Recognized by Norwegian restaurants and staff</span></div><span class="packing-item-tag" style="background:rgba(60,90,160,0.08);color:#3a5080;">Norway</span></li>
+      <li class="packing-item"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" class="packing-check"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1" opacity="0.3"/></svg><div class="packing-item-content"><span class="packing-item-name">GF crispbread for self-catering</span><span class="packing-item-why">Good backup when restaurant options are limited</span></div><span class="packing-item-tag" style="background:rgba(60,90,160,0.08);color:#3a5080;">Norway</span></li>
+      <li class="packing-item"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" class="packing-check"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1" opacity="0.3"/></svg><div class="packing-item-content"><span class="packing-item-name">Power adapter (Type C/F)</span><span class="packing-item-why">Standard European two-pin plug</span></div><span class="packing-item-tag" style="background:rgba(60,90,160,0.08);color:#3a5080;">Norway</span></li>
+      <li class="packing-item"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" class="packing-check"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1" opacity="0.3"/></svg><div class="packing-item-content"><span class="packing-item-name">Extra GF provisions from Bergen/Oslo</span><span class="packing-item-why">Flåm has almost no grocery — stock up before arriving</span></div><span class="packing-item-tag packing-tag-city">Flåm</span></li>
+      <li class="packing-item"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" class="packing-check"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1" opacity="0.3"/></svg><div class="packing-item-content"><span class="packing-item-name">Layers for variable fjord weather</span><span class="packing-item-why">September ranges 8–15°C with rapid changes</span></div><span class="packing-item-tag packing-tag-city">Flåm</span></li>
+      <li class="packing-item"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" class="packing-check"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1" opacity="0.3"/></svg><div class="packing-item-content"><span class="packing-item-name">Rain jacket</span><span class="packing-item-why">Western Norway gets frequent rain year-round</span></div><span class="packing-item-tag packing-tag-city">Flåm</span></li>
+      <li class="packing-item"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" class="packing-check"><rect x="1" y="1" width="10" height="10" rx="2" stroke="currentColor" stroke-width="1" opacity="0.3"/></svg><div class="packing-item-content"><span class="packing-item-name">Camera & binoculars</span><span class="packing-item-why">For the Flåm Railway views and fjord cruise wildlife</span></div><span class="packing-item-tag packing-tag-city">Flåm</span></li>
+    </ul>
+    <!-- STOREFRONT: Uncomment when Amazon storefront URL is ready
+    <div class="packing-storefront">
+      <a href="STOREFRONT_URL_HERE" class="packing-storefront-link" target="_blank" rel="noopener sponsored">Browse My Full Travel Storefront <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg></a>
+    </div>
+    -->
+  </section>
+
+  <section class="travel-tips" id="travel-tips">
+    <div class="tips-header"><h2 class="tips-title">Travel Tips</h2></div>
+    <div class="tips-rule"></div>
+    <ul class="tips-list">
+      <li class="tip-item"><span class="tip-bullet"></span><span class="tip-text">Pack MORE GF snacks than you think you need — options are extremely limited in this remote village</span></li>
+      <li class="tip-item"><span class="tip-bullet"></span><span class="tip-text">Book Flåm Railway tickets online well in advance — summer departures sell out weeks ahead</span></li>
+      <li class="tip-item"><span class="tip-bullet"></span><span class="tip-text">The Nærøyfjord cruise is the highlight — book the morning departure for best lighting and calmer waters</span></li>
+      <li class="tip-item"><span class="tip-bullet"></span><span class="tip-text">Consider staying overnight rather than day-tripping — the village is magical once cruise ship crowds leave by 5pm</span></li>
+      <li class="tip-item"><span class="tip-bullet"></span><span class="tip-text">The tiny Flåm Nærbutikk shop has basics but almost no GF products — don't count on it</span></li>
+    </ul>
+    <div class="tips-hindsight">
+      <div class="tips-hindsight-label">What I&rsquo;d Do Differently</div>
+      <ul class="hindsight-list">
+        <li class="hindsight-item">
+          <svg class="hindsight-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1L1 11h10L6 1z" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 4.5V7M6 8.5h.01" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
+          <span class="hindsight-text">I'd bring an entire bag of GF provisions. We underestimated how limited the food options would be in such a remote fjord village.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
   <div class="tip-cta">
     <div class="tip-cta-title">Have a tip or comment?</div>
-    <div class="tip-cta-sub">Found a great GF spot in Flåm? I'd love to hear from you.</div>
+    <div class="tip-cta-sub">Found a great GF spot in Flåm? I&rsquo;d love to hear from you.</div>
     <a href="mailto:gfgoneglobal@gmail.com?subject=Tip for Flåm" class="tip-cta-link">
       <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="2.5" width="11" height="8" rx="1.5" stroke="currentColor" stroke-width="1.1"/><path d="M1 4l5.5 3.5L12 4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
       Send a note
     </a>
   </div>
+
+  <footer class="page-footer">
+    <div class="page-disclosure">This page may contain affiliate links. If you book through these links, I may earn a small commission at no extra cost to you.</div>
+  </footer>
+
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" aria-label="Close lightbox"><svg viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="">
+  </div>
+  <script>
+  (function() {
+    var overlay = document.getElementById('lightbox');
+    var lbImg = document.getElementById('lightbox-img');
+    document.querySelectorAll('.restaurant-photo, .landmark-photo, .hotel-image, .thing-photo').forEach(function(img) {
+      img.addEventListener('click', function(e) { e.stopPropagation(); lbImg.src = this.src; lbImg.alt = this.alt; overlay.classList.add('active'); document.body.style.overflow = 'hidden'; });
+    });
+    function closeLightbox() { overlay.classList.remove('active'); document.body.style.overflow = ''; }
+    overlay.addEventListener('click', closeLightbox);
+    overlay.querySelector('.lightbox-close').addEventListener('click', function(e) { e.stopPropagation(); closeLightbox(); });
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && overlay.classList.contains('active')) closeLightbox(); });
+  })();
+  </script>
 
 </body>
 </html>

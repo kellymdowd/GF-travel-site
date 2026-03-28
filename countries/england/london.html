@@ -98,7 +98,6 @@
     .hotel-cta:active { background: #a85a63; transform: translateY(0); box-shadow: 0 1px 4px rgba(200, 113, 122, 0.15); }
     .hotel-cta svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; }
     .hotel-cta:hover svg { transform: translateX(2px); }
-    .hotel-image-placeholder { min-height: 280px; background: linear-gradient(135deg, rgba(251, 240, 241, 0.6) 0%, rgba(200, 113, 122, 0.08) 100%); display: flex; align-items: center; justify-content: center; color: var(--ink-light); opacity: 0.4; }
     @media (max-width: 768px) { .hotel-card { grid-template-columns: 1fr; } .hotel-image-side { min-height: 200px; } }
 
     /* ─── Gluten-Free Survival Guide ────────────────────────── */
@@ -255,7 +254,6 @@
     .landmark-source-researched { color: var(--ink-light); opacity: 0.7; }
     .landmark-source-researched .restaurant-source-dot { background: var(--ink-light); }
     .landmark-photo { width: 80px; height: 80px; border-radius: 4px; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 4px rgba(42, 32, 24, 0.1); }
-    .landmark-photo-placeholder { width: 80px; height: 80px; border-radius: 4px; flex-shrink: 0; background: rgba(42, 32, 24, 0.03); border: 1px dashed rgba(42, 32, 24, 0.1); display: flex; align-items: center; justify-content: center; color: var(--ink-light); opacity: 0.4; }
     @media (max-width: 768px) { .landmarks-grid { grid-template-columns: 1fr; } .landmark-card:nth-child(odd) { border-right: none; padding-right: 0; } .landmark-card:nth-child(even) { padding-left: 0; } .landmark-card:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } }
 
     /* ─── Neighborhoods ────────────────────────────────────── */
@@ -537,9 +535,11 @@
 
     <div class="hotel-card" style="margin-bottom: 1.6rem;">
       <div class="hotel-image-side">
-        <div class="hotel-image-placeholder">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M9 21V13h6v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><rect x="7" y="8" width="3" height="3" rx="0.5" stroke="currentColor" stroke-width="1"/><rect x="14" y="8" width="3" height="3" rx="0.5" stroke="currentColor" stroke-width="1"/></svg>
-        </div>
+        <img src="../../photos/england/london/pan-pacific-london/pan-pacific-london-exterior.jpeg"
+             alt="Pan Pacific London — One Bishopsgate Plaza exterior"
+             class="hotel-image" loading="lazy">
+        <div class="hotel-image-overlay"></div>
+        <!-- Photo: Sebastiandoe5 / Wikimedia Commons / CC BY-SA 4.0 -->
         <span class="hotel-badge"><span class="hotel-badge-dot"></span>Where I stayed</span>
       </div>
       <div class="hotel-info-side">
@@ -567,9 +567,11 @@
 
     <div class="hotel-card">
       <div class="hotel-image-side">
-        <div class="hotel-image-placeholder">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M9 21V13h6v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><rect x="7" y="8" width="3" height="3" rx="0.5" stroke="currentColor" stroke-width="1"/><rect x="14" y="8" width="3" height="3" rx="0.5" stroke="currentColor" stroke-width="1"/></svg>
-        </div>
+        <img src="../../photos/england/london/voyage-hotel-paddington/norfolk-square-paddington.jpeg"
+             alt="Norfolk Square, Paddington — The Voyage Hotel area"
+             class="hotel-image" loading="lazy">
+        <div class="hotel-image-overlay"></div>
+        <!-- Photo: 14GTR / Wikimedia Commons / CC0 Public Domain -->
         <span class="hotel-badge"><span class="hotel-badge-dot"></span>Where I stayed</span>
       </div>
       <div class="hotel-info-side">
@@ -1071,7 +1073,7 @@
             <div class="landmark-location"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>West End</div>
             <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span>Went here</div>
           </div>
-          <img class="landmark-photo" src="../../photos/england/london/piccadilly-circus/IMG_4171.jpeg" alt="Red telephone boxes near Piccadilly Circus">
+          
         </div>
       </div>
 
@@ -1086,7 +1088,6 @@
             <div class="landmark-location"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>Kensington / Westminster</div>
             <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span>Went here</div>
           </div>
-          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 13l4-5 3 3 2-2 3 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="5" cy="5" r="1.5" stroke="currentColor" stroke-width="1"/></svg></div>
         </div>
       </div>
 
@@ -1101,7 +1102,6 @@
             <div class="landmark-location"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>Westminster</div>
             <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span>Traveler recommended</div>
           </div>
-          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 13l4-5 3 3 2-2 3 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="5" cy="5" r="1.5" stroke="currentColor" stroke-width="1"/></svg></div>
         </div>
       </div>
 
@@ -1116,7 +1116,6 @@
             <div class="landmark-location"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>Kensington</div>
             <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span>Traveler recommended</div>
           </div>
-          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 13l4-5 3 3 2-2 3 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="5" cy="5" r="1.5" stroke="currentColor" stroke-width="1"/></svg></div>
         </div>
       </div>
 
@@ -1146,7 +1145,6 @@
             <div class="landmark-location"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>Kensington / Westminster</div>
             <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span>Traveler recommended</div>
           </div>
-          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 13l4-5 3 3 2-2 3 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="5" cy="5" r="1.5" stroke="currentColor" stroke-width="1"/></svg></div>
         </div>
       </div>
 
@@ -1161,7 +1159,6 @@
             <div class="landmark-location"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>Shoreditch / East London</div>
             <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span>Traveler recommended</div>
           </div>
-          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 13l4-5 3 3 2-2 3 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="5" cy="5" r="1.5" stroke="currentColor" stroke-width="1"/></svg></div>
         </div>
       </div>
 
@@ -1176,7 +1173,6 @@
             <div class="landmark-location"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>Southwark / South Bank</div>
             <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span>Traveler recommended</div>
           </div>
-          <div class="landmark-photo-placeholder"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 13l4-5 3 3 2-2 3 4" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="5" cy="5" r="1.5" stroke="currentColor" stroke-width="1"/></svg></div>
         </div>
       </div>
 
@@ -1191,7 +1187,7 @@
             <div class="landmark-location"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1C3.3 1 2 2.3 2 4c0 2.5 3 5 3 5s3-2.5 3-5c0-1.7-1.3-3-3-3z" stroke="currentColor" stroke-width="0.8"/></svg>Notting Hill</div>
             <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span>Went here</div>
           </div>
-          <img class="landmark-photo" src="../../photos/england/london/the-notting-hill-bookshop/IMG_0952.jpeg" alt="The iconic blue door near The Notting Hill Bookshop">
+          
         </div>
       </div>
 

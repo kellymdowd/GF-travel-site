@@ -10,26 +10,42 @@
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
   <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
   <style>
+    /* ─── Design Tokens ──────────────────────────────────────── */
     :root { --cream: #FFFFFF; --slate: #C8717A; --slate-dark: #AD5D65; --rose: #B8907A; --ink: #2A2018; --ink-mid: #5A5048; --ink-light: #9A907A; --pin: #B8907A; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
     body { background: var(--cream); color: var(--ink); font-family: 'Jost', sans-serif; font-weight: 300; min-height: 100vh; padding-top: 52px; }
     body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 100; opacity: 0.6; }
+
+    /* ─── Site Nav ────────────────────────────────────────────── */
     .site-nav { position: fixed; top: 0; left: 0; right: 0; height: 52px; background: var(--cream); border-bottom: 1px solid rgba(42, 32, 24, 0.08); display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; z-index: 300; }
     .nav-home { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.85rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); text-decoration: none; transition: color 0.2s ease; }
     .nav-home:hover { color: var(--slate); }
     .nav-links { display: flex; align-items: center; gap: 2rem; }
     .nav-link { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; transition: color 0.2s ease; }
     .nav-link:hover { color: var(--ink); }
+
+    /* ─── Back Link ──────────────────────────────────────────── */
     .nav-sub { padding: 1.2rem 2.5rem 0; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards; }
     .back-link { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
     .back-link:hover { color: var(--slate); }
     .back-link:hover svg { transform: translateX(-3px); }
     .back-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+
+    /* ─── Header ─────────────────────────────────────────────── */
     .header { display: flex; justify-content: space-between; align-items: flex-end; padding: 1.4rem 2.5rem 1.2rem; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
     .country-name { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1; }
     .trip-dates { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(0.85rem, 1.3vw, 1rem); color: var(--ink-light); letter-spacing: 0.04em; padding-bottom: 0.2rem; }
     .header-rule { height: 1px; background: linear-gradient(to right, var(--rose), transparent 60%); margin: 0 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 0.6s forwards; }
+
+    /* ─── Overview Button ────────────────────────────────────── */
+    .overview-section { padding: 1rem 2.5rem 0; opacity: 0; animation: fadeIn 0.8s ease 0.3s forwards; }
+    .overview-btn { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; border: 1px solid rgba(154, 144, 122, 0.35); padding: 0.45rem 0.9rem 0.45rem 0.75rem; transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease; }
+    .overview-btn:hover { color: var(--slate); border-color: var(--slate); background: rgba(200, 113, 122, 0.05); }
+    .overview-btn svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .overview-btn:hover svg { transform: translateX(2px); }
+
+    /* ─── Map ────────────────────────────────────────────────── */
     .map-section { padding: 1.5rem 2.5rem 1rem; opacity: 0; animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
     #country-map { width: 100%; display: block; }
     #country-map svg { width: 100%; display: block; overflow: hidden; }
@@ -38,16 +54,62 @@
     .city-pin:hover circle.pin-fill { r: 7; fill: #C8A088; }
     .city-label { font-family: 'Jost', sans-serif; font-size: 10px; font-weight: 400; letter-spacing: 0.1em; fill: var(--ink-mid); pointer-events: none; transition: fill 0.2s ease; }
     .city-pin:hover .city-label { fill: var(--ink); }
+
+    /* ─── City Chips ─────────────────────────────────────────── */
     .cities-section { padding: 0.5rem 2.5rem 2rem; opacity: 0; animation: fadeIn 0.8s ease 1.2s forwards; }
     .cities-rule { height: 1px; background: rgba(170, 170, 170, 0.3); margin-bottom: 1.2rem; }
     .cities-grid { display: flex; flex-wrap: wrap; gap: 0.6rem 1.2rem; }
     .city-chip { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 0.75rem 0.35rem 0.6rem; border: 1px solid rgba(180, 168, 155, 0.4); cursor: pointer; background: transparent; font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease; }
     .city-chip:hover { border-color: var(--rose); background: rgba(184, 144, 122, 0.06); color: var(--ink); }
     .city-chip-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--pin); flex-shrink: 0; }
+
+    /* ─── Tooltip ─────────────────────────────────────────────── */
     #map-tooltip { position: fixed; pointer-events: none; background: var(--ink); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.4rem 0.75rem; white-space: nowrap; opacity: 0; transition: opacity 0.15s ease; z-index: 200; }
+
+    /* ─── GF Friendliness Section ─────────────────────────────── */
+    .gf-section { padding: 0 2.5rem 2rem; opacity: 0; animation: fadeIn 0.8s ease 1.4s forwards; }
+    .gf-section-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.2rem; }
+    .gf-section-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .gf-verdict-tag { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.25rem 0.7rem 0.25rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; }
+    .gf-verdict-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .gf-verdict-easy { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .gf-verdict-easy .gf-verdict-dot { background: #4c8c50; }
+    .gf-verdict-moderate { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
+    .gf-verdict-moderate .gf-verdict-dot { background: #b48c3c; }
+    .gf-verdict-challenging { background: rgba(200, 122, 80, 0.08); color: #8a5030; }
+    .gf-verdict-challenging .gf-verdict-dot { background: #c87a50; }
+    .gf-verdict-difficult { background: rgba(180, 70, 60, 0.08); color: #8a3a30; }
+    .gf-verdict-difficult .gf-verdict-dot { background: #b4463c; }
+    .gf-section-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.4rem; }
+    .gf-section-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    .gf-section-summary { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.01em; margin-bottom: 1.4rem; }
+    .gf-score-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.05); }
+    .gf-score-row:first-of-type { border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .gf-score-category { font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; color: var(--ink-mid); letter-spacing: 0.02em; }
+    .gf-score-pips { display: flex; gap: 4px; align-items: center; }
+    .gf-score-pip { width: 8px; height: 8px; border-radius: 50%; background: rgba(42, 32, 24, 0.08); }
+    .gf-score-pip.is-filled { background: var(--slate); }
+    .gf-score-total { display: flex; align-items: baseline; gap: 0.5rem; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid rgba(42, 32, 24, 0.12); }
+    .gf-score-total-num { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 2.4rem; color: var(--ink); line-height: 1; letter-spacing: -0.02em; }
+    .gf-score-total-label { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .gf-city-scores { margin-top: 1.4rem; }
+    .gf-city-scores-label { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.6rem; }
+    .gf-city-score-row { display: flex; justify-content: space-between; align-items: center; padding: 0.45rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.05); }
+    .gf-city-score-row:first-of-type { border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .gf-city-name { font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; color: var(--ink-mid); }
+    .gf-city-name a { color: var(--ink-mid); text-decoration: none; transition: color 0.2s ease; }
+    .gf-city-name a:hover { color: var(--slate); }
+    .gf-city-score-bar { display: flex; gap: 3px; align-items: center; }
+    .gf-city-pip { width: 6px; height: 6px; border-radius: 50%; background: rgba(42, 32, 24, 0.08); }
+    .gf-city-pip.is-filled { background: var(--slate); }
+    @media (max-width: 768px) {
+      .gf-section-grid { grid-template-columns: 1fr; gap: 1.6rem; }
+    }
+
+    /* ─── Animations ─────────────────────────────────────────── */
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
-    @media (max-width: 600px) { .site-nav { padding: 0 1.2rem; } .nav-sub, .header, .map-section, .cities-section { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
+    @media (max-width: 600px) { .site-nav { padding: 0 1.2rem; } .nav-sub, .header, .overview-section, .map-section, .cities-section, .gf-section { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
   </style>
 
   <!-- Google Analytics (gtag.js) -->
@@ -117,9 +179,11 @@
 
     });
   </script>
-  
+
 </head>
 <body>
+
+  <!-- ═══════════════ SITE NAV ═══════════════ -->
   <nav class="site-nav">
     <a href="../index.html" class="nav-home">GF Gone Global</a>
     <div class="nav-links">
@@ -128,6 +192,8 @@
       <a href="../about.html" class="nav-link">About Me</a>
     </div>
   </nav>
+
+  <!-- ═══════════════ BACK LINK ═══════════════ -->
   <div class="nav-sub">
     <a href="../index.html" class="back-link">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -136,46 +202,186 @@
       All Countries
     </a>
   </div>
+
+  <!-- ═══════════════ HEADER ═══════════════ -->
   <header class="header">
     <h1 class="country-name">Czech Republic</h1>
-    <span class="trip-dates"><!-- Add trip dates when known --></span>
+    <span class="trip-dates">May 2018</span>
   </header>
   <div class="header-rule"></div>
-  <section class="map-section"><div id="country-map"></div></section>
+
+  <!-- ═══════════════ GOOGLE MAPS BUTTON ═══════════════ -->
+  <div class="overview-section">
+    <a class="overview-btn" href="https://www.google.com/maps/d/u/1/edit?mid=1jjERR5-WvmSOY1W2cq2lCJO06F0-KKE&usp=sharing" target="_blank" rel="noopener">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+        <path d="M6.5 1.5C4 1.5 2 3.5 2 6s2 4.5 4.5 4.5S11 8.5 11 6 9 1.5 6.5 1.5Z" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M8.5 11 11 8.5M8.5 11H11V8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Open Google Map
+    </a>
+  </div>
+
+  <!-- ═══════════════ D3 COUNTRY MAP ═══════════════ -->
+  <section class="map-section">
+    <div id="country-map"></div>
+  </section>
+
+  <!-- ═══════════════ CITY CHIPS ═══════════════ -->
   <section class="cities-section">
     <div class="cities-rule"></div>
     <div class="cities-grid" id="city-chips"></div>
   </section>
+
+  <!-- ═══════════════ GF FRIENDLINESS ═══════════════ -->
+  <section class="gf-section">
+    <div class="gf-section-header">
+      <h2 class="gf-section-title">GF Friendliness</h2>
+      <span class="gf-verdict-tag gf-verdict-moderate"><span class="gf-verdict-dot"></span>Manageable</span>
+    </div>
+    <div class="gf-section-rule"></div>
+
+    <div class="gf-section-grid">
+      <div>
+        <p class="gf-section-summary">Czech Republic is doable for celiac travelers, but it takes some legwork. Traditional cuisine leans heavily on dumplings, breaded meats, and flour-thickened sauces, so you won't be casually sampling the local classics. The upside is strong EU labeling, well-stocked supermarket GF sections, and a handful of dedicated GF restaurants in Prague. Bring a Czech-language celiac card, lean on self-catering from the excellent grocery options, and you'll eat well enough.</p>
+
+        <div class="gf-city-scores">
+          <div class="gf-city-scores-label">City Scores</div>
+          <div class="gf-city-score-row">
+            <span class="gf-city-name"><a href="czech-republic/prague.html">Prague</a></span>
+            <div class="gf-city-score-bar"><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">GF Culture &amp; Awareness</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Labeling &amp; Regulations</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Dining Options Nationwide</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Grocery &amp; Supermarket Access</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Naturally GF Cuisine</span>
+          <div class="gf-score-pips"><span class="gf-score-pip"></span><span class="gf-score-pip"></span></div>
+        </div>
+        <div class="gf-score-total">
+          <span class="gf-score-total-num">6</span>
+          <span class="gf-score-total-label">out of 10</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ TOOLTIP ═══════════════ -->
   <div id="map-tooltip"></div>
+
+  <!-- ═══════════════ D3 MAP SCRIPT ═══════════════ -->
   <script>
     const CITIES = [
       { name: 'Prague', slug: 'prague', lat: 50.0755, lon: 14.4378, trips: '' },
     ];
-    const LABEL_OPTS = { 'Prague': { dx: 10, dy: 4, anchor: 'start' } };
+
+    const LABEL_OPTS = {
+      'Prague': { dx: 10, dy: 4, anchor: 'start' },
+    };
+
+    const REGION = {
+      type: 'Feature',
+      geometry: {
+        type: 'Polygon',
+        coordinates: [[[11.5, 48.0], [19.5, 48.0], [19.5, 51.5], [11.5, 51.5], [11.5, 48.0]]]
+      }
+    };
+
     const W = 960, H = 560;
-    const svg = d3.select('#country-map').append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('preserveAspectRatio', 'xMidYMid meet');
+
+    const svg = d3.select('#country-map')
+      .append('svg')
+      .attr('viewBox', `0 0 ${W} ${H}`)
+      .attr('preserveAspectRatio', 'xMidYMid meet');
+
     const projection = d3.geoMercator();
     const path = d3.geoPath().projection(projection);
     const tooltip = document.getElementById('map-tooltip');
+
     fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json')
       .then(r => r.json())
       .then(world => {
         const countries = topojson.feature(world, world.objects.countries);
-        const country = countries.features.find(f => +f.id === 203);
-        projection.fitExtent([[60, 40], [W - 60, H - 50]], country);
+        const target = countries.features.find(f => +f.id === 203);
+
+        projection.fitExtent([[60, 40], [W - 60, H - 50]], REGION);
+
         svg.append('rect').attr('width', W).attr('height', H).attr('fill', '#F3F3F3');
-        svg.selectAll('.bg-country').data(countries.features).enter().append('path').attr("fill", "#E0E0E0").attr('stroke', 'rgba(255,255,255,0.7)').attr('stroke-width', 0.5).attr('d', path);
-        svg.append('path').datum(country).attr('fill', '#C8717A').attr('stroke', '#AD5D65').attr('stroke-width', 1).attr('d', path);
-        const pinGroup = svg.selectAll('.city-pin').data(CITIES).enter().append('g').attr('class', 'city-pin').attr('transform', d => { const [x, y] = projection([d.lon, d.lat]); return `translate(${x},${y})`; });
+
+        svg.selectAll('.bg-country')
+          .data(countries.features)
+          .enter().append('path')
+          .attr('fill', '#E0E0E0')
+          .attr('stroke', 'rgba(255,255,255,0.7)')
+          .attr('stroke-width', 0.5)
+          .attr('d', path);
+
+        svg.append('path')
+          .datum(target)
+          .attr('fill', '#C8717A')
+          .attr('stroke', '#AD5D65')
+          .attr('stroke-width', 1.5)
+          .attr('d', path);
+
+        const pinGroup = svg.selectAll('.city-pin')
+          .data(CITIES).enter()
+          .append('g')
+          .attr('class', 'city-pin')
+          .attr('transform', d => {
+            const [x, y] = projection([d.lon, d.lat]);
+            return `translate(${x},${y})`;
+          });
+
         pinGroup.append('circle').attr('r', 7).attr('cy', 2).attr('fill', 'rgba(42, 32, 24, 0.15)');
         pinGroup.append('circle').attr('class', 'pin-fill').attr('r', 5).attr('fill', '#B8907A').attr('stroke', '#FFFFFF').attr('stroke-width', 1.5);
-        pinGroup.append('text').attr('class', 'city-label').attr('dx', d => (LABEL_OPTS[d.name]||{dx:10}).dx).attr('dy', d => (LABEL_OPTS[d.name]||{dy:4}).dy).attr('text-anchor', d => (LABEL_OPTS[d.name]||{anchor:'start'}).anchor).text(d => d.name.toUpperCase());
-        pinGroup.on('mousemove', function(event, d) { tooltip.textContent = d.name; tooltip.style.opacity = '1'; tooltip.style.left = (event.clientX - tooltip.offsetWidth/2)+'px'; tooltip.style.top = (event.clientY-42)+'px'; }).on('mouseleave', () => { tooltip.style.opacity = '0'; }).on('click', (event, d) => { window.location.href = `czech-republic/${d.slug}.html`; });
-        pinGroup.style('opacity', 0).each(function(d, i) { d3.select(this).transition().delay(800+i*100).duration(500).ease(d3.easeCubicOut).style('opacity', 1); });
+        pinGroup.append('text')
+          .attr('class', 'city-label')
+          .attr('dx', d => (LABEL_OPTS[d.name] || { dx: 10 }).dx)
+          .attr('dy', d => (LABEL_OPTS[d.name] || { dy: 4 }).dy)
+          .attr('text-anchor', d => (LABEL_OPTS[d.name] || { anchor: 'start' }).anchor)
+          .text(d => d.name.toUpperCase());
+
+        pinGroup
+          .on('mousemove', function(event, d) {
+            tooltip.textContent = d.name;
+            tooltip.style.opacity = '1';
+            tooltip.style.left = (event.clientX - tooltip.offsetWidth / 2) + 'px';
+            tooltip.style.top  = (event.clientY - 42) + 'px';
+          })
+          .on('mouseleave', () => { tooltip.style.opacity = '0'; })
+          .on('click', (event, d) => { window.location.href = `czech-republic/${d.slug}.html`; });
+
+        pinGroup.style('opacity', 0).each(function(d, i) {
+          d3.select(this).transition().delay(800 + i * 100).duration(500).ease(d3.easeCubicOut).style('opacity', 1);
+        });
+
         const chipsEl = document.getElementById('city-chips');
         chipsEl.innerHTML = '';
-        CITIES.forEach(city => { const a = document.createElement('a'); a.className = 'city-chip'; a.href = `czech-republic/${city.slug}.html`; a.innerHTML = `<span class="city-chip-dot"></span>${city.name}`; chipsEl.appendChild(a); });
+        CITIES.forEach(city => {
+          const a = document.createElement('a');
+          a.className = 'city-chip';
+          a.href = `czech-republic/${city.slug}.html`;
+          a.innerHTML = `<span class="city-chip-dot"></span>${city.name}`;
+          chipsEl.appendChild(a);
+        });
       });
   </script>
+
 </body>
 </html>

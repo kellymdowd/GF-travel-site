@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GF Gone Global — Instagram Branding Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  :root {
+    --cream: #FFFCF9;
+    --slate: #C8717A;
+    --slate-dark: #AD5D65;
+    --slate-light: #D9979E;
+    --rose: #B8907A;
+    --rose-light: #D4B5A0;
+    --ink: #2A2018;
+    --ink-mid: #5A5048;
+    --ink-light: #9A907A;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #F5F0EB;
+    color: var(--ink);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  .kit { max-width: 1100px; margin: 0 auto; padding: 3rem 2.5rem 6rem; }
+
+  .kit-header { margin-bottom: 3rem; }
+  .kit-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--slate);
+    margin-bottom: 0.4rem;
+  }
+  .kit-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+  .kit-sub {
+    font-size: 0.78rem;
+    color: var(--ink-light);
+    margin-top: 0.8rem;
+    line-height: 1.6;
+  }
+
+  /* ─── Section ───────────────────────────── */
+  .section { margin-top: 3rem; }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 1.3rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .section-rule {
+    height: 1px;
+    background: rgba(42,32,24,0.08);
+    margin-bottom: 1.5rem;
+  }
+
+  /* ─── Logo + Profile Photo ─────────────── */
+  .logo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  .logo-card {
+    background: var(--cream);
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(42,32,24,0.04), 0 8px 24px rgba(42,32,24,0.06);
+  }
+
+  .logo-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1.2rem;
+    border-bottom: 1px solid rgba(42,32,24,0.06);
+  }
+
+  .logo-card-label {
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+  }
+
+  .btn-save {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.55rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid rgba(42,32,24,0.12);
+    background: transparent;
+    color: var(--ink-mid);
+    cursor: pointer;
+    border-radius: 1px;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .btn-save:hover { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+
+  .logo-canvas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem;
+  }
+
+  .logo-canvas.dark { background: var(--ink); }
+
+  /* ─── Profile Photo (circle) ───────────── */
+  .profile-photo {
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .profile-photo-inner {
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .profile-photo-inner.light {
+    background: var(--cream);
+    border: 2px solid rgba(42,32,24,0.06);
+  }
+
+  .profile-photo-inner.dark {
+    background: var(--ink);
+  }
+
+  .profile-photo-inner.rose {
+    background: var(--slate);
+  }
+
+  .pp-globe {
+    margin-bottom: 6px;
+  }
+
+  .pp-text-top {
+    font-family: 'Jost', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+
+  .pp-text-main {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 42px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 0.95;
+    margin-top: 2px;
+  }
+
+  .pp-text-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 50px;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    line-height: 0.9;
+  }
+
+  .pp-divider {
+    width: 40px;
+    height: 1px;
+    margin: 8px 0 6px;
+  }
+
+  .pp-tagline {
+    font-family: 'Jost', sans-serif;
+    font-size: 8px;
+    font-weight: 400;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+
+  /* ─── Highlight Covers ─────────────────── */
+  .highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .highlight-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .highlight-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .highlight-circle.cream-bg {
+    background: var(--cream);
+    border: 1.5px solid rgba(42,32,24,0.08);
+  }
+
+  .highlight-icon {
+    margin-bottom: 3px;
+  }
+
+  .highlight-label {
+    font-family: 'Jost', sans-serif;
+    font-size: 7.5px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+  }
+
+  .highlight-name {
+    font-family: 'Jost', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+  }
+
+  /* ─── Palette ──────────────────────────── */
+  .palette-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 1rem;
+  }
+
+  .swatch-card {
+    background: var(--cream);
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(42,32,24,0.04);
+  }
+
+  .swatch-color {
+    height: 80px;
+  }
+
+  .swatch-info {
+    padding: 0.7rem;
+  }
+
+  .swatch-name {
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 0.15rem;
+  }
+
+  .swatch-hex {
+    font-size: 0.62rem;
+    font-weight: 300;
+    color: var(--ink-light);
+    letter-spacing: 0.08em;
+  }
+
+  /* ─── Bio ───────────────────────────────── */
+  .bio-card {
+    background: var(--cream);
+    padding: 1.5rem;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(42,32,24,0.04);
+    max-width: 500px;
+  }
+
+  .bio-preview {
+    font-size: 0.82rem;
+    line-height: 1.6;
+    color: var(--ink-mid);
+    white-space: pre-wrap;
+  }
+
+  .bio-copy {
+    margin-top: 1rem;
+  }
+
+  /* ─── Typography ────────────────────────── */
+  .type-sample {
+    background: var(--cream);
+    padding: 2rem;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(42,32,24,0.04);
+    margin-bottom: 1rem;
+  }
+
+  .type-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 2.2rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+
+  .type-body {
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--ink-mid);
+    margin-top: 0.8rem;
+  }
+
+  .type-meta {
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(42,32,24,0.06);
+  }
+
+  .type-meta-item {
+    font-size: 0.6rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+  }
+
+  @media (max-width: 600px) {
+    .kit { padding: 2rem 1.2rem 4rem; }
+    .logo-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="kit">
+
+  <div class="kit-header">
+    <div class="kit-brand">@gfgoneglobal</div>
+    <h1 class="kit-title">Instagram Branding Kit</h1>
+    <p class="kit-sub">Profile photos, story highlight covers, color palette, typography, and bio — everything needed for a cohesive Instagram presence.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       PROFILE PHOTOS
+       ═══════════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">Profile Photo</h2>
+    <div class="section-rule"></div>
+
+    <div class="logo-grid">
+
+      <!-- Cream — Primary (passport stamp style) -->
+      <div class="logo-card">
+        <div class="logo-card-header">
+          <span class="logo-card-label">Cream — Primary Profile Photo</span>
+        </div>
+        <div class="logo-canvas" data-export>
+          <img src="exports/branding/gfgg-profile-cream.png" alt="GF Gone Global profile photo" style="width: 320px; height: 320px; border-radius: 50%; object-fit: cover;">
+        </div>
+      </div>
+
+      <!-- How it looks on Instagram -->
+      <div class="logo-card">
+        <div class="logo-card-header">
+          <span class="logo-card-label">Instagram Preview (circle crop)</span>
+        </div>
+        <div class="logo-canvas" style="background: #1a1a1a; padding: 3rem;" data-export>
+          <div style="display: flex; align-items: center; gap: 1.2rem;">
+            <img src="exports/branding/gfgg-profile-cream.png" alt="GF Gone Global profile photo" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid #333;">
+            <div>
+              <div style="font-family: 'Jost', sans-serif; font-weight: 500; font-size: 0.85rem; color: #fff; letter-spacing: 0.02em;">gfgoneglobal</div>
+              <div style="font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.72rem; color: #888; margin-top: 2px;">Celiac-safe travel guides</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <p style="font-size: 0.72rem; color: var(--ink-light); margin-top: 1rem; line-height: 1.6;">
+      The exported PNG is in <strong style="font-weight: 500; color: var(--ink-mid);">instagram/exports/branding/gfgg-profile-cream.png</strong> (1080&times;1080). Upload directly to Instagram — the circle crop will frame the stamp border and text naturally.
+    </p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       STORY HIGHLIGHT COVERS
+       ═══════════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">Story Highlight Covers</h2>
+    <div class="section-rule"></div>
+
+    <div class="highlights-grid">
+
+      <div class="highlight-item">
+        <div class="highlight-circle cream-bg" data-highlight>
+          <svg class="highlight-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C8717A" stroke-width="1.3">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+          </svg>
+          <span class="highlight-label" style="color: var(--slate);">Restaurants</span>
+        </div>
+        <span class="highlight-name">Restaurants</span>
+      </div>
+
+      <div class="highlight-item">
+        <div class="highlight-circle cream-bg" data-highlight>
+          <svg class="highlight-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C8717A" stroke-width="1.3">
+            <circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 10-16 0c0 3 2.7 7 8 11.7z"/>
+          </svg>
+          <span class="highlight-label" style="color: var(--slate);">Cities</span>
+        </div>
+        <span class="highlight-name">Cities</span>
+      </div>
+
+      <div class="highlight-item">
+        <div class="highlight-circle cream-bg" data-highlight>
+          <svg class="highlight-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C8717A" stroke-width="1.3">
+            <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+          </svg>
+          <span class="highlight-label" style="color: var(--slate);">GF Tips</span>
+        </div>
+        <span class="highlight-name">GF Tips</span>
+      </div>
+
+      <div class="highlight-item">
+        <div class="highlight-circle cream-bg" data-highlight>
+          <svg class="highlight-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C8717A" stroke-width="1.3">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/>
+          </svg>
+          <span class="highlight-label" style="color: var(--slate);">Hotels</span>
+        </div>
+        <span class="highlight-name">Hotels</span>
+      </div>
+
+      <div class="highlight-item">
+        <div class="highlight-circle cream-bg" data-highlight>
+          <svg class="highlight-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C8717A" stroke-width="1.3">
+            <rect x="3" y="7" width="18" height="13" rx="2"/><path d="M7 7V5a5 5 0 0110 0v2"/>
+          </svg>
+          <span class="highlight-label" style="color: var(--slate);">Packing</span>
+        </div>
+        <span class="highlight-name">Packing</span>
+      </div>
+
+      <div class="highlight-item">
+        <div class="highlight-circle cream-bg" data-highlight>
+          <svg class="highlight-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C8717A" stroke-width="1.3">
+            <path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/>
+          </svg>
+          <span class="highlight-label" style="color: var(--slate);">100% GF</span>
+        </div>
+        <span class="highlight-name">100% GF</span>
+      </div>
+
+      <div class="highlight-item">
+        <div class="highlight-circle cream-bg" data-highlight>
+          <svg class="highlight-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#C8717A" stroke-width="1.3">
+            <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+          </svg>
+          <span class="highlight-label" style="color: var(--slate);">Explore</span>
+        </div>
+        <span class="highlight-name">Explore</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       COLOR PALETTE
+       ═══════════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">Color Palette</h2>
+    <div class="section-rule"></div>
+
+    <div class="palette-grid">
+      <div class="swatch-card">
+        <div class="swatch-color" style="background: #C8717A;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Slate</div>
+          <div class="swatch-hex">#C8717A — Primary accent</div>
+        </div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-color" style="background: #B8907A;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Rose</div>
+          <div class="swatch-hex">#B8907A — Warm accent</div>
+        </div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-color" style="background: #2A2018;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Ink</div>
+          <div class="swatch-hex">#2A2018 — Text / dark bg</div>
+        </div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-color" style="background: #5A5048;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Ink Mid</div>
+          <div class="swatch-hex">#5A5048 — Body text</div>
+        </div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-color" style="background: #9A907A;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Ink Light</div>
+          <div class="swatch-hex">#9A907A — Captions / muted</div>
+        </div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-color" style="background: #FFFCF9; border-bottom: 1px solid rgba(42,32,24,0.08);"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Cream</div>
+          <div class="swatch-hex">#FFFCF9 — Backgrounds</div>
+        </div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-color" style="background: #D9979E;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Slate Light</div>
+          <div class="swatch-hex">#D9979E — Soft highlight</div>
+        </div>
+      </div>
+      <div class="swatch-card">
+        <div class="swatch-color" style="background: #D4B5A0;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Rose Light</div>
+          <div class="swatch-hex">#D4B5A0 — Warm highlight</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       TYPOGRAPHY
+       ═══════════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">Typography</h2>
+    <div class="section-rule"></div>
+
+    <div class="type-sample">
+      <div class="type-heading">Cormorant Garamond</div>
+      <div class="type-body">Used for headings, city names, restaurant names, and display text. Light weight (300), generous letter-spacing, uppercase.</div>
+      <div class="type-meta">
+        <span class="type-meta-item">Google Fonts</span>
+        <span class="type-meta-item">Weight: 300, 400, 500</span>
+        <span class="type-meta-item">Role: Display / Headings</span>
+      </div>
+    </div>
+
+    <div class="type-sample">
+      <div style="font-family: 'Jost', sans-serif; font-weight: 300; font-size: 2.2rem; letter-spacing: 0.02em; color: var(--ink);">Jost</div>
+      <div class="type-body">Used for body copy, labels, UI elements, captions, and hashtags. Light weight (300) for body, medium (500) for labels.</div>
+      <div class="type-meta">
+        <span class="type-meta-item">Google Fonts</span>
+        <span class="type-meta-item">Weight: 300, 400, 500</span>
+        <span class="type-meta-item">Role: Body / UI</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       BIO
+       ═══════════════════════════════════════════════════ -->
+  <div class="section">
+    <h2 class="section-title">Instagram Bio</h2>
+    <div class="section-rule"></div>
+
+    <div class="bio-card">
+      <div class="bio-preview">Celiac-safe travel guides, tested firsthand.
+GF restaurant reviews · city guides · packing tips
+21 countries · 60+ cities · real GF scores
+↓ Full guides with maps + ratings</div>
+      <button class="btn-save bio-copy" onclick="copyBio(this)">Copy Bio</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  async function saveLogo(btn, filename) {
+    var card = btn.closest('.logo-card');
+    var target = card.querySelector('[data-export-target]');
+    btn.textContent = 'Rendering...';
+    btn.disabled = true;
+    try {
+      var canvas = await html2canvas(target, {
+        scale: 1080 / target.offsetWidth,
+        useCORS: true,
+        backgroundColor: null,
+        logging: false
+      });
+      var link = document.createElement('a');
+      link.download = filename + '.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      btn.textContent = 'Saved!';
+      setTimeout(function() { btn.textContent = 'Save PNG'; btn.disabled = false; }, 2000);
+    } catch(e) {
+      btn.textContent = 'Error';
+      setTimeout(function() { btn.textContent = 'Save PNG'; btn.disabled = false; }, 2000);
+    }
+  }
+
+  function copyBio(btn) {
+    var text = btn.closest('.bio-card').querySelector('.bio-preview').textContent;
+    navigator.clipboard.writeText(text).then(function() {
+      btn.textContent = 'Copied!';
+      setTimeout(function() { btn.textContent = 'Copy Bio'; }, 2000);
+    });
+  }
+</script>
+
+</body>
+</html>
