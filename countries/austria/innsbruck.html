@@ -16,15 +16,14 @@
     :root { --cream: #FFFFFF; --slate: #C8717A; --slate-bg: #FBF0F1; --rose: #B8907A; --ink: #2A2018; --ink-mid: #5A5048; --ink-light: #9A907A; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
-    body { background: var(--cream); color: var(--ink); font-family: 'Jost', sans-serif; font-weight: 300; min-height: 100vh; display: flex; flex-direction: column; }
+    body { background: var(--cream); color: var(--ink); font-family: 'Jost', sans-serif; font-weight: 300; min-height: 100vh; padding-top: 52px; display: flex; flex-direction: column; }
     body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 100; opacity: 0.6; }
 
     /* ─── Site Nav ────────────────────────────────────────────── */
-    .site-nav { padding: 1.2rem 2.5rem 0; display: flex; gap: 1.6rem; align-items: center; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.05s forwards; }
-    .site-nav-link { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
-    .site-nav-link:hover { color: var(--slate); }
-    .site-nav-link:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
-    .site-nav-link:active { color: var(--rose); }
+    .site-nav { position: fixed; top: 0; left: 0; right: 0; height: 52px; background: var(--cream); border-bottom: 1px solid rgba(42, 32, 24, 0.08); display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; z-index: 300; }
+    .nav-home { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.85rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); text-decoration: none; transition: color 0.2s ease; }
+    .nav-home:hover { color: var(--slate); }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
 
     /* ─── Breadcrumb Nav ──────────────────────────────────────── */
     .nav { padding: 1.6rem 2.5rem 0; display: flex; gap: 1rem; align-items: center; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards; }
@@ -388,6 +387,13 @@
       .header { flex-direction: column; align-items: flex-start; gap: 0.2rem; }
       .trip-date { padding-bottom: 0; }
     }
+
+    /* ─── Mobile: Site nav bar ────────────────────────────── */
+    @media (max-width: 480px) {
+      .site-nav { padding: 0 1.2rem; }
+      .nav-links { gap: 0.8rem; }
+      .nav-home { font-size: 0.72rem; letter-spacing: 0.1em; }
+    }
   </style>
 
   <!-- Google Analytics (gtag.js) -->
@@ -673,9 +679,12 @@
 
   <!-- ═══════════════ SITE NAV ═══════════════ -->
   <nav class="site-nav">
-    <a href="../../index.html" class="site-nav-link">Places</a>
-    <a href="../../gf-scoring.html" class="site-nav-link">GF Scoring</a>
-    <a href="../../about.html" class="site-nav-link">About Me</a>
+    <a href="../../index.html" class="nav-home">GF Gone Global</a>
+    <div class="nav-links">
+      <a href="../../index.html" class="nav-link">Places</a>
+      <a href="../../gf-scoring.html" class="nav-link">GF Scoring</a>
+      <a href="../../about.html" class="nav-link">About Me</a>
+    </div>
   </nav>
 
   <!-- ═══════════════ BREADCRUMB NAV ═══════════════ -->
@@ -772,9 +781,9 @@
 
     <div class="hotel-card">
       <div class="hotel-image-side">
-        <div class="hotel-image-placeholder">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 21V13h6v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 21h22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><rect x="7" y="8" width="3" height="3" rx="0.5" fill="currentColor"/><rect x="14" y="8" width="3" height="3" rx="0.5" fill="currentColor"/></svg>
-        </div>
+        <!-- Wikimedia Commons CC-BY 2.0, Alain Rouiller -->
+        <img src="../../photos/austria/innsbruck/hotel-sailer/hotel-sailer-exterior.jpeg" alt="Hotel Sailer signage" class="hotel-image" loading="lazy">
+        <div class="hotel-image-overlay"></div>
         <div class="hotel-badge"><span class="hotel-badge-dot"></span> Where I stayed</div>
       </div>
       <div class="hotel-info-side">
@@ -962,51 +971,122 @@
 
     <div class="restaurants-grid">
 
-    <!-- 1. Ludwig — 4/5 — Photo -->
+    <!-- 1. Ludwig — 4/5 -->
     <div class="restaurant-card"> <!-- RESEARCHED -->
-      <div class="restaurant-card-inner">
-        <div class="restaurant-card-content">
-          <div class="restaurant-top">
-            <h3 class="restaurant-name">Ludwig</h3>
-            <div class="restaurant-tags">
-              <span class="restaurant-tag restaurant-tag-options">GF Options</span>
-            </div>
-          </div>
-          <div class="restaurant-cuisine">Burgers</div>
-          <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
-          <div class="restaurant-gf-score">
-            <span class="restaurant-gf-score-label">GF Score</span>
-            <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div>
-          </div>
-          <div class="restaurant-details">
-            <div class="restaurant-detail">
-              <div class="restaurant-detail-label">Safety Notes</div>
-              <div class="restaurant-detail-value">Separate GF menu, dedicated prep space, GF buns from bakery (+&euro;2), fries in separate dedicated fryer. All sauces made in-house in GF space.</div>
-            </div>
-            <div class="restaurant-detail">
-              <div class="restaurant-detail-label">What to Order</div>
-              <div class="restaurant-detail-value">GF cheeseburger (praised bun, tasty sauce), GF beer, GF dessert. Every burger can be made GF.</div>
-            </div>
-            <div class="restaurant-detail restaurant-location">
-              <div class="restaurant-detail-label">Location</div>
-              <div class="restaurant-detail-value restaurant-location-value">
-                <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-                <span class="restaurant-detail-value">Altstadt</span>
-              </div>
-            </div>
-          </div>
-          <div class="restaurant-fmgf">
-            <a href="https://www.findmeglutenfree.com/biz/ludwig/4668762562363392" class="restaurant-fmgf-link" target="_blank" rel="noopener">
-              See reviews on Find Me Gluten Free
-              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-            </a>
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Ludwig</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Burgers</div>
+      <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">Separate GF menu, dedicated prep space, GF buns from bakery (+&euro;2), fries in separate dedicated fryer. All sauces made in-house in GF space.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">GF cheeseburger (praised bun, tasty sauce), GF beer, GF dessert. Every burger can be made GF.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Altstadt</span>
           </div>
         </div>
-        <img src="../../photos/austria/innsbruck/ludwig/IMG_8460.jpeg" alt="GF pasta with truffles at Ludwig" class="restaurant-photo" loading="lazy">
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/ludwig/4668762562363392" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
       </div>
     </div>
 
-    <!-- 2. Breakfast Club — 3/5 — No photo -->
+    <!-- 2. Restaurant Thai Li — 4/5 -->
+    <div class="restaurant-card"> <!-- RESEARCHED -->
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Restaurant Thai Li</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Thai</div>
+      <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">Allergen guide in menu. Staff knowledge varies &mdash; one reviewer noted waitress didn&rsquo;t know what coeliac was.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">Curry dishes with rice (green chicken curry recommended), chicken satay skewers. Ask about curry paste and soy sauce.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Near Markthalle</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/thai-li/5719049251717120" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 3. L'Osteria — 3/5 -->
+    <div class="restaurant-card"> <!-- RESEARCHED -->
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">L&rsquo;Osteria</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Italian</div>
+      <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">GF penne/fusilli substitution for any pasta. Open kitchen &mdash; cannot guarantee no cross-contamination. Documented mix-up serving regular pasta. Better for intolerance than true celiac.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">Simple pasta dishes with GF swap. Double-check when served.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Near Hauptbahnhof</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/losteria/4519515645411328" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div><!-- 4. Breakfast Club — 3/5 — No photo -->
     <div class="restaurant-card"> <!-- RESEARCHED -->
       <div class="restaurant-top">
         <h3 class="restaurant-name">Breakfast Club</h3>
@@ -1045,51 +1125,7 @@
       </div>
     </div>
 
-    <!-- 3. Restaurant Thai Li — 4/5 — Photo -->
-    <div class="restaurant-card"> <!-- RESEARCHED -->
-      <div class="restaurant-card-inner">
-        <div class="restaurant-card-content">
-          <div class="restaurant-top">
-            <h3 class="restaurant-name">Restaurant Thai Li</h3>
-            <div class="restaurant-tags">
-              <span class="restaurant-tag restaurant-tag-options">GF Options</span>
-            </div>
-          </div>
-          <div class="restaurant-cuisine">Thai</div>
-          <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
-          <div class="restaurant-gf-score">
-            <span class="restaurant-gf-score-label">GF Score</span>
-            <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div>
-          </div>
-          <div class="restaurant-details">
-            <div class="restaurant-detail">
-              <div class="restaurant-detail-label">Safety Notes</div>
-              <div class="restaurant-detail-value">Allergen guide in menu. Staff knowledge varies &mdash; one reviewer noted waitress didn&rsquo;t know what coeliac was.</div>
-            </div>
-            <div class="restaurant-detail">
-              <div class="restaurant-detail-label">What to Order</div>
-              <div class="restaurant-detail-value">Curry dishes with rice (green chicken curry recommended), chicken satay skewers. Ask about curry paste and soy sauce.</div>
-            </div>
-            <div class="restaurant-detail restaurant-location">
-              <div class="restaurant-detail-label">Location</div>
-              <div class="restaurant-detail-value restaurant-location-value">
-                <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-                <span class="restaurant-detail-value">Near Markthalle</span>
-              </div>
-            </div>
-          </div>
-          <div class="restaurant-fmgf">
-            <a href="https://www.findmeglutenfree.com/biz/thai-li/5719049251717120" class="restaurant-fmgf-link" target="_blank" rel="noopener">
-              See reviews on Find Me Gluten Free
-              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-            </a>
-          </div>
-        </div>
-        <img src="../../photos/austria/innsbruck/restaurant-thai-li/IMG_8403.jpeg" alt="Old Town scene near Restaurant Thai Li" class="restaurant-photo" loading="lazy">
-      </div>
-    </div>
-
-    <!-- 4. Le Burger DEZ — 3/5 — No photo -->
+    <!-- 5. Le Burger DEZ — 3/5 — No photo -->
     <div class="restaurant-card"> <!-- RESEARCHED -->
       <div class="restaurant-top">
         <h3 class="restaurant-name">Le Burger DEZ</h3>
@@ -1128,44 +1164,7 @@
       </div>
     </div>
 
-    <!-- 5. L'Osteria — 3/5 -->
-    <div class="restaurant-card"> <!-- RESEARCHED -->
-      <div class="restaurant-top">
-        <h3 class="restaurant-name">L&rsquo;Osteria</h3>
-        <div class="restaurant-tags">
-          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
-        </div>
-      </div>
-      <div class="restaurant-cuisine">Italian</div>
-      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
-      <div class="restaurant-gf-score">
-        <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
-      </div>
-      <div class="restaurant-details">
-        <div class="restaurant-detail">
-          <div class="restaurant-detail-label">Safety Notes</div>
-          <div class="restaurant-detail-value">GF penne/fusilli substitution for any pasta. Open kitchen &mdash; cannot guarantee no cross-contamination. Documented mix-up serving regular pasta. Better for intolerance than true celiac.</div>
-        </div>
-        <div class="restaurant-detail">
-          <div class="restaurant-detail-label">What to Order</div>
-          <div class="restaurant-detail-value">Simple pasta dishes with GF swap. Double-check when served.</div>
-        </div>
-        <div class="restaurant-detail restaurant-location">
-          <div class="restaurant-detail-label">Location</div>
-          <div class="restaurant-detail-value restaurant-location-value">
-            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-            <span class="restaurant-detail-value">Near Hauptbahnhof</span>
-          </div>
-        </div>
-      </div>
-      <div class="restaurant-fmgf">
-        <a href="https://www.findmeglutenfree.com/biz/losteria/4519515645411328" class="restaurant-fmgf-link" target="_blank" rel="noopener">
-          See reviews on Find Me Gluten Free
-          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-        </a>
-      </div>
-    </div>
+    
 
     </div>
   </section>
@@ -1262,7 +1261,7 @@
               <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
               City Centre
             </div>
-            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+            <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
           </div>
           <img src="../../photos/austria/innsbruck/altstadt-innsbruck/IMG_8405.jpeg" alt="Altstadt Innsbruck Old Town" class="landmark-photo" loading="lazy">
         </div>
@@ -1281,7 +1280,7 @@
               <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
               North of City Centre
             </div>
-            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+            <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
           </div>
           <img src="../../photos/austria/innsbruck/innsbrucker-nordkettenbahnen-betriebs-gmbh-nordkette/IMG_8429.jpeg" alt="Nordkette" class="landmark-photo" loading="lazy">
         </div>
@@ -1300,7 +1299,7 @@
               <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
               Hungerburg
             </div>
-            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+            <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
           </div>
           <img src="../../photos/austria/innsbruck/hungerburgstation-hungerburg/IMG_8425.jpeg" alt="View from Hungerburgstation" class="landmark-photo" loading="lazy">
         </div>
@@ -1379,7 +1378,7 @@
               <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
               Rennweg &middot; Near Hofburg
             </div>
-            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+            <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
           </div>
           <img src="../../photos/austria/innsbruck/leopoldsbrunnen/IMG_8447.jpeg" alt="Leopoldsbrunnen and Hofburg" class="landmark-photo" loading="lazy">
         </div>
@@ -1683,7 +1682,7 @@
       </li>
       <li class="tip-item">
         <span class="tip-bullet"></span>
-        <span class="tip-text">Innsbruck is compact enough to walk everywhere in the center &mdash; save the tram for Bergisel or DEZ</span>
+        <span class="tip-text">Innsbruck is compact enough to walk everywhere in the center</span>
       </li>
       <li class="tip-item">
         <span class="tip-bullet"></span>
@@ -1691,7 +1690,7 @@
       </li>
       <li class="tip-item">
         <span class="tip-bullet"></span>
-        <span class="tip-text">Austrian wine (Gr&uuml;ner Veltliner, Zweigelt) is all GF &mdash; a safer choice than beer in Innsbruck&rsquo;s bars</span>
+        <span class="tip-text">Austrian wine (Gr&uuml;ner Veltliner, Zweigelt) is all GF</span>
       </li>
     </ul>
 
@@ -1701,14 +1700,6 @@
         <li class="hindsight-item">
           <svg class="hindsight-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L6 1L11 11H1Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>
           <span class="hindsight-text">Spent more time at Nordkette &mdash; the views from Hafelekar are worth a full half-day</span>
-        </li>
-        <li class="hindsight-item">
-          <svg class="hindsight-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L6 1L11 11H1Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>
-          <span class="hindsight-text">Tried more restaurants &mdash; Ludwig alone is worth a return visit for the GF burger scene</span>
-        </li>
-        <li class="hindsight-item">
-          <svg class="hindsight-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L6 1L11 11H1Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>
-          <span class="hindsight-text">Explored St. Nikolaus neighborhood &mdash; the colorful riverside houses deserve a proper wander</span>
         </li>
       </ul>
     </div>
