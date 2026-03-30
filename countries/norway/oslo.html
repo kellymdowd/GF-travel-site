@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="description" content="First-hand celiac travel guide to Oslo with 13 GF-rated restaurants, 7/10 safety score, hotel reviews, and interactive maps. Visited September 2019.">
+  <meta name="description" content="First-hand gluten-free travel guide to Oslo with 13 GF-rated restaurants, 7/10 safety score, hotel reviews, and interactive maps. Visited September 2019.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gluten-Free Restaurants &amp; Celiac Guide to Oslo, Norway | GF Gone Global</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -190,8 +190,151 @@
     @media (max-width: 768px) { .transport-grid { grid-template-columns: 1fr 1fr; } .transport-card { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } .transport-card:nth-child(2) { border-right: none; padding-right: 0; } .transport-card:nth-child(3) { padding-left: 0; } .transport-card:nth-child(3), .transport-card:nth-child(4) { border-bottom: none; } }
     @media (max-width: 480px) { .transport-grid { grid-template-columns: 1fr; } .transport-card { border-right: none; padding-left: 0; padding-right: 0; } .transport-card:last-child { border-bottom: none; } }
 
+    /* ─── Restaurant & Neighborhood Map ─────────────────────── */
+    .map-container { margin-bottom: 1.6rem; border-radius: 4px; overflow: hidden; border: 1px solid rgba(42, 32, 24, 0.08); }
+    .map-container .leaflet-container { height: 260px; width: 100%; }
+    .map-legend { display: flex; flex-wrap: wrap; gap: 0.8rem; padding: 0.8rem 0 0; }
+    .map-legend-item { display: flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.06em; color: var(--ink-light); }
+    .map-legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ─── Landmarks & Must-See Spots ─────────────────────────── */
+    .landmarks { padding: 2.4rem 2.5rem 0; }
+    .landmarks-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .landmarks-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .landmarks-count { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .landmarks-rule { height: 1px; background: rgba(42, 32, 24, 0.08); }
+    .landmarks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .landmark-card { padding: 1.4rem 1.6rem 1.4rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .landmark-card:nth-child(odd) { padding-right: 1.6rem; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .landmark-card:nth-child(even) { padding-left: 1.6rem; padding-right: 0; }
+    .landmark-card:nth-last-child(1), .landmark-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    .landmark-card:nth-last-child(1):nth-child(even) ~ .landmark-card { border-bottom: none; }
+    .landmark-card-inner { display: flex; gap: 1.2rem; align-items: flex-start; }
+    .landmark-card-content { flex: 1; min-width: 0; }
+    .landmark-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.3rem; }
+    .landmark-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.15rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .landmark-type { display: inline-block; padding: 0.2rem 0.55rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.52rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+    .landmark-type-historic { background: rgba(42, 32, 24, 0.04); color: var(--ink-mid); }
+    .landmark-type-nature { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .landmark-type-walk { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    .landmark-type-neighborhood { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
+    .landmark-type-market { background: rgba(160, 90, 130, 0.08); color: #804068; }
+    .landmark-desc { font-family: 'Jost', sans-serif; font-size: 0.74rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; margin-bottom: 0.5rem; }
+    .landmark-location { display: flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; color: var(--ink-light); letter-spacing: 0.04em; }
+    .landmark-location svg { flex-shrink: 0; opacity: 0.5; }
+    .landmark-source { display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.08em; margin-top: 0.5rem; }
+    .landmark-source-visited { color: var(--rose); }
+    .landmark-source-visited .restaurant-source-dot { background: var(--rose); }
+    .landmark-source-researched { color: var(--ink-light); opacity: 0.7; }
+    .landmark-source-researched .restaurant-source-dot { background: var(--ink-light); }
+    .landmark-photo { width: 80px; height: 80px; border-radius: 4px; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 4px rgba(42, 32, 24, 0.1); }
+    .landmark-photo-placeholder { width: 80px; height: 80px; border-radius: 4px; flex-shrink: 0; background: rgba(42, 32, 24, 0.03); border: 1px dashed rgba(42, 32, 24, 0.1); display: flex; align-items: center; justify-content: center; color: var(--ink-light); opacity: 0.4; }
+    @media (max-width: 768px) { .landmarks-grid { grid-template-columns: 1fr; } .landmark-card:nth-child(odd) { border-right: none; padding-right: 0; } .landmark-card:nth-child(even) { padding-left: 0; } .landmark-card:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } }
+
+    /* ─── Neighborhoods ─────────────────────────────────────── */
+    .neighborhoods { padding: 2.4rem 2.5rem 0; }
+    .neighborhoods-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .neighborhoods-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .neighborhoods-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .neighborhood-list { display: flex; flex-direction: column; gap: 0; }
+    .neighborhood-item { display: grid; grid-template-columns: 140px 1fr; gap: 2rem; padding: 1.3rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); align-items: baseline; }
+    .neighborhood-item:first-child { padding-top: 0; }
+    .neighborhood-item:last-child { border-bottom: none; }
+    .neighborhood-name-col { display: flex; flex-direction: column; gap: 0.25rem; }
+    .neighborhood-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.15rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .neighborhood-vibe { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-light); }
+    .neighborhood-desc { font-family: 'Jost', sans-serif; font-size: 0.74rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; }
+    @media (max-width: 768px) { .neighborhood-item { grid-template-columns: 1fr; gap: 0.4rem; } }
+
+    /* ─── Things to Do ─────────────────────────────────────── */
+    .things-to-do { padding: 2.4rem 2.5rem 0; }
+    .things-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .things-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .things-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .things-category-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .things-category + .things-category { margin-top: 2rem; }
+    .things-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .thing-card { padding: 1.2rem 1.6rem 1.2rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .thing-card:nth-child(odd) { padding-right: 1.6rem; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .thing-card:nth-child(even) { padding-left: 1.6rem; padding-right: 0; }
+    .thing-card:nth-last-child(1), .thing-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    .thing-card:nth-last-child(1):nth-child(even) ~ .thing-card { border-bottom: none; }
+    .thing-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.3rem; }
+    .thing-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.1rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .thing-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+    .thing-tag-free { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .thing-tag-paid { background: rgba(42, 32, 24, 0.04); color: var(--ink-mid); }
+    .thing-desc { font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; margin-bottom: 0.6rem; }
+    .thing-meta { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+    .thing-detail { display: flex; align-items: center; gap: 0.3rem; font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; color: var(--ink-light); letter-spacing: 0.04em; }
+    .thing-detail svg { flex-shrink: 0; opacity: 0.5; }
+    .thing-book { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.7rem; padding: 0.45rem 0.9rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 3px; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 6px rgba(200, 113, 122, 0.15), 0 1px 2px rgba(200, 113, 122, 0.08); }
+    .thing-book:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200, 113, 122, 0.25), 0 2px 4px rgba(200, 113, 122, 0.12); }
+    .thing-book:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; }
+    .thing-book:active { background: #a85a63; transform: translateY(0); }
+    .thing-book svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .thing-book:hover svg { transform: translateX(2px); }
+    @media (max-width: 768px) { .things-grid { grid-template-columns: 1fr; } .thing-card:nth-child(odd) { border-right: none; padding-right: 0; } .thing-card:nth-child(even) { padding-left: 0; } .thing-card:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } }
+
+    /* ─── What to Pack ─────────────────────────────────────── */
+    .packing { padding: 2.4rem 2.5rem 0; }
+    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .packing-item:last-child { border-bottom: none; }
+    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
+    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
+    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
+    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
+    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
+    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    .packing-storefront { margin-top: 1.4rem; padding-top: 1.2rem; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .packing-storefront-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1.1rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.64rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 3px; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 6px rgba(200, 113, 122, 0.15), 0 1px 2px rgba(200, 113, 122, 0.08); }
+    .packing-storefront-link:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200, 113, 122, 0.25), 0 2px 4px rgba(200, 113, 122, 0.12); }
+    .packing-storefront-link:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; }
+    .packing-storefront-link:active { background: #a85a63; transform: translateY(0); }
+    .packing-storefront-link svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .packing-storefront-link:hover svg { transform: translateX(2px); }
+    @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
+
+    /* ─── Travel Tips ──────────────────────────────────────── */
+    .travel-tips { padding: 2.4rem 2.5rem 0; }
+    .tips-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .tips-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .tips-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .tips-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .tip-item { display: flex; gap: 0.8rem; align-items: baseline; padding: 0.7rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .tip-item:last-child { border-bottom: none; }
+    .tip-bullet { width: 4px; height: 4px; border-radius: 50%; background: var(--slate); flex-shrink: 0; opacity: 0.5; position: relative; top: 0.35rem; }
+    .tip-text { font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; }
+    .tips-hindsight { margin-top: 1.8rem; }
+    .tips-hindsight-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.8rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .hindsight-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .hindsight-item { display: flex; gap: 0.8rem; align-items: baseline; padding: 0.7rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .hindsight-item:last-child { border-bottom: none; }
+    .hindsight-icon { flex-shrink: 0; color: var(--slate); opacity: 0.5; position: relative; top: 0.2rem; }
+    .hindsight-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.01em; }
+
+    /* ─── Tip CTA ────────────────────────────────────────────── */
+    .tip-cta { padding: 2.4rem 2.5rem; text-align: center; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .tip-cta-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.2rem, 2vw, 1.5rem); letter-spacing: 0.04em; color: var(--ink); margin-bottom: 0.4rem; }
+    .tip-cta-sub { font-family: 'Jost', sans-serif; font-size: 0.82rem; font-weight: 300; color: var(--ink-light); margin-bottom: 1.2rem; }
+    .tip-cta-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--slate); text-decoration: none; border: 1px solid rgba(200, 113, 122, 0.3); padding: 0.6rem 1.4rem; border-radius: 100px; transition: background 0.2s ease, border-color 0.2s ease; }
+    .tip-cta-link:hover { background: var(--slate-bg); border-color: var(--slate); }
+
+    /* ─── Footer ────────────────────────────────────────────── */
+    .page-footer { padding: 2rem 2.5rem 2.5rem; text-align: center; }
+    .page-disclosure { font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 300; color: var(--ink-light); opacity: 0.5; letter-spacing: 0.03em; }
+
     /* ─── Photo Lightbox ──────────────────────────────────────── */
-    .restaurant-photo, .landmark-photo, .hotel-image { cursor: zoom-in; }
+    .restaurant-card-inner { display: flex; align-items: center; gap: 12px; }
+    .restaurant-card-content { flex: 1; min-width: 0; }
+    .restaurant-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 4px rgba(42, 32, 24, 0.1); }
+    .restaurant-photo, .landmark-photo, .hotel-image, .thing-photo { cursor: zoom-in; }
     .lightbox-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(10, 8, 6, 0); display: flex; align-items: center; justify-content: center; cursor: zoom-out; opacity: 0; pointer-events: none; transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
     .lightbox-overlay.active { opacity: 1; pointer-events: auto; background: rgba(10, 8, 6, 0.85); }
     .lightbox-img { max-width: 90vw; max-height: 85vh; border-radius: 6px; object-fit: contain; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06); transform: scale(0.92); opacity: 0; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease; }
@@ -205,7 +348,7 @@
     /* ─── Animations & Global Responsive ──────────────────── */
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
-    @media (max-width: 600px) { .site-nav, .nav, .header, .snapshot, .toc, .gf-guide, .restaurants, .where-to-stay, .getting-around { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
+    @media (max-width: 600px) { .site-nav, .nav, .header, .snapshot, .toc, .gf-guide, .restaurants, .where-to-stay, .landmarks, .neighborhoods, .things-to-do, .packing, .travel-tips, .getting-around, .page-footer { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
   
 
     /* ─── Mobile: Breadcrumb nav ──────────────────────────── */
@@ -785,18 +928,64 @@
   <nav class="toc">
     <div class="toc-label">Jump to</div>
     <ul class="toc-list">
-      <li class="toc-item"><a href="#gluten-free" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>GF survival guide</a></li>
       <li class="toc-item"><a href="#where-to-stay" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Where to stay</a></li>
+      <li class="toc-item"><a href="#gluten-free" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>GF survival guide</a></li>
       <li class="toc-item"><a href="#restaurants" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Restaurants</a></li>
       <li class="toc-item"><a href="#getting-around" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Getting around</a></li>
       <li class="toc-item"><a href="#landmarks" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Landmarks &amp; must-see spots</a></li>
+      <li class="toc-item"><a href="#neighborhoods" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Neighborhoods</a></li>
       <li class="toc-item"><a href="#things-to-do" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Things to do</a></li>
       <li class="toc-item"><a href="#what-to-pack" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>What to pack</a></li>
       <li class="toc-item"><a href="#travel-tips" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Travel tips</a></li>
     </ul>
   </nav>
 
-  <section class="gf-guide" id="gf-guide">
+  <section class="where-to-stay" id="where-to-stay">
+    <div class="stay-header">
+      <h2 class="stay-title">Where to Stay</h2>
+      <span class="stay-subtitle">Recommended</span>
+    </div>
+    <div class="stay-rule"></div>
+
+    <div class="hotel-card">
+      <div class="hotel-image-side">
+        <img src="../../photos/norway/oslo/scandic-byporten-oslo/IMG_1900.jpeg" alt="Photo of Scandic Byporten Oslo" class="hotel-image" loading="lazy">
+        <div class="hotel-image-overlay"></div>
+        <div class="hotel-badge">
+          <span class="hotel-badge-dot"></span>
+          Where I stayed
+        </div>
+      </div>
+
+      <div class="hotel-info-side">
+        <h3 class="hotel-name">Scandic Byporten Oslo</h3>
+        <div class="hotel-location">
+          <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+          Central Station &middot; Oslo S
+        </div>
+
+        <div class="hotel-why">
+          <div class="hotel-why-label">Why Stay Here</div>
+          <div class="hotel-why-text">Right at Oslo Central Station with direct airport train access. Free breakfast buffet with allergen labels &mdash; Scandic labels GF items well, with dedicated GF bread and cereal available. Free WiFi and gym included.</div>
+        </div>
+
+        <div class="hotel-features">
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Free Breakfast</span>
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> GF-Labeled Buffet</span>
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Central Location</span>
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Gym</span>
+        </div>
+
+        <a href="https://www.hotels.com/ho161130/scandic-byporten-oslo-norway/" class="hotel-cta" target="_blank" rel="noopener sponsored">
+          Book on Hotels.com
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="gf-guide" id="gluten-free">
     <div class="gf-guide-header">
       <h2 class="gf-guide-title">Gluten-Free Survival Guide</h2>
     </div>
@@ -874,52 +1063,6 @@
         </div>
       </div>
     </div>
-  </section>
-
-  <section class="where-to-stay" id="where-to-stay">
-    <div class="stay-header">
-      <h2 class="stay-title">Where to Stay</h2>
-      <span class="stay-subtitle">Recommended</span>
-    </div>
-    <div class="stay-rule"></div>
-
-    <div class="hotel-card">
-      <div class="hotel-image-side">
-        <div class="hotel-image-placeholder">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14"/><path d="M9 21V13h6v8"/><path d="M1 21h22"/><rect x="7" y="8" width="3" height="3" rx="0.5"/><rect x="14" y="8" width="3" height="3" rx="0.5"/></svg>
-        </div>
-        <div class="hotel-badge">
-          <span class="hotel-badge-dot"></span>
-          Where I stayed
-        </div>
-      </div>
-
-      <div class="hotel-info-side">
-        <h3 class="hotel-name">Scandic Byporten Oslo</h3>
-        <div class="hotel-location">
-          <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-          Central Station &middot; Oslo S
-        </div>
-
-        <div class="hotel-why">
-          <div class="hotel-why-label">Why Stay Here</div>
-          <div class="hotel-why-text">Right at Oslo Central Station with direct airport train access. Free breakfast buffet with allergen labels &mdash; Scandic labels GF items well, with dedicated GF bread and cereal available. Free WiFi and gym included.</div>
-        </div>
-
-        <div class="hotel-features">
-          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Free Breakfast</span>
-          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> GF-Labeled Buffet</span>
-          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Central Location</span>
-          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Gym</span>
-        </div>
-
-        <a href="https://www.hotels.com/ho161130/scandic-byporten-oslo-norway/" class="hotel-cta" target="_blank" rel="noopener sponsored">
-          Book on Hotels.com
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-        </a>
-      </div>
-    </div>
-
   </section>
 
   <section class="restaurants" id="restaurants">
@@ -1110,6 +1253,8 @@
     </div>
 
     <div class="restaurant-card"> <!-- RESEARCHED -->
+      <div class="restaurant-card-inner">
+        <div class="restaurant-card-content">
       <div class="restaurant-top">
         <h3 class="restaurant-name">Illegal Burger</h3>
         <div class="restaurant-tags">
@@ -1144,6 +1289,9 @@
           See reviews on Find Me Gluten Free
           <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
         </a>
+      </div>
+        </div>
+        <img src="../../photos/norway/oslo/illegal-burger/IMG_1978.jpeg" alt="Photo of Illegal Burger" class="restaurant-photo" loading="lazy">
       </div>
     </div>
 
@@ -1256,6 +1404,8 @@
     </div>
 
     <div class="restaurant-card"> <!-- RESEARCHED -->
+      <div class="restaurant-card-inner">
+        <div class="restaurant-card-content">
       <div class="restaurant-top">
         <h3 class="restaurant-name">Yo! Sushi</h3>
         <div class="restaurant-tags">
@@ -1290,6 +1440,9 @@
           See reviews on Find Me Gluten Free
           <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
         </a>
+      </div>
+        </div>
+        <img src="../../photos/norway/oslo/yo-sushi/IMG_1917.jpeg" alt="Photo of Yo! Sushi" class="restaurant-photo" loading="lazy">
       </div>
     </div>
 
@@ -1332,6 +1485,8 @@
     </div>
 
     <div class="restaurant-card"> <!-- RESEARCHED -->
+      <div class="restaurant-card-inner">
+        <div class="restaurant-card-content">
       <div class="restaurant-top">
         <h3 class="restaurant-name">Eataly</h3>
         <div class="restaurant-tags">
@@ -1366,6 +1521,9 @@
           See reviews on Find Me Gluten Free
           <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
         </a>
+      </div>
+        </div>
+        <img src="../../photos/norway/oslo/eataly/IMG_1986.jpeg" alt="Photo of Eataly" class="restaurant-photo" loading="lazy">
       </div>
     </div>
 
@@ -1545,17 +1703,14 @@
 
   <!-- LANDMARKS -->
   <section class="landmarks" id="landmarks">
-    <div class="landmarks-header"><h2 class="landmarks-title">Landmarks &amp; Must-See Spots</h2><span class="landmarks-count">8 spots</span></div>
+    <div class="landmarks-header"><h2 class="landmarks-title">Landmarks &amp; Must-See Spots</h2><span class="landmarks-count">5 spots</span></div>
     <div class="landmarks-rule"></div>
     <div class="landmarks-grid">
       <div class="landmark-card"><div class="landmark-card-inner"><div class="landmark-card-content"><div class="landmark-top"><h3 class="landmark-name">The Vigeland Park</h3><span class="landmark-type landmark-type-nature">Nature</span></div><div class="landmark-desc">World's largest sculpture park by a single artist. Over 200 Gustav Vigeland bronze and granite sculptures in a stunning park setting. Free entry.</div><div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Frogner</div><div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div></div><div class="landmark-photo-placeholder"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div></div>
-      <div class="landmark-card"><div class="landmark-card-inner"><div class="landmark-card-content"><div class="landmark-top"><h3 class="landmark-name">Oslo Opera House</h3><span class="landmark-type landmark-type-historic">Historic</span></div><div class="landmark-desc">Stunning modern architecture rising from the harbor. Walk on the sloping marble roof for panoramic views of the Oslofjord and city skyline.</div><div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Bjørvika</div><div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div></div><div class="landmark-photo-placeholder"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div></div>
-      <div class="landmark-card"><div class="landmark-card-inner"><div class="landmark-card-content"><div class="landmark-top"><h3 class="landmark-name">Aker Brygge</h3><span class="landmark-type landmark-type-walk">Walk</span></div><div class="landmark-desc">Vibrant waterfront promenade with restaurants, shops, and views of the Oslofjord. The hub of Oslo's dining and nightlife scene.</div><div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Waterfront</div><div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div></div><div class="landmark-photo-placeholder"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div></div>
+      <div class="landmark-card"><div class="landmark-card-inner"><div class="landmark-card-content"><div class="landmark-top"><h3 class="landmark-name">Oslo Opera House</h3><span class="landmark-type landmark-type-historic">Historic</span></div><div class="landmark-desc">Stunning modern architecture rising from the harbor. Walk on the sloping marble roof for panoramic views of the Oslofjord and city skyline.</div><div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Bjørvika</div><div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div></div><img src="../../photos/norway/oslo/oslo-opera-house/IMG_1905.jpeg" alt="Photo of Oslo Opera House" class="landmark-photo" loading="lazy"></div></div>
+      <div class="landmark-card"><div class="landmark-card-inner"><div class="landmark-card-content"><div class="landmark-top"><h3 class="landmark-name">Aker Brygge</h3><span class="landmark-type landmark-type-walk">Walk</span></div><div class="landmark-desc">Vibrant waterfront promenade with restaurants, shops, and views of the Oslofjord. The hub of Oslo's dining and nightlife scene.</div><div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Waterfront</div><div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div></div><img src="../../photos/norway/oslo/aker-brygge/IMG_1987.jpeg" alt="Photo of Aker Brygge" class="landmark-photo" loading="lazy"></div></div>
       <div class="landmark-card"><div class="landmark-card-inner"><div class="landmark-card-content"><div class="landmark-top"><h3 class="landmark-name">Tjuvholmen Sculpture Park</h3><span class="landmark-type landmark-type-nature">Nature</span></div><div class="landmark-desc">Modern art sculptures on the harbor peninsula near Astrup Fearnley Museum. A free outdoor gallery with waterfront views.</div><div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Tjuvholmen</div><div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div></div><div class="landmark-photo-placeholder"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div></div>
-      <div class="landmark-card"><div class="landmark-card-inner"><div class="landmark-card-content"><div class="landmark-top"><h3 class="landmark-name">Frogner Neighborhood</h3><span class="landmark-type landmark-type-walk">Walk</span></div><div class="landmark-desc">Upscale residential area with tree-lined streets, embassies, and charming cafés. Elegant architecture and a peaceful atmosphere.</div><div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> West Oslo</div><div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div></div><div class="landmark-photo-placeholder"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div></div>
       <div class="landmark-card"><div class="landmark-card-inner"><div class="landmark-card-content"><div class="landmark-top"><h3 class="landmark-name">Ekebergparken</h3><span class="landmark-type landmark-type-nature">Nature</span></div><div class="landmark-desc">Sculpture park on a hillside with panoramic Oslo views. The spot that inspired Edvard Munch's The Scream. Free entry.</div><div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Ekeberg</div><div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div></div><div class="landmark-photo-placeholder"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div></div>
-      <div class="landmark-card"><div class="landmark-card-inner"><div class="landmark-card-content"><div class="landmark-top"><h3 class="landmark-name">Mathallen Oslo</h3><span class="landmark-type landmark-type-market">Market</span></div><div class="landmark-desc">Indoor food hall in the Vulkan district. Specialty food stalls with some GF options. Great for exploring Norwegian cuisine and local producers.</div><div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Vulkan / Grünerløkka</div><div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div></div><div class="landmark-photo-placeholder"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div></div>
-      <div class="landmark-card"><div class="landmark-card-inner"><div class="landmark-card-content"><div class="landmark-top"><h3 class="landmark-name">Gamle Oslo</h3><span class="landmark-type landmark-type-historic">Historic</span></div><div class="landmark-desc">Oslo's oldest district with medieval ruins, vibrant street art, and a multicultural dining scene. Raw and authentic contrast to the polished waterfront.</div><div class="landmark-location"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> East Oslo</div><div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div></div><div class="landmark-photo-placeholder"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div></div></div>
     </div>
   </section>
 

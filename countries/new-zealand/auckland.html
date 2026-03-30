@@ -2,256 +2,400 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="description" content="First-hand celiac travel guide to Auckland, 8/10 safety score, and interactive maps. Visited December 2025.">
+  <meta name="description" content="First-hand celiac travel guide to Auckland with 20 GF-rated restaurants, 8/10 safety score, hotel reviews, and interactive maps. Visited November 2025.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gluten-Free Restaurants & Celiac Guide to Auckland, New Zealand | GF Gone Global</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <!-- Leaflet CSS — needed for restaurant and neighborhood maps -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
+    /* ─── Design Tokens ──────────────────────────────────────── */
     :root { --cream: #FFFFFF; --slate: #C8717A; --slate-bg: #FBF0F1; --rose: #B8907A; --ink: #2A2018; --ink-mid: #5A5048; --ink-light: #9A907A; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
     body { background: var(--cream); color: var(--ink); font-family: 'Jost', sans-serif; font-weight: 300; min-height: 100vh; padding-top: 52px; display: flex; flex-direction: column; }
     body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 100; opacity: 0.6; }
+
     /* ─── Site Nav Bar ────────────────────────────────────── */
     .site-nav { position: fixed; top: 0; left: 0; right: 0; height: 52px; background: var(--cream); border-bottom: 1px solid rgba(42, 32, 24, 0.08); display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; z-index: 300; }
     .nav-home { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.85rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); text-decoration: none; transition: color 0.2s ease; }
     .nav-home:hover { color: var(--slate); }
     .nav-links { display: flex; align-items: center; gap: 2rem; }
+
+    /* ─── Breadcrumb Nav ──────────────────────────────────────── */
     .nav { padding: 1.6rem 2.5rem 0; display: flex; gap: 1rem; align-items: center; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards; }
     .back-link { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
     .back-link:hover { color: var(--slate); }
     .back-link:hover svg { transform: translateX(-3px); }
     .back-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
     .nav-sep { font-size: 0.68rem; color: rgba(154, 144, 122, 0.4); letter-spacing: 0.1em; }
+    .nav-link { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .nav-link:hover { color: var(--slate); }
     .nav-current { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mid); }
+
+    /* ─── Header ──────────────────────────────────────────────── */
     .header { display: flex; justify-content: space-between; align-items: flex-end; padding: 1.4rem 2.5rem 1.2rem; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
+    .header-left { display: flex; flex-direction: column; }
+    .country-label { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.25rem; }
     .city-name { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1; }
     .trip-date { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(0.85rem, 1.3vw, 1rem); color: var(--ink-light); letter-spacing: 0.04em; padding-bottom: 0.2rem; }
     .header-rule { height: 1px; background: linear-gradient(to right, var(--rose), transparent 60%); margin: 0 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 0.6s forwards; }
-    .map-section { flex: 1; padding: 1.5rem 2.5rem 2rem; display: flex; flex-direction: column; gap: 0; opacity: 0; animation: fadeIn 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
-    .map-frame { width: 100%; flex: 1; min-height: 520px; border: none; }
-    
+
     /* ─── City Snapshot ──────────────────────────────────────── */
-    .snapshot {
-      padding: 1.6rem 2.5rem 0;
-      opacity: 0;
-      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
-    }
-
-    .snapshot-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 1rem;
-    }
-
-    .snapshot-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 0;
-      border-top: 1px solid rgba(42, 32, 24, 0.08);
-    }
-
-    .snapshot-item {
-      padding: 1rem 1.2rem 1rem 0;
-      border-bottom: 1px solid rgba(42, 32, 24, 0.08);
-    }
-
-    .snapshot-item-label {
-      font-family: 'Jost', sans-serif;
-      font-size: 0.58rem;
-      font-weight: 400;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 0.35rem;
-    }
-
-    .snapshot-item-value {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 400;
-      font-size: 1.05rem;
-      letter-spacing: 0.02em;
-      color: var(--ink);
-      line-height: 1.2;
-    }
-
-    /* GF Score visual */
-    .snapshot-score {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .snapshot-score-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 400;
-      font-size: 1.05rem;
-      color: var(--ink);
-      letter-spacing: 0.02em;
-      line-height: 1;
-    }
-
-    .snapshot-score-bar {
-      display: flex;
-      gap: 3px;
-      align-items: center;
-    }
-
-    .snapshot-score-pip {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: rgba(42, 32, 24, 0.1);
-    }
-
-    .snapshot-score-pip.is-filled {
-      background: var(--slate);
-    }
+    .snapshot { padding: 1.6rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards; }
+    .snapshot-label { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .snapshot-item { padding: 1rem 1.2rem 1rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.08); }
+    .snapshot-item-label { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.35rem; }
+    .snapshot-item-value { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .snapshot-score { display: flex; align-items: center; gap: 0.6rem; }
+    .snapshot-score-num { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); letter-spacing: 0.02em; line-height: 1; }
+    .snapshot-score-bar { display: flex; gap: 3px; align-items: center; }
+    .snapshot-score-pip { width: 6px; height: 6px; border-radius: 50%; background: rgba(42, 32, 24, 0.1); }
+    .snapshot-score-pip.is-filled { background: var(--slate); }
 
     /* ─── Table of Contents ─────────────────────────────────── */
-    .toc {
-      padding: 1.6rem 2.5rem 0;
-      opacity: 0;
-      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
-    }
+    .toc { padding: 1.6rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
+    .toc-label { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; }
+    .toc-list { list-style: none; display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .toc-item { border-bottom: 1px solid rgba(42, 32, 24, 0.08); }
+    .toc-link { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1.6rem 0.7rem 0; font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; letter-spacing: 0.04em; color: var(--ink-mid); text-decoration: none; transition: color 0.2s ease; }
+    .toc-link:hover { color: var(--slate); }
+    .toc-link:hover .toc-arrow { transform: translateX(3px); color: var(--slate); }
+    .toc-link:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .toc-link:active { color: var(--rose); }
+    .toc-arrow { color: var(--ink-light); opacity: 0.4; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease; flex-shrink: 0; }
 
-    .toc-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 1rem;
-    }
+    /* ─── Gluten-Free Survival Guide ────────────────────────── */
+    .gf-guide { padding: 2.4rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards; }
+    .gf-guide-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.4rem; }
+    .gf-guide-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .gf-guide-difficulty { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.25rem 0.7rem 0.25rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; }
+    .gf-guide-difficulty .gf-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .gf-difficulty-easy { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .gf-difficulty-easy .gf-dot { background: #4c8c50; }
+    .gf-difficulty-moderate { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
+    .gf-difficulty-moderate .gf-dot { background: #b48c3c; }
+    .gf-difficulty-difficult { background: rgba(180, 70, 60, 0.08); color: #8a3a30; }
+    .gf-difficulty-difficult .gf-dot { background: #b4463c; }
+    .gf-guide-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.4rem; }
+    .gf-guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    .gf-info-group { margin-bottom: 1.6rem; }
+    .gf-info-group:last-child { margin-bottom: 0; }
+    .gf-info-label { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.5rem; }
+    .gf-info-value { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.6; letter-spacing: 0.01em; }
+    .gf-phrase { display: flex; justify-content: space-between; align-items: baseline; padding: 0.3rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.05); }
+    .gf-phrase:last-child { border-bottom: none; }
+    .gf-phrase-local { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; color: var(--ink); }
+    .gf-phrase-meaning { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-light); letter-spacing: 0.03em; }
+    .gf-list { list-style: none; }
+    .gf-list li { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); padding: 0.25rem 0; line-height: 1.4; }
+    .gf-list li::before { content: '\2014'; color: var(--ink-light); opacity: 0.4; margin-right: 0.5rem; }
+    .gf-score-section { padding-left: 2.5rem; border-left: 1px solid rgba(42, 32, 24, 0.08); }
+    .gf-score-title { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; }
+    .gf-score-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.05); }
+    .gf-score-row:first-of-type { border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .gf-score-category { font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; color: var(--ink-mid); letter-spacing: 0.02em; }
+    .gf-score-pips { display: flex; gap: 4px; align-items: center; }
+    .gf-score-pip { width: 8px; height: 8px; border-radius: 50%; background: rgba(42, 32, 24, 0.08); }
+    .gf-score-pip.is-filled { background: var(--slate); }
+    .gf-score-total { display: flex; align-items: baseline; gap: 0.5rem; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid rgba(42, 32, 24, 0.12); }
+    .gf-score-total-num { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 2.4rem; color: var(--ink); line-height: 1; letter-spacing: -0.02em; }
+    .gf-score-total-label { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .gf-score-verdict { margin-top: 0.8rem; }
+    @media (max-width: 768px) { .gf-guide-grid { grid-template-columns: 1fr; gap: 1.6rem; } .gf-score-section { padding-left: 0; border-left: none; padding-top: 1.2rem; border-top: 1px solid rgba(42, 32, 24, 0.08); } }
 
-    .toc-list {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0;
-      border-top: 1px solid rgba(42, 32, 24, 0.08);
-    }
+    /* ─── Where to Stay ────────────────────────────────────── */
+    .where-to-stay { padding: 2.4rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.65s forwards; }
+    .stay-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .stay-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .stay-subtitle { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .stay-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .hotel-card { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid rgba(42, 32, 24, 0.08); border-radius: 4px; overflow: hidden; background: linear-gradient(135deg, rgba(251, 240, 241, 0.3) 0%, rgba(255, 255, 255, 0.6) 100%); transition: box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+    .hotel-card:hover { box-shadow: 0 4px 20px rgba(200, 113, 122, 0.08), 0 1px 6px rgba(42, 32, 24, 0.04); }
+    .hotel-image-side { position: relative; min-height: 280px; overflow: hidden; }
+    .hotel-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .hotel-image-overlay { position: absolute; inset: 0; background: linear-gradient(to right, transparent 50%, rgba(42, 32, 24, 0.04) 100%); mix-blend-mode: multiply; }
+    .hotel-badge { position: absolute; top: 1rem; left: 1rem; display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.3rem 0.7rem; background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(8px); border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mid); box-shadow: 0 1px 4px rgba(42, 32, 24, 0.08); }
+    .hotel-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--slate); }
+    .hotel-info-side { padding: 1.8rem 2rem; display: flex; flex-direction: column; justify-content: center; }
+    .hotel-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.4rem; letter-spacing: 0.03em; color: var(--ink); line-height: 1.2; margin-bottom: 0.15rem; }
+    .hotel-location { display: flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.64rem; font-weight: 300; color: var(--ink-light); letter-spacing: 0.04em; margin-bottom: 1.1rem; }
+    .hotel-location svg { flex-shrink: 0; opacity: 0.5; }
+    .hotel-why { margin-bottom: 1.3rem; }
+    .hotel-why-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.5rem; }
+    .hotel-why-text { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 0.98rem; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.01em; }
+    .hotel-features { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
+    .hotel-feature { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.2rem 0.55rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(42, 32, 24, 0.03); color: var(--ink-mid); }
+    .hotel-feature svg { flex-shrink: 0; opacity: 0.5; }
+    .hotel-cta { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1.4rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-radius: 3px; border: none; cursor: pointer; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 8px rgba(200, 113, 122, 0.2), 0 1px 3px rgba(200, 113, 122, 0.1); }
+    .hotel-cta:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(200, 113, 122, 0.3), 0 2px 5px rgba(200, 113, 122, 0.15); }
+    .hotel-cta:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; border-radius: 3px; }
+    .hotel-cta:active { background: #a85a63; transform: translateY(0); box-shadow: 0 1px 4px rgba(200, 113, 122, 0.15); }
+    .hotel-cta svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; }
+    .hotel-cta:hover svg { transform: translateX(2px); }
+    /* Hotel placeholder (no photo) */
+    .hotel-image-placeholder { min-height: 280px; background: linear-gradient(135deg, rgba(251, 240, 241, 0.6) 0%, rgba(200, 113, 122, 0.08) 100%); display: flex; align-items: center; justify-content: center; color: var(--ink-light); opacity: 0.4; }
+    @media (max-width: 768px) { .hotel-card { grid-template-columns: 1fr; } .hotel-image-side { min-height: 200px; } }
 
-    .toc-item {
-      border-bottom: 1px solid rgba(42, 32, 24, 0.08);
-    }
+    /* ─── Restaurants ────────────────────────────────────────── */
+    .restaurants { padding: 2.4rem 2.5rem 0; }
+    .restaurants-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .restaurants-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .restaurants-count { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .restaurants-rule { height: 1px; background: rgba(42, 32, 24, 0.08); }
+    .restaurants-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .restaurant-card { padding: 1.4rem 1.6rem 1.4rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .restaurant-card:nth-child(odd) { padding-right: 1.6rem; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .restaurant-card:nth-child(even) { padding-left: 1.6rem; padding-right: 0; }
+    .restaurant-card:nth-last-child(1), .restaurant-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    .restaurant-card:nth-last-child(1):nth-child(even) ~ .restaurant-card { border-bottom: none; }
+    .restaurant-card-inner { display: flex; gap: 1.2rem; align-items: flex-start; }
+    .restaurant-card-content { flex: 1; min-width: 0; }
+    .restaurant-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 4px rgba(42, 32, 24, 0.1); margin-top: 0.3rem; }
+    .restaurant-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.4rem; }
+    .restaurant-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.15rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .restaurant-tags { display: flex; gap: 0.4rem; flex-shrink: 0; }
+    .restaurant-tag { display: inline-block; padding: 0.2rem 0.55rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
+    .restaurant-tag-gf { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .restaurant-tag-options { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
+    .restaurant-tag-closed { background: rgba(180, 60, 60, 0.08); color: #9a3030; }
+    .restaurant-cuisine { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-light); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.9rem; }
+    .restaurant-source { display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 400; letter-spacing: 0.08em; margin-bottom: 0.9rem; }
+    .restaurant-source-dot { width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
+    .restaurant-source-visited { color: var(--rose); }
+    .restaurant-source-visited .restaurant-source-dot { background: var(--rose); }
+    .restaurant-source-researched { color: var(--ink-light); opacity: 0.7; }
+    .restaurant-source-researched .restaurant-source-dot { background: var(--ink-light); }
+    .restaurant-gf-score { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.7rem; margin-bottom: 1rem; }
+    .restaurant-gf-score-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .restaurant-gf-pips { display: flex; gap: 3px; align-items: center; }
+    .restaurant-gf-pip { width: 7px; height: 7px; border-radius: 50%; background: rgba(42, 32, 24, 0.08); }
+    .restaurant-gf-pip.is-filled { background: var(--slate); }
+    .restaurant-details { display: flex; flex-direction: column; gap: 0.6rem; }
+    .restaurant-detail-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.25rem; }
+    .restaurant-detail-value { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 0.95rem; color: var(--ink-mid); line-height: 1.5; letter-spacing: 0.01em; }
+    .restaurant-location-value { display: flex; align-items: baseline; gap: 0.4rem; }
+    .restaurant-location-value svg { flex-shrink: 0; color: var(--ink-light); opacity: 0.5; position: relative; top: 1px; }
+    .restaurant-fmgf { margin-top: 0.7rem; }
+    .restaurant-fmgf-link { display: inline-flex; align-items: center; gap: 0.4rem; font-family: 'Jost', sans-serif; font-size: 0.64rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .restaurant-fmgf-link:hover { color: var(--slate); }
+    .restaurant-fmgf-link:hover svg { transform: translateX(2px); }
+    .restaurant-fmgf-link:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .restaurant-fmgf-link:active { color: var(--rose); }
+    .restaurant-fmgf-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; }
+    .restaurants-footer { padding-top: 1.2rem; margin-top: 0.4rem; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .restaurants-fmgf-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .restaurants-fmgf-link:hover { color: var(--slate); }
+    .restaurants-fmgf-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; }
+    .restaurants-fmgf-link:hover svg { transform: translateX(2px); }
+    @media (max-width: 768px) { .restaurants-grid { grid-template-columns: 1fr; } .restaurant-card:nth-child(odd) { border-right: none; padding-right: 0; } .restaurant-card:nth-child(even) { padding-left: 0; } .restaurant-card:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } }
 
-    .toc-link {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.7rem 1.6rem 0.7rem 0;
-      font-family: 'Jost', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 300;
-      letter-spacing: 0.04em;
-      color: var(--ink-mid);
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
+    /* ─── Restaurant & Neighborhood Map ─────────────────────── */
+    .map-container { margin-bottom: 1.6rem; border-radius: 4px; overflow: hidden; border: 1px solid rgba(42, 32, 24, 0.08); }
+    .map-container .leaflet-container { height: 260px; width: 100%; }
+    .map-legend { display: flex; flex-wrap: wrap; gap: 0.8rem; padding: 0.8rem 0 0; }
+    .map-legend-item { display: flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.06em; color: var(--ink-light); }
+    .map-legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
-    .toc-link:hover {
-      color: var(--slate);
-    }
+    /* ─── Landmarks & Must-See Spots ─────────────────────────── */
+    .landmarks { padding: 2.4rem 2.5rem 0; }
+    .landmarks-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .landmarks-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .landmarks-count { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .landmarks-rule { height: 1px; background: rgba(42, 32, 24, 0.08); }
+    .landmarks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .landmark-card { padding: 1.4rem 1.6rem 1.4rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .landmark-card:nth-child(odd) { padding-right: 1.6rem; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .landmark-card:nth-child(even) { padding-left: 1.6rem; padding-right: 0; }
+    .landmark-card:nth-last-child(1), .landmark-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    .landmark-card:nth-last-child(1):nth-child(even) ~ .landmark-card { border-bottom: none; }
+    .landmark-card-inner { display: flex; gap: 1.2rem; align-items: flex-start; }
+    .landmark-card-content { flex: 1; min-width: 0; }
+    .landmark-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.3rem; }
+    .landmark-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.15rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .landmark-type { display: inline-block; padding: 0.2rem 0.55rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.52rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+    .landmark-type-historic { background: rgba(42, 32, 24, 0.04); color: var(--ink-mid); }
+    .landmark-type-nature { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .landmark-type-walk { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    .landmark-type-neighborhood { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
+    .landmark-type-market { background: rgba(160, 90, 130, 0.08); color: #804068; }
+    .landmark-desc { font-family: 'Jost', sans-serif; font-size: 0.74rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; margin-bottom: 0.5rem; }
+    .landmark-location { display: flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; color: var(--ink-light); letter-spacing: 0.04em; }
+    .landmark-location svg { flex-shrink: 0; opacity: 0.5; }
+    .landmark-source { display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.08em; margin-top: 0.5rem; }
+    .landmark-source-visited { color: var(--rose); }
+    .landmark-source-visited .restaurant-source-dot { background: var(--rose); }
+    .landmark-source-researched { color: var(--ink-light); opacity: 0.7; }
+    .landmark-source-researched .restaurant-source-dot { background: var(--ink-light); }
+    .landmark-photo { width: 80px; height: 80px; border-radius: 4px; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 4px rgba(42, 32, 24, 0.1); }
+    .landmark-photo-placeholder { width: 80px; height: 80px; border-radius: 4px; flex-shrink: 0; background: rgba(42, 32, 24, 0.03); border: 1px dashed rgba(42, 32, 24, 0.1); display: flex; align-items: center; justify-content: center; color: var(--ink-light); opacity: 0.4; }
+    @media (max-width: 768px) { .landmarks-grid { grid-template-columns: 1fr; } .landmark-card:nth-child(odd) { border-right: none; padding-right: 0; } .landmark-card:nth-child(even) { padding-left: 0; } .landmark-card:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } }
 
-    .toc-link:hover .toc-arrow {
-      transform: translateX(3px);
-      color: var(--slate);
-    }
+    /* ─── Neighborhoods ────────────────────────────────────── */
+    .neighborhoods { padding: 2.4rem 2.5rem 0; }
+    .neighborhoods-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .neighborhoods-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .neighborhoods-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .neighborhood-list { display: flex; flex-direction: column; gap: 0; }
+    .neighborhood-item { display: grid; grid-template-columns: 140px 1fr; gap: 2rem; padding: 1.3rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); align-items: baseline; }
+    .neighborhood-item:first-child { padding-top: 0; }
+    .neighborhood-item:last-child { border-bottom: none; }
+    .neighborhood-name-col { display: flex; flex-direction: column; gap: 0.25rem; }
+    .neighborhood-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.15rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .neighborhood-vibe { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-light); }
+    .neighborhood-desc { font-family: 'Jost', sans-serif; font-size: 0.74rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; }
+    @media (max-width: 768px) { .neighborhood-item { grid-template-columns: 1fr; gap: 0.4rem; } }
 
-    .toc-link:focus-visible {
-      outline: 1.5px solid var(--slate);
-      outline-offset: 2px;
-      border-radius: 2px;
-    }
+    /* ─── Things to Do ─────────────────────────────────────── */
+    .things-to-do { padding: 2.4rem 2.5rem 0; }
+    .things-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .things-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .things-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .things-category-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .things-category + .things-category { margin-top: 2rem; }
+    .things-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .thing-card { padding: 1.2rem 1.6rem 1.2rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .thing-card:nth-child(odd) { padding-right: 1.6rem; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .thing-card:nth-child(even) { padding-left: 1.6rem; padding-right: 0; }
+    .thing-card:nth-last-child(1), .thing-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    .thing-card:nth-last-child(1):nth-child(even) ~ .thing-card { border-bottom: none; }
+    .thing-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.3rem; }
+    .thing-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.1rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .thing-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+    .thing-tag-free { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .thing-tag-paid { background: rgba(42, 32, 24, 0.04); color: var(--ink-mid); }
+    .thing-desc { font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; margin-bottom: 0.6rem; }
+    .thing-card-inner { display: flex; gap: 1rem; align-items: flex-start; }
+    .thing-card-content { flex: 1; min-width: 0; }
+    .thing-photo { width: 80px; height: 80px; border-radius: 6px; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 4px rgba(42, 32, 24, 0.1); cursor: pointer; }
+    .thing-meta { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+    .thing-detail { display: flex; align-items: center; gap: 0.3rem; font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; color: var(--ink-light); letter-spacing: 0.04em; }
+    .thing-detail svg { flex-shrink: 0; opacity: 0.5; }
+    .thing-book { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.7rem; padding: 0.45rem 0.9rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 3px; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 6px rgba(200, 113, 122, 0.15), 0 1px 2px rgba(200, 113, 122, 0.08); }
+    .thing-book:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200, 113, 122, 0.25), 0 2px 4px rgba(200, 113, 122, 0.12); }
+    .thing-book:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; }
+    .thing-book:active { background: #a85a63; transform: translateY(0); }
+    .thing-book svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .thing-book:hover svg { transform: translateX(2px); }
+    .thing-visit { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.7rem; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .thing-visit:hover { color: var(--slate); }
+    .thing-visit:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .thing-visit:active { color: var(--rose); }
+    .thing-visit svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .thing-visit:hover svg { transform: translateX(2px); }
+    @media (max-width: 768px) { .things-grid { grid-template-columns: 1fr; } .thing-card:nth-child(odd) { border-right: none; padding-right: 0; } .thing-card:nth-child(even) { padding-left: 0; } .thing-card:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } }
 
-    .toc-link:active {
-      color: var(--rose);
-    }
+    /* ─── Getting Around ────────────────────────────────────── */
+    .getting-around { padding: 2.4rem 2.5rem 0; }
+    .getting-around-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .getting-around-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .getting-around-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .transport-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+    .transport-card { padding: 1.4rem 1.4rem 1.4rem 0; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .transport-card:last-child { border-right: none; padding-right: 0; }
+    .transport-card:first-child { padding-left: 0; }
+    .transport-card:not(:first-child) { padding-left: 1.4rem; }
+    .transport-icon { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(42, 32, 24, 0.03); color: var(--ink-mid); margin-bottom: 0.9rem; }
+    .transport-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.1rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; margin-bottom: 0.5rem; }
+    .transport-desc { font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; }
+    .transport-detail { display: flex; align-items: baseline; gap: 0.4rem; margin-top: 0.6rem; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); }
+    .transport-detail svg { flex-shrink: 0; position: relative; top: 1px; opacity: 0.5; }
+    .transit-tip { margin-top: 1.6rem; padding: 1.2rem 1.4rem; background: var(--slate-bg); border-radius: 4px; border-left: 2px solid var(--slate); display: flex; gap: 0.8rem; align-items: flex-start; }
+    .transit-tip-icon { flex-shrink: 0; color: var(--slate); opacity: 0.7; position: relative; top: 1px; }
+    .transit-tip-content { flex: 1; min-width: 0; }
+    .transit-tip-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--slate); margin-bottom: 0.35rem; }
+    .transit-tip-text { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 0.98rem; color: var(--ink); line-height: 1.6; letter-spacing: 0.01em; }
+    @media (max-width: 768px) { .transport-grid { grid-template-columns: 1fr 1fr; } .transport-card { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } .transport-card:nth-child(2) { border-right: none; padding-right: 0; } .transport-card:nth-child(3) { padding-left: 0; } .transport-card:nth-child(3), .transport-card:nth-child(4) { border-bottom: none; } }
+    @media (max-width: 480px) { .transport-grid { grid-template-columns: 1fr; } .transport-card { border-right: none; padding-left: 0; padding-right: 0; } .transport-card:last-child { border-bottom: none; } }
 
-    .toc-arrow {
-      color: var(--ink-light);
-      opacity: 0.4;
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
-      flex-shrink: 0;
-    }
+    /* ─── What to Pack ─────────────────────────────────────── */
+    .packing { padding: 2.4rem 2.5rem 0; }
+    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .packing-item:last-child { border-bottom: none; }
+    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
+    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
+    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
+    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
+    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
+    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    .packing-tag-country { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
+    .packing-storefront { margin-top: 1.4rem; padding-top: 1.2rem; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .packing-storefront-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1.1rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.64rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 3px; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 6px rgba(200, 113, 122, 0.15), 0 1px 2px rgba(200, 113, 122, 0.08); }
+    .packing-storefront-link:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200, 113, 122, 0.25), 0 2px 4px rgba(200, 113, 122, 0.12); }
+    .packing-storefront-link:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; }
+    .packing-storefront-link:active { background: #a85a63; transform: translateY(0); }
+    .packing-storefront-link svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .packing-storefront-link:hover svg { transform: translateX(2px); }
+    @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
 
-    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeIn { to { opacity: 1; } }
-    @media (max-width: 600px) { .site-nav, .nav, .header, .map-section, .snapshot, .toc, .coming-soon-banner { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
-  
-    /* ─── Coming Soon Badge ────────────────────────────────── */
-    .coming-soon-banner {
-      padding: 2.5rem 2.5rem 0;
-      opacity: 0;
-      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
-    }
+    /* ─── Travel Tips ──────────────────────────────────────── */
+    .travel-tips { padding: 2.4rem 2.5rem 0; }
+    .tips-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .tips-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .tips-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .tips-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .tip-item { display: flex; gap: 0.8rem; align-items: baseline; padding: 0.7rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .tip-item:last-child { border-bottom: none; }
+    .tip-bullet { width: 4px; height: 4px; border-radius: 50%; background: var(--slate); flex-shrink: 0; opacity: 0.5; position: relative; top: 0.35rem; }
+    .tip-text { font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; }
+    .tips-hindsight { margin-top: 1.8rem; }
+    .tips-hindsight-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.8rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .hindsight-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .hindsight-item { display: flex; gap: 0.8rem; align-items: baseline; padding: 0.7rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .hindsight-item:last-child { border-bottom: none; }
+    .hindsight-icon { flex-shrink: 0; color: var(--slate); opacity: 0.5; position: relative; top: 0.2rem; }
+    .hindsight-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.01em; }
 
-    .coming-soon-inner {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1.2rem 1.6rem;
-      background: var(--slate-bg, #FBF0F1);
-      border-left: 2px solid var(--slate, #C8717A);
-    }
-
-    .coming-soon-icon {
-      flex-shrink: 0;
-      color: var(--slate, #C8717A);
-      opacity: 0.6;
-    }
-
-    .coming-soon-text {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-    }
-
-    .coming-soon-label {
-      font-family: 'Jost', sans-serif;
-      font-size: 0.62rem;
-      font-weight: 400;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--slate, #C8717A);
-    }
-
-    .coming-soon-desc {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.95rem;
-      font-weight: 300;
-      font-style: italic;
-      color: var(--ink-mid, #5A5048);
-      letter-spacing: 0.02em;
-      line-height: 1.4;
-    }
-      .tip-cta { padding: 2.4rem 2.5rem; text-align: center; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    /* ─── Tip CTA ────────────────────────────────────────────── */
+    .tip-cta { padding: 2.4rem 2.5rem; text-align: center; border-top: 1px solid rgba(42, 32, 24, 0.08); }
     .tip-cta-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.2rem, 2vw, 1.5rem); letter-spacing: 0.04em; color: var(--ink); margin-bottom: 0.4rem; }
     .tip-cta-sub { font-family: 'Jost', sans-serif; font-size: 0.82rem; font-weight: 300; color: var(--ink-light); margin-bottom: 1.2rem; }
     .tip-cta-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--slate); text-decoration: none; border: 1px solid rgba(200, 113, 122, 0.3); padding: 0.6rem 1.4rem; border-radius: 100px; transition: background 0.2s ease, border-color 0.2s ease; }
     .tip-cta-link:hover { background: var(--slate-bg); border-color: var(--slate); }
-  
+
+    /* ─── Footer ────────────────────────────────────────────── */
+    .page-footer { padding: 2rem 2.5rem 2.5rem; text-align: center; }
+    .page-disclosure { font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 300; color: var(--ink-light); opacity: 0.5; letter-spacing: 0.03em; }
+
+    /* ─── Photo Lightbox ──────────────────────────────────────── */
+    .restaurant-photo, .landmark-photo, .hotel-image, .thing-photo { cursor: zoom-in; }
+    .lightbox-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(10, 8, 6, 0); display: flex; align-items: center; justify-content: center; cursor: zoom-out; opacity: 0; pointer-events: none; transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .lightbox-overlay.active { opacity: 1; pointer-events: auto; background: rgba(10, 8, 6, 0.85); }
+    .lightbox-img { max-width: 90vw; max-height: 85vh; border-radius: 6px; object-fit: contain; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06); transform: scale(0.92); opacity: 0; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease; }
+    .lightbox-overlay.active .lightbox-img { transform: scale(1); opacity: 1; }
+    .lightbox-close { position: absolute; top: 1.2rem; right: 1.4rem; width: 36px; height: 36px; border: none; background: rgba(255, 255, 255, 0.1); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .lightbox-close:hover { background: rgba(255, 255, 255, 0.2); transform: scale(1.1); }
+    .lightbox-close:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.5); outline-offset: 2px; }
+    .lightbox-close:active { transform: scale(0.95); }
+    .lightbox-close svg { width: 16px; height: 16px; stroke: rgba(255, 255, 255, 0.8); stroke-width: 2; }
+
+    /* ─── Animations & Global Responsive ──────────────────── */
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { to { opacity: 1; } }
+    @media (max-width: 600px) { .site-nav, .nav, .header, .snapshot, .toc, .gf-guide, .restaurants, .where-to-stay, .landmarks, .neighborhoods, .things-to-do, .packing, .travel-tips, .getting-around, .page-footer { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
+
+    /* ─── Mobile: Site nav bar ────────────────────────────── */
+    @media (max-width: 480px) {
+      .site-nav { padding: 0 1.2rem; }
+      .nav-links { gap: 0.8rem; }
+      .nav-home { font-size: 0.72rem; letter-spacing: 0.1em; }
+    }
 
     /* ─── Mobile: Breadcrumb nav ──────────────────────────── */
     @media (max-width: 480px) {
       .nav { flex-wrap: wrap; gap: 0.4rem 0.6rem; }
       .header { flex-direction: column; align-items: flex-start; gap: 0.2rem; }
       .trip-date { padding-bottom: 0; }
-    }
-  
-    /* ─── Mobile: Site nav bar ────────────────────────────── */
-    @media (max-width: 480px) {
-      .site-nav { padding: 0 1.2rem; }
-      .nav-links { gap: 0.8rem; }
-      .nav-home { font-size: 0.72rem; letter-spacing: 0.1em; }
     }
   </style>
 
@@ -281,11 +425,7 @@
             [25, 50, 75, 100].forEach(function(mark) {
               if (scrollPct >= mark && !scrollMarks[mark]) {
                 scrollMarks[mark] = true;
-                gtag('event', 'scroll_depth', {
-                  event_category: 'engagement',
-                  event_label: mark + '%',
-                  page_title: document.title
-                });
+                gtag('event', 'scroll_depth', { event_category: 'engagement', event_label: mark + '%', page_title: document.title });
               }
             });
             ticking = false;
@@ -294,28 +434,19 @@
         }
       });
 
-      // ── 2. Section visibility tracking (Intersection Observer) ──
+      // ── 2. Section visibility tracking ──
       var sectionObserver = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
           if (entry.isIntersecting) {
-            var sectionName = entry.target.querySelector('h2')
-              ? entry.target.querySelector('h2').textContent.trim()
-              : entry.target.className;
-            gtag('event', 'section_view', {
-              event_category: 'engagement',
-              event_label: sectionName,
-              page_title: document.title
-            });
+            var sectionName = entry.target.querySelector('h2') ? entry.target.querySelector('h2').textContent.trim() : entry.target.className;
+            gtag('event', 'section_view', { event_category: 'engagement', event_label: sectionName, page_title: document.title });
             sectionObserver.unobserve(entry.target);
           }
         });
       }, { threshold: 0.3 });
+      document.querySelectorAll('section, .gf-guide-section, .restaurants-section, .landmarks-section, .things-section, .neighborhoods-section, .getting-around-section, .packing-section, .tips-section').forEach(function(s) { sectionObserver.observe(s); });
 
-      document.querySelectorAll('section, .gf-guide-section, .restaurants-section, .landmarks-section, .things-section, .neighborhoods-section, .getting-around-section, .packing-section, .tips-section').forEach(function(section) {
-        sectionObserver.observe(section);
-      });
-
-      // ── 3. Outbound link clicks (with link type classification) ──
+      // ── 3. Outbound link clicks (classified) ──
       document.querySelectorAll('a[target="_blank"]').forEach(function(link) {
         link.addEventListener('click', function() {
           var href = this.href;
@@ -325,147 +456,71 @@
           else if (href.includes('viator.com')) linkType = 'activity_booking';
           else if (href.includes('getyourguide.com')) linkType = 'activity_booking';
           else if (href.includes('google.com/maps')) linkType = 'google_maps';
-
-          var context = this.closest('.restaurant-card') ? this.closest('.restaurant-card').querySelector('.restaurant-name').textContent.trim()
-            : this.closest('.thing-card') ? this.closest('.thing-card').querySelector('.thing-name').textContent.trim()
-            : this.closest('.hotel-card') ? 'hotel'
-            : 'page';
-
-          gtag('event', 'outbound_click', {
-            event_category: 'engagement',
-            event_label: href,
-            link_type: linkType,
-            click_context: context,
-            transport_type: 'beacon'
-          });
+          var context = this.closest('.restaurant-card') ? this.closest('.restaurant-card').querySelector('.restaurant-name').textContent.trim() : this.closest('.thing-card') ? this.closest('.thing-card').querySelector('.thing-name').textContent.trim() : this.closest('.hotel-card') ? 'hotel' : 'page';
+          gtag('event', 'outbound_click', { event_category: 'engagement', event_label: href, link_type: linkType, click_context: context, transport_type: 'beacon' });
         });
       });
 
-      // ── 4. FMGF link clicks (high-value — tracks which restaurants) ──
+      // ── 4. FMGF clicks ──
       document.querySelectorAll('.restaurant-fmgf-link').forEach(function(link) {
         link.addEventListener('click', function() {
-          var restaurantName = this.closest('.restaurant-card')
-            ? this.closest('.restaurant-card').querySelector('.restaurant-name').textContent.trim()
-            : 'unknown';
-          gtag('event', 'fmgf_click', {
-            event_category: 'conversion',
-            event_label: restaurantName,
-            page_title: document.title,
-            transport_type: 'beacon'
-          });
+          var name = this.closest('.restaurant-card') ? this.closest('.restaurant-card').querySelector('.restaurant-name').textContent.trim() : 'unknown';
+          gtag('event', 'fmgf_click', { event_category: 'conversion', event_label: name, page_title: document.title, transport_type: 'beacon' });
         });
       });
 
-      // ── 5. Hotel booking clicks (affiliate conversion) ──
+      // ── 5. Hotel booking clicks ──
       document.querySelectorAll('a[href*="hotels.com"]').forEach(function(link) {
         link.addEventListener('click', function() {
-          var hotelName = this.closest('.hotel-card')
-            ? (this.closest('.hotel-card').querySelector('.hotel-name') || {}).textContent || 'unknown'
-            : 'unknown';
-          gtag('event', 'hotel_booking_click', {
-            event_category: 'conversion',
-            event_label: hotelName,
-            page_title: document.title,
-            transport_type: 'beacon'
-          });
+          var name = this.closest('.hotel-card') ? (this.closest('.hotel-card').querySelector('.hotel-name') || {}).textContent || 'unknown' : 'unknown';
+          gtag('event', 'hotel_booking_click', { event_category: 'conversion', event_label: name, page_title: document.title, transport_type: 'beacon' });
         });
       });
 
-      // ── 6. Activity booking clicks (affiliate conversion) ──
+      // ── 6. Activity booking clicks ──
       document.querySelectorAll('.thing-book-btn, a[href*="viator.com"], a[href*="getyourguide.com"]').forEach(function(link) {
         link.addEventListener('click', function() {
-          var activityName = this.closest('.thing-card')
-            ? this.closest('.thing-card').querySelector('.thing-name').textContent.trim()
-            : 'unknown';
-          gtag('event', 'activity_booking_click', {
-            event_category: 'conversion',
-            event_label: activityName,
-            page_title: document.title,
-            transport_type: 'beacon'
-          });
+          var name = this.closest('.thing-card') ? this.closest('.thing-card').querySelector('.thing-name').textContent.trim() : 'unknown';
+          gtag('event', 'activity_booking_click', { event_category: 'conversion', event_label: name, page_title: document.title, transport_type: 'beacon' });
         });
       });
 
-      // ── 7. Photo lightbox opens (which photos interest people) ──
+      // ── 7. Photo lightbox opens ──
       document.querySelectorAll('.restaurant-photo, .landmark-photo, .hotel-image, .thing-photo').forEach(function(img) {
         img.addEventListener('click', function() {
-          var placeName = this.closest('.restaurant-card')
-            ? this.closest('.restaurant-card').querySelector('.restaurant-name').textContent.trim()
-            : this.closest('.landmark-card')
-            ? this.closest('.landmark-card').querySelector('.landmark-name').textContent.trim()
-            : this.alt || 'unknown';
-          gtag('event', 'photo_view', {
-            event_category: 'engagement',
-            event_label: placeName,
-            page_title: document.title
-          });
+          var name = this.closest('.restaurant-card') ? this.closest('.restaurant-card').querySelector('.restaurant-name').textContent.trim() : this.closest('.landmark-card') ? this.closest('.landmark-card').querySelector('.landmark-name').textContent.trim() : this.alt || 'unknown';
+          gtag('event', 'photo_view', { event_category: 'engagement', event_label: name, page_title: document.title });
         });
       });
 
-      // ── 8. Section navigation (TOC clicks) ──
+      // ── 8. Section nav (TOC) ──
       document.querySelectorAll('a[href^="#"]').forEach(function(link) {
-        link.addEventListener('click', function() {
-          gtag('event', 'section_nav', {
-            event_category: 'navigation',
-            event_label: this.textContent.trim(),
-            page_title: document.title
-          });
-        });
+        link.addEventListener('click', function() { gtag('event', 'section_nav', { event_category: 'navigation', event_label: this.textContent.trim(), page_title: document.title }); });
       });
 
       // ── 9. Map interactions ──
       document.querySelectorAll('.map-container, [class*="map-wrap"]').forEach(function(el) {
         var tracked = false;
-        el.addEventListener('click', function() {
-          if (!tracked) {
-            tracked = true;
-            gtag('event', 'map_interaction', {
-              event_category: 'engagement',
-              event_label: el.id || 'map',
-              page_title: document.title
-            });
-          }
-        });
+        el.addEventListener('click', function() { if (!tracked) { tracked = true; gtag('event', 'map_interaction', { event_category: 'engagement', event_label: el.id || 'map', page_title: document.title }); } });
       });
 
       // ── 10. Tip CTA email clicks ──
       document.querySelectorAll('a[href^="mailto:"]').forEach(function(link) {
-        link.addEventListener('click', function() {
-          gtag('event', 'tip_cta_click', {
-            event_category: 'conversion',
-            event_label: document.title,
-            transport_type: 'beacon'
-          });
-        });
+        link.addEventListener('click', function() { gtag('event', 'tip_cta_click', { event_category: 'conversion', event_label: document.title, transport_type: 'beacon' }); });
       });
 
-      // ── 11. Internal navigation (country page links, breadcrumbs) ──
+      // ── 11. Internal navigation ──
       document.querySelectorAll('.back-link, .nav-link, .nav-home').forEach(function(link) {
-        link.addEventListener('click', function() {
-          gtag('event', 'internal_nav', {
-            event_category: 'navigation',
-            event_label: this.textContent.trim(),
-            link_url: this.href
-          });
-        });
+        link.addEventListener('click', function() { gtag('event', 'internal_nav', { event_category: 'navigation', event_label: this.textContent.trim(), link_url: this.href }); });
       });
 
-      // ── 12. Time on page (fires at 30s, 60s, 120s, 300s) ──
+      // ── 12. Time on page (30s, 60s, 120s, 300s) ──
       [30, 60, 120, 300].forEach(function(seconds) {
-        setTimeout(function() {
-          if (!document.hidden) {
-            gtag('event', 'time_on_page', {
-              event_category: 'engagement',
-              event_label: seconds + 's',
-              page_title: document.title
-            });
-          }
-        }, seconds * 1000);
+        setTimeout(function() { if (!document.hidden) { gtag('event', 'time_on_page', { event_category: 'engagement', event_label: seconds + 's', page_title: document.title }); } }, seconds * 1000);
       });
 
     });
   </script>
-  
 
   <!-- Structured data for search engines and AI systems -->
   <script type="application/ld+json">
@@ -475,7 +530,7 @@
     {
       "@type": "Article",
       "headline": "Gluten-Free Restaurants & Celiac Guide to Auckland, New Zealand",
-      "description": "First-hand celiac travel guide to Auckland with 0 GF-rated restaurants, 8/10 GF friendliness score. Visited December 2025.",
+      "description": "First-hand celiac travel guide to Auckland with 20 GF-rated restaurants, 8/10 GF friendliness score. Visited November 2025.",
       "author": {
         "@type": "Person",
         "name": "GF Gone Global"
@@ -494,6 +549,152 @@
       }
     },
     {
+      "@type": "Restaurant",
+      "name": "Giapo",
+      "address": { "@type": "PostalAddress", "addressLocality": "Auckland", "addressCountry": "NZ" },
+      "servesCuisine": "Ice Cream / Dessert",
+      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 5, "bestRating": 5, "worstRating": 1 } }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "Hello Beasty",
+      "address": { "@type": "PostalAddress", "addressLocality": "Auckland", "addressCountry": "NZ" },
+      "servesCuisine": "Japanese / Korean Fusion",
+      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5, "worstRating": 1 } }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "The Good Luck Coconut",
+      "address": { "@type": "PostalAddress", "addressLocality": "Auckland", "addressCountry": "NZ" },
+      "servesCuisine": "Pacific / Asian Fusion",
+      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5, "worstRating": 1 } }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "Mudbrick Vineyard and Restaurant",
+      "address": { "@type": "PostalAddress", "addressLocality": "Auckland", "addressCountry": "NZ" },
+      "servesCuisine": "Fine Dining / Vineyard",
+      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5, "worstRating": 1 } }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "I Love Crepes",
+      "address": { "@type": "PostalAddress", "addressLocality": "Auckland", "addressCountry": "NZ" },
+      "servesCuisine": "Crepes / Galettes",
+      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5, "worstRating": 1 } }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "HNT Kitchen",
+      "address": { "@type": "PostalAddress", "addressLocality": "Auckland", "addressCountry": "NZ" },
+      "servesCuisine": "Healthy Bowls",
+      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 5, "bestRating": 5, "worstRating": 1 } }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "The Chip Shop",
+      "address": { "@type": "PostalAddress", "addressLocality": "Auckland", "addressCountry": "NZ" },
+      "servesCuisine": "Fish & Chips",
+      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 5, "bestRating": 5, "worstRating": 1 } }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "The GF Depot",
+      "address": { "@type": "PostalAddress", "addressLocality": "Auckland", "addressCountry": "NZ" },
+      "servesCuisine": "Cafe / Brunch",
+      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 5, "bestRating": 5, "worstRating": 1 } }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "Little Bird Kitchen",
+      "address": { "@type": "PostalAddress", "addressLocality": "Auckland", "addressCountry": "NZ" },
+      "servesCuisine": "Vegan / Plant-Based",
+      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 5, "bestRating": 5, "worstRating": 1 } }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "The Attic Bar & Restaurant",
+      "address": { "@type": "PostalAddress", "addressLocality": "Auckland", "addressCountry": "NZ" },
+      "servesCuisine": "Bar & Grill",
+      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 5, "bestRating": 5, "worstRating": 1 } }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "Olas Arepas",
+      "address": { "@type": "PostalAddress", "addressLocality": "Auckland", "addressCountry": "NZ" },
+      "servesCuisine": "Venezuelan",
+      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 5, "bestRating": 5, "worstRating": 1 } }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "Village Wholefoods Cafe",
+      "address": { "@type": "PostalAddress", "addressLocality": "Auckland", "addressCountry": "NZ" },
+      "servesCuisine": "Wholefood Cafe",
+      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 5, "bestRating": 5, "worstRating": 1 } }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "Botswana Butchery",
+      "address": { "@type": "PostalAddress", "addressLocality": "Auckland", "addressCountry": "NZ" },
+      "servesCuisine": "Steakhouse",
+      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 4, "bestRating": 5, "worstRating": 1 } }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "Tony's Original Steak & Seafood",
+      "address": { "@type": "PostalAddress", "addressLocality": "Auckland", "addressCountry": "NZ" },
+      "servesCuisine": "Steakhouse / Seafood",
+      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5, "worstRating": 1 } }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "Nahm | Auckland",
+      "address": { "@type": "PostalAddress", "addressLocality": "Auckland", "addressCountry": "NZ" },
+      "servesCuisine": "Thai Street Food",
+      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5, "worstRating": 1 } }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "The Shelf",
+      "address": { "@type": "PostalAddress", "addressLocality": "Auckland", "addressCountry": "NZ" },
+      "servesCuisine": "Breakfast / Brunch Cafe",
+      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5, "worstRating": 1 } }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "Ebisu",
+      "address": { "@type": "PostalAddress", "addressLocality": "Auckland", "addressCountry": "NZ" },
+      "servesCuisine": "Japanese",
+      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5, "worstRating": 1 } }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "Baduzzi",
+      "address": { "@type": "PostalAddress", "addressLocality": "Auckland", "addressCountry": "NZ" },
+      "servesCuisine": "Italian",
+      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5, "worstRating": 1 } }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "Orewa Beach Fish & Chips",
+      "address": { "@type": "PostalAddress", "addressLocality": "Auckland", "addressCountry": "NZ" },
+      "servesCuisine": "Fish & Chips",
+      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5, "worstRating": 1 } }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "Mekong Baby",
+      "address": { "@type": "PostalAddress", "addressLocality": "Auckland", "addressCountry": "NZ" },
+      "servesCuisine": "SE Asian Fusion",
+      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5, "worstRating": 1 } }
+    },
+    {
+      "@type": "LodgingBusiness",
+      "name": "InterContinental Auckland by IHG",
+      "address": { "@type": "PostalAddress", "addressLocality": "Auckland", "addressCountry": "NZ" },
+      "geo": { "@type": "GeoCoordinates", "latitude": -36.843217, "longitude": 174.766588 }
+    },
+    {
       "@type": "FAQPage",
       "mainEntity": [
         {
@@ -501,7 +702,15 @@
           "name": "Is Auckland safe for celiacs?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Auckland scores 8/10 for GF friendliness (GF Friendly)."
+            "text": "Auckland scores 8/10 on our GF friendliness scale, making it one of the easier cities for celiac travelers. New Zealand has strong awareness of coeliac disease, menus are widely labeled, and there are multiple 100% dedicated gluten-free restaurants in the city."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the best gluten-free restaurants in Auckland?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Top-rated 100% GF restaurants include Giapo (dedicated GF ice cream), HNT Kitchen (GF bowls), The Chip Shop (GF fish & chips), The GF Depot (GF cafe), Little Bird Kitchen (vegan/GF), The Attic Bar & Restaurant (Coeliac NZ accredited), and Olas Arepas (corn-based arepas)."
           }
         },
         {
@@ -509,7 +718,7 @@
           "name": "Can you find gluten-free food in Auckland supermarkets?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Check the full guide for grocery recommendations and naturally gluten-free local dishes in Auckland, New Zealand."
+            "text": "Yes. Pak'nSave, New World, and Countdown/Woolworths all carry dedicated GF sections. Farro specializes in organic and GF products, and The Gluten Free Grocer in Mt Eden is a 100% gluten-free store. Look for the Crossed Grain logo — Coeliac New Zealand's official certification on 300+ products."
           }
         }
       ]
@@ -517,9 +726,12 @@
   ]
 }
   </script>
+
 </head>
 <body>
-    <nav class="site-nav">
+
+  <!-- ═══════════════ SITE NAV ═══════════════ -->
+  <nav class="site-nav">
     <a href="../../index.html" class="nav-home">GF Gone Global</a>
     <div class="nav-links">
       <a href="../../index.html" class="nav-link">Places</a>
@@ -528,112 +740,1476 @@
     </div>
   </nav>
 
-<nav class="nav">
-    <a href="../new-zealand.html" class="back-link">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      New Zealand
+  <!-- ═══════════════ BREADCRUMB ═══════════════ -->
+  <nav class="nav">
+    <a href="../../index.html" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      All Countries
     </a>
+    <span class="nav-sep">/</span>
+    <a href="../new-zealand.html" class="nav-link">New Zealand</a>
     <span class="nav-sep">/</span>
     <span class="nav-current">Auckland</span>
   </nav>
+
+  <!-- ═══════════════ HEADER ═══════════════ -->
   <header class="header">
-    <h1 class="city-name">Auckland</h1>
-    <span class="trip-date">Last traveled · December 2025</span>
+    <div class="header-left">
+      <span class="country-label">New Zealand</span>
+      <h1 class="city-name">Auckland</h1>
+    </div>
+    <span class="trip-date">Last traveled &middot; November 2025</span>
   </header>
   <div class="header-rule"></div>
 
-  <div class="coming-soon-banner">
-    <div class="coming-soon-inner">
-      <svg class="coming-soon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
-        <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.2"/>
-        <path d="M10 5.5V10.5L13 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <div class="coming-soon-text">
-        <span class="coming-soon-label">Coming Soon</span>
-        <span class="coming-soon-desc">Full guide with restaurants, hotels &amp; landmarks is on its way.</span>
-      </div>
-    </div>
-  </div>
-
+  <!-- ═══════════════ SNAPSHOT ═══════════════ -->
   <section class="snapshot">
     <div class="snapshot-label">City Snapshot</div>
     <div class="snapshot-grid">
       <div class="snapshot-item">
         <div class="snapshot-item-label">Best Months</div>
-        <div class="snapshot-item-value">Nov–Mar</div>
+        <div class="snapshot-item-value">Nov &ndash; Mar</div>
       </div>
       <div class="snapshot-item">
         <div class="snapshot-item-label">Ideal Stay</div>
-        <div class="snapshot-item-value">1–2 days</div>
+        <div class="snapshot-item-value">3&ndash;4 days</div>
       </div>
       <div class="snapshot-item">
-        <div class="snapshot-item-label">Gluten-Free</div>
-        <div class="snapshot-score">
-          <span class="snapshot-score-num">8/10</span>
-          <div class="snapshot-score-bar">
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip"></span>
-            <span class="snapshot-score-pip"></span>
+        <div class="snapshot-item-label">Best For</div>
+        <div class="snapshot-item-value">Food, Wine, Nature</div>
+      </div>
+      <div class="snapshot-item">
+        <div class="snapshot-item-label">GF Friendliness</div>
+        <div class="snapshot-item-value">
+          <div class="snapshot-score">
+            <span class="snapshot-score-num">8/10</span>
+            <div class="snapshot-score-bar">
+              <span class="snapshot-score-pip is-filled"></span>
+              <span class="snapshot-score-pip is-filled"></span>
+              <span class="snapshot-score-pip is-filled"></span>
+              <span class="snapshot-score-pip is-filled"></span>
+              <span class="snapshot-score-pip is-filled"></span>
+              <span class="snapshot-score-pip is-filled"></span>
+              <span class="snapshot-score-pip is-filled"></span>
+              <span class="snapshot-score-pip is-filled"></span>
+              <span class="snapshot-score-pip"></span>
+              <span class="snapshot-score-pip"></span>
+            </div>
           </div>
         </div>
       </div>
       <div class="snapshot-item">
-        <div class="snapshot-item-label">English Spoken</div>
-        <div class="snapshot-item-value">Widely</div>
+        <div class="snapshot-item-label">Language</div>
+        <div class="snapshot-item-value">English</div>
+      </div>
+      <div class="snapshot-item">
+        <div class="snapshot-item-label">English</div>
+        <div class="snapshot-item-value">Fluent</div>
       </div>
       <div class="snapshot-item">
         <div class="snapshot-item-label">City Size</div>
-        <div class="snapshot-item-value">Large</div>
+        <div class="snapshot-item-value">Large (1.7M)</div>
       </div>
       <div class="snapshot-item">
-        <div class="snapshot-item-label">Walkability</div>
-        <div class="snapshot-item-value">Moderate</div>
-      </div>
-      <div class="snapshot-item">
-        <div class="snapshot-item-label">Public Transit</div>
-        <div class="snapshot-item-value">Good</div>
+        <div class="snapshot-item-label">Currency</div>
+        <div class="snapshot-item-value">NZD ($)</div>
       </div>
     </div>
   </section>
 
-
-  <nav class="toc">
-    <div class="toc-label">Jump to</div>
+  <!-- ═══════════════ TABLE OF CONTENTS ═══════════════ -->
+  <section class="toc">
+    <div class="toc-label">On This Page</div>
     <ul class="toc-list">
-      <li class="toc-item"><a href="#where-to-stay" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Where to stay</a></li>
-      <li class="toc-item"><a href="#gluten-free" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Gluten-free survival guide</a></li>
-      <li class="toc-item"><a href="#restaurants" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Restaurants</a></li>
-      <li class="toc-item"><a href="#getting-around" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Getting around</a></li>
-      <li class="toc-item"><a href="#landmarks" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Landmarks &amp; must-see spots</a></li>
+      <li class="toc-item"><a href="#where-to-stay" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Where to Stay</a></li>
+      <li class="toc-item"><a href="#gluten-free" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>GF Survival Guide</a></li>
+      <li class="toc-item"><a href="#restaurants" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>GF Friendly Restaurants</a></li>
+      <li class="toc-item"><a href="#landmarks" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Landmarks</a></li>
       <li class="toc-item"><a href="#neighborhoods" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Neighborhoods</a></li>
-      <li class="toc-item"><a href="#things-to-do" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Things to do</a></li>
-      <li class="toc-item"><a href="#what-to-pack" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>What to pack</a></li>
-      <li class="toc-item"><a href="#travel-tips" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Travel tips</a></li>
+      <li class="toc-item"><a href="#things-to-do" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Things to Do</a></li>
+      <li class="toc-item"><a href="#getting-around" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Getting Around</a></li>
+      <li class="toc-item"><a href="#packing" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>What to Pack</a></li>
+      <li class="toc-item"><a href="#tips" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Travel Tips</a></li>
     </ul>
-  </nav>
+  </section>
 
-  <section class="map-section">
-    <!-- <iframe class="map-frame" src="https://www.google.com/maps/d/embed?mid=1Xi1_YHadD7JtjltqGBFZlqHsua_23hM" allowfullscreen></iframe> -->
+  <!-- ═══════════════ WHERE TO STAY ═══════════════ -->
+  <section class="where-to-stay" id="where-to-stay">
+    <div class="stay-header">
+      <h2 class="stay-title">Where to Stay</h2>
+      <span class="stay-subtitle">Recommended</span>
+    </div>
+    <div class="stay-rule"></div>
+
+    <div class="hotel-card">
+      <div class="hotel-image-side">
+        <!-- Photo: Christian Mehlführer, Wikimedia Commons, CC BY 2.5 -->
+        <img src="../../photos/new-zealand/auckland/auckland-cityscape/auckland-skyline.jpeg" alt="Auckland skyline with Sky Tower" class="hotel-image" loading="lazy">
+        <div class="hotel-image-overlay"></div>
+        <div class="hotel-badge">
+          <span class="hotel-badge-dot"></span>
+          Where I stayed
+        </div>
+      </div>
+
+      <div class="hotel-info-side">
+        <h3 class="hotel-name">InterContinental Auckland by IHG</h3>
+        <div class="hotel-location">
+          <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+          City Centre &middot; Princes Wharf
+        </div>
+
+        <div class="hotel-why">
+          <div class="hotel-why-label">Post-Visit Notes</div>
+          <div class="hotel-why-text">Breakfast for 2 was included with my stay &mdash; was at one of their restaurants on-site with a buffet and select menu items. Was very good and they even had GF bread (I did not end up eating it).</div>
+        </div>
+
+        <div class="hotel-features">
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Waterfront Location</span>
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> GF Breakfast Options</span>
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Restaurant On-site</span>
+        </div>
+
+        <a href="https://www.hotels.com/ho3054422624/intercontinental-auckland-an-ihg-hotel-auckland-new-zealand/" class="hotel-cta" target="_blank" rel="noopener">
+          Book on Hotels.com
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ GF SURVIVAL GUIDE ═══════════════ -->
+  <section class="gf-guide" id="gluten-free">
+    <div class="gf-guide-header">
+      <h2 class="gf-guide-title">Gluten-Free Survival Guide</h2>
+    </div>
+    <div class="gf-guide-rule"></div>
+    <div class="gf-guide-grid">
+      <div class="gf-guide-left">
+        <div class="gf-info-group">
+          <div class="gf-info-label">Key Phrases</div>
+          <div class="gf-phrase">
+            <span class="gf-phrase-local">"Gluten-free, please"</span>
+            <span class="gf-phrase-meaning">English-speaking</span>
+          </div>
+          <div class="gf-phrase">
+            <span class="gf-phrase-local">"I have coeliac disease"</span>
+            <span class="gf-phrase-meaning">NZ spelling &mdash; widely understood</span>
+          </div>
+          <div class="gf-phrase">
+            <span class="gf-phrase-local">"Is this safe for coeliacs?"</span>
+            <span class="gf-phrase-meaning">Direct safety question</span>
+          </div>
+        </div>
+        <div class="gf-info-group">
+          <div class="gf-info-label">Grocery Stores</div>
+          <ul class="gf-list">
+            <li><!-- RESEARCHED -->Pak&rsquo;nSave &mdash; 17 locations, dedicated GF sections</li>
+            <li><!-- RESEARCHED -->New World &mdash; 26 locations, GF products</li>
+            <li><!-- RESEARCHED -->Countdown/Woolworths &mdash; GF products alongside mainstream</li>
+            <li><!-- RESEARCHED -->Farro &mdash; 6 locations, specializes in GF/organic</li>
+            <li><!-- RESEARCHED -->Gluten Free Grocer (Mt Eden) &mdash; 100% GF store</li>
+          </ul>
+        </div>
+        <div class="gf-info-group">
+          <div class="gf-info-label">Safe Cuisines</div>
+          <ul class="gf-list">
+            <li><!-- RESEARCHED -->M&#257;ori h&#257;ng&#299; &mdash; earth-oven cooking, naturally GF</li>
+            <li><!-- RESEARCHED -->Seafood &mdash; fresh New Zealand catch</li>
+            <li><!-- RESEARCHED -->Vietnamese &mdash; rice-based dishes</li>
+          </ul>
+        </div>
+        <div class="gf-info-group">
+          <div class="gf-info-label">Tip</div>
+          <div class="gf-info-value"><!-- RESEARCHED -->Look for the Crossed Grain logo &mdash; official Coeliac New Zealand certification on 300+ products.</div>
+        </div>
+      </div>
+      <div class="gf-score-section">
+        <div class="gf-score-title">Score Breakdown</div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Dedicated GF restaurants</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Menu labeling</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Staff knowledge &amp; safety</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Density of GF dining</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Grocery availability</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div>
+        </div>
+        <div class="gf-score-total">
+          <span class="gf-score-total-num">8/10</span>
+          <span class="gf-score-total-label">Overall GF Score</span>
+        </div>
+        <div class="gf-score-verdict">
+          <span class="gf-guide-difficulty gf-difficulty-easy"><span class="gf-dot"></span>Easy</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ RESTAURANTS ═══════════════ -->
+  <section class="restaurants" id="restaurants">
+    <div class="restaurants-header">
+      <h2 class="restaurants-title">GF Friendly Restaurants</h2>
+      <span class="restaurants-count">20 spots</span>
+    </div>
+    <div class="restaurants-rule"></div>
+
+    <div id="gf-map" style="width:100%; min-height:260px; border-radius:4px; border:1px solid rgba(42,32,24,0.08); margin-bottom:1.6rem;"></div>
+    <div style="display:flex; align-items:center; gap:1.2rem; flex-wrap:wrap; margin-bottom:2.4rem; font-family:'Jost',sans-serif; font-size:0.58rem; font-weight:400; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-light);">
+      <span>GF Score</span>
+      <span style="display:inline-flex;align-items:center;gap:0.3rem;"><span style="width:10px;height:10px;border-radius:50%;background:#3d6e40;"></span> 5/5</span>
+      <span style="display:inline-flex;align-items:center;gap:0.3rem;"><span style="width:10px;height:10px;border-radius:50%;background:#6a9a40;"></span> 4/5</span>
+      <span style="display:inline-flex;align-items:center;gap:0.3rem;"><span style="width:10px;height:10px;border-radius:50%;background:#b48c3c;"></span> 3/5</span>
+      <span style="display:inline-flex;align-items:center;gap:0.3rem;"><span style="width:10px;height:10px;border-radius:50%;background:#2A2018;"></span> Hotel</span>
+    </div>
+    <script>
+    (function(){
+      var map = L.map('gf-map', { scrollWheelZoom: false }).setView([-36.855, 174.770], 12);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 18
+      }).addTo(map);
+
+      var colors = { 5:'#3d6e40', 4:'#6a9a40', 3:'#b48c3c', 2:'#c87a50', 1:'#b4463c', 0:'#9a9a9a' };
+
+      var restaurants = [
+        { name:'Giapo', score:5, lat:-36.845796, lng:174.768848 },
+        { name:'Hello Beasty', score:3, lat:-36.843112, lng:174.762463 },
+        { name:'The Good Luck Coconut', score:3, lat:-36.840628, lng:174.756733 },
+        { name:'Mudbrick Vineyard and Restaurant', score:3, lat:-36.792517, lng:175.000390 },
+        { name:'I Love Crepes', score:3, lat:-36.781780, lng:175.007787 },
+        { name:'HNT Kitchen', score:5, lat:-36.843976, lng:174.766142 },
+        { name:'The Chip Shop', score:5, lat:-36.911682, lng:174.775924 },
+        { name:'The GF Depot', score:5, lat:-36.858382, lng:174.782250 },
+        { name:'Little Bird Kitchen', score:5, lat:-36.851746, lng:174.744367 },
+        { name:'The Attic Bar & Restaurant', score:5, lat:-36.909433, lng:174.680889 },
+        { name:'Olas Arepas', score:5, lat:-36.856412, lng:174.746004 },
+        { name:'Village Wholefoods Cafe', score:5, lat:-36.894844, lng:174.931860 },
+        { name:'Botswana Butchery', score:4, lat:-36.842965, lng:174.766703 },
+        { name:'Tony\u2019s Original Steak & Seafood', score:3, lat:-36.850332, lng:174.763211 },
+        { name:'Nahm | Auckland', score:3, lat:-36.850182, lng:174.763650 },
+        { name:'The Shelf', score:3, lat:-36.848478, lng:174.766440 },
+        { name:'Ebisu', score:3, lat:-36.844166, lng:174.769892 },
+        { name:'Baduzzi', score:3, lat:-36.841080, lng:174.757045 },
+        { name:'Orewa Beach Fish & Chips', score:3, lat:-36.585761, lng:174.695388 },
+        { name:'Mekong Baby', score:3, lat:-36.850739, lng:174.744328 }
+      ];
+
+      var hotelIcon = L.divIcon({
+        className: '',
+        html: '<div style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;background:#2A2018;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.25);"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 21V13h6v8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 21h22" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><rect x="7" y="8" width="3" height="3" rx="0.5" fill="#fff"/><rect x="14" y="8" width="3" height="3" rx="0.5" fill="#fff"/></svg></div>',
+        iconSize: [22, 22], iconAnchor: [11, 11]
+      });
+      L.marker([-36.843217, 174.766588], { icon: hotelIcon })
+        .addTo(map)
+        .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">InterContinental Auckland</strong><br><span style="font-size:11px;color:#5A5048;">Where I stayed</span></div>', { closeButton: false });
+
+      restaurants.forEach(function(r) {
+        var color = colors[r.score];
+        var tag = r.score >= 5 ? '100% GF' : 'GF Options';
+        var icon = L.divIcon({
+          className: '',
+          html: '<div style="width:14px;height:14px;border-radius:50%;background:'+color+';border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.2);"></div>',
+          iconSize: [14, 14], iconAnchor: [7, 7]
+        });
+        L.marker([r.lat, r.lng], { icon: icon })
+          .addTo(map)
+          .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">'+r.name+'</strong><br><span style="font-size:11px;color:#5A5048;">'+tag+' \u00b7 GF Score: '+r.score+'/5</span></div>', { closeButton: false });
+      });
+    })();
+    </script>
+
+    <div class="restaurants-grid">
+
+    <!-- ═══ VISITED RESTAURANTS ═══ -->
+
+    <!-- 1. Giapo — 5/5, visited -->
+    <div class="restaurant-card">
+      <div class="restaurant-card-inner">
+      <div class="restaurant-card-content">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Giapo</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-gf">100% GF</span></div>
+      </div>
+      <div class="restaurant-cuisine">Ice Cream / Dessert</div>
+      <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">100% dedicated GF facility. All ice cream is gluten-free.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">Creative artisan GF ice cream, award-winning hokey pokey.</div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/giapo/6591935115165696" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- 2. Hello Beasty — 3/5, visited -->
+    <div class="restaurant-card">
+      <div class="restaurant-card-inner">
+      <div class="restaurant-card-content">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Hello Beasty</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div>
+      </div>
+      <div class="restaurant-cuisine">Japanese / Korean Fusion</div>
+      <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">Separate GF menu with items marked &lsquo;c&rsquo; for coeliac safe. No dedicated fryer.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">GF sashimi, sushi, curry, dessert.</div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/hello-beasty/4658048917438464" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- 3. The Good Luck Coconut — 3/5, visited -->
+    <div class="restaurant-card">
+      <div class="restaurant-card-inner">
+      <div class="restaurant-card-content">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">The Good Luck Coconut</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div>
+      </div>
+      <div class="restaurant-cuisine">Pacific / Asian Fusion</div>
+      <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">GF menu available.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">GF fries, sharing plates, cocktails.</div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/the-good-luck-coconut/6185018217070592" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- 4. Mudbrick Vineyard and Restaurant — 3/5, visited, HAS PHOTO -->
+    <div class="restaurant-card">
+      <div class="restaurant-card-inner">
+      <div class="restaurant-card-content">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Mudbrick Vineyard and Restaurant</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div>
+      </div>
+      <div class="restaurant-cuisine">Fine Dining / Vineyard</div>
+      <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">GF food menu available.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">Fine dining with ocean views, award-winning wines.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Waiheke Island</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/mudbrick/6687576704024576" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+      </div>
+      <img src="../../photos/new-zealand/auckland/mudbrick-vineyard-and-restaurant/IMG_3188.jpeg" alt="Mudbrick Vineyard and Restaurant" class="restaurant-photo" loading="lazy">
+      </div>
+    </div>
+
+    <!-- 5. I Love Crepes — 3/5, visited -->
+    <div class="restaurant-card">
+      <div class="restaurant-card-inner">
+      <div class="restaurant-card-content">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">I Love Crepes</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div>
+      </div>
+      <div class="restaurant-cuisine">Crepes / Galettes</div>
+      <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">Accommodates GF dietary needs.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">Sweet and savory crepes/galettes.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Waiheke Island &middot; Oneroa</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/i-love-crepes/5683063960502272" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- ═══ RECOMMENDED RESTAURANTS (sorted by score desc) ═══ -->
+
+    <!-- 6. HNT Kitchen — 5/5 -->
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">HNT Kitchen</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-gf">100% GF</span></div>
+      </div>
+      <div class="restaurant-cuisine">Healthy Bowls</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value"><!-- RESEARCHED -->100% dedicated GF facility. All bowls are naturally gluten-free.</div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/hnt-kitchen/5903362633629696" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 7. The Chip Shop — 5/5 -->
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">The Chip Shop</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-gf">100% GF</span></div>
+      </div>
+      <div class="restaurant-cuisine">Fish &amp; Chips</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value"><!-- RESEARCHED -->100% dedicated GF fish and chips shop. No gluten on premises.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Onehunga</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/the-chip-shop/6388076454608896" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 8. The GF Depot — 5/5 -->
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">The GF Depot</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-gf">100% GF</span></div>
+      </div>
+      <div class="restaurant-cuisine">Cafe / Brunch</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value"><!-- RESEARCHED -->100% dedicated GF cafe. Everything on the menu is gluten-free.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Meadowbank</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/the-gf-depot/5580785355194368" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 9. Little Bird Kitchen — 5/5 -->
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Little Bird Kitchen</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-gf">100% GF</span></div>
+      </div>
+      <div class="restaurant-cuisine">Vegan / Plant-Based</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value"><!-- RESEARCHED -->100% dedicated GF and plant-based kitchen. No gluten on premises.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Ponsonby</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/little-bird-kitchen/5855646424104960" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 10. The Attic Bar & Restaurant — 5/5 -->
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">The Attic Bar &amp; Restaurant</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-gf">100% GF</span></div>
+      </div>
+      <div class="restaurant-cuisine">Bar &amp; Grill</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value"><!-- RESEARCHED -->COELIAC NZ ACCREDITED. Chef and owners are celiac. No gluten fried in fryers.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">New Lynn</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/the-attic-bar-and-restaurant/5162469747851264" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 11. Olas Arepas — 5/5 -->
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Olas Arepas</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-gf">100% GF</span></div>
+      </div>
+      <div class="restaurant-cuisine">Venezuelan</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value"><!-- RESEARCHED -->100% GF arepas (corn-based), dedicated fryer.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Ponsonby</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/olas-arepas/5101443785293824" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 12. Village Wholefoods Cafe — 5/5 -->
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Village Wholefoods Cafe</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-gf">100% GF</span></div>
+      </div>
+      <div class="restaurant-cuisine">Wholefood Cafe</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value"><!-- RESEARCHED -->100% GF and refined sugar-free.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Howick</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/village-wholefoods-cafe/6430639002353664" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 13. Botswana Butchery — 4/5, NO fmgf -->
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Botswana Butchery</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div>
+      </div>
+      <div class="restaurant-cuisine">Steakhouse</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value"><!-- RESEARCHED -->Wharfside restaurant with great steak and safe gluten-free practices.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Wynyard Quarter &middot; Quay St</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 14. Tony's Original Steak & Seafood — 3/5 -->
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Tony&rsquo;s Original Steak &amp; Seafood</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div>
+      </div>
+      <div class="restaurant-cuisine">Steakhouse / Seafood</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value"><!-- RESEARCHED -->GF menu available. Mixed safety reports &mdash; communicate needs clearly.</div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/tonys-original-steak-and-seafood-restaurant/5473940862140416" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 15. Nahm | Auckland — 3/5 -->
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Nahm | Auckland</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div>
+      </div>
+      <div class="restaurant-cuisine">Thai Street Food</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value"><!-- RESEARCHED -->Thai street food with GF options available. Mixed safety &mdash; ask about soy sauce.</div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/nahm/6748741973442560" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 16. The Shelf — 3/5 -->
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">The Shelf</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div>
+      </div>
+      <div class="restaurant-cuisine">Breakfast / Brunch Cafe</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value"><!-- RESEARCHED -->Breakfast and lunch cafe with lots of GF and vegetarian options.</div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/the-shelf/6264125321248768" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 17. Ebisu — 3/5 -->
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Ebisu</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div>
+      </div>
+      <div class="restaurant-cuisine">Japanese</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value"><!-- RESEARCHED -->Has GF sushi options. Mixed safety &mdash; confirm soy sauce is GF-safe.</div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/ebisu/5632128536936448" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 18. Baduzzi — 3/5 -->
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Baduzzi</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div>
+      </div>
+      <div class="restaurant-cuisine">Italian</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value"><!-- RESEARCHED -->In-house GF bread and pasta. Staff are knowledgeable about celiac needs.</div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/baduzzi/4773974533865472" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 19. Orewa Beach Fish & Chips — 3/5 -->
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Orewa Beach Fish &amp; Chips</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div>
+      </div>
+      <div class="restaurant-cuisine">Fish &amp; Chips</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value"><!-- RESEARCHED -->GF fish and chips available. Mixed safety &mdash; ask about dedicated fryer.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Orewa</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/orewa-beach-fish-and-chips/4521322979393536" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- 20. Mekong Baby — 3/5 -->
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Mekong Baby</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div>
+      </div>
+      <div class="restaurant-cuisine">SE Asian Fusion</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value"><!-- RESEARCHED -->GF Asian food options. Mixed safety &mdash; communicate celiac needs clearly.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Ponsonby</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/mekong-baby/4696116376109056" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    </div><!-- end restaurants-grid -->
+  </section>
+
+  <!-- ═══════════════ GETTING AROUND ═══════════════ -->
+  <section class="getting-around" id="getting-around">
+    <div class="getting-around-header">
+      <h2 class="getting-around-title">Getting Around</h2>
+    </div>
+    <div class="getting-around-rule"></div>
+
+    <!-- RESEARCHED -->
+    <div class="transport-grid">
+      <div class="transport-card">
+        <div class="transport-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="3" width="16" height="14" rx="2"/><path d="M4 11h16"/><circle cx="8" cy="20" r="1.5"/><circle cx="16" cy="20" r="1.5"/><path d="M8 17v1.5M16 17v1.5"/></svg>
+        </div>
+        <div class="transport-name">Bus</div>
+        <div class="transport-desc"><!-- RESEARCHED -->AT Metro network covers the entire city. No cash &mdash; use AT HOP card or contactless payment. $50/week fare cap.</div>
+        <div class="transport-detail">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="3"/></svg>
+          Auckland Transport (AT)
+        </div>
+      </div>
+
+      <div class="transport-card">
+        <div class="transport-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11V4a1 1 0 011-1h14a1 1 0 011 1v7"/><path d="M4 11h16v6a2 2 0 01-2 2H6a2 2 0 01-2-2v-6z"/><path d="M8 19v2M16 19v2"/><circle cx="7.5" cy="15" r="1.5"/><circle cx="16.5" cy="15" r="1.5"/><path d="M4 7h16"/></svg>
+        </div>
+        <div class="transport-name">Train</div>
+        <div class="transport-desc"><!-- RESEARCHED -->Western, Southern, Eastern, and Onehunga lines. Airport: AirportLink bus to Puhinui Station then train (45 min total).</div>
+      </div>
+
+      <div class="transport-card">
+        <div class="transport-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20l2-2h4l4-8 4 8h4l2 2"/><path d="M12 4v6"/></svg>
+        </div>
+        <div class="transport-name">Ferry</div>
+        <div class="transport-desc"><!-- RESEARCHED -->Waiheke Island (35 min from downtown, Fullers360). Devonport ferry for North Head. 20+ sailings daily.</div>
+        <div class="transport-detail">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="3"/></svg>
+          Fullers360
+        </div>
+      </div>
+
+      <div class="transport-card">
+        <div class="transport-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="M10 22V14l-2-2v-4h8v4l-2 2v8"/><path d="M8 8l-1 1"/><path d="M16 8l1 1"/></svg>
+        </div>
+        <div class="transport-name">Walking</div>
+        <div class="transport-desc"><!-- RESEARCHED -->CBD is walkable. Wynyard Quarter, Viaduct, Queen Street all on foot. Ponsonby ~20 min walk from CBD.</div>
+      </div>
+    </div>
+
+    <div class="transit-tip">
+      <svg class="transit-tip-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+      <div class="transit-tip-content">
+        <div class="transit-tip-label">Transit Tip</div>
+        <div class="transit-tip-text"><!-- RESEARCHED -->Get an AT HOP card at the airport or any convenience store &mdash; it saves at least 20% on every fare and caps at $50/week.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ LANDMARKS ═══════════════ -->
+  <section class="landmarks" id="landmarks">
+    <div class="landmarks-header">
+      <h2 class="landmarks-title">Landmarks &amp; Must-See Spots</h2>
+      <span class="landmarks-count">4 spots</span>
+    </div>
+    <div class="landmarks-rule"></div>
+
+    <div class="landmarks-grid">
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <h3 class="landmark-name">Queen Street</h3>
+              <span class="landmark-type landmark-type-historic">Historic</span>
+            </div>
+            <div class="landmark-desc">Main shopping and dining boulevard running from Karangahape Rd down to the waterfront. The heart of Auckland's CBD.</div>
+            <div class="landmark-location">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+              City Centre
+            </div>
+            <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
+          </div>
+          <img src="../../photos/new-zealand/auckland/queen-street/queen-street.jpeg" alt="Queen Street, Auckland" class="landmark-photo" loading="lazy">
+        </div>
+      </div>
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <h3 class="landmark-name">Princes Wharf</h3>
+              <span class="landmark-type landmark-type-walk">Walk</span>
+            </div>
+            <div class="landmark-desc">Historic waterfront promenade with restaurants, bars, and views of Waitemat&#257; Harbour. Starting point for harbour cruises.</div>
+            <div class="landmark-location">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+              Viaduct Harbour
+            </div>
+            <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
+          </div>
+          <img src="../../photos/new-zealand/auckland/princes-wharf/princes-wharf.jpeg" alt="Princes Wharf, Auckland" class="landmark-photo" loading="lazy">
+        </div>
+      </div>
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <h3 class="landmark-name">Silo Park</h3>
+              <span class="landmark-type landmark-type-nature">Nature</span>
+            </div>
+            <div class="landmark-desc"><!-- RESEARCHED -->Six repurposed cement silos turned cultural space in Wynyard Quarter. Art exhibitions, outdoor movies, street food markets, live music.</div>
+            <div class="landmark-location">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+              Wynyard Quarter &middot; Jellicoe St
+            </div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+          </div>
+          <img src="../../photos/new-zealand/auckland/silo-park/silo-park.jpeg" alt="Silo Park, Auckland" class="landmark-photo" loading="lazy">
+        </div>
+      </div>
+
+      <div class="landmark-card">
+        <div class="landmark-card-inner">
+          <div class="landmark-card-content">
+            <div class="landmark-top">
+              <h3 class="landmark-name">North Head</h3>
+              <span class="landmark-type landmark-type-historic">Historic</span>
+            </div>
+            <div class="landmark-desc"><!-- RESEARCHED -->Historic volcanic cone with 1800s British fort, tunnels, and disappearing gun emplacements. Panoramic views of Hauraki Gulf and city skyline. Accessible by ferry to Devonport.</div>
+            <div class="landmark-location">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+              Devonport
+            </div>
+            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+          </div>
+          <img src="../../photos/new-zealand/auckland/north-head/north-head.jpeg" alt="North Head, Devonport" class="landmark-photo" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ NEIGHBORHOODS ═══════════════ -->
+  <section class="neighborhoods" id="neighborhoods">
+    <div class="neighborhoods-header">
+      <h2 class="neighborhoods-title">Neighborhoods</h2>
+    </div>
+    <div class="neighborhoods-rule"></div>
+
+    <div id="neighborhoods-map" style="width:100%; min-height:260px; border-radius:4px; border:1px solid rgba(42,32,24,0.08); margin-bottom:2.4rem;"></div>
+    <script>
+    (function(){
+      var nMap = L.map('neighborhoods-map', { scrollWheelZoom: false }).setView([-36.845, 174.790], 12);
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 18
+      }).addTo(nMap);
+
+      var neighborhoods = [
+        { name: 'CBD / City Centre', center: [-36.849, 174.764], radius: 800 },
+        { name: 'Wynyard Quarter', center: [-36.841, 174.757], radius: 500 },
+        { name: 'Ponsonby', center: [-36.852, 174.745], radius: 600 },
+        { name: 'Devonport', center: [-36.831, 174.796], radius: 700 },
+        { name: 'Waiheke Island', center: [-36.792, 175.004], radius: 2000 }
+      ];
+
+      neighborhoods.forEach(function(n) {
+        L.circle(n.center, {
+          radius: n.radius, color: '#2A2018', weight: 1.2, fillColor: 'transparent', fillOpacity: 0, dashArray: '3 5', opacity: 0.35
+        }).addTo(nMap);
+        var label = L.divIcon({
+          className: '',
+          html: '<div style="font-family:Jost,sans-serif;font-size:8.5px;font-weight:400;letter-spacing:0.2em;text-transform:uppercase;color:#2A2018;white-space:nowrap;text-align:center;opacity:0.6;">'+n.name+'</div>',
+          iconSize: [0, 0], iconAnchor: [0, 8]
+        });
+        L.marker(n.center, { icon: label, interactive: false }).addTo(nMap);
+      });
+
+      var hotelIcon = L.divIcon({
+        className: '',
+        html: '<div style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;background:#2A2018;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.25);"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 21V13h6v8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 21h22" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><rect x="7" y="8" width="3" height="3" rx="0.5" fill="#fff"/><rect x="14" y="8" width="3" height="3" rx="0.5" fill="#fff"/></svg></div>',
+        iconSize: [22, 22], iconAnchor: [11, 11]
+      });
+      L.marker([-36.843217, 174.766588], { icon: hotelIcon })
+        .addTo(nMap)
+        .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">InterContinental Auckland</strong><br><span style="font-size:11px;color:#5A5048;">Where I stayed</span></div>', { closeButton: false });
+    })();
+    </script>
+
+    <div class="neighborhood-list">
+      <div class="neighborhood-item">
+        <div class="neighborhood-name-col">
+          <h3 class="neighborhood-name">CBD / City Centre</h3>
+          <span class="neighborhood-vibe">Urban Hub</span>
+        </div>
+        <div class="neighborhood-desc">The commercial heart with Queen Street shopping, Sky Tower, and most GF restaurants clustered here.</div>
+      </div>
+
+      <div class="neighborhood-item">
+        <div class="neighborhood-name-col">
+          <h3 class="neighborhood-name">Wynyard Quarter</h3>
+          <span class="neighborhood-vibe">Waterfront</span>
+        </div>
+        <div class="neighborhood-desc">Revitalized harbourside precinct with Silo Park, seafood restaurants (Baduzzi, The Good Luck Coconut), and weekend markets.</div>
+      </div>
+
+      <div class="neighborhood-item">
+        <div class="neighborhood-name-col">
+          <h3 class="neighborhood-name">Ponsonby</h3>
+          <span class="neighborhood-vibe">Trendy &amp; Leafy</span>
+        </div>
+        <div class="neighborhood-desc">Auckland's cafe culture capital. Home to Little Bird Kitchen, Olas Arepas, and Mekong Baby. Boutique shopping on Ponsonby Rd.</div>
+      </div>
+
+      <div class="neighborhood-item">
+        <div class="neighborhood-name-col">
+          <h3 class="neighborhood-name">Devonport</h3>
+          <span class="neighborhood-vibe">Village Charm</span>
+        </div>
+        <div class="neighborhood-desc"><!-- RESEARCHED -->Charming harbourside village a short ferry ride from downtown. Historic North Head, galleries, and seaside walks.</div>
+      </div>
+
+      <div class="neighborhood-item">
+        <div class="neighborhood-name-col">
+          <h3 class="neighborhood-name">Waiheke Island</h3>
+          <span class="neighborhood-vibe">Wine &amp; Beaches</span>
+        </div>
+        <div class="neighborhood-desc"><!-- RESEARCHED -->Auckland's island escape &mdash; boutique vineyards (Mudbrick), olive groves, golden beaches. 35-minute ferry from downtown.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ THINGS TO DO ═══════════════ -->
+  <section class="things-to-do" id="things-to-do">
+    <div class="things-header">
+      <h2 class="things-title">Things to Do</h2>
+    </div>
+    <div class="things-rule"></div>
+
+    <div class="things-category">
+      <div class="things-category-label">Activities &amp; Experiences</div>
+      <div class="things-grid">
+
+        <div class="thing-card">
+          <div class="thing-card-inner">
+            <div class="thing-card-content">
+              <div class="thing-top">
+                <h3 class="thing-name">Hobbiton Movie Set</h3>
+                <span class="thing-tag thing-tag-paid">Paid</span>
+              </div>
+              <div class="thing-desc">12-acre Lord of the Rings film set in Matamata. Includes hobbit holes, gardens, and a drink at The Green Dragon Inn. Full-day tour with transport from Auckland.</div>
+              <div class="thing-meta">
+                <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> Full day</span>
+                <span class="thing-detail">~$150 NZD</span>
+              </div>
+              <a href="https://www.viator.com/tours/Auckland/Hobbiton-Movie-Set-Group-Tour-Transport-and-Tickets/d391-35014P39" class="thing-book" target="_blank" rel="noopener">
+                Book Tour <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+              </a>
+            </div>
+            <img src="../../photos/new-zealand/auckland/hobbiton/IMG_2999.jpeg" alt="Hobbiton Movie Set" class="thing-photo" loading="lazy">
+          </div>
+        </div>
+
+        <div class="thing-card">
+          <div class="thing-top">
+            <h3 class="thing-name">Mount Eden Summit</h3>
+            <span class="thing-tag thing-tag-free">Free</span>
+          </div>
+          <div class="thing-desc"><!-- RESEARCHED -->196-meter volcanic cone with 360-degree views of Auckland. Multiple trails, 1&ndash;2 hour round trip. No booking needed.</div>
+          <div class="thing-meta">
+            <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> 1&ndash;2 hours</span>
+            <span class="thing-detail"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Mount Eden</span>
+          </div>
+        </div>
+
+        <div class="thing-card">
+          <div class="thing-top">
+            <h3 class="thing-name">Sky Tower</h3>
+            <span class="thing-tag thing-tag-paid">Paid</span>
+          </div>
+          <div class="thing-desc"><!-- RESEARCHED -->New Zealand's tallest structure (328m). Observation decks, SkyBar, and optional SkyWalk/SkyJump.</div>
+          <div class="thing-meta">
+            <span class="thing-detail">~$35 NZD</span>
+          </div>
+          <a href="https://www.viator.com/tours/Auckland/Sky-Tower-General-Admission/d391-61969P1" class="thing-book" target="_blank" rel="noopener">
+            Book Tickets <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+
+        <div class="thing-card">
+          <div class="thing-top">
+            <h3 class="thing-name">Rangitoto Island</h3>
+            <span class="thing-tag thing-tag-paid">Paid</span>
+          </div>
+          <div class="thing-desc"><!-- RESEARCHED -->Volcanic island with 7km summit track and lava caves. Ferry + hike combo, 4&ndash;5 hours total.</div>
+          <div class="thing-meta">
+            <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> 4&ndash;5 hours</span>
+            <span class="thing-detail">~$70 NZD</span>
+          </div>
+          <a href="https://www.viator.com/tours/Auckland/Rangitoto-Island-Tour-from-Auckland/d391-6194RVET" class="thing-book" target="_blank" rel="noopener">
+            Book Tour <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+
+        <div class="thing-card">
+          <div class="thing-top">
+            <h3 class="thing-name">Waiheke Island Wine Tour</h3>
+            <span class="thing-tag thing-tag-paid">Paid</span>
+          </div>
+          <div class="thing-desc"><!-- RESEARCHED -->Boutique vineyard tastings with food pairings and scenic island views. Full-day experience with ferry.</div>
+          <div class="thing-meta">
+            <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> Full day</span>
+            <span class="thing-detail">~$200 NZD</span>
+          </div>
+          <a href="https://www.viator.com/tours/Waiheke-Island/Waiheke-Daily-Boutique-Wine-Tour/d32653-111321P1" class="thing-book" target="_blank" rel="noopener">
+            Book Tour <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ WHAT TO PACK ═══════════════ -->
+  <section class="packing" id="what-to-pack">
+    <div class="packing-header">
+      <h2 class="packing-title">What to Pack</h2>
+      <span class="packing-season">Summer in New Zealand (Nov&ndash;Dec)</span>
+    </div>
+    <div class="packing-rule"></div>
+
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Celiac dining card</span>
+          <span class="packing-item-why">English version with "coeliac" spelling &mdash; the standard term in New Zealand and Australia.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">GF snack bars</span>
+          <span class="packing-item-why">Essential for day trips and ferry rides to Waiheke, Rangitoto, and Hobbiton.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable GF soy sauce packets</span>
+          <span class="packing-item-why">Auckland has excellent Asian dining &mdash; bring your own tamari for safe seasoning.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">NZ power adapter (Type I, angled 2-pin)</span>
+          <span class="packing-item-why"><!-- RESEARCHED -->New Zealand uses Type I plugs &mdash; different from US, UK, and EU standards.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">New Zealand</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Reef-safe sunscreen</span>
+          <span class="packing-item-why"><!-- RESEARCHED -->NZ has intense UV due to the ozone layer &mdash; burn time can be under 10 minutes in summer.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">New Zealand</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Insect repellent</span>
+          <span class="packing-item-why"><!-- RESEARCHED -->Sandflies in coastal areas and on island beaches can be relentless.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">New Zealand</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Light layers</span>
+          <span class="packing-item-why">Summer weather changes quickly, 20&ndash;25&deg;C but breezy &mdash; mornings and evenings can be cool.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Auckland</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Rain jacket or compact umbrella</span>
+          <span class="packing-item-why"><!-- RESEARCHED -->Auckland averages 135 rainy days per year &mdash; showers can roll in quickly even in summer.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Auckland</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">Hills and waterfront walks &mdash; Auckland is not flat. Volcanic cones add elevation.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Auckland</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Swimsuit</span>
+          <span class="packing-item-why">Beaches and Waiheke Island &mdash; you'll want to swim.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Auckland</span>
+      </li>
+    </ul>
+
+    <!-- STOREFRONT: Uncomment when Amazon storefront URL is ready
+    <div class="packing-storefront">
+      <a href="STOREFRONT_URL_HERE" class="packing-storefront-link" target="_blank" rel="noopener sponsored">
+        Browse My Full Travel Storefront
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+    -->
+  </section>
+
+  <!-- ═══════════════ TRAVEL TIPS ═══════════════ -->
+  <section class="travel-tips" id="travel-tips">
+    <div class="tips-header">
+      <h2 class="tips-title">Travel Tips</h2>
+    </div>
+    <div class="tips-rule"></div>
+
+    <ul class="tips-list">
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text"><!-- RESEARCHED -->Download the AT Mobile app for real-time bus/train/ferry tracking and AT HOP card top-ups.</span>
+      </li>
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text"><!-- RESEARCHED -->Book Hobbiton and Waiheke wine tours at least a week ahead in summer &mdash; they sell out fast.</span>
+      </li>
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text"><!-- RESEARCHED -->Auckland's UV index is extreme in summer &mdash; wear sunscreen even on cloudy days.</span>
+      </li>
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text">The best GF dining is concentrated in the CBD and Ponsonby &mdash; plan meals in those areas.</span>
+      </li>
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text">Waiheke Island deserves a full day &mdash; don't try to rush it as a half-day trip.</span>
+      </li>
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text">Mudbrick Vineyard has stunning views but book ahead, especially for weekend lunch.</span>
+      </li>
+    </ul>
+
+    <div class="tips-hindsight">
+      <div class="tips-hindsight-label">What I'd Do Differently</div>
+      <ul class="hindsight-list">
+        <li class="hindsight-item">
+          <svg class="hindsight-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L6 1L11 11H1Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>
+          <span class="hindsight-text">I'd spend an extra day on Waiheke Island &mdash; one day wasn't enough to explore the vineyards and beaches.</span>
+        </li>
+        <li class="hindsight-item">
+          <svg class="hindsight-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L6 1L11 11H1Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>
+          <span class="hindsight-text">I was really looking forward to Mt Eden but never actually made it there &mdash; next time for sure!</span>
+        </li>
+        <li class="hindsight-item">
+          <svg class="hindsight-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L6 1L11 11H1Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>
+          <span class="hindsight-text">I'd add a day trip to Rotorua &mdash; the geothermal pools and M&#257;ori cultural experiences are only a few hours south and I wish I'd made the time.</span>
+        </li>
+      </ul>
+    </div>
   </section>
 
   <!-- TIP CTA -->
   <div class="tip-cta">
     <div class="tip-cta-title">Have a tip or comment?</div>
     <div class="tip-cta-sub">Found a great GF spot in Auckland? I'd love to hear from you.</div>
-    <a href="mailto:gfgoneglobal@gmail.com?subject=Tip for Auckland" class="tip-cta-link">
+    <a href="mailto:kellymdowd@gmail.com?subject=Tip for Auckland" class="tip-cta-link">
       <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="2.5" width="11" height="8" rx="1.5" stroke="currentColor" stroke-width="1.1"/><path d="M1 4l5.5 3.5L12 4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
       Send a note
     </a>
   </div>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="page-footer">
+    <div class="page-disclosure">This page may contain affiliate links. If you book through these links, I may earn a small commission at no extra cost to you.</div>
+  </footer>
+
+  <!-- ═══════════════ PHOTO LIGHTBOX ═══════════════ -->
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" aria-label="Close lightbox">
+      <svg viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="">
+  </div>
+  <script>
+  (function() {
+    var overlay = document.getElementById('lightbox');
+    var lbImg = document.getElementById('lightbox-img');
+
+    document.querySelectorAll('.restaurant-photo, .landmark-photo, .hotel-image, .thing-photo').forEach(function(img) {
+      img.addEventListener('click', function(e) {
+        e.stopPropagation();
+        lbImg.src = this.src;
+        lbImg.alt = this.alt;
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLightbox() {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    overlay.addEventListener('click', closeLightbox);
+    overlay.querySelector('.lightbox-close').addEventListener('click', function(e) {
+      e.stopPropagation();
+      closeLightbox();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && overlay.classList.contains('active')) {
+        closeLightbox();
+      }
+    });
+  })();
+  </script>
 
 </body>
 </html>

@@ -56,12 +56,12 @@
     .nav-link.is-active { color: var(--slate); }
 
     /* ─── Header ───────────────────────────────────────────── */
-    .header { padding: 2.4rem 2.5rem 1.2rem; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
-    .page-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1; }
-    .header-rule { height: 1px; background: linear-gradient(to right, var(--rose), transparent 60%); margin: 0 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 0.6s forwards; }
+    .header { max-width: 860px; margin: 0 auto; padding: 4rem 2.5rem 0; opacity: 0; transform: translateY(-14px); animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards; }
+    .page-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3rem); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1; }
+    .page-rule { width: 3rem; height: 1px; background: var(--rose); margin-top: 1.2rem; }
 
     /* ─── Content ───────────────────────────────────────────── */
-    .content { max-width: 860px; padding: 2.4rem 2.5rem 4rem; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards; }
+    .content { max-width: 860px; margin: 0 auto; padding: 2.4rem 2.5rem 4rem; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards; }
 
     .intro { margin-bottom: 3rem; }
     .intro p { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.01em; }
@@ -322,7 +322,8 @@
 
     /* ─── Footer ────────────────────────────────────────────── */
     .page-footer {
-      margin-top: auto;
+      max-width: 860px;
+      margin: auto auto 0;
       padding: 2rem 2.5rem;
       border-top: 1px solid rgba(42, 32, 24, 0.08);
       opacity: 0;
@@ -352,7 +353,6 @@
     @media (max-width: 600px) {
       .site-nav { padding: 0 1.2rem; }
       .header, .content, .page-footer { padding-left: 1.2rem; padding-right: 1.2rem; }
-      .header-rule { margin: 0 1.2rem; }
     }
   
 
@@ -450,8 +450,8 @@
 
   <header class="header">
     <h1 class="page-title">How We Score</h1>
+    <div class="page-rule"></div>
   </header>
-  <div class="header-rule"></div>
 
   <main class="content">
 
