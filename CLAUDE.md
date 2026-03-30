@@ -1,10 +1,11 @@
 # CLAUDE.md — Frontend Website Rules
 
 ## Always Do First
-- **Invoke the `frontend-design` skill** before writing any frontend code, every session, no exceptions.
+- **Invoke the `frontend-design` skill** only when designing new UI components or pages from scratch (e.g. new page layouts, new card designs, new sections). Skip it for data-driven builds using existing templates (city pages, country pages), photo updates, validation, or content edits.
 
 ## Project Structure
 - **Data source:** `travel_master.xlsx` — the single source of truth for all places, hotels, restaurants, GF scores, coordinates, and visit history. Read with Node.js `xlsx` package (installed in `node_modules/`).
+- **Pre-extracted data:** `data/[country]/[city].json` — cached per-city JSON extracted from the spreadsheet. Use these instead of parsing the xlsx directly. Regenerate with `node scripts/extract-city-data.js` after spreadsheet changes.
 - **Maps registry:** `map downloads/maps_registry.json` — index of all Google My Maps (local KML files + Google Maps IDs).
 - **City pages:** `countries/[country]/[city].html` — self-contained HTML with inline CSS/JS.
 - **Photos:** `photos/[country]/[city]/[place-name]/` — exported from Apple Photos, organized by place. Each city folder has a `photo_manifest.json`.
