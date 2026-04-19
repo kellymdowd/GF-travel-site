@@ -2,243 +2,285 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="description" content="First-hand celiac travel guide to Montego Bay, 5/10 safety score, and interactive maps. Visited December 2017.">
+  <meta name="description" content="First-hand celiac travel guide to Rose Hall with 0 GF-rated restaurants, 4/10 safety score, hotel reviews, and interactive maps. Visited December 2017.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gluten-Free Restaurants & Celiac Guide to Montego Bay, Jamaica | GF Gone Global</title>
+  <title>Gluten-Free Restaurants & Celiac Guide to Rose Hall, Jamaica | GF Gone Global</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
+    /* ─── Design Tokens ──────────────────────────────────────── */
     :root { --cream: #FFFFFF; --slate: #C8717A; --slate-bg: #FBF0F1; --rose: #B8907A; --ink: #2A2018; --ink-mid: #5A5048; --ink-light: #9A907A; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
     body { background: var(--cream); color: var(--ink); font-family: 'Jost', sans-serif; font-weight: 300; min-height: 100vh; padding-top: 52px; display: flex; flex-direction: column; }
     body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 100; opacity: 0.6; }
+
     /* ─── Site Nav Bar ────────────────────────────────────── */
     .site-nav { position: fixed; top: 0; left: 0; right: 0; height: 52px; background: var(--cream); border-bottom: 1px solid rgba(42, 32, 24, 0.08); display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; z-index: 300; }
     .nav-home { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.85rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); text-decoration: none; transition: color 0.2s ease; }
     .nav-home:hover { color: var(--slate); }
     .nav-links { display: flex; align-items: center; gap: 2rem; }
+
+    /* ─── Breadcrumb Nav ──────────────────────────────────────── */
     .nav { padding: 1.6rem 2.5rem 0; display: flex; gap: 1rem; align-items: center; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards; }
     .back-link { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
     .back-link:hover { color: var(--slate); }
     .back-link:hover svg { transform: translateX(-3px); }
     .back-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
     .nav-sep { font-size: 0.68rem; color: rgba(154, 144, 122, 0.4); letter-spacing: 0.1em; }
+    .nav-link { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .nav-link:hover { color: var(--slate); }
     .nav-current { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mid); }
+
+    /* ─── Header ──────────────────────────────────────────────── */
     .header { display: flex; justify-content: space-between; align-items: flex-end; padding: 1.4rem 2.5rem 1.2rem; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
+    .header-left { display: flex; flex-direction: column; }
+    .country-label { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.25rem; }
     .city-name { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1; }
     .trip-date { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(0.85rem, 1.3vw, 1rem); color: var(--ink-light); letter-spacing: 0.04em; padding-bottom: 0.2rem; }
     .header-rule { height: 1px; background: linear-gradient(to right, var(--rose), transparent 60%); margin: 0 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 0.6s forwards; }
-    .map-section { flex: 1; padding: 1.5rem 2.5rem 2rem; display: flex; flex-direction: column; gap: 0; opacity: 0; animation: fadeIn 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
-    .map-frame { width: 100%; flex: 1; min-height: 520px; border: none; }
-    
+
     /* ─── City Snapshot ──────────────────────────────────────── */
-    .snapshot {
-      padding: 1.6rem 2.5rem 0;
-      opacity: 0;
-      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
-    }
-
-    .snapshot-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 1rem;
-    }
-
-    .snapshot-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 0;
-      border-top: 1px solid rgba(42, 32, 24, 0.08);
-    }
-
-    .snapshot-item {
-      padding: 1rem 1.2rem 1rem 0;
-      border-bottom: 1px solid rgba(42, 32, 24, 0.08);
-    }
-
-    .snapshot-item-label {
-      font-family: 'Jost', sans-serif;
-      font-size: 0.58rem;
-      font-weight: 400;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 0.35rem;
-    }
-
-    .snapshot-item-value {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 400;
-      font-size: 1.05rem;
-      letter-spacing: 0.02em;
-      color: var(--ink);
-      line-height: 1.2;
-    }
-
-    /* GF Score visual */
-    .snapshot-score {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .snapshot-score-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 400;
-      font-size: 1.05rem;
-      color: var(--ink);
-      letter-spacing: 0.02em;
-      line-height: 1;
-    }
-
-    .snapshot-score-bar {
-      display: flex;
-      gap: 3px;
-      align-items: center;
-    }
-
-    .snapshot-score-pip {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: rgba(42, 32, 24, 0.1);
-    }
-
-    .snapshot-score-pip.is-filled {
-      background: var(--slate);
-    }
+    .snapshot { padding: 1.6rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards; }
+    .snapshot-label { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; }
+    .snapshot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .snapshot-item { padding: 1rem 1.2rem 1rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.08); }
+    .snapshot-item-label { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.35rem; }
+    .snapshot-item-value { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .snapshot-score { display: flex; align-items: center; gap: 0.6rem; }
+    .snapshot-score-num { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); letter-spacing: 0.02em; line-height: 1; }
+    .snapshot-score-bar { display: flex; gap: 3px; align-items: center; }
+    .snapshot-score-pip { width: 6px; height: 6px; border-radius: 50%; background: rgba(42, 32, 24, 0.1); }
+    .snapshot-score-pip.is-filled { background: var(--slate); }
 
     /* ─── Table of Contents ─────────────────────────────────── */
-    .toc {
-      padding: 1.6rem 2.5rem 0;
-      opacity: 0;
-      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
-    }
+    .toc { padding: 1.6rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
+    .toc-label { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; }
+    .toc-list { list-style: none; display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .toc-item { border-bottom: 1px solid rgba(42, 32, 24, 0.08); }
+    .toc-link { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1.6rem 0.7rem 0; font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; letter-spacing: 0.04em; color: var(--ink-mid); text-decoration: none; transition: color 0.2s ease; }
+    .toc-link:hover { color: var(--slate); }
+    .toc-link:hover .toc-arrow { transform: translateX(3px); color: var(--slate); }
+    .toc-link:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .toc-link:active { color: var(--rose); }
+    .toc-arrow { color: var(--ink-light); opacity: 0.4; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease; flex-shrink: 0; }
 
-    .toc-label {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-light);
-      margin-bottom: 1rem;
-    }
+    /* ─── Where to Stay ────────────────────────────────────── */
+    .where-to-stay { padding: 2.4rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.65s forwards; }
+    .stay-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .stay-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .stay-subtitle { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .stay-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .hotel-card { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid rgba(42, 32, 24, 0.08); border-radius: 4px; overflow: hidden; background: linear-gradient(135deg, rgba(251, 240, 241, 0.3) 0%, rgba(255, 255, 255, 0.6) 100%); transition: box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+    .hotel-card:hover { box-shadow: 0 4px 20px rgba(200, 113, 122, 0.08), 0 1px 6px rgba(42, 32, 24, 0.04); }
+    .hotel-image-side { position: relative; min-height: 280px; overflow: hidden; }
+    .hotel-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .hotel-image-overlay { position: absolute; inset: 0; background: linear-gradient(to right, transparent 50%, rgba(42, 32, 24, 0.04) 100%); mix-blend-mode: multiply; }
+    .hotel-badge { position: absolute; top: 1rem; left: 1rem; display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.3rem 0.7rem; background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(8px); border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mid); box-shadow: 0 1px 4px rgba(42, 32, 24, 0.08); }
+    .hotel-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--slate); }
+    .hotel-info-side { padding: 1.8rem 2rem; display: flex; flex-direction: column; justify-content: center; }
+    .hotel-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.4rem; letter-spacing: 0.03em; color: var(--ink); line-height: 1.2; margin-bottom: 0.15rem; }
+    .hotel-location { display: flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.64rem; font-weight: 300; color: var(--ink-light); letter-spacing: 0.04em; margin-bottom: 1.1rem; }
+    .hotel-location svg { flex-shrink: 0; opacity: 0.5; }
+    .hotel-why { margin-bottom: 1.3rem; }
+    .hotel-why-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.5rem; }
+    .hotel-why-text { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 0.98rem; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.01em; }
+    .hotel-features { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
+    .hotel-feature { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.2rem 0.55rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; background: rgba(42, 32, 24, 0.03); color: var(--ink-mid); }
+    .hotel-feature svg { flex-shrink: 0; opacity: 0.5; }
+    .hotel-cta { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1.4rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; border-radius: 3px; border: none; cursor: pointer; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 8px rgba(200, 113, 122, 0.2), 0 1px 3px rgba(200, 113, 122, 0.1); }
+    .hotel-cta:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(200, 113, 122, 0.3), 0 2px 5px rgba(200, 113, 122, 0.15); }
+    .hotel-cta:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; border-radius: 3px; }
+    .hotel-cta:active { background: #a85a63; transform: translateY(0); box-shadow: 0 1px 4px rgba(200, 113, 122, 0.15); }
+    .hotel-cta svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; }
+    .hotel-cta:hover svg { transform: translateX(2px); }
+    .hotel-image-placeholder { min-height: 280px; background: linear-gradient(135deg, rgba(251, 240, 241, 0.6) 0%, rgba(200, 113, 122, 0.08) 100%); display: flex; align-items: center; justify-content: center; color: var(--ink-light); opacity: 0.4; }
+    .hotel-onsite { margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid rgba(42, 32, 24, 0.06); }
+    .hotel-onsite-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.5rem; }
+    .hotel-onsite-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .hotel-onsite-item { display: inline-block; padding: 0.2rem 0.55rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.08em; background: rgba(42, 32, 24, 0.03); color: var(--ink-mid); }
+    @media (max-width: 768px) { .hotel-card { grid-template-columns: 1fr; } .hotel-image-side { min-height: 200px; } .hotel-info-side { padding: 1.4rem 1.2rem; } }
 
-    .toc-list {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0;
-      border-top: 1px solid rgba(42, 32, 24, 0.08);
-    }
+    /* ─── Gluten-Free Survival Guide ────────────────────────── */
+    .gf-guide { padding: 2.4rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards; }
+    .gf-guide-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.4rem; }
+    .gf-guide-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .gf-guide-difficulty { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.25rem 0.7rem 0.25rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; }
+    .gf-guide-difficulty .gf-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .gf-difficulty-easy { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .gf-difficulty-easy .gf-dot { background: #4c8c50; }
+    .gf-difficulty-moderate { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
+    .gf-difficulty-moderate .gf-dot { background: #b48c3c; }
+    .gf-difficulty-difficult { background: rgba(180, 70, 60, 0.08); color: #8a3a30; }
+    .gf-difficulty-difficult .gf-dot { background: #b4463c; }
+    .gf-guide-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.4rem; }
+    .gf-guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    .gf-info-group { margin-bottom: 1.6rem; }
+    .gf-info-group:last-child { margin-bottom: 0; }
+    .gf-info-label { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.5rem; }
+    .gf-info-value { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.6; letter-spacing: 0.01em; }
+    .gf-phrase { display: flex; justify-content: space-between; align-items: baseline; padding: 0.3rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.05); }
+    .gf-phrase:last-child { border-bottom: none; }
+    .gf-phrase-local { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; color: var(--ink); }
+    .gf-phrase-meaning { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-light); letter-spacing: 0.03em; }
+    .gf-list { list-style: none; }
+    .gf-list li { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); padding: 0.25rem 0; line-height: 1.4; }
+    .gf-list li::before { content: '\2014'; color: var(--ink-light); opacity: 0.4; margin-right: 0.5rem; }
+    .gf-score-section { padding-left: 2.5rem; border-left: 1px solid rgba(42, 32, 24, 0.08); }
+    .gf-score-title { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; }
+    .gf-score-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.05); }
+    .gf-score-row:first-of-type { border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .gf-score-category { font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; color: var(--ink-mid); letter-spacing: 0.02em; }
+    .gf-score-pips { display: flex; gap: 4px; align-items: center; }
+    .gf-score-pip { width: 8px; height: 8px; border-radius: 50%; background: rgba(42, 32, 24, 0.08); }
+    .gf-score-pip.is-filled { background: var(--slate); }
+    .gf-score-total { display: flex; align-items: baseline; gap: 0.5rem; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid rgba(42, 32, 24, 0.12); }
+    .gf-score-total-num { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 2.4rem; color: var(--ink); line-height: 1; letter-spacing: -0.02em; }
+    .gf-score-total-label { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .gf-score-verdict { margin-top: 0.8rem; }
+    @media (max-width: 768px) { .gf-guide-grid { grid-template-columns: 1fr; gap: 1.6rem; } .gf-score-section { padding-left: 0; border-left: none; padding-top: 1.2rem; border-top: 1px solid rgba(42, 32, 24, 0.08); } }
 
-    .toc-item {
-      border-bottom: 1px solid rgba(42, 32, 24, 0.08);
-    }
+    /* ─── Things to Do ─────────────────────────────────────── */
+    .things-to-do { padding: 2.4rem 2.5rem 0; }
+    .things-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .things-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .things-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .things-category-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .things-category + .things-category { margin-top: 2rem; }
+    .things-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .thing-card { padding: 1.2rem 1.6rem 1.2rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .thing-card:nth-child(odd) { padding-right: 1.6rem; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .thing-card:nth-child(even) { padding-left: 1.6rem; padding-right: 0; }
+    .thing-card:nth-last-child(1), .thing-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+    .thing-card:nth-last-child(1):nth-child(even) ~ .thing-card { border-bottom: none; }
+    .thing-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.3rem; }
+    .thing-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.1rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
+    .thing-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
+    .thing-tag-free { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .thing-tag-paid { background: rgba(42, 32, 24, 0.04); color: var(--ink-mid); }
+    .thing-desc { font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; margin-bottom: 0.6rem; }
+    .thing-card-inner { display: flex; gap: 1rem; align-items: flex-start; }
+    .thing-card-content { flex: 1; min-width: 0; }
+    .thing-photo { width: 80px; height: 80px; border-radius: 6px; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 4px rgba(42, 32, 24, 0.1); cursor: pointer; }
+    .thing-meta { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
+    .thing-detail { display: flex; align-items: center; gap: 0.3rem; font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; color: var(--ink-light); letter-spacing: 0.04em; }
+    .thing-detail svg { flex-shrink: 0; opacity: 0.5; }
+    .thing-book { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.7rem; padding: 0.45rem 0.9rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 3px; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 6px rgba(200, 113, 122, 0.15), 0 1px 2px rgba(200, 113, 122, 0.08); }
+    .thing-book:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200, 113, 122, 0.25), 0 2px 4px rgba(200, 113, 122, 0.12); }
+    .thing-book:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; }
+    .thing-book:active { background: #a85a63; transform: translateY(0); }
+    .thing-book svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .thing-book:hover svg { transform: translateX(2px); }
+    .thing-visit { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.7rem; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .thing-visit:hover { color: var(--slate); }
+    .thing-visit:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .thing-visit:active { color: var(--rose); }
+    .thing-visit svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .thing-visit:hover svg { transform: translateX(2px); }
+    @media (max-width: 768px) { .things-grid { grid-template-columns: 1fr; } .thing-card:nth-child(odd) { border-right: none; padding-right: 0; } .thing-card:nth-child(even) { padding-left: 0; } .thing-card:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } }
 
-    .toc-link {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      padding: 0.7rem 1.6rem 0.7rem 0;
-      font-family: 'Jost', sans-serif;
-      font-size: 0.78rem;
-      font-weight: 300;
-      letter-spacing: 0.04em;
-      color: var(--ink-mid);
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
+    /* ─── Getting Around ────────────────────────────────────── */
+    .getting-around { padding: 2.4rem 2.5rem 0; }
+    .getting-around-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .getting-around-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .getting-around-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .transport-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+    .transport-card { padding: 1.4rem 1.4rem 1.4rem 0; border-right: 1px solid rgba(42, 32, 24, 0.06); }
+    .transport-card:last-child { border-right: none; padding-right: 0; }
+    .transport-card:first-child { padding-left: 0; }
+    .transport-card:not(:first-child) { padding-left: 1.4rem; }
+    .transport-icon { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(42, 32, 24, 0.03); color: var(--ink-mid); margin-bottom: 0.9rem; }
+    .transport-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.1rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; margin-bottom: 0.5rem; }
+    .transport-desc { font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; }
+    .transport-detail { display: flex; align-items: baseline; gap: 0.4rem; margin-top: 0.6rem; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); }
+    .transport-detail svg { flex-shrink: 0; position: relative; top: 1px; opacity: 0.5; }
+    .transit-tip { margin-top: 1.6rem; padding: 1.2rem 1.4rem; background: var(--slate-bg); border-radius: 4px; border-left: 2px solid var(--slate); display: flex; gap: 0.8rem; align-items: flex-start; }
+    .transit-tip-icon { flex-shrink: 0; color: var(--slate); opacity: 0.7; position: relative; top: 1px; }
+    .transit-tip-content { flex: 1; min-width: 0; }
+    .transit-tip-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--slate); margin-bottom: 0.35rem; }
+    .transit-tip-text { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 0.98rem; color: var(--ink); line-height: 1.6; letter-spacing: 0.01em; }
+    @media (max-width: 768px) { .transport-grid { grid-template-columns: 1fr 1fr; } .transport-card { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } .transport-card:nth-child(2) { border-right: none; padding-right: 0; } .transport-card:nth-child(3) { padding-left: 0; border-right: none; border-bottom: none; } }
+    @media (max-width: 480px) { .transport-grid { grid-template-columns: 1fr; } .transport-card { border-right: none; padding-left: 0; padding-right: 0; } .transport-card:last-child { border-bottom: none; } }
 
-    .toc-link:hover {
-      color: var(--slate);
-    }
+    /* ─── What to Pack ─────────────────────────────────────── */
+    .packing { padding: 2.4rem 2.5rem 0; }
+    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .packing-item:last-child { border-bottom: none; }
+    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
+    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
+    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
+    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
+    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
+    .packing-tag-jamaica { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
+    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    .packing-storefront { margin-top: 1.4rem; padding-top: 1.2rem; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .packing-storefront-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1.1rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.64rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 3px; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 6px rgba(200, 113, 122, 0.15), 0 1px 2px rgba(200, 113, 122, 0.08); }
+    .packing-storefront-link:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200, 113, 122, 0.25), 0 2px 4px rgba(200, 113, 122, 0.12); }
+    .packing-storefront-link:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; }
+    .packing-storefront-link:active { background: #a85a63; transform: translateY(0); }
+    .packing-storefront-link svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .packing-storefront-link:hover svg { transform: translateX(2px); }
+    @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
 
-    .toc-link:hover .toc-arrow {
-      transform: translateX(3px);
-      color: var(--slate);
-    }
+    /* ─── Travel Tips ──────────────────────────────────────── */
+    .travel-tips { padding: 2.4rem 2.5rem 0; }
+    .tips-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .tips-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .tips-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
+    .tips-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .tip-item { display: flex; gap: 0.8rem; align-items: baseline; padding: 0.7rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .tip-item:last-child { border-bottom: none; }
+    .tip-bullet { width: 4px; height: 4px; border-radius: 50%; background: var(--slate); flex-shrink: 0; opacity: 0.5; position: relative; top: 0.35rem; }
+    .tip-text { font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; }
+    .tips-hindsight { margin-top: 1.8rem; }
+    .tips-hindsight-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.8rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .hindsight-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .hindsight-item { display: flex; gap: 0.8rem; align-items: baseline; padding: 0.7rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .hindsight-item:last-child { border-bottom: none; }
+    .hindsight-icon { flex-shrink: 0; color: var(--slate); opacity: 0.5; position: relative; top: 0.2rem; }
+    .hindsight-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.01em; }
 
-    .toc-link:focus-visible {
-      outline: 1.5px solid var(--slate);
-      outline-offset: 2px;
-      border-radius: 2px;
-    }
-
-    .toc-link:active {
-      color: var(--rose);
-    }
-
-    .toc-arrow {
-      color: var(--ink-light);
-      opacity: 0.4;
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
-      flex-shrink: 0;
-    }
-
-    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeIn { to { opacity: 1; } }
-    @media (max-width: 600px) { .site-nav, .nav, .header, .map-section, .snapshot, .toc, .coming-soon-banner { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
-  
-    /* ─── Coming Soon Badge ────────────────────────────────── */
-    .coming-soon-banner {
-      padding: 2.5rem 2.5rem 0;
-      opacity: 0;
-      animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
-    }
-
-    .coming-soon-inner {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1.2rem 1.6rem;
-      background: var(--slate-bg, #FBF0F1);
-      border-left: 2px solid var(--slate, #C8717A);
-    }
-
-    .coming-soon-icon {
-      flex-shrink: 0;
-      color: var(--slate, #C8717A);
-      opacity: 0.6;
-    }
-
-    .coming-soon-text {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-    }
-
-    .coming-soon-label {
-      font-family: 'Jost', sans-serif;
-      font-size: 0.62rem;
-      font-weight: 400;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--slate, #C8717A);
-    }
-
-    .coming-soon-desc {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 0.95rem;
-      font-weight: 300;
-      font-style: italic;
-      color: var(--ink-mid, #5A5048);
-      letter-spacing: 0.02em;
-      line-height: 1.4;
-    }
-      .tip-cta { padding: 2.4rem 2.5rem; text-align: center; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    /* ─── Footer ──────────────────────────────────────────── */
+    .tip-cta { padding: 2.4rem 2.5rem; text-align: center; border-top: 1px solid rgba(42, 32, 24, 0.08); }
     .tip-cta-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.2rem, 2vw, 1.5rem); letter-spacing: 0.04em; color: var(--ink); margin-bottom: 0.4rem; }
     .tip-cta-sub { font-family: 'Jost', sans-serif; font-size: 0.82rem; font-weight: 300; color: var(--ink-light); margin-bottom: 1.2rem; }
     .tip-cta-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--slate); text-decoration: none; border: 1px solid rgba(200, 113, 122, 0.3); padding: 0.6rem 1.4rem; border-radius: 100px; transition: background 0.2s ease, border-color 0.2s ease; }
     .tip-cta-link:hover { background: var(--slate-bg); border-color: var(--slate); }
-  
+    .page-footer { padding: 2rem 2.5rem 2.5rem; text-align: center; }
+    .page-disclosure { font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 300; color: var(--ink-light); opacity: 0.5; letter-spacing: 0.03em; }
+
+    /* ─── Photo Lightbox ──────────────────────────────────────── */
+    .restaurant-photo, .landmark-photo, .hotel-image { cursor: zoom-in; }
+    .lightbox-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(10, 8, 6, 0); display: flex; align-items: center; justify-content: center; cursor: zoom-out; opacity: 0; pointer-events: none; transition: background 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .lightbox-overlay.active { opacity: 1; pointer-events: auto; background: rgba(10, 8, 6, 0.85); }
+    .lightbox-img { max-width: 90vw; max-height: 85vh; border-radius: 6px; object-fit: contain; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06); transform: scale(0.92); opacity: 0; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease; }
+    .lightbox-overlay.active .lightbox-img { transform: scale(1); opacity: 1; }
+    .lightbox-close { position: absolute; top: 1.2rem; right: 1.4rem; width: 36px; height: 36px; border: none; background: rgba(255, 255, 255, 0.1); border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s ease, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .lightbox-close:hover { background: rgba(255, 255, 255, 0.2); transform: scale(1.1); }
+    .lightbox-close:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.5); outline-offset: 2px; }
+    .lightbox-close:active { transform: scale(0.95); }
+    .lightbox-close svg { width: 16px; height: 16px; stroke: rgba(255, 255, 255, 0.8); stroke-width: 2; }
+
+    /* ─── Animations & Global Responsive ──────────────────── */
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { to { opacity: 1; } }
+    @media (max-width: 600px) { .site-nav, .nav, .header, .snapshot, .toc, .gf-guide, .where-to-stay, .things-to-do, .packing, .travel-tips, .getting-around, .page-footer { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
+
+    /* ─── Mobile: Site nav bar ────────────────────────────── */
+    @media (max-width: 480px) {
+      .site-nav { padding: 0 1.2rem; }
+      .nav-links { gap: 0.8rem; }
+      .nav-home { font-size: 0.72rem; letter-spacing: 0.1em; }
+    }
 
     /* ─── Mobile: Breadcrumb nav ──────────────────────────── */
     @media (max-width: 480px) {
@@ -246,22 +288,15 @@
       .header { flex-direction: column; align-items: flex-start; gap: 0.2rem; }
       .trip-date { padding-bottom: 0; }
     }
-  
-    /* ─── Mobile: Site nav bar ────────────────────────────── */
-    @media (max-width: 480px) {
-      .site-nav { padding: 0 1.2rem; }
-      .nav-links { gap: 0.8rem; }
-      .nav-home { font-size: 0.72rem; letter-spacing: 0.1em; }
-    }
   </style>
 
   <!-- Google Analytics (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-64V5CSB1DT"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J5LD1HTY75"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-64V5CSB1DT');
+    gtag('config', 'G-J5LD1HTY75');
 
     // ─── Enhanced event tracking ──────────────────────────
 
@@ -281,11 +316,7 @@
             [25, 50, 75, 100].forEach(function(mark) {
               if (scrollPct >= mark && !scrollMarks[mark]) {
                 scrollMarks[mark] = true;
-                gtag('event', 'scroll_depth', {
-                  event_category: 'engagement',
-                  event_label: mark + '%',
-                  page_title: document.title
-                });
+                gtag('event', 'scroll_depth', { event_category: 'engagement', event_label: mark + '%', page_title: document.title });
               }
             });
             ticking = false;
@@ -294,28 +325,19 @@
         }
       });
 
-      // ── 2. Section visibility tracking (Intersection Observer) ──
+      // ── 2. Section visibility tracking ──
       var sectionObserver = new IntersectionObserver(function(entries) {
         entries.forEach(function(entry) {
           if (entry.isIntersecting) {
-            var sectionName = entry.target.querySelector('h2')
-              ? entry.target.querySelector('h2').textContent.trim()
-              : entry.target.className;
-            gtag('event', 'section_view', {
-              event_category: 'engagement',
-              event_label: sectionName,
-              page_title: document.title
-            });
+            var sectionName = entry.target.querySelector('h2') ? entry.target.querySelector('h2').textContent.trim() : entry.target.className;
+            gtag('event', 'section_view', { event_category: 'engagement', event_label: sectionName, page_title: document.title });
             sectionObserver.unobserve(entry.target);
           }
         });
       }, { threshold: 0.3 });
+      document.querySelectorAll('section, .gf-guide-section, .restaurants-section, .landmarks-section, .things-section, .neighborhoods-section, .getting-around-section, .packing-section, .tips-section').forEach(function(s) { sectionObserver.observe(s); });
 
-      document.querySelectorAll('section, .gf-guide-section, .restaurants-section, .landmarks-section, .things-section, .neighborhoods-section, .getting-around-section, .packing-section, .tips-section').forEach(function(section) {
-        sectionObserver.observe(section);
-      });
-
-      // ── 3. Outbound link clicks (with link type classification) ──
+      // ── 3. Outbound link clicks (classified) ──
       document.querySelectorAll('a[target="_blank"]').forEach(function(link) {
         link.addEventListener('click', function() {
           var href = this.href;
@@ -325,147 +347,71 @@
           else if (href.includes('viator.com')) linkType = 'activity_booking';
           else if (href.includes('getyourguide.com')) linkType = 'activity_booking';
           else if (href.includes('google.com/maps')) linkType = 'google_maps';
-
-          var context = this.closest('.restaurant-card') ? this.closest('.restaurant-card').querySelector('.restaurant-name').textContent.trim()
-            : this.closest('.thing-card') ? this.closest('.thing-card').querySelector('.thing-name').textContent.trim()
-            : this.closest('.hotel-card') ? 'hotel'
-            : 'page';
-
-          gtag('event', 'outbound_click', {
-            event_category: 'engagement',
-            event_label: href,
-            link_type: linkType,
-            click_context: context,
-            transport_type: 'beacon'
-          });
+          var context = this.closest('.restaurant-card') ? this.closest('.restaurant-card').querySelector('.restaurant-name').textContent.trim() : this.closest('.thing-card') ? this.closest('.thing-card').querySelector('.thing-name').textContent.trim() : this.closest('.hotel-card') ? 'hotel' : 'page';
+          gtag('event', 'outbound_click', { event_category: 'engagement', event_label: href, link_type: linkType, click_context: context, transport_type: 'beacon' });
         });
       });
 
-      // ── 4. FMGF link clicks (high-value — tracks which restaurants) ──
+      // ── 4. FMGF clicks ──
       document.querySelectorAll('.restaurant-fmgf-link').forEach(function(link) {
         link.addEventListener('click', function() {
-          var restaurantName = this.closest('.restaurant-card')
-            ? this.closest('.restaurant-card').querySelector('.restaurant-name').textContent.trim()
-            : 'unknown';
-          gtag('event', 'fmgf_click', {
-            event_category: 'conversion',
-            event_label: restaurantName,
-            page_title: document.title,
-            transport_type: 'beacon'
-          });
+          var name = this.closest('.restaurant-card') ? this.closest('.restaurant-card').querySelector('.restaurant-name').textContent.trim() : 'unknown';
+          gtag('event', 'fmgf_click', { event_category: 'conversion', event_label: name, page_title: document.title, transport_type: 'beacon' });
         });
       });
 
-      // ── 5. Hotel booking clicks (affiliate conversion) ──
+      // ── 5. Hotel booking clicks ──
       document.querySelectorAll('a[href*="hotels.com"]').forEach(function(link) {
         link.addEventListener('click', function() {
-          var hotelName = this.closest('.hotel-card')
-            ? (this.closest('.hotel-card').querySelector('.hotel-name') || {}).textContent || 'unknown'
-            : 'unknown';
-          gtag('event', 'hotel_booking_click', {
-            event_category: 'conversion',
-            event_label: hotelName,
-            page_title: document.title,
-            transport_type: 'beacon'
-          });
+          var name = this.closest('.hotel-card') ? (this.closest('.hotel-card').querySelector('.hotel-name') || {}).textContent || 'unknown' : 'unknown';
+          gtag('event', 'hotel_booking_click', { event_category: 'conversion', event_label: name, page_title: document.title, transport_type: 'beacon' });
         });
       });
 
-      // ── 6. Activity booking clicks (affiliate conversion) ──
+      // ── 6. Activity booking clicks ──
       document.querySelectorAll('.thing-book-btn, a[href*="viator.com"], a[href*="getyourguide.com"]').forEach(function(link) {
         link.addEventListener('click', function() {
-          var activityName = this.closest('.thing-card')
-            ? this.closest('.thing-card').querySelector('.thing-name').textContent.trim()
-            : 'unknown';
-          gtag('event', 'activity_booking_click', {
-            event_category: 'conversion',
-            event_label: activityName,
-            page_title: document.title,
-            transport_type: 'beacon'
-          });
+          var name = this.closest('.thing-card') ? this.closest('.thing-card').querySelector('.thing-name').textContent.trim() : 'unknown';
+          gtag('event', 'activity_booking_click', { event_category: 'conversion', event_label: name, page_title: document.title, transport_type: 'beacon' });
         });
       });
 
-      // ── 7. Photo lightbox opens (which photos interest people) ──
+      // ── 7. Photo lightbox opens ──
       document.querySelectorAll('.restaurant-photo, .landmark-photo, .hotel-image, .thing-photo').forEach(function(img) {
         img.addEventListener('click', function() {
-          var placeName = this.closest('.restaurant-card')
-            ? this.closest('.restaurant-card').querySelector('.restaurant-name').textContent.trim()
-            : this.closest('.landmark-card')
-            ? this.closest('.landmark-card').querySelector('.landmark-name').textContent.trim()
-            : this.alt || 'unknown';
-          gtag('event', 'photo_view', {
-            event_category: 'engagement',
-            event_label: placeName,
-            page_title: document.title
-          });
+          var name = this.closest('.restaurant-card') ? this.closest('.restaurant-card').querySelector('.restaurant-name').textContent.trim() : this.closest('.landmark-card') ? this.closest('.landmark-card').querySelector('.landmark-name').textContent.trim() : this.alt || 'unknown';
+          gtag('event', 'photo_view', { event_category: 'engagement', event_label: name, page_title: document.title });
         });
       });
 
-      // ── 8. Section navigation (TOC clicks) ──
+      // ── 8. Section nav (TOC) ──
       document.querySelectorAll('a[href^="#"]').forEach(function(link) {
-        link.addEventListener('click', function() {
-          gtag('event', 'section_nav', {
-            event_category: 'navigation',
-            event_label: this.textContent.trim(),
-            page_title: document.title
-          });
-        });
+        link.addEventListener('click', function() { gtag('event', 'section_nav', { event_category: 'navigation', event_label: this.textContent.trim(), page_title: document.title }); });
       });
 
       // ── 9. Map interactions ──
       document.querySelectorAll('.map-container, [class*="map-wrap"]').forEach(function(el) {
         var tracked = false;
-        el.addEventListener('click', function() {
-          if (!tracked) {
-            tracked = true;
-            gtag('event', 'map_interaction', {
-              event_category: 'engagement',
-              event_label: el.id || 'map',
-              page_title: document.title
-            });
-          }
-        });
+        el.addEventListener('click', function() { if (!tracked) { tracked = true; gtag('event', 'map_interaction', { event_category: 'engagement', event_label: el.id || 'map', page_title: document.title }); } });
       });
 
       // ── 10. Tip CTA email clicks ──
       document.querySelectorAll('a[href^="mailto:"]').forEach(function(link) {
-        link.addEventListener('click', function() {
-          gtag('event', 'tip_cta_click', {
-            event_category: 'conversion',
-            event_label: document.title,
-            transport_type: 'beacon'
-          });
-        });
+        link.addEventListener('click', function() { gtag('event', 'tip_cta_click', { event_category: 'conversion', event_label: document.title, transport_type: 'beacon' }); });
       });
 
-      // ── 11. Internal navigation (country page links, breadcrumbs) ──
+      // ── 11. Internal navigation ──
       document.querySelectorAll('.back-link, .nav-link, .nav-home').forEach(function(link) {
-        link.addEventListener('click', function() {
-          gtag('event', 'internal_nav', {
-            event_category: 'navigation',
-            event_label: this.textContent.trim(),
-            link_url: this.href
-          });
-        });
+        link.addEventListener('click', function() { gtag('event', 'internal_nav', { event_category: 'navigation', event_label: this.textContent.trim(), link_url: this.href }); });
       });
 
-      // ── 12. Time on page (fires at 30s, 60s, 120s, 300s) ──
+      // ── 12. Time on page (30s, 60s, 120s, 300s) ──
       [30, 60, 120, 300].forEach(function(seconds) {
-        setTimeout(function() {
-          if (!document.hidden) {
-            gtag('event', 'time_on_page', {
-              event_category: 'engagement',
-              event_label: seconds + 's',
-              page_title: document.title
-            });
-          }
-        }, seconds * 1000);
+        setTimeout(function() { if (!document.hidden) { gtag('event', 'time_on_page', { event_category: 'engagement', event_label: seconds + 's', page_title: document.title }); } }, seconds * 1000);
       });
 
     });
   </script>
-  
 
   <!-- Structured data for search engines and AI systems -->
   <script type="application/ld+json">
@@ -474,8 +420,8 @@
   "@graph": [
     {
       "@type": "Article",
-      "headline": "Gluten-Free Restaurants & Celiac Guide to Montego Bay, Jamaica",
-      "description": "First-hand celiac travel guide to Montego Bay with 0 GF-rated restaurants, 5/10 GF friendliness score. Visited December 2017.",
+      "headline": "Gluten-Free Restaurants & Celiac Guide to Rose Hall, Jamaica",
+      "description": "First-hand celiac travel guide to Rose Hall with 0 GF-rated restaurants, 4/10 GF friendliness score. Visited December 2017.",
       "author": {
         "@type": "Person",
         "name": "GF Gone Global"
@@ -486,7 +432,7 @@
       },
       "about": {
         "@type": "City",
-        "name": "Montego Bay",
+        "name": "Rose Hall",
         "containedInPlace": {
           "@type": "Country",
           "name": "Jamaica"
@@ -494,22 +440,44 @@
       }
     },
     {
+      "@type": "LodgingBusiness",
+      "name": "Hyatt Ziva Rose Hall",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Rose Hall",
+        "addressCountry": "JM"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 18.5230477,
+        "longitude": -77.8328206
+      }
+    },
+    {
       "@type": "FAQPage",
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "Is Montego Bay safe for celiacs?",
+          "name": "Is Rose Hall safe for celiacs?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Montego Bay scores 5/10 for GF friendliness (Manageable)."
+            "text": "Rose Hall scores 4/10 for GF friendliness (Difficult). GF dining is entirely resort-dependent. The Hyatt Ziva Rose Hall has clearly marked GF menus across 16 dining outlets. Outside resorts, celiac awareness is low, but naturally GF Jamaican dishes like ackee & saltfish and jerk chicken help."
           }
         },
         {
           "@type": "Question",
-          "name": "Can you find gluten-free food in Montego Bay supermarkets?",
+          "name": "What are the best gluten-free restaurants in Rose Hall?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Check the full guide for grocery recommendations and naturally gluten-free local dishes in Montego Bay, Jamaica."
+            "text": "There are no standalone GF-friendly restaurants in Rose Hall. The Hyatt Ziva Rose Hall all-inclusive resort offers 16 dining outlets with GF-marked menus, including Di RoZa (Italian), CalypZo (Seafood), Fuzion (Asian), and Jerk Shack."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you find gluten-free food in Rose Hall supermarkets?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Progressive Foods Supermarket in nearby Montego Bay (Fairview Business Park) carries some GF products. There are no supermarkets in Rose Hall itself — stock up in Montego Bay if leaving the resort."
           }
         }
       ]
@@ -519,7 +487,11 @@
   </script>
 </head>
 <body>
-    <nav class="site-nav">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SITE NAV
+       ═══════════════════════════════════════════════════════════ -->
+  <nav class="site-nav">
     <a href="../../index.html" class="nav-home">GF Gone Global</a>
     <div class="nav-links">
       <a href="../../index.html" class="nav-link">Places</a>
@@ -528,112 +500,525 @@
     </div>
   </nav>
 
-<nav class="nav">
-    <a href="../jamaica.html" class="back-link">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-        <path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      Jamaica
+  <!-- ═══════════════════════════════════════════════════════════
+       BREADCRUMB NAV
+       ═══════════════════════════════════════════════════════════ -->
+  <nav class="nav">
+    <a href="../../index.html" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      All Countries
     </a>
     <span class="nav-sep">/</span>
-    <span class="nav-current">Montego Bay</span>
+    <a href="../jamaica.html" class="nav-link">Jamaica</a>
+    <span class="nav-sep">/</span>
+    <span class="nav-current">Rose Hall</span>
   </nav>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       HEADER
+       ═══════════════════════════════════════════════════════════ -->
   <header class="header">
-    <h1 class="city-name">Montego Bay</h1>
+    <div class="header-left">
+      <span class="country-label">Jamaica</span>
+      <h1 class="city-name">Rose Hall</h1>
+    </div>
     <span class="trip-date">Last traveled · December 2017</span>
   </header>
   <div class="header-rule"></div>
 
-  <div class="coming-soon-banner">
-    <div class="coming-soon-inner">
-      <svg class="coming-soon-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
-        <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.2"/>
-        <path d="M10 5.5V10.5L13 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <div class="coming-soon-text">
-        <span class="coming-soon-label">Coming Soon</span>
-        <span class="coming-soon-desc">Full guide with restaurants, hotels &amp; landmarks is on its way.</span>
-      </div>
-    </div>
-  </div>
-
+  <!-- ═══════════════════════════════════════════════════════════
+       SNAPSHOT
+       ═══════════════════════════════════════════════════════════ -->
   <section class="snapshot">
     <div class="snapshot-label">City Snapshot</div>
     <div class="snapshot-grid">
       <div class="snapshot-item">
         <div class="snapshot-item-label">Best Months</div>
-        <div class="snapshot-item-value">Dec–Apr</div>
+        <div class="snapshot-item-value">Dec – Apr</div>
       </div>
       <div class="snapshot-item">
         <div class="snapshot-item-label">Ideal Stay</div>
-        <div class="snapshot-item-value">2–3 days</div>
+        <div class="snapshot-item-value">4–7 days</div>
       </div>
       <div class="snapshot-item">
-        <div class="snapshot-item-label">Gluten-Free</div>
+        <div class="snapshot-item-label">Best For</div>
+        <div class="snapshot-item-value">All-inclusive resorts, beaches</div>
+      </div>
+      <div class="snapshot-item">
+        <div class="snapshot-item-label">GF Friendliness</div>
         <div class="snapshot-score">
-          <span class="snapshot-score-num">5/10</span>
+          <span class="snapshot-score-num">4/10</span>
           <div class="snapshot-score-bar">
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip is-filled"></span>
-            <span class="snapshot-score-pip"></span>
-            <span class="snapshot-score-pip"></span>
-            <span class="snapshot-score-pip"></span>
-            <span class="snapshot-score-pip"></span>
-            <span class="snapshot-score-pip"></span>
+            <span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span>
           </div>
         </div>
       </div>
       <div class="snapshot-item">
-        <div class="snapshot-item-label">English Spoken</div>
-        <div class="snapshot-item-value">Widely</div>
+        <div class="snapshot-item-label">Language</div>
+        <div class="snapshot-item-value">English / Patois</div>
+      </div>
+      <div class="snapshot-item">
+        <div class="snapshot-item-label">English</div>
+        <div class="snapshot-item-value">Widely spoken</div>
       </div>
       <div class="snapshot-item">
         <div class="snapshot-item-label">City Size</div>
-        <div class="snapshot-item-value">Medium</div>
+        <div class="snapshot-item-value">Small resort area</div>
       </div>
       <div class="snapshot-item">
-        <div class="snapshot-item-label">Walkability</div>
-        <div class="snapshot-item-value">Low</div>
-      </div>
-      <div class="snapshot-item">
-        <div class="snapshot-item-label">Public Transit</div>
-        <div class="snapshot-item-value">Limited</div>
+        <div class="snapshot-item-label">Currency</div>
+        <div class="snapshot-item-value">JMD (Jamaican Dollar)</div>
       </div>
     </div>
   </section>
 
-
+  <!-- ═══════════════════════════════════════════════════════════
+       TABLE OF CONTENTS
+       ═══════════════════════════════════════════════════════════ -->
   <nav class="toc">
-    <div class="toc-label">Jump to</div>
+    <div class="toc-label">On this page</div>
     <ul class="toc-list">
       <li class="toc-item"><a href="#where-to-stay" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Where to stay</a></li>
-      <li class="toc-item"><a href="#gluten-free" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Gluten-free survival guide</a></li>
-      <li class="toc-item"><a href="#restaurants" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Restaurants</a></li>
-      <li class="toc-item"><a href="#getting-around" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Getting around</a></li>
-      <li class="toc-item"><a href="#landmarks" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Landmarks &amp; must-see spots</a></li>
-      <li class="toc-item"><a href="#neighborhoods" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Neighborhoods</a></li>
+      <li class="toc-item"><a href="#gf-guide" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>GF survival guide</a></li>
       <li class="toc-item"><a href="#things-to-do" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Things to do</a></li>
+      <li class="toc-item"><a href="#getting-around" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Getting around</a></li>
       <li class="toc-item"><a href="#what-to-pack" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>What to pack</a></li>
       <li class="toc-item"><a href="#travel-tips" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Travel tips</a></li>
     </ul>
   </nav>
 
-  <section class="map-section">
-    <!-- <iframe class="map-frame" src="https://www.google.com/maps/d/embed?mid=1lBOPLZJ2idHPSbncKsSF2zkH6-CNhVo" allowfullscreen></iframe> -->
+  <!-- ═══════════════ WHERE TO STAY ═══════════════ -->
+  <section class="where-to-stay" id="where-to-stay">
+    <div class="stay-header">
+      <h2 class="stay-title">Where to Stay</h2>
+      <span class="stay-subtitle">Recommended</span>
+    </div>
+    <div class="stay-rule"></div>
+
+    <div class="hotel-card">
+      <div class="hotel-image-side">
+        <div class="hotel-image-placeholder">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14"/><path d="M9 21V13h6v8"/><path d="M1 21h22"/><rect x="7" y="8" width="3" height="3" rx="0.5"/><rect x="14" y="8" width="3" height="3" rx="0.5"/></svg>
+        </div>
+        <div class="hotel-badge">
+          <span class="hotel-badge-dot"></span>
+          Where I stayed
+        </div>
+      </div>
+
+      <div class="hotel-info-side">
+        <h3 class="hotel-name">Hyatt Ziva Rose Hall</h3>
+        <div class="hotel-location">
+          <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+          Rose Hall · North Coast
+        </div>
+
+        <div class="hotel-why">
+          <div class="hotel-why-label">Why Stay Here</div>
+          <div class="hotel-why-text">All-inclusive resort for a bachelorette party — the staff were very accommodating with GF for an all-inclusive. Would definitely stay at Hyatt Zivas or Zilaras again. Note: temporarily closed due to Hurricane Melissa, expected to reopen Q1 2027.</div>
+        </div>
+
+        <div class="hotel-features">
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> All-Inclusive</span>
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Beachfront</span>
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> GF Menus</span>
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> 16 Dining Outlets</span>
+        </div>
+
+        <div class="hotel-onsite">
+          <div class="hotel-onsite-label">On-site Restaurants</div>
+          <div class="hotel-onsite-list">
+            <span class="hotel-onsite-item">Di RoZa (Italian)</span>
+            <span class="hotel-onsite-item">CalypZo (Seafood)</span>
+            <span class="hotel-onsite-item">Fuzion (Asian)</span>
+            <span class="hotel-onsite-item">Petit Pariz (French)</span>
+            <span class="hotel-onsite-item">ChoiceZ (Buffet)</span>
+            <span class="hotel-onsite-item">Jerk Shack</span>
+          </div>
+        </div>
+
+        <a href="https://www.hotels.com/ho458391/hyatt-ziva-rose-hall-all-inclusive-st-bran-s-burg-jamaica/" class="hotel-cta" target="_blank" rel="noopener sponsored" style="margin-top: 1.4rem;">
+          Book on Hotels.com
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
   </section>
 
-  <!-- TIP CTA -->
+  <!-- ═══════════════ GF SURVIVAL GUIDE ═══════════════ -->
+  <section class="gf-guide" id="gf-guide">
+    <div class="gf-guide-header">
+      <h2 class="gf-guide-title">Gluten-Free Survival Guide</h2>
+      <span class="gf-guide-difficulty gf-difficulty-difficult"><span class="gf-dot"></span>Difficult</span>
+    </div>
+    <div class="gf-guide-rule"></div>
+    <div class="gf-guide-grid">
+      <div class="gf-guide-left">
+        <!-- RESEARCHED -->
+        <div class="gf-info-group">
+          <div class="gf-info-label">Key Phrases</div>
+          <div class="gf-phrase">
+            <span class="gf-phrase-local">"I have celiac disease and cannot eat wheat, rye, oats, or barley"</span>
+            <span class="gf-phrase-meaning">English understood at resorts</span>
+          </div>
+          <div class="gf-phrase">
+            <span class="gf-phrase-local">"Does this contain flour or wheat?"</span>
+            <span class="gf-phrase-meaning">Flour = 'flaar' in patois</span>
+          </div>
+          <div class="gf-phrase">
+            <span class="gf-phrase-local">"No bread, pasta, or anything with flour"</span>
+            <span class="gf-phrase-meaning">Be direct with kitchen staff</span>
+          </div>
+        </div>
+        <!-- RESEARCHED -->
+        <div class="gf-info-group">
+          <div class="gf-info-label">Naturally GF Dishes</div>
+          <ul class="gf-list">
+            <li>Ackee &amp; saltfish (national dish, naturally safe)</li>
+            <li>Jerk chicken/pork (safe, verify marinades)</li>
+            <li>Rice and peas (safe)</li>
+            <li>Curried goat (safe, check thickeners)</li>
+            <li>Bammy (cassava flatbread, naturally GF)</li>
+            <li>Pepper shrimp (safe)</li>
+            <li>Plantains (safe if cooked in clean oil)</li>
+          </ul>
+        </div>
+        <!-- RESEARCHED -->
+        <div class="gf-info-group">
+          <div class="gf-info-label">Avoid</div>
+          <ul class="gf-list">
+            <li>Festival (wheat flour dumplings)</li>
+            <li>Regular dumplings (wheat flour)</li>
+          </ul>
+        </div>
+        <!-- RESEARCHED -->
+        <div class="gf-info-group">
+          <div class="gf-info-label">Grocery Stores</div>
+          <ul class="gf-list">
+            <li>Progressive Foods Supermarket — Fairview Business Park, Montego Bay. Carries GF products.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="gf-score-section">
+        <div class="gf-score-title">Score Breakdown</div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Dedicated GF restaurants</span>
+          <div class="gf-score-pips"><span class="gf-score-pip"></span><span class="gf-score-pip"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Menu labeling</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Staff knowledge &amp; safety</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Density of GF dining</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Grocery availability</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div>
+        </div>
+        <div class="gf-score-total">
+          <span class="gf-score-total-num">4/10</span>
+          <span class="gf-score-total-label">Overall GF Score</span>
+        </div>
+        <div class="gf-score-verdict">
+          <span class="gf-guide-difficulty gf-difficulty-difficult"><span class="gf-dot"></span>Difficult</span>
+          <div class="gf-info-value" style="margin-top: 0.6rem; font-size: 0.92rem; color: var(--ink-mid);">GF dining is entirely resort-dependent. Outside resorts, awareness is low, but naturally GF Jamaican cuisine helps.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ THINGS TO DO ═══════════════ -->
+  <section class="things-to-do" id="things-to-do">
+    <div class="things-header">
+      <h2 class="things-title">Things to Do</h2>
+    </div>
+    <div class="things-rule"></div>
+
+    <div class="things-grid">
+      <!-- RESEARCHED -->
+      <div class="thing-card">
+        <div class="thing-top">
+          <h3 class="thing-name">Rose Hall Great House (Day Tour)</h3>
+          <span class="thing-tag thing-tag-paid">Paid / Historic</span>
+        </div>
+        <div class="thing-desc"><!-- RESEARCHED -->Historic 18th-century plantation house with the legend of Annie Palmer, the "White Witch of Rose Hall." Guided daytime tours cover the restored Georgian architecture and grounds.</div>
+        <div class="thing-meta">
+          <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> 1–1.5 hours</span>
+          <span class="thing-detail"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> ~5 min from hotel</span>
+        </div>
+        <a href="https://www.viator.com/Montego-Bay-attractions/Rose-Hall-Great-House/d432-a489" class="thing-book" target="_blank" rel="noopener">
+          Book Tour <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+
+      <!-- RESEARCHED -->
+      <div class="thing-card">
+        <div class="thing-top">
+          <h3 class="thing-name">Rose Hall Great House (Night Tour)</h3>
+          <span class="thing-tag thing-tag-paid">Paid</span>
+        </div>
+        <div class="thing-desc"><!-- RESEARCHED -->2-hour spooky evening tour of the Great House. Guides tell the ghost stories of Annie Palmer by candlelight — worth the trip for the atmosphere alone.</div>
+        <div class="thing-meta">
+          <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> 2 hours</span>
+          <span class="thing-detail"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> ~5 min from hotel</span>
+        </div>
+        <a href="https://www.getyourguide.com/montego-bay-l238/montego-bay-rose-hall-great-house-2-hour-night-tour-t273492/" class="thing-book" target="_blank" rel="noopener">
+          Book Night Tour <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ GETTING AROUND ═══════════════ -->
+  <section class="getting-around" id="getting-around">
+    <div class="getting-around-header">
+      <h2 class="getting-around-title">Getting Around</h2>
+    </div>
+    <div class="getting-around-rule"></div>
+
+    <!-- RESEARCHED -->
+    <div class="transport-grid">
+      <div class="transport-card">
+        <div class="transport-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.4-.1.9.3 1.1l5.7 3.8-3.2 3.2-2-.7c-.3-.1-.7 0-.9.2l-.5.5c-.2.2-.2.6 0 .8L6 18.6l2.8 3.2c.2.2.6.2.8 0l.5-.5c.2-.2.3-.6.2-.9l-.7-2 3.2-3.2 3.8 5.7c.2.4.7.5 1.1.3l.5-.3c.4-.2.6-.6.5-1.1z"/></svg>
+        </div>
+        <div class="transport-name">Airport Transfer</div>
+        <div class="transport-desc"><!-- RESEARCHED -->Sangster International Airport (MBJ) is only 10–12 minutes from Hyatt Ziva Rose Hall. Contact the resort in advance for private car service.</div>
+        <div class="transport-detail">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="3"/></svg>
+          MBJ · 10–12 min
+        </div>
+      </div>
+
+      <div class="transport-card">
+        <div class="transport-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 16H9m10 0h3v-3.15a1 1 0 0 0-.84-.99L16 11l-2.7-3.6a1 1 0 0 0-.8-.4H5.24a2 2 0 0 0-1.8 1.1l-.8 1.63A6 6 0 0 0 2 12.42V16h2"/><circle cx="6.5" cy="16.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg>
+        </div>
+        <div class="transport-name">Taxi</div>
+        <div class="transport-desc"><!-- RESEARCHED -->Available at the airport and around the resort area. Negotiate fares in advance — there are no meters. Multiple private transfer operators also serve the area.</div>
+      </div>
+
+      <div class="transport-card">
+        <div class="transport-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="14" rx="2"/><path d="M4 11h16"/><circle cx="8" cy="20" r="1.5"/><circle cx="16" cy="20" r="1.5"/><path d="M8 17v1.5M16 17v1.5"/></svg>
+        </div>
+        <div class="transport-name">Resort Shuttle</div>
+        <div class="transport-desc"><!-- RESEARCHED -->Most attractions are accessible by taxi or tour transfers. The resort can arrange day trips and excursions through the concierge.</div>
+      </div>
+    </div>
+
+    <div class="transit-tip">
+      <svg class="transit-tip-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+      <div class="transit-tip-content">
+        <div class="transit-tip-label">Resort Area</div>
+        <div class="transit-tip-text"><!-- RESEARCHED -->Rose Hall is a resort corridor, not a town you walk around. Everything happens at or through the resort — let the concierge handle logistics for off-site excursions.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ WHAT TO PACK ═══════════════ -->
+  <section class="packing" id="what-to-pack">
+    <div class="packing-header">
+      <h2 class="packing-title">What to Pack</h2>
+      <span class="packing-season">December in Jamaica</span>
+    </div>
+    <div class="packing-rule"></div>
+
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable sandals</span>
+          <span class="packing-item-why">For the beach, pool, and resort dining — you'll live in these.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Reef-safe sunscreen</span>
+          <span class="packing-item-why">High UV all year round. Protect the coral reefs too.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Reusable water bottle</span>
+          <span class="packing-item-why">Stay hydrated in the tropical heat. Refill at the resort.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Swimsuit</span>
+          <span class="packing-item-why">Obviously. Bring at least two so one can dry.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Celiac dining card</span>
+          <span class="packing-item-why">A printed card explaining GF needs clearly. Helpful when communicating with kitchen staff outside the resort.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-jamaica">Jamaica</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">GF snack bars</span>
+          <span class="packing-item-why">For day trips away from the resort where GF options are scarce.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-jamaica">Jamaica</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Light rain jacket</span>
+          <span class="packing-item-why">Brief tropical showers can pop up any time of year.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-jamaica">Jamaica</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Light layers for evening tours</span>
+          <span class="packing-item-why">The Rose Hall Great House evening tour can get cool after sundown.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Rose Hall</span>
+      </li>
+
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Mosquito repellent</span>
+          <span class="packing-item-why">Tropical evenings bring mosquitoes — especially near the gardens and grounds.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Rose Hall</span>
+      </li>
+    </ul>
+
+    <!-- STOREFRONT: Uncomment when Amazon storefront URL is ready
+    <div class="packing-storefront">
+      <a href="STOREFRONT_URL_HERE" class="packing-storefront-link" target="_blank" rel="noopener sponsored">
+        Browse My Full Travel Storefront
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+    -->
+  </section>
+
+  <!-- ═══════════════ TRAVEL TIPS ═══════════════ -->
+  <section class="travel-tips" id="travel-tips">
+    <div class="tips-header">
+      <h2 class="tips-title">Travel Tips</h2>
+    </div>
+    <div class="tips-rule"></div>
+
+    <ul class="tips-list">
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text">Notify the resort about celiac needs BEFORE arriving — contact concierge at jamaicaconcierge@hyatt.com</span>
+      </li>
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text">Hyatt Ziva menus are clearly marked with GF options across all 16 dining outlets.</span>
+      </li>
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text">Ask for dedicated oil when ordering fried items — the resort accommodates this.</span>
+      </li>
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text">Rose Hall Great House evening tour is worth the trip for the spooky atmosphere.</span>
+      </li>
+      <li class="tip-item">
+        <span class="tip-bullet"></span>
+        <span class="tip-text">The all-inclusive format works well for celiacs — you get familiar with the kitchens and they learn your needs over the stay.</span>
+      </li>
+    </ul>
+
+    <div class="tips-hindsight">
+      <div class="tips-hindsight-label">What I'd Do Differently</div>
+      <ul class="hindsight-list">
+        <li class="hindsight-item">
+          <svg class="hindsight-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L6 1L11 11H1Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>
+          <span class="hindsight-text">I'd book a Hyatt Zilara (adults-only sister property) next time — same GF accommodation but quieter atmosphere.</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═══════════════ TIP CTA ═══════════════ -->
   <div class="tip-cta">
     <div class="tip-cta-title">Have a tip or comment?</div>
-    <div class="tip-cta-sub">Found a great GF spot in Montego Bay? I'd love to hear from you.</div>
-    <a href="mailto:gfgoneglobal@gmail.com?subject=Tip for Montego Bay" class="tip-cta-link">
+    <div class="tip-cta-sub">Found a great GF spot in Rose Hall? I'd love to hear from you.</div>
+    <a href="mailto:kellymdowd@gmail.com?subject=Tip for Rose Hall" class="tip-cta-link">
       <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="2.5" width="11" height="8" rx="1.5" stroke="currentColor" stroke-width="1.1"/><path d="M1 4l5.5 3.5L12 4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
       Send a note
     </a>
   </div>
+
+  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <footer class="page-footer">
+    <div class="page-disclosure">This page may contain affiliate links. If you book through these links, I may earn a small commission at no extra cost to you.</div>
+  </footer>
+
+  <!-- ═══════════════ PHOTO LIGHTBOX ═══════════════ -->
+  <div class="lightbox-overlay" id="lightbox">
+    <button class="lightbox-close" aria-label="Close lightbox">
+      <svg viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="">
+  </div>
+  <script>
+  (function() {
+    var overlay = document.getElementById('lightbox');
+    var lbImg = document.getElementById('lightbox-img');
+
+    document.querySelectorAll('.restaurant-photo, .landmark-photo, .hotel-image, .thing-photo').forEach(function(img) {
+      img.addEventListener('click', function(e) {
+        e.stopPropagation();
+        lbImg.src = this.src;
+        lbImg.alt = this.alt;
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    function closeLightbox() {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    overlay.addEventListener('click', closeLightbox);
+    overlay.querySelector('.lightbox-close').addEventListener('click', function(e) {
+      e.stopPropagation();
+      closeLightbox();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && overlay.classList.contains('active')) {
+        closeLightbox();
+      }
+    });
+  })();
+  </script>
 
 </body>
 </html>
