@@ -2,15 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="description" content="First-hand celiac travel guide to Cologne with 2 GF-rated restaurants, 5/10 safety score, hotel reviews, and interactive maps. Visited December 2021.">
+  <meta name="description" content="First-hand celiac travel guide to Negombo with 3 GF-rated restaurants, 3/10 safety score, hotel reviews, and interactive maps. Visited April 2026.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gluten-Free Restaurants & Celiac Guide to Cologne, Germany | GF Gone Global</title>
+  <title>Gluten-Free Restaurants & Celiac Guide to Negombo, Sri Lanka | GF Gone Global</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <style>
+    /* ─── Design Tokens ──────────────────────────────────────── */
     :root { --cream: #FFFFFF; --slate: #C8717A; --slate-bg: #FBF0F1; --rose: #B8907A; --ink: #2A2018; --ink-mid: #5A5048; --ink-light: #9A907A; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
@@ -22,6 +23,8 @@
     .nav-home { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.85rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); text-decoration: none; transition: color 0.2s ease; }
     .nav-home:hover { color: var(--slate); }
     .nav-links { display: flex; align-items: center; gap: 2rem; }
+
+    /* ─── Breadcrumb Nav ──────────────────────────────────────── */
     .nav { padding: 1.6rem 2.5rem 0; display: flex; gap: 1rem; align-items: center; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards; }
     .back-link { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
     .back-link:hover { color: var(--slate); }
@@ -31,6 +34,8 @@
     .nav-link { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
     .nav-link:hover { color: var(--slate); }
     .nav-current { font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mid); }
+
+    /* ─── Header ──────────────────────────────────────────────── */
     .header { display: flex; justify-content: space-between; align-items: flex-end; padding: 1.4rem 2.5rem 1.2rem; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
     .header-left { display: flex; flex-direction: column; }
     .country-label { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.25rem; }
@@ -92,6 +97,8 @@
     .hotel-cta:active { background: #a85a63; transform: translateY(0); box-shadow: 0 1px 4px rgba(200, 113, 122, 0.15); }
     .hotel-cta svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; }
     .hotel-cta:hover svg { transform: translateX(2px); }
+    .hotel-image-placeholder { min-height: 280px; background: linear-gradient(135deg, rgba(251, 240, 241, 0.6) 0%, rgba(200, 113, 122, 0.08) 100%); display: flex; align-items: center; justify-content: center; color: var(--ink-light); opacity: 0.4; }
+    @media (max-width: 768px) { .hotel-card { grid-template-columns: 1fr; } .hotel-image-side { min-height: 200px; } .hotel-info-side { padding: 1.4rem 1.2rem; } }
 
     /* ─── Gluten-Free Survival Guide ────────────────────────── */
     .gf-guide { padding: 2.4rem 2.5rem 0; opacity: 0; animation: fadeIn 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards; }
@@ -130,10 +137,7 @@
     .gf-score-total-num { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 2.4rem; color: var(--ink); line-height: 1; letter-spacing: -0.02em; }
     .gf-score-total-label { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
     .gf-score-verdict { margin-top: 0.8rem; }
-    @media (max-width: 768px) {
-      .gf-guide-grid { grid-template-columns: 1fr; gap: 1.6rem; }
-      .gf-score-section { padding-left: 0; border-left: none; padding-top: 1.2rem; border-top: 1px solid rgba(42, 32, 24, 0.08); }
-    }
+    @media (max-width: 768px) { .gf-guide-grid { grid-template-columns: 1fr; gap: 1.6rem; } .gf-score-section { padding-left: 0; border-left: none; padding-top: 1.2rem; border-top: 1px solid rgba(42, 32, 24, 0.08); } }
 
     /* ─── Restaurants ────────────────────────────────────────── */
     .restaurants { padding: 2.4rem 2.5rem 0; }
@@ -147,6 +151,9 @@
     .restaurant-card:nth-child(even) { padding-left: 1.6rem; padding-right: 0; }
     .restaurant-card:nth-last-child(1), .restaurant-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
     .restaurant-card:nth-last-child(1):nth-child(even) ~ .restaurant-card { border-bottom: none; }
+    .restaurant-card-inner { display: flex; gap: 1.2rem; align-items: flex-start; }
+    .restaurant-card-content { flex: 1; min-width: 0; }
+    .restaurant-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 4px rgba(42, 32, 24, 0.1); margin-top: 0.3rem; }
     .restaurant-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.4rem; }
     .restaurant-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.15rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
     .restaurant-tags { display: flex; gap: 0.4rem; flex-shrink: 0; }
@@ -155,19 +162,22 @@
     .restaurant-tag-options { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
     .restaurant-tag-closed { background: rgba(180, 60, 60, 0.08); color: #9a3030; }
     .restaurant-cuisine { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-light); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.9rem; }
-    .restaurant-details { display: flex; flex-direction: column; gap: 0.6rem; }
-    .restaurant-detail-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.25rem; }
-    .restaurant-detail-value { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 0.95rem; color: var(--ink-mid); line-height: 1.5; letter-spacing: 0.01em; }
-    .restaurant-location-value { display: flex; align-items: baseline; gap: 0.4rem; }
-    .restaurant-location-value svg { flex-shrink: 0; color: var(--ink-light); opacity: 0.5; position: relative; top: 1px; }
-    .restaurant-card-inner { display: flex; gap: 1.2rem; align-items: flex-start; }
-    .restaurant-card-content { flex: 1; min-width: 0; }
-    .restaurant-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 4px rgba(42, 32, 24, 0.1); margin-top: 0.3rem; }
+    .restaurant-source { display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 400; letter-spacing: 0.08em; margin-bottom: 0.9rem; }
+    .restaurant-source-dot { width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
+    .restaurant-source-visited { color: var(--rose); }
+    .restaurant-source-visited .restaurant-source-dot { background: var(--rose); }
+    .restaurant-source-researched { color: var(--ink-light); opacity: 0.7; }
+    .restaurant-source-researched .restaurant-source-dot { background: var(--ink-light); }
     .restaurant-gf-score { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.7rem; margin-bottom: 1rem; }
     .restaurant-gf-score-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
     .restaurant-gf-pips { display: flex; gap: 3px; align-items: center; }
     .restaurant-gf-pip { width: 7px; height: 7px; border-radius: 50%; background: rgba(42, 32, 24, 0.08); }
     .restaurant-gf-pip.is-filled { background: var(--slate); }
+    .restaurant-details { display: flex; flex-direction: column; gap: 0.6rem; }
+    .restaurant-detail-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.25rem; }
+    .restaurant-detail-value { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 0.95rem; color: var(--ink-mid); line-height: 1.5; letter-spacing: 0.01em; }
+    .restaurant-location-value { display: flex; align-items: baseline; gap: 0.4rem; }
+    .restaurant-location-value svg { flex-shrink: 0; color: var(--ink-light); opacity: 0.5; position: relative; top: 1px; }
     .restaurant-fmgf { margin-top: 0.7rem; }
     .restaurant-fmgf-link { display: inline-flex; align-items: center; gap: 0.4rem; font-family: 'Jost', sans-serif; font-size: 0.64rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
     .restaurant-fmgf-link:hover { color: var(--slate); }
@@ -175,106 +185,19 @@
     .restaurant-fmgf-link:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
     .restaurant-fmgf-link:active { color: var(--rose); }
     .restaurant-fmgf-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; }
-    .restaurant-source { display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 400; letter-spacing: 0.08em; margin-bottom: 0.9rem; }
-    .restaurant-source-dot { width: 4px; height: 4px; border-radius: 50%; flex-shrink: 0; }
-    .restaurant-source-visited { color: var(--rose); }
-    .restaurant-source-visited .restaurant-source-dot { background: var(--rose); }
-    .restaurant-source-researched { color: var(--ink-light); opacity: 0.7; }
-    .restaurant-source-researched .restaurant-source-dot { background: var(--ink-light); }
-    @media (max-width: 768px) {
-      .restaurants-grid { grid-template-columns: 1fr; }
-      .restaurant-card:nth-child(odd) { border-right: none; padding-right: 0; }
-      .restaurant-card:nth-child(even) { padding-left: 0; }
-      .restaurant-card:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
-    }
-    @media (max-width: 768px) {
-      .hotel-card { grid-template-columns: 1fr; }
-      .hotel-image-side { min-height: 200px; }
-      .hotel-info-side { padding: 1.4rem 1.2rem; }
-    }
+    .restaurants-footer { padding-top: 1.2rem; margin-top: 0.4rem; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .restaurants-fmgf-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .restaurants-fmgf-link:hover { color: var(--slate); }
+    .restaurants-fmgf-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); flex-shrink: 0; }
+    .restaurants-fmgf-link:hover svg { transform: translateX(2px); }
+    @media (max-width: 768px) { .restaurants-grid { grid-template-columns: 1fr; } .restaurant-card:nth-child(odd) { border-right: none; padding-right: 0; } .restaurant-card:nth-child(even) { padding-left: 0; } .restaurant-card:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } }
 
-    /* ─── Landmarks & Must-See Spots ─────────────────────────── */
-    .landmarks { padding: 2.4rem 2.5rem 0; }
-    .landmarks-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
-    .landmarks-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
-    .landmarks-count { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
-    .landmarks-rule { height: 1px; background: rgba(42, 32, 24, 0.08); }
-    .landmarks-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
-    .landmark-card { padding: 1.4rem 1.6rem 1.4rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
-    .landmark-card:nth-child(odd) { padding-right: 1.6rem; border-right: 1px solid rgba(42, 32, 24, 0.06); }
-    .landmark-card:nth-child(even) { padding-left: 1.6rem; padding-right: 0; }
-    .landmark-card:nth-last-child(1), .landmark-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
-    .landmark-card:nth-last-child(1):nth-child(even) ~ .landmark-card { border-bottom: none; }
-    .landmark-card-inner { display: flex; gap: 1.2rem; align-items: flex-start; }
-    .landmark-card-content { flex: 1; min-width: 0; }
-    .landmark-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.6rem; margin-bottom: 0.3rem; }
-    .landmark-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.15rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
-    .landmark-type { display: inline-block; padding: 0.2rem 0.55rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.52rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
-    .landmark-type-historic { background: rgba(42, 32, 24, 0.04); color: var(--ink-mid); }
-    .landmark-type-nature { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
-    .landmark-type-walk { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
-    .landmark-type-neighborhood { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
-    .landmark-type-market { background: rgba(160, 90, 130, 0.08); color: #804068; }
-    .landmark-desc { font-family: 'Jost', sans-serif; font-size: 0.74rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; margin-bottom: 0.5rem; }
-    .landmark-location { display: flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; color: var(--ink-light); letter-spacing: 0.04em; }
-    .landmark-location svg { flex-shrink: 0; opacity: 0.5; }
-    .landmark-photo { width: 80px; height: 80px; border-radius: 4px; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 4px rgba(42, 32, 24, 0.1); }
-    .landmark-photo-placeholder { width: 80px; height: 80px; border-radius: 4px; flex-shrink: 0; background: rgba(42, 32, 24, 0.03); border: 1px dashed rgba(42, 32, 24, 0.1); display: flex; align-items: center; justify-content: center; color: var(--ink-light); opacity: 0.4; }
-    .landmark-source { display: inline-flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.08em; margin-top: 0.5rem; }
-    .landmark-source-visited { color: var(--rose); }
-    .landmark-source-visited .restaurant-source-dot { background: var(--rose); }
-    .landmark-source-researched { color: var(--ink-light); opacity: 0.7; }
-    .landmark-source-researched .restaurant-source-dot { background: var(--ink-light); }
-    @media (max-width: 768px) {
-      .landmarks-grid { grid-template-columns: 1fr; }
-      .landmark-card:nth-child(odd) { border-right: none; padding-right: 0; }
-      .landmark-card:nth-child(even) { padding-left: 0; }
-      .landmark-card:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
-    }
-
-    /* ─── Things to Do ─────────────────────────────────────── */
-    .things-to-do { padding: 2.4rem 2.5rem 0; }
-    .things-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
-    .things-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
-    .things-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
-    .things-category-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
-    .things-category + .things-category { margin-top: 2rem; }
-    .things-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
-    .thing-card { padding: 1.2rem 1.6rem 1.2rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
-    .thing-card:nth-child(odd) { padding-right: 1.6rem; border-right: 1px solid rgba(42, 32, 24, 0.06); }
-    .thing-card:nth-child(even) { padding-left: 1.6rem; padding-right: 0; }
-    .thing-card:nth-last-child(1), .thing-card:nth-last-child(2):nth-child(odd) { border-bottom: none; }
-    .thing-card:nth-last-child(1):nth-child(even) ~ .thing-card { border-bottom: none; }
-    .thing-card-inner { display: flex; gap: 1rem; align-items: flex-start; }
-    .thing-card-content { flex: 1; min-width: 0; }
-    .thing-photo { width: 80px; height: 80px; border-radius: 6px; object-fit: cover; flex-shrink: 0; box-shadow: 0 1px 4px rgba(42, 32, 24, 0.1); cursor: pointer; }
-    .thing-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 0.5rem; margin-bottom: 0.3rem; }
-    .thing-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.1rem; letter-spacing: 0.02em; color: var(--ink); line-height: 1.2; }
-    .thing-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; flex-shrink: 0; }
-    .thing-tag-free { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
-    .thing-tag-paid { background: rgba(42, 32, 24, 0.04); color: var(--ink-mid); }
-    .thing-desc { font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 300; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.02em; margin-bottom: 0.6rem; }
-    .thing-meta { display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap; }
-    .thing-detail { display: flex; align-items: center; gap: 0.3rem; font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; color: var(--ink-light); letter-spacing: 0.04em; }
-    .thing-detail svg { flex-shrink: 0; opacity: 0.5; }
-    .thing-book { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.7rem; padding: 0.45rem 0.9rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 3px; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 6px rgba(200, 113, 122, 0.15), 0 1px 2px rgba(200, 113, 122, 0.08); }
-    .thing-book:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200, 113, 122, 0.25), 0 2px 4px rgba(200, 113, 122, 0.12); }
-    .thing-book:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; }
-    .thing-book:active { background: #a85a63; transform: translateY(0); }
-    .thing-book svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
-    .thing-book:hover svg { transform: translateX(2px); }
-    .thing-visit { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.7rem; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
-    .thing-visit:hover { color: var(--slate); }
-    .thing-visit:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
-    .thing-visit:active { color: var(--rose); }
-    .thing-visit svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
-    .thing-visit:hover svg { transform: translateX(2px); }
-    @media (max-width: 768px) {
-      .things-grid { grid-template-columns: 1fr; }
-      .thing-card:nth-child(odd) { border-right: none; padding-right: 0; }
-      .thing-card:nth-child(even) { padding-left: 0; }
-      .thing-card:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
-    }
+    /* ─── Restaurant Map ─────────────────────────────────────── */
+    .map-container { margin-bottom: 1.6rem; border-radius: 4px; overflow: hidden; border: 1px solid rgba(42, 32, 24, 0.08); }
+    .map-container .leaflet-container { height: 260px; width: 100%; }
+    .map-legend { display: flex; flex-wrap: wrap; gap: 0.8rem; padding: 0.8rem 0 0; }
+    .map-legend-item { display: flex; align-items: center; gap: 0.35rem; font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.06em; color: var(--ink-light); }
+    .map-legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
     /* ─── Getting Around ────────────────────────────────────── */
     .getting-around { padding: 2.4rem 2.5rem 0; }
@@ -296,18 +219,8 @@
     .transit-tip-content { flex: 1; min-width: 0; }
     .transit-tip-label { font-family: 'Jost', sans-serif; font-size: 0.54rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--slate); margin-bottom: 0.35rem; }
     .transit-tip-text { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 0.98rem; color: var(--ink); line-height: 1.6; letter-spacing: 0.01em; }
-    @media (max-width: 768px) {
-      .transport-grid { grid-template-columns: 1fr 1fr; }
-      .transport-card { border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
-      .transport-card:nth-child(2) { border-right: none; padding-right: 0; }
-      .transport-card:nth-child(3) { padding-left: 0; }
-      .transport-card:nth-child(3), .transport-card:nth-child(4) { border-bottom: none; }
-    }
-    @media (max-width: 480px) {
-      .transport-grid { grid-template-columns: 1fr; }
-      .transport-card { border-right: none; padding-left: 0; padding-right: 0; }
-      .transport-card:last-child { border-bottom: none; }
-    }
+    @media (max-width: 768px) { .transport-grid { grid-template-columns: 1fr 1fr; } .transport-card { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } .transport-card:nth-child(2) { border-right: none; padding-right: 0; } .transport-card:nth-child(3) { padding-left: 0; } .transport-card:nth-child(3), .transport-card:nth-child(4) { border-bottom: none; } }
+    @media (max-width: 480px) { .transport-grid { grid-template-columns: 1fr; } .transport-card { border-right: none; padding-left: 0; padding-right: 0; } .transport-card:last-child { border-bottom: none; } }
 
     /* ─── What to Pack ─────────────────────────────────────── */
     .packing { padding: 2.4rem 2.5rem 0; }
@@ -324,12 +237,16 @@
     .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
     .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
     .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
-    .packing-tag-germany { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
+    .packing-tag-country { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
     .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
-    @media (max-width: 768px) {
-      .packing-item { grid-template-columns: 20px 1fr; }
-      .packing-item-tag { grid-column: 2; }
-    }
+    .packing-storefront { margin-top: 1.4rem; padding-top: 1.2rem; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .packing-storefront-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1.1rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.64rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 3px; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 6px rgba(200, 113, 122, 0.15), 0 1px 2px rgba(200, 113, 122, 0.08); }
+    .packing-storefront-link:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200, 113, 122, 0.25), 0 2px 4px rgba(200, 113, 122, 0.12); }
+    .packing-storefront-link:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; }
+    .packing-storefront-link:active { background: #a85a63; transform: translateY(0); }
+    .packing-storefront-link svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .packing-storefront-link:hover svg { transform: translateX(2px); }
+    @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
 
     /* ─── Travel Tips ──────────────────────────────────────── */
     .travel-tips { padding: 2.4rem 2.5rem 0; }
@@ -349,12 +266,14 @@
     .hindsight-icon { flex-shrink: 0; color: var(--slate); opacity: 0.5; position: relative; top: 0.2rem; }
     .hindsight-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.01em; }
 
-    /* ─── Footer ──────────────────────────────────────────── */
+    /* ─── Tip CTA ────────────────────────────────────────────── */
     .tip-cta { padding: 2.4rem 2.5rem; text-align: center; border-top: 1px solid rgba(42, 32, 24, 0.08); }
     .tip-cta-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.2rem, 2vw, 1.5rem); letter-spacing: 0.04em; color: var(--ink); margin-bottom: 0.4rem; }
     .tip-cta-sub { font-family: 'Jost', sans-serif; font-size: 0.82rem; font-weight: 300; color: var(--ink-light); margin-bottom: 1.2rem; }
     .tip-cta-link { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Jost', sans-serif; font-size: 0.75rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--slate); text-decoration: none; border: 1px solid rgba(200, 113, 122, 0.3); padding: 0.6rem 1.4rem; border-radius: 100px; transition: background 0.2s ease, border-color 0.2s ease; }
     .tip-cta-link:hover { background: var(--slate-bg); border-color: var(--slate); }
+
+    /* ─── Footer ────────────────────────────────────────────── */
     .page-footer { padding: 2rem 2.5rem 2.5rem; text-align: center; }
     .page-disclosure { font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 300; color: var(--ink-light); opacity: 0.5; letter-spacing: 0.03em; }
 
@@ -373,7 +292,7 @@
     /* ─── Animations & Global Responsive ──────────────────── */
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
-    @media (max-width: 600px) { .site-nav, .nav, .header, .snapshot, .toc, .gf-guide, .restaurants, .where-to-stay, .landmarks, .things-to-do, .packing, .travel-tips, .getting-around, .page-footer { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
+    @media (max-width: 600px) { .site-nav, .nav, .header, .snapshot, .toc, .gf-guide, .restaurants, .where-to-stay, .landmarks, .neighborhoods, .things-to-do, .packing, .travel-tips, .getting-around, .page-footer { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
 
     /* ─── Mobile: Site nav bar ────────────────────────────── */
     @media (max-width: 480px) {
@@ -400,6 +319,7 @@
 
     // ─── Enhanced event tracking ──────────────────────────
 
+    // Helper: get page context
     var pageCity = document.title.split('\u2014')[0].trim();
     var pageCountry = document.title.split('\u2014')[1] ? document.title.split('\u2014')[1].trim() : '';
 
@@ -434,7 +354,7 @@
           }
         });
       }, { threshold: 0.3 });
-      document.querySelectorAll('section').forEach(function(s) { sectionObserver.observe(s); });
+      document.querySelectorAll('section, .gf-guide-section, .restaurants-section, .landmarks-section, .things-section, .neighborhoods-section, .getting-around-section, .packing-section, .tips-section').forEach(function(s) { sectionObserver.observe(s); });
 
       // ── 3. Outbound link clicks (classified) ──
       document.querySelectorAll('a[target="_blank"]').forEach(function(link) {
@@ -468,7 +388,7 @@
       });
 
       // ── 6. Activity booking clicks ──
-      document.querySelectorAll('.thing-book, a[href*="viator.com"], a[href*="getyourguide.com"]').forEach(function(link) {
+      document.querySelectorAll('.thing-book-btn, a[href*="viator.com"], a[href*="getyourguide.com"]').forEach(function(link) {
         link.addEventListener('click', function() {
           var name = this.closest('.thing-card') ? this.closest('.thing-card').querySelector('.thing-name').textContent.trim() : 'unknown';
           gtag('event', 'activity_booking_click', { event_category: 'conversion', event_label: name, page_title: document.title, transport_type: 'beacon' });
@@ -489,7 +409,7 @@
       });
 
       // ── 9. Map interactions ──
-      document.querySelectorAll('.map-container, [id*="map"]').forEach(function(el) {
+      document.querySelectorAll('.map-container, [class*="map-wrap"]').forEach(function(el) {
         var tracked = false;
         el.addEventListener('click', function() { if (!tracked) { tracked = true; gtag('event', 'map_interaction', { event_category: 'engagement', event_label: el.id || 'map', page_title: document.title }); } });
       });
@@ -519,8 +439,8 @@
   "@graph": [
     {
       "@type": "Article",
-      "headline": "Gluten-Free Restaurants & Celiac Guide to Cologne, Germany",
-      "description": "First-hand celiac travel guide to Cologne with 2 GF-rated restaurants, 5/10 GF friendliness score. Visited December 2021.",
+      "headline": "Gluten-Free Restaurants & Celiac Guide to Negombo, Sri Lanka",
+      "description": "First-hand celiac travel guide to Negombo with 3 GF-rated restaurants, 3/10 GF friendliness score. Visited April 2026.",
       "author": {
         "@type": "Person",
         "name": "GF Gone Global"
@@ -531,22 +451,22 @@
       },
       "about": {
         "@type": "City",
-        "name": "Cologne",
+        "name": "Negombo",
         "containedInPlace": {
           "@type": "Country",
-          "name": "Germany"
+          "name": "Sri Lanka"
         }
       }
     },
     {
       "@type": "Restaurant",
-      "name": "mama trattoria K\u00f6ln City",
+      "name": "Lords Restaurant Complex",
       "address": {
         "@type": "PostalAddress",
-        "addressLocality": "Cologne",
-        "addressCountry": "DE"
+        "addressLocality": "Negombo",
+        "addressCountry": "LK"
       },
-      "servesCuisine": "Italian",
+      "servesCuisine": "Sri Lankan / Indian / Thai",
       "review": {
         "@type": "Review",
         "author": {
@@ -559,18 +479,18 @@
           "bestRating": 5,
           "worstRating": 0
         },
-        "reviewBody": "GF pizza base and pasta available, accommodating staff, organic ingredients. A solid option for celiac diners in Cologne."
+        "reviewBody": "Didn't get to eat here but looks like it has GF options and is fun! GF menu with curry, fish & chips, fries, desserts, vegan GF pizzas."
       }
     },
     {
       "@type": "Restaurant",
-      "name": "Kuchi Mami",
+      "name": "Zen Cafe",
       "address": {
         "@type": "PostalAddress",
-        "addressLocality": "Cologne",
-        "addressCountry": "DE"
+        "addressLocality": "Negombo",
+        "addressCountry": "LK"
       },
-      "servesCuisine": "Asian",
+      "servesCuisine": "Healthy / Vegetarian / Vegan",
       "review": {
         "@type": "Review",
         "author": {
@@ -579,20 +499,44 @@
         },
         "reviewRating": {
           "@type": "Rating",
-          "ratingValue": 2,
+          "ratingValue": 3,
           "bestRating": 5,
           "worstRating": 0
         },
-        "reviewBody": "Allergens marked on the menu, but no GF soy sauce available. Communicate celiac needs clearly with staff."
+        "reviewBody": "GF banana pancakes, Buddha bowls, smoothie bowls clearly marked on the menu."
+      }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "YAAGA - Backyard Dining",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Negombo",
+        "addressCountry": "LK"
+      },
+      "servesCuisine": "Sri Lankan / Thai",
+      "review": {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "GF Gone Global"
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": 3,
+          "bestRating": 5,
+          "worstRating": 0
+        },
+        "reviewBody": "Supposedly very celiac friendly. GF pad thai and other options available."
       }
     },
     {
       "@type": "LodgingBusiness",
-      "name": "Hyatt Regency Cologne",
+      "name": "Spicepeek Boutique Hotel CMB Airport",
       "address": {
         "@type": "PostalAddress",
-        "addressLocality": "Cologne",
-        "addressCountry": "DE"
+        "addressLocality": "Negombo",
+        "addressCountry": "LK"
       }
     },
     {
@@ -600,26 +544,26 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "Is Cologne safe for celiacs?",
+          "name": "Is Negombo safe for celiacs?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Cologne scores 5/10 for GF friendliness (Moderate). There are limited dedicated GF options, but Italian restaurants often accommodate. Christmas markets have very limited GF food \u2014 eat beforehand."
+            "text": "Negombo scores 3/10 for GF friendliness (Difficult). Celiac disease is not well understood in Sri Lanka. Say 'wheat flour is poisonous' rather than trying to explain celiac disease. Carry a Sinhala/Tamil translation card."
           }
         },
         {
           "@type": "Question",
-          "name": "What are the best gluten-free restaurants in Cologne?",
+          "name": "What are the best gluten-free restaurants in Negombo?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "mama trattoria K\u00f6ln City (3/5 GF score, Italian with GF pizza and pasta); Kuchi Mami (2/5 GF score, Asian with allergens marked on menu)."
+            "text": "Lords Restaurant Complex (3/5 GF score, Sri Lankan/Indian/Thai); Zen Cafe (3/5 GF score, Healthy/Vegetarian/Vegan); YAAGA - Backyard Dining (3/5 GF score, Sri Lankan/Thai)."
           }
         },
         {
           "@type": "Question",
-          "name": "Can you find gluten-free food in Cologne supermarkets?",
+          "name": "Can you find gluten-free food in Negombo supermarkets?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. REWE and EDEKA carry dedicated GF sections, and DM (drugstore) stocks a good range of GF snacks and staples."
+            "text": "Cargills and Keells supermarkets have GF staples like rice flour, dhal, and coconut milk, but there are no dedicated free-from aisles. Stock up on naturally GF Sri Lankan staples."
           }
         }
       ]
@@ -627,10 +571,13 @@
   ]
 }
   </script>
+
 </head>
 <body>
 
-  <!-- ═══════════════ SITE NAV ═══════════════ -->
+  <!-- ═══════════════════════════════════════════════════════════
+       SITE NAV
+       ═══════════════════════════════════════════════════════════ -->
   <nav class="site-nav">
     <a href="../../index.html" class="nav-home">GF Gone Global</a>
     <div class="nav-links">
@@ -640,88 +587,96 @@
     </div>
   </nav>
 
-  <!-- ═══════════════ BREADCRUMB NAV ═══════════════ -->
+  <!-- ═══════════════════════════════════════════════════════════
+       BREADCRUMB NAV
+       ═══════════════════════════════════════════════════════════ -->
   <nav class="nav">
     <a href="../../index.html" class="back-link">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       All Countries
     </a>
     <span class="nav-sep">/</span>
-    <a href="../germany.html" class="nav-link">Germany</a>
+    <a href="../sri-lanka.html" class="nav-link">Sri Lanka</a>
     <span class="nav-sep">/</span>
-    <span class="nav-current">Cologne</span>
+    <span class="nav-current">Negombo</span>
   </nav>
 
-  <!-- ═══════════════ HEADER ═══════════════ -->
+  <!-- ═══════════════════════════════════════════════════════════
+       HEADER
+       ═══════════════════════════════════════════════════════════ -->
   <header class="header">
     <div class="header-left">
-      <span class="country-label">Germany</span>
-      <h1 class="city-name">Cologne</h1>
+      <span class="country-label">Sri Lanka</span>
+      <h1 class="city-name">Negombo</h1>
     </div>
-    <span class="trip-date">Last traveled &middot; December 2021</span>
+    <span class="trip-date">Last traveled · April 2026</span>
   </header>
   <div class="header-rule"></div>
 
-  <!-- ═══════════════ SNAPSHOT ═══════════════ -->
+  <!-- ═══════════════════════════════════════════════════════════
+       SNAPSHOT
+       ═══════════════════════════════════════════════════════════ -->
   <section class="snapshot">
     <div class="snapshot-label">City Snapshot</div>
     <div class="snapshot-grid">
       <div class="snapshot-item">
         <div class="snapshot-item-label">Best Months</div>
-        <div class="snapshot-item-value">May&ndash;Sep (Dec for markets)</div>
+        <div class="snapshot-item-value">Dec – Mar</div>
       </div>
       <div class="snapshot-item">
         <div class="snapshot-item-label">Ideal Stay</div>
-        <div class="snapshot-item-value">1&ndash;2 days</div>
+        <div class="snapshot-item-value">1 night (transit)</div>
       </div>
       <div class="snapshot-item">
         <div class="snapshot-item-label">Best For</div>
-        <div class="snapshot-item-value">Cathedral &amp; Christmas Markets</div>
+        <div class="snapshot-item-value">Airport layover</div>
       </div>
       <div class="snapshot-item">
         <div class="snapshot-item-label">GF Friendliness</div>
         <div class="snapshot-score">
-          <span class="snapshot-score-num">5/10</span>
+          <span class="snapshot-score-num">3/10</span>
           <div class="snapshot-score-bar">
-            <span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span>
+            <span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip is-filled"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span><span class="snapshot-score-pip"></span>
           </div>
         </div>
       </div>
       <div class="snapshot-item">
         <div class="snapshot-item-label">Language</div>
-        <div class="snapshot-item-value">German</div>
+        <div class="snapshot-item-value">Sinhala, Tamil</div>
       </div>
       <div class="snapshot-item">
         <div class="snapshot-item-label">English</div>
-        <div class="snapshot-item-value">Widely</div>
+        <div class="snapshot-item-value">Moderate (tourist areas)</div>
       </div>
       <div class="snapshot-item">
         <div class="snapshot-item-label">City Size</div>
-        <div class="snapshot-item-value">Medium-Large</div>
+        <div class="snapshot-item-value">Medium beach town</div>
       </div>
       <div class="snapshot-item">
         <div class="snapshot-item-label">Currency</div>
-        <div class="snapshot-item-value">Euro (&euro;)</div>
+        <div class="snapshot-item-value">LKR (Rupee)</div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════ TABLE OF CONTENTS ═══════════════ -->
+  <!-- ═══════════════════════════════════════════════════════════
+       TABLE OF CONTENTS
+       ═══════════════════════════════════════════════════════════ -->
   <nav class="toc">
     <div class="toc-label">On this page</div>
     <ul class="toc-list">
       <li class="toc-item"><a href="#where-to-stay" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Where to stay</a></li>
-      <li class="toc-item"><a href="#gf-guide" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>GF survival guide</a></li>
+      <li class="toc-item"><a href="#gf-guide" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Gluten-free survival guide</a></li>
       <li class="toc-item"><a href="#restaurants" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Restaurants</a></li>
-      <li class="toc-item"><a href="#landmarks" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Landmarks &amp; must-see spots</a></li>
-      <li class="toc-item"><a href="#things-to-do" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Things to do</a></li>
       <li class="toc-item"><a href="#getting-around" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Getting around</a></li>
       <li class="toc-item"><a href="#what-to-pack" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>What to pack</a></li>
       <li class="toc-item"><a href="#travel-tips" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Travel tips</a></li>
     </ul>
   </nav>
 
-  <!-- ═══════════════ WHERE TO STAY ═══════════════ -->
+  <!-- ═══════════════════════════════════════════════════════════
+       WHERE TO STAY
+       ═══════════════════════════════════════════════════════════ -->
   <section class="where-to-stay" id="where-to-stay">
     <div class="stay-header">
       <h2 class="stay-title">Where to Stay</h2>
@@ -731,7 +686,8 @@
 
     <div class="hotel-card">
       <div class="hotel-image-side">
-        <img src="../../photos/germany/cologne/hyatt-regency-cologne/IMG_3834.jpeg" alt="View from Hyatt Regency Cologne" class="hotel-image" loading="lazy">
+        <!-- Photo: Steffen Schmitz (Carschten), Wikimedia Commons, CC BY-SA 4.0 -->
+        <img src="../../photos/sri-lanka/negombo/negombo-beach/negombo-beach.jpeg" alt="Negombo beach, Sri Lanka" class="hotel-image" loading="lazy">
         <div class="hotel-image-overlay"></div>
         <div class="hotel-badge">
           <span class="hotel-badge-dot"></span>
@@ -740,24 +696,24 @@
       </div>
 
       <div class="hotel-info-side">
-        <h3 class="hotel-name">Hyatt Regency Cologne</h3>
+        <h3 class="hotel-name">Spicepeek Boutique Hotel CMB Airport</h3>
         <div class="hotel-location">
           <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-          Deutz &middot; Rhine riverfront
+          Seeduwa-Katunayake · Near CMB Airport
         </div>
 
         <div class="hotel-why">
-          <div class="hotel-why-label">Why Stay Here</div>
-          <div class="hotel-why-text">5-star hotel right on the Rhine with stunning views of Cologne Cathedral. Indoor pool, spa, and three on-site restaurants. Walking distance to the Hohenzollernbr&uuml;cke and Old Town.</div>
+          <div class="hotel-why-label">GF Notes</div>
+          <div class="hotel-why-text">Limited GF/pescatarian dinner options, but able to make me a GF english breakfast in the morning (no bread). Convenient for an airport layover.</div>
         </div>
 
         <div class="hotel-features">
-          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Indoor Pool</span>
-          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Spa</span>
-          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> 3 Restaurants</span>
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Airport Transfer</span>
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> Boutique</span>
+          <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> GF Breakfast</span>
         </div>
 
-        <a href="https://www.hotels.com/ho139586/hyatt-regency-cologne-cologne-germany/" class="hotel-cta" target="_blank" rel="noopener">
+        <a href="https://www.hotels.com/en/ho3261964224/spicepeek-boutique-hotel-cmb-airport-seeduwa-katunayake-sri-lanka/" class="hotel-cta" target="_blank" rel="noopener">
           Book on Hotels.com
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
         </a>
@@ -765,44 +721,67 @@
     </div>
   </section>
 
-  <!-- ═══════════════ GF SURVIVAL GUIDE ═══════════════ -->
+  <!-- ═══════════════════════════════════════════════════════════
+       GF SURVIVAL GUIDE
+       ═══════════════════════════════════════════════════════════ -->
   <section class="gf-guide" id="gf-guide">
     <div class="gf-guide-header">
       <h2 class="gf-guide-title">Gluten-Free Survival Guide</h2>
+      <span class="gf-guide-difficulty gf-difficulty-difficult"><span class="gf-dot"></span>Difficult</span>
     </div>
     <div class="gf-guide-rule"></div>
     <div class="gf-guide-grid">
       <div class="gf-guide-left">
         <div class="gf-info-group">
-          <div class="gf-info-label">Key Phrases (German)</div>
+          <div class="gf-info-label">Key Phrases (Sinhala)</div><!-- RESEARCHED -->
           <div class="gf-phrase">
-            <span class="gf-phrase-local">&ldquo;Ich habe Z&ouml;liakie&rdquo;</span>
-            <span class="gf-phrase-meaning">I have celiac disease</span>
+            <span class="gf-phrase-local">"Mata Paan Piti kema wisai"</span>
+            <span class="gf-phrase-meaning">Wheat flour is poisonous for me</span>
           </div>
           <div class="gf-phrase">
-            <span class="gf-phrase-local">&ldquo;Ist das glutenfrei?&rdquo;</span>
-            <span class="gf-phrase-meaning">Is this gluten-free?</span>
+            <span class="gf-phrase-local">"Mama paan piti kanne nee"</span>
+            <span class="gf-phrase-meaning">I do not eat wheat flour</span>
           </div>
           <div class="gf-phrase">
-            <span class="gf-phrase-local">&ldquo;Ohne Gluten, bitte&rdquo;</span>
-            <span class="gf-phrase-meaning">Without gluten, please</span>
+            <span class="gf-phrase-local">"thiringu piTi" (&#3501;&#3538;&#3515;&#3538;&#3458;&#3484;&#3540; &#3508;&#3538;&#3495;&#3538;)</span>
+            <span class="gf-phrase-meaning">Wheat flour</span>
           </div>
           <div class="gf-phrase">
-            <span class="gf-phrase-local">&ldquo;Ich vertrage kein Weizen&rdquo;</span>
-            <span class="gf-phrase-meaning">I can&rsquo;t tolerate wheat</span>
+            <span class="gf-phrase-local">"haal piTi" (&#3524;&#3535;&#3517;&#3530; &#3508;&#3538;&#3495;&#3538;)</span>
+            <span class="gf-phrase-meaning">Rice flour (safe)</span>
           </div>
         </div>
         <div class="gf-info-group">
-          <div class="gf-info-label">Grocery Stores</div>
+          <div class="gf-info-label">Safe Local Dishes</div><!-- RESEARCHED -->
           <ul class="gf-list">
-            <li>REWE &mdash; good free-from section, multiple locations</li>
-            <li>EDEKA &mdash; dedicated GF shelf, wide selection</li>
-            <li>DM (drugstore) &mdash; surprisingly good for GF snacks and staples</li>
+            <li>Rice and curry (naturally GF)</li>
+            <li>String hoppers / idiyappam (rice flour noodles)</li>
+            <li>Hoppers &amp; egg hoppers (rice flour crepes)</li>
+            <li>Pittu (rice flour &amp; coconut steamed)</li>
+            <li>Dhal curry, fish curry, sambols</li>
           </ul>
         </div>
         <div class="gf-info-group">
-          <div class="gf-info-label">City Note</div>
-          <div class="gf-info-value">Limited dedicated GF options, but Italian restaurants often accommodate. Christmas markets have very limited GF food &mdash; eat before you go or bring snacks.</div>
+          <div class="gf-info-label">Avoid</div><!-- RESEARCHED -->
+          <ul class="gf-list">
+            <li>Kottu roti (chopped wheat flatbread)</li>
+            <li>Roti / paratha (wheat-based)</li>
+            <li>Papadams (often wheat now, not always lentil)</li>
+            <li>Vada (deep-fried in shared oil with wheat)</li>
+            <li>Lamprais (rice wrapped in banana leaf, sauce may contain flour)</li>
+          </ul>
+        </div>
+        <div class="gf-info-group">
+          <div class="gf-info-label">Grocery Stores</div><!-- RESEARCHED -->
+          <ul class="gf-list">
+            <li>Cargills &amp; Keells supermarkets have rice flour, dhal, coconut milk</li>
+            <li>No dedicated free-from aisles</li>
+            <li>Stock up on naturally GF Sri Lankan staples</li>
+          </ul>
+        </div>
+        <div class="gf-info-group">
+          <div class="gf-info-label">Pro Tip</div><!-- RESEARCHED -->
+          <div class="gf-info-value">Celiac disease is not well understood in Sri Lanka. Saying "wheat flour is poisonous" is far more effective than explaining celiac disease. Carry a Sinhala/Tamil translation card. Small family-run places tend to be safer than mid-range tourist restaurants because they cook from scratch.</div>
         </div>
       </div>
       <div class="gf-score-section">
@@ -817,7 +796,7 @@
         </div>
         <div class="gf-score-row">
           <span class="gf-score-category">Staff knowledge &amp; safety</span>
-          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div>
+          <div class="gf-score-pips"><span class="gf-score-pip"></span><span class="gf-score-pip"></span></div>
         </div>
         <div class="gf-score-row">
           <span class="gf-score-category">Density of GF dining</span>
@@ -825,122 +804,49 @@
         </div>
         <div class="gf-score-row">
           <span class="gf-score-category">Grocery availability</span>
-          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div>
         </div>
         <div class="gf-score-total">
-          <span class="gf-score-total-num">5/10</span>
+          <span class="gf-score-total-num">3/10</span>
           <span class="gf-score-total-label">Overall GF Score</span>
         </div>
         <div class="gf-score-verdict">
-          <span class="gf-guide-difficulty gf-difficulty-moderate"><span class="gf-dot"></span>Moderate</span>
+          <span class="gf-guide-difficulty gf-difficulty-difficult"><span class="gf-dot"></span>Difficult</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════ RESTAURANTS ═══════════════ -->
+  <!-- ═══════════════════════════════════════════════════════════
+       RESTAURANTS
+       ═══════════════════════════════════════════════════════════ -->
   <section class="restaurants" id="restaurants">
     <div class="restaurants-header">
       <h2 class="restaurants-title">GF Friendly Restaurants</h2>
-      <span class="restaurants-count">2 spots</span>
+      <span class="restaurants-count">3 spots</span>
     </div>
     <div class="restaurants-rule"></div>
 
-    <div class="restaurants-grid">
-
-      <div class="restaurant-card">
-        <div class="restaurant-top">
-          <h3 class="restaurant-name">mama trattoria K&ouml;ln City</h3>
-          <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div>
-        </div>
-        <div class="restaurant-cuisine">Italian</div>
-        <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
-        <div class="restaurant-gf-score">
-          <span class="restaurant-gf-score-label">GF Score</span>
-          <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
-        </div>
-        <div class="restaurant-details">
-          <div class="restaurant-detail">
-            <div class="restaurant-detail-label">Safety Notes</div>
-            <div class="restaurant-detail-value">GF pizza base and pasta available. Accommodating staff who understand allergen requests. Organic ingredients used throughout.</div>
-          </div>
-          <div class="restaurant-detail restaurant-location">
-            <div class="restaurant-detail-label">Location</div>
-            <div class="restaurant-detail-value restaurant-location-value">
-              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-              <span class="restaurant-detail-value">Altstadt &middot; City Centre</span>
-            </div>
-          </div>
-        </div>
-        <div class="restaurant-fmgf">
-          <a href="https://www.findmeglutenfree.com/biz/mama-trattoria/5528070261964800" class="restaurant-fmgf-link" target="_blank" rel="noopener">
-            See reviews on Find Me Gluten Free
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-          </a>
-        </div>
-      </div>
-
-      <div class="restaurant-card">
-        <div class="restaurant-card-inner">
-          <div class="restaurant-card-content">
-            <div class="restaurant-top">
-              <h3 class="restaurant-name">Kuchi Mami</h3>
-              <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div>
-            </div>
-            <div class="restaurant-cuisine">Asian</div>
-            <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
-            <div class="restaurant-gf-score">
-              <span class="restaurant-gf-score-label">GF Score</span>
-              <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
-            </div>
-            <div class="restaurant-details">
-              <div class="restaurant-detail">
-                <div class="restaurant-detail-label">Safety Notes</div>
-                <div class="restaurant-detail-value">Allergens are marked on the menu, which helps with navigation. However, no GF soy sauce is available &mdash; communicate clearly with staff about celiac needs.</div>
-              </div>
-              <div class="restaurant-detail restaurant-location">
-                <div class="restaurant-detail-label">Location</div>
-                <div class="restaurant-detail-value restaurant-location-value">
-                  <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-                  <span class="restaurant-detail-value">Altstadt-Nord &middot; near Cathedral</span>
-                </div>
-              </div>
-            </div>
-            <div class="restaurant-fmgf">
-              <a href="https://www.findmeglutenfree.com/biz/kuchi-mami/5621067874435072" class="restaurant-fmgf-link" target="_blank" rel="noopener">
-                See reviews on Find Me Gluten Free
-                <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-              </a>
-            </div>
-          </div>
-          <img src="../../photos/germany/cologne/kuchi-mami/IMG_3871.jpeg" alt="Cologne Cathedral at night near Kuchi Mami" class="restaurant-photo" loading="lazy">
-        </div>
-      </div>
-
+    <!-- Restaurant Map -->
+    <div id="gf-map" style="width:100%; min-height:260px; border-radius:4px; border:1px solid rgba(42,32,24,0.08); margin-bottom:1.6rem;"></div>
+    <div style="display:flex; align-items:center; gap:1.2rem; flex-wrap:wrap; margin-bottom:2.4rem; font-family:'Jost',sans-serif; font-size:0.58rem; font-weight:400; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-light);">
+      <span>GF Score</span>
+      <span style="display:inline-flex;align-items:center;gap:0.3rem;"><span style="width:10px;height:10px;border-radius:50%;background:#b48c3c;"></span> 3/5</span>
+      <span style="display:inline-flex;align-items:center;gap:0.3rem;"><span style="width:10px;height:10px;border-radius:50%;background:#2A2018;"></span> Hotel</span>
     </div>
-  </section>
-
-  <!-- ═══════════════ LANDMARKS ═══════════════ -->
-  <section class="landmarks" id="landmarks">
-    <div class="landmarks-header">
-      <h2 class="landmarks-title">Landmarks &amp; Must-See Spots</h2>
-      <span class="landmarks-count">4 spots</span>
-    </div>
-    <div class="landmarks-rule"></div>
-
-    <div id="landmarks-map" style="width:100%; min-height:260px; border-radius:4px; border:1px solid rgba(42,32,24,0.08); margin-bottom:1.6rem;"></div>
     <script>
     (function(){
-      var map = L.map('landmarks-map', { scrollWheelZoom: false }).setView([50.940, 6.958], 14);
+      var map = L.map('gf-map', { scrollWheelZoom: false }).setView([7.210, 79.852], 12);
       L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 18
       }).addTo(map);
 
-      var landmarks = [
-        { name:'Cologne Cathedral', lat:50.941278, lng:6.958281 },
-        { name:'Hohenzollernbr\u00fccke', lat:50.941605, lng:6.965789 },
-        { name:'Old Market', lat:50.938504, lng:6.960141 },
-        { name:'Weihnachtsmarkt', lat:50.93599, lng:6.947487 }
+      var colors = { 5:'#3d6e40', 4:'#6a9a40', 3:'#b48c3c', 2:'#c87a50', 1:'#b4463c', 0:'#9a9a9a' };
+
+      var restaurants = [
+        { name:'Lords Restaurant Complex', score:3, lat:7.241358, lng:79.842078 },
+        { name:'Zen Cafe', score:3, lat:7.228816, lng:79.841015 },
+        { name:'YAAGA - Backyard Dining', score:3, lat:7.240864, lng:79.84249 }
       ];
 
       var hotelIcon = L.divIcon({
@@ -948,349 +854,324 @@
         html: '<div style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;background:#2A2018;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.25);"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 21V13h6v8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 21h22" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><rect x="7" y="8" width="3" height="3" rx="0.5" fill="#fff"/><rect x="14" y="8" width="3" height="3" rx="0.5" fill="#fff"/></svg></div>',
         iconSize: [22, 22], iconAnchor: [11, 11]
       });
-      L.marker([50.94043, 6.96953], { icon: hotelIcon })
+      L.marker([7.142758, 79.872138], { icon: hotelIcon })
         .addTo(map)
-        .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">Hyatt Regency Cologne</strong><br><span style="font-size:11px;color:#5A5048;">Where I stayed</span></div>', { closeButton: false });
+        .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">Spicepeek Boutique Hotel</strong><br><span style="font-size:11px;color:#5A5048;">Where I stayed</span></div>', { closeButton: false });
 
-      landmarks.forEach(function(l) {
+      restaurants.forEach(function(r) {
+        var color = colors[r.score];
         var icon = L.divIcon({
           className: '',
-          html: '<div style="width:14px;height:14px;border-radius:50%;background:#C8717A;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.2);"></div>',
+          html: '<div style="width:14px;height:14px;border-radius:50%;background:'+color+';border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.2);"></div>',
           iconSize: [14, 14], iconAnchor: [7, 7]
         });
-        L.marker([l.lat, l.lng], { icon: icon })
+        L.marker([r.lat, r.lng], { icon: icon })
           .addTo(map)
-          .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">'+l.name+'</strong></div>', { closeButton: false });
+          .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">'+r.name+'</strong><br><span style="font-size:11px;color:#5A5048;">GF Options \u00b7 GF Score: '+r.score+'/5</span></div>', { closeButton: false });
       });
     })();
     </script>
 
-    <div class="landmarks-grid">
+    <div class="restaurants-grid">
 
-      <div class="landmark-card">
-        <div class="landmark-card-inner">
-          <div class="landmark-card-content">
-            <div class="landmark-top">
-              <h3 class="landmark-name">Cologne Cathedral</h3>
-              <span class="landmark-type landmark-type-historic">Historic</span>
-            </div>
-            <div class="landmark-desc">Germany's most visited landmark and a UNESCO World Heritage Site. This iconic Gothic cathedral took over 600 years to complete. Free to enter &mdash; the twin spires dominate the skyline from every angle.</div>
-            <div class="landmark-location">
-              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-              Domkloster &middot; next to Hauptbahnhof
-            </div>
-            <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
+    <!-- All restaurants are "Traveler recommended" (none visited) -->
+
+    <div class="restaurant-card">
+      <div class="restaurant-card-inner">
+      <div class="restaurant-card-content">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Lords Restaurant Complex</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div>
+      </div>
+      <div class="restaurant-cuisine">Sri Lankan / Indian / Thai</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">GF Notes</div>
+          <div class="restaurant-detail-value"><!-- RESEARCHED -->Didn't get to eat here but looks like it has GF options and is fun! GF menu with curry, fish &amp; chips, fries, desserts, vegan GF pizzas.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Negombo</span>
           </div>
-          <img src="../../photos/germany/cologne/cologne-cathedral/IMG_0275.jpeg" alt="Cologne Cathedral" class="landmark-photo" loading="lazy">
         </div>
       </div>
-
-      <div class="landmark-card">
-        <div class="landmark-card-inner">
-          <div class="landmark-card-content">
-            <div class="landmark-top">
-              <h3 class="landmark-name">Hohenzollernbr&uuml;cke</h3>
-              <span class="landmark-type landmark-type-walk">Walk</span>
-            </div>
-            <div class="landmark-desc">The famous love lock bridge spanning the Rhine. Walk across for some of the best views of the Cathedral and the Old Town. Thousands of padlocks cover the railings &mdash; a Cologne tradition.</div>
-            <div class="landmark-location">
-              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-              Rhine &middot; Cathedral to Deutz
-            </div>
-            <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
-          </div>
-          <img src="../../photos/germany/cologne/hohenzollernbrucke/IMG_3832.jpeg" alt="Hohenzollernbrücke" class="landmark-photo" loading="lazy">
-        </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/lords-restaurant/6001387190747136" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
       </div>
-
-      <div class="landmark-card">
-        <div class="landmark-card-inner">
-          <div class="landmark-card-content">
-            <div class="landmark-top">
-              <h3 class="landmark-name">Old Market (Alter Markt)</h3>
-              <span class="landmark-type landmark-type-historic">Historic</span>
-            </div>
-            <div class="landmark-desc">The historic heart of Cologne's Altstadt. Colorful buildings line the square, which hosts markets and is surrounded by traditional brewhouses serving K&ouml;lsch beer.</div>
-            <div class="landmark-location">
-              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-              Altstadt &middot; Old Town
-            </div>
-            <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
-          </div>
-          <img src="../../photos/germany/cologne/old-market/IMG_3841.jpeg" alt="Old Market Christmas market" class="landmark-photo" loading="lazy">
-        </div>
       </div>
-
-      <div class="landmark-card">
-        <div class="landmark-card-inner">
-          <div class="landmark-card-content">
-            <div class="landmark-top">
-              <h3 class="landmark-name">Weihnachtsmarkt auf dem Neumarkt</h3>
-              <span class="landmark-type landmark-type-market">Market</span>
-            </div>
-            <div class="landmark-desc">One of Cologne's beloved Christmas markets, set around the Neumarkt square. Gl&uuml;hwein, handcrafts, and festive atmosphere &mdash; but very limited GF food options. Eat beforehand.</div>
-            <div class="landmark-location">
-              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
-              Neumarkt &middot; City Centre
-            </div>
-            <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
-          </div>
-          <img src="../../photos/germany/cologne/weihnachtsmarkt-auf-dem-neumarkt-koln/IMG_3858.jpeg" alt="Weihnachtsmarkt auf dem Neumarkt" class="landmark-photo" loading="lazy">
-        </div>
       </div>
-
     </div>
+
+    <div class="restaurant-card">
+      <div class="restaurant-card-inner">
+      <div class="restaurant-card-content">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Zen Cafe</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div>
+      </div>
+      <div class="restaurant-cuisine">Healthy / Vegetarian / Vegan</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">GF Notes</div>
+          <div class="restaurant-detail-value"><!-- RESEARCHED -->GF banana pancakes, Buddha bowls, smoothie bowls clearly marked on the menu.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Negombo</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/zen-cafe/5307625374089216" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+      </div>
+      </div>
+    </div>
+
+    <div class="restaurant-card">
+      <div class="restaurant-card-inner">
+      <div class="restaurant-card-content">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">YAAGA - Backyard Dining</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div>
+      </div>
+      <div class="restaurant-cuisine">Sri Lankan / Thai</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">GF Notes</div>
+          <div class="restaurant-detail-value"><!-- RESEARCHED -->Supposedly very celiac friendly. GF pad thai and other options available.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Negombo</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/yaaga/4880134834618368" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+      </div>
+      </div>
+    </div>
+
+    </div><!-- /.restaurants-grid -->
   </section>
 
-  <!-- ═══════════════ THINGS TO DO ═══════════════ -->
-  <section class="things-to-do" id="things-to-do">
-    <div class="things-header">
-      <h2 class="things-title">Things to Do</h2>
-    </div>
-    <div class="things-rule"></div>
-
-    <div class="things-category">
-      <div class="things-category-label">Activities &amp; Experiences</div>
-      <div class="things-grid">
-
-        <div class="thing-card">
-          <div class="thing-top">
-            <h3 class="thing-name">Cologne Cathedral Tour</h3>
-            <span class="thing-tag thing-tag-paid">Ticketed</span>
-          </div>
-          <div class="thing-desc">Guided tour of Germany's most visited landmark. Learn about the 600-year construction history, see the Shrine of the Three Kings, and climb the 533 steps to the tower for panoramic views.</div>
-          <div class="thing-meta">
-            <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> 1&ndash;2 hours</span>
-            <span class="thing-detail">&sim;&euro;10 adult</span>
-          </div>
-          <a href="https://www.viator.com/Cologne-attractions/Kolner-Dom-Cologne-Cathedral/d923-a2164" class="thing-book" target="_blank" rel="noopener">
-            Book on Viator <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-          </a>
-        </div>
-
-        <div class="thing-card">
-          <div class="thing-top">
-            <h3 class="thing-name">Cologne Triangle Observation Deck</h3>
-            <span class="thing-tag thing-tag-paid">Ticketed</span>
-          </div>
-          <div class="thing-desc">103-metre panoramic viewing platform across the Rhine in Deutz. The best vantage point for Cathedral photos &mdash; go in late afternoon for sunset light over the Old Town.</div>
-          <div class="thing-meta">
-            <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> 30&ndash;60 min</span>
-            <span class="thing-detail">&sim;&euro;3</span>
-          </div>
-          <a href="https://www.getyourguide.com/kolntriangle-l17294/" class="thing-book" target="_blank" rel="noopener">
-            Book on GetYourGuide <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-          </a>
-        </div>
-
-        <div class="thing-card">
-          <div class="thing-top">
-            <h3 class="thing-name">Rhine River Cruise</h3>
-            <span class="thing-tag thing-tag-paid">Ticketed</span>
-          </div>
-          <div class="thing-desc">See Cologne from the water on a 1&ndash;2 hour sightseeing cruise. Pass under the Hohenzollernbr&uuml;cke, glide past the Old Town, and enjoy Cathedral views from the Rhine.</div>
-          <div class="thing-meta">
-            <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> 1&ndash;2 hours</span>
-          </div>
-          <a href="https://www.viator.com/tours/Cologne/Cologne-Sightseeing-Cruise/d923-3320CGNCRUISE" class="thing-book" target="_blank" rel="noopener">
-            Book on Viator <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-          </a>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════ GETTING AROUND ═══════════════ -->
+  <!-- ═══════════════════════════════════════════════════════════
+       GETTING AROUND
+       ═══════════════════════════════════════════════════════════ -->
   <section class="getting-around" id="getting-around">
     <div class="getting-around-header">
       <h2 class="getting-around-title">Getting Around</h2>
     </div>
     <div class="getting-around-rule"></div>
-
     <div class="transport-grid">
       <div class="transport-card">
         <div class="transport-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="M10 22V14l-2-2v-4h8v4l-2 2v8"/><path d="M8 8l-1 1"/><path d="M16 8l1 1"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5"/></svg>
         </div>
-        <div class="transport-name">Walking</div>
-        <div class="transport-desc">Most major sights are within walking distance of the Cathedral. The Old Town, Rhine promenade, and Neumarkt are all easily connected on foot.</div>
-      </div>
-
-      <div class="transport-card">
-        <div class="transport-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 15V5a1 1 0 011-1h14a1 1 0 011 1v10M4 15h16M4 15l-2 4h20l-2-4"/><path d="M12 4v11"/></svg>
-        </div>
-        <div class="transport-name">Tram &amp; U-Bahn</div>
-        <div class="transport-desc">Cologne's KVB network covers the city well. Trams and underground trains run frequently and connect all major areas.</div>
+        <div class="transport-name">Tuk-tuks</div>
+        <div class="transport-desc"><!-- RESEARCHED -->The main way to get around Negombo. Always agree on the fare before you get in.</div>
         <div class="transport-detail">
-          <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="3"/></svg>
-          KVB network
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
+          Negotiate fare upfront
         </div>
       </div>
-
       <div class="transport-card">
         <div class="transport-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="14" rx="2"/><path d="M4 11h16"/><circle cx="8" cy="20" r="1.5"/><circle cx="16" cy="20" r="1.5"/><path d="M8 17v1.5M16 17v1.5"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="6" width="18" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3 10h18" stroke="currentColor" stroke-width="1.5"/><circle cx="7.5" cy="14.5" r="1" fill="currentColor"/><circle cx="16.5" cy="14.5" r="1" fill="currentColor"/></svg>
         </div>
-        <div class="transport-name">Bus</div>
-        <div class="transport-desc">Supplements the tram network. Useful for reaching areas not served by rail. Part of the KVB system, same tickets.</div>
+        <div class="transport-name">Airport Transfers</div>
+        <div class="transport-desc"><!-- RESEARCHED -->Taxi from Bandaranaike International Airport takes about 15 minutes to most Negombo hotels.</div>
         <div class="transport-detail">
-          <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="3"/></svg>
-          24h service weekends
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
+          LKR 2,000-3,000 ($7-10)
         </div>
       </div>
-
       <div class="transport-card">
         <div class="transport-icon">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="10" rx="2"/><path d="M6 15v2M18 15v2"/><circle cx="7" cy="10" r="1"/><circle cx="17" cy="10" r="1"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="5" y="2" width="14" height="20" rx="2" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="18" r="1" fill="currentColor"/><path d="M9 2v1h6V2" stroke="currentColor" stroke-width="1.5"/></svg>
         </div>
-        <div class="transport-name">K&ouml;lnCard</div>
-        <div class="transport-desc">Unlimited transit plus museum discounts. &euro;9/24h single, &euro;19/24h group. Worth it if you're doing multiple attractions beyond walking distance.</div>
+        <div class="transport-name">Ride-hailing</div>
+        <div class="transport-desc"><!-- RESEARCHED -->Uber and PickMe both available in the Negombo/airport area. More reliable pricing than tuk-tuks.</div>
         <div class="transport-detail">
-          <svg width="8" height="8" viewBox="0 0 8 8" fill="currentColor"><circle cx="4" cy="4" r="3"/></svg>
-          &euro;9 single / &euro;19 group
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
+          Uber &amp; PickMe apps
+        </div>
+      </div>
+      <div class="transport-card">
+        <div class="transport-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 17V3h16v14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M2 17h20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M7 17v4M17 17v4M5 21h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="transport-name">To Kandy</div>
+        <div class="transport-desc"><!-- RESEARCHED -->Private vehicle or bus takes 2-3 hours. Scenic route through the hill country.</div>
+        <div class="transport-detail">
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>
+          2-3 hours
         </div>
       </div>
     </div>
 
     <div class="transit-tip">
-      <svg class="transit-tip-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+      <svg class="transit-tip-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="currentColor" stroke-width="1.2"/><path d="M7 4v3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="7" cy="10" r="0.75" fill="currentColor"/></svg>
       <div class="transit-tip-content">
-        <div class="transit-tip-label">Local Tip</div>
-        <div class="transit-tip-text">Most sights are walkable from the Cathedral. The K&ouml;lnCard is good value if you're doing multiple attractions, but for a short visit you can easily get by on foot.</div>
+        <div class="transit-tip-label">Transit Tip</div>
+        <div class="transit-tip-text"><!-- RESEARCHED -->If your flight arrives late, most hotels near the airport will arrange a pickup. Confirm this in advance and carry small LKR notes for tips.</div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════ WHAT TO PACK ═══════════════ -->
+  <!-- ═══════════════════════════════════════════════════════════
+       WHAT TO PACK
+       ═══════════════════════════════════════════════════════════ -->
   <section class="packing" id="what-to-pack">
     <div class="packing-header">
       <h2 class="packing-title">What to Pack</h2>
-      <span class="packing-season">December in Germany</span>
+      <span class="packing-season">April · Hot &amp; Humid</span>
     </div>
     <div class="packing-rule"></div>
-
     <ul class="packing-list">
       <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
         <div class="packing-item-content">
-          <span class="packing-item-name">Comfortable walking shoes</span>
-          <span class="packing-item-why">Cobblestones in the Old Town and long walks along the Rhine promenade.</span>
+          <span class="packing-item-name">GF snack stash</span>
+          <span class="packing-item-why">GF options are limited; pack bars, crackers, or trail mix for the layover</span>
         </div>
         <span class="packing-item-tag packing-tag-essential">Essential</span>
       </li>
-
       <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
         <div class="packing-item-content">
-          <span class="packing-item-name">Celiac travel card (German)</span>
-          <span class="packing-item-why">A printed card explaining celiac disease in German. Essential for communicating with kitchen staff.</span>
+          <span class="packing-item-name">Celiac translation card</span>
+          <span class="packing-item-why">Print a Sinhala/Tamil card explaining celiac disease and wheat allergy</span>
         </div>
         <span class="packing-item-tag packing-tag-essential">Essential</span>
       </li>
-
       <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
         <div class="packing-item-content">
-          <span class="packing-item-name">Portable gluten-free snacks</span>
-          <span class="packing-item-why">GF options at Christmas markets are nearly non-existent. Stock up at REWE or bring your own.</span>
+          <span class="packing-item-name">Reusable water bottle</span>
+          <span class="packing-item-why">Tap water is not safe to drink; refill from filtered/bottled sources</span>
         </div>
         <span class="packing-item-tag packing-tag-essential">Essential</span>
       </li>
-
       <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
         <div class="packing-item-content">
-          <span class="packing-item-name">EU power adapter (Type C/F)</span>
-          <span class="packing-item-why">Germany uses standard European plugs. Bring a universal adapter if you're coming from outside the EU.</span>
+          <span class="packing-item-name">Type D/M/G power adapter</span>
+          <span class="packing-item-why">Sri Lanka uses a mix of plug types; a universal adapter is safest</span>
         </div>
-        <span class="packing-item-tag packing-tag-germany">Germany</span>
+        <span class="packing-item-tag packing-tag-country">Sri Lanka</span>
       </li>
-
       <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
         <div class="packing-item-content">
-          <span class="packing-item-name">Heavy winter coat</span>
-          <span class="packing-item-why">December temperatures hover around 0&ndash;5&deg;C. You'll be outdoors at markets for hours.</span>
+          <span class="packing-item-name">Insect repellent</span>
+          <span class="packing-item-why">Mosquitoes are active in the tropics, especially near the coast</span>
         </div>
-        <span class="packing-item-tag packing-tag-city">Cologne</span>
+        <span class="packing-item-tag packing-tag-country">Sri Lanka</span>
       </li>
-
       <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
         <div class="packing-item-content">
-          <span class="packing-item-name">Thermal layers</span>
-          <span class="packing-item-why">A base layer makes all the difference when standing outside at Christmas markets in the cold.</span>
+          <span class="packing-item-name">Small LKR notes</span>
+          <span class="packing-item-why">Useful for tuk-tuk fares and tips; exchange at the airport on arrival</span>
         </div>
-        <span class="packing-item-tag packing-tag-city">Cologne</span>
+        <span class="packing-item-tag packing-tag-country">Sri Lanka</span>
       </li>
-
       <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
         <div class="packing-item-content">
-          <span class="packing-item-name">Warm accessories (hat, gloves, scarf)</span>
-          <span class="packing-item-why">Exposed along the Rhine and at open-air markets. Wind chill can be brutal.</span>
+          <span class="packing-item-name">Lightweight, breathable clothing</span>
+          <span class="packing-item-why">April temps hit 30-33 C (86-91 F) with high humidity</span>
         </div>
-        <span class="packing-item-tag packing-tag-city">Cologne</span>
+        <span class="packing-item-tag packing-tag-city">Negombo</span>
       </li>
-
       <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
         <div class="packing-item-content">
-          <span class="packing-item-name">Waterproof boots</span>
-          <span class="packing-item-why">Rain and occasional snow in December. Keeps feet warm and dry on cobblestones.</span>
+          <span class="packing-item-name">Sunscreen (SPF 50+)</span>
+          <span class="packing-item-why">Intense tropical sun even on cloudy days</span>
         </div>
-        <span class="packing-item-tag packing-tag-city">Cologne</span>
+        <span class="packing-item-tag packing-tag-city">Negombo</span>
       </li>
-
       <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
         <div class="packing-item-content">
-          <span class="packing-item-name">Hand warmers</span>
-          <span class="packing-item-why">A lifesaver for long evenings browsing outdoor Christmas markets. Cheap, disposable, and worth every cent.</span>
+          <span class="packing-item-name">Compact umbrella</span>
+          <span class="packing-item-why">April is the start of the rainy inter-monsoon season; afternoon showers likely</span>
         </div>
-        <span class="packing-item-tag packing-tag-city">Cologne</span>
+        <span class="packing-item-tag packing-tag-city">Negombo</span>
       </li>
     </ul>
-
     <!-- STOREFRONT: Uncomment when Amazon storefront URL is ready
     <div class="packing-storefront">
       <a href="STOREFRONT_URL_HERE" class="packing-storefront-link" target="_blank" rel="noopener sponsored">
         Browse My Full Travel Storefront
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
       </a>
     </div>
     -->
   </section>
 
-  <!-- ═══════════════ TRAVEL TIPS ═══════════════ -->
+  <!-- ═══════════════════════════════════════════════════════════
+       TRAVEL TIPS + WHAT I'D DO DIFFERENTLY
+       ═══════════════════════════════════════════════════════════ -->
   <section class="travel-tips" id="travel-tips">
     <div class="tips-header">
       <h2 class="tips-title">Travel Tips</h2>
     </div>
     <div class="tips-rule"></div>
-
     <ul class="tips-list">
       <li class="tip-item">
         <span class="tip-bullet"></span>
-        <span class="tip-text">Cologne Cathedral is free to enter. The tower climb and guided tours are paid, but you can wander the nave for free anytime.</span>
+        <span class="tip-text"><!-- RESEARCHED -->Negombo is primarily a transit stop near the airport. If you have a late arrival or early departure, it makes a convenient overnight rather than rushing to Colombo.</span>
       </li>
       <li class="tip-item">
         <span class="tip-bullet"></span>
-        <span class="tip-text">Walk across the Hohenzollernbr&uuml;cke for the best photo angles of the Cathedral and Rhine skyline.</span>
+        <span class="tip-text"><!-- RESEARCHED -->The fish market at the Negombo lagoon is worth a quick visit in the morning if you have time before your onward journey. It's one of the biggest on the west coast.</span>
       </li>
       <li class="tip-item">
         <span class="tip-bullet"></span>
-        <span class="tip-text">Christmas markets are magical but have almost no GF food. Eat at a restaurant beforehand, then enjoy the atmosphere and Gl&uuml;hwein (most is naturally GF, but always confirm).</span>
+        <span class="tip-text"><!-- RESEARCHED -->For celiac safety, stick to rice-based dishes: hoppers, string hoppers, and rice and curry are your safest bets. Avoid anything described as "short eats" (often wheat-based pastries).</span>
       </li>
       <li class="tip-item">
         <span class="tip-bullet"></span>
-        <span class="tip-text">Visit the Cologne Triangle observation deck in late afternoon &mdash; the sunset light over the Cathedral is stunning and the &euro;3 admission is a bargain.</span>
+        <span class="tip-text">Confirm your hotel's airport transfer in advance. Many budget hotels near the airport offer free or low-cost pickups.</span>
       </li>
       <li class="tip-item">
         <span class="tip-bullet"></span>
-        <span class="tip-text">K&ouml;lsch beer (served in tiny 0.2L glasses) is the local tradition. Not GF, but the ritual of the K&ouml;bes (waiters) constantly refilling your glass is worth observing.</span>
+        <span class="tip-text"><!-- RESEARCHED -->Download the PickMe app before arrival. It's Sri Lanka's local ride-hailing alternative to Uber and often has better coverage in smaller towns.</span>
       </li>
     </ul>
 
@@ -1298,33 +1179,39 @@
       <div class="tips-hindsight-label">What I'd Do Differently</div>
       <ul class="hindsight-list">
         <li class="hindsight-item">
-          <svg class="hindsight-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L6 1L11 11H1Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>
-          <span class="hindsight-text">I'd pack more GF snacks &mdash; the markets are incredible but being unable to eat anything there gets old fast.</span>
+          <svg class="hindsight-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6C1 3.24 3.24 1 6 1C8.76 1 11 3.24 11 6C11 8.76 8.76 11 6 11C3.24 11 1 8.76 1 6Z" stroke="currentColor" stroke-width="1.2"/><path d="M4 6L6 8L8.5 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="hindsight-text">Would have eaten at Lords Restaurant Complex or YAAGA if I'd had more time. The hotel dinner options were limited for GF.</span>
         </li>
         <li class="hindsight-item">
-          <svg class="hindsight-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L6 1L11 11H1Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>
-          <span class="hindsight-text">I'd take the Rhine cruise &mdash; the Cathedral views from the water looked spectacular and we ran out of time.</span>
+          <svg class="hindsight-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6C1 3.24 3.24 1 6 1C8.76 1 11 3.24 11 6C11 8.76 8.76 11 6 11C3.24 11 1 8.76 1 6Z" stroke="currentColor" stroke-width="1.2"/><path d="M4 6L6 8L8.5 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="hindsight-text">Bring more GF snacks than you think you need. Negombo isn't the place to rely on finding safe food easily.</span>
         </li>
       </ul>
     </div>
   </section>
 
-  <!-- ═══════════════ TIP CTA ═══════════════ -->
+  <!-- ═══════════════════════════════════════════════════════════
+       TIP CTA
+       ═══════════════════════════════════════════════════════════ -->
   <div class="tip-cta">
     <div class="tip-cta-title">Have a tip or comment?</div>
-    <div class="tip-cta-sub">Found a great GF spot in Cologne? I'd love to hear from you.</div>
-    <a href="mailto:gfgoneglobal@gmail.com?subject=Tip for Cologne" class="tip-cta-link">
+    <div class="tip-cta-sub">Found a great GF spot in Negombo? I'd love to hear from you.</div>
+    <a href="mailto:kellymdowd@gmail.com?subject=Tip for Negombo" class="tip-cta-link">
       <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="2.5" width="11" height="8" rx="1.5" stroke="currentColor" stroke-width="1.1"/><path d="M1 4l5.5 3.5L12 4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
       Send a note
     </a>
   </div>
 
-  <!-- ═══════════════ FOOTER ═══════════════ -->
+  <!-- ═══════════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════════ -->
   <footer class="page-footer">
     <div class="page-disclosure">This page may contain affiliate links. If you book through these links, I may earn a small commission at no extra cost to you.</div>
   </footer>
 
-  <!-- ═══════════════ PHOTO LIGHTBOX ═══════════════ -->
+  <!-- ═══════════════════════════════════════════════════════════
+       PHOTO LIGHTBOX
+       ═══════════════════════════════════════════════════════════ -->
   <div class="lightbox-overlay" id="lightbox">
     <button class="lightbox-close" aria-label="Close lightbox">
       <svg viewBox="0 0 24 24" fill="none"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
@@ -1335,7 +1222,6 @@
   (function() {
     var overlay = document.getElementById('lightbox');
     var lbImg = document.getElementById('lightbox-img');
-
     document.querySelectorAll('.restaurant-photo, .landmark-photo, .hotel-image, .thing-photo').forEach(function(img) {
       img.addEventListener('click', function(e) {
         e.stopPropagation();
@@ -1345,25 +1231,19 @@
         document.body.style.overflow = 'hidden';
       });
     });
-
     function closeLightbox() {
       overlay.classList.remove('active');
       document.body.style.overflow = '';
     }
-
     overlay.addEventListener('click', closeLightbox);
     overlay.querySelector('.lightbox-close').addEventListener('click', function(e) {
       e.stopPropagation();
       closeLightbox();
     });
-
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && overlay.classList.contains('active')) {
-        closeLightbox();
-      }
+      if (e.key === 'Escape' && overlay.classList.contains('active')) closeLightbox();
     });
   })();
   </script>
-
 </body>
 </html>

@@ -3,33 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Canada — GF Gone Global</title>
+  <title>Sri Lanka — GF Gone Global</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
   <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
   <style>
+    /* ─── Design Tokens ──────────────────────────────────────── */
     :root { --cream: #FFFFFF; --slate: #C8717A; --slate-dark: #AD5D65; --rose: #B8907A; --ink: #2A2018; --ink-mid: #5A5048; --ink-light: #9A907A; --pin: #B8907A; }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
     body { background: var(--cream); color: var(--ink); font-family: 'Jost', sans-serif; font-weight: 300; min-height: 100vh; padding-top: 52px; }
     body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 100; opacity: 0.6; }
+
+    /* ─── Site Nav ────────────────────────────────────────────── */
     .site-nav { position: fixed; top: 0; left: 0; right: 0; height: 52px; background: var(--cream); border-bottom: 1px solid rgba(42, 32, 24, 0.08); display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; z-index: 300; }
     .nav-home { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.85rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); text-decoration: none; transition: color 0.2s ease; }
     .nav-home:hover { color: var(--slate); }
     .nav-links { display: flex; align-items: center; gap: 2rem; }
     .nav-link { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; transition: color 0.2s ease; }
     .nav-link:hover { color: var(--ink); }
+
+    /* ─── Back Link ──────────────────────────────────────────── */
     .nav-sub { padding: 1.2rem 2.5rem 0; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards; }
     .back-link { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
     .back-link:hover { color: var(--slate); }
     .back-link:hover svg { transform: translateX(-3px); }
     .back-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+
+    /* ─── Header ─────────────────────────────────────────────── */
     .header { display: flex; justify-content: space-between; align-items: flex-end; padding: 1.4rem 2.5rem 1.2rem; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
     .country-name { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1; }
     .trip-dates { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(0.85rem, 1.3vw, 1rem); color: var(--ink-light); letter-spacing: 0.04em; padding-bottom: 0.2rem; }
     .header-rule { height: 1px; background: linear-gradient(to right, var(--rose), transparent 60%); margin: 0 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 0.6s forwards; }
+
+    /* ─── Overview Button ────────────────────────────────────── */
+    .overview-section { padding: 1rem 2.5rem 0; opacity: 0; animation: fadeIn 0.8s ease 0.3s forwards; }
+    .overview-btn { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; border: 1px solid rgba(154, 144, 122, 0.35); padding: 0.45rem 0.9rem 0.45rem 0.75rem; transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease; }
+    .overview-btn:hover { color: var(--slate); border-color: var(--slate); background: rgba(200, 113, 122, 0.05); }
+    .overview-btn svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .overview-btn:hover svg { transform: translateX(2px); }
+
+    /* ─── Map ────────────────────────────────────────────────── */
     .map-section { padding: 1.5rem 2.5rem 1rem; opacity: 0; animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
     #country-map { width: 100%; display: block; }
     #country-map svg { width: 100%; display: block; overflow: hidden; }
@@ -38,18 +54,18 @@
     .city-pin:hover circle.pin-fill { r: 7; fill: #C8A088; }
     .city-label { font-family: 'Jost', sans-serif; font-size: 10px; font-weight: 400; letter-spacing: 0.1em; fill: var(--ink-mid); pointer-events: none; transition: fill 0.2s ease; }
     .city-pin:hover .city-label { fill: var(--ink); }
+
+    /* ─── City Chips ─────────────────────────────────────────── */
     .cities-section { padding: 0.5rem 2.5rem 2rem; opacity: 0; animation: fadeIn 0.8s ease 1.2s forwards; }
     .cities-rule { height: 1px; background: rgba(170, 170, 170, 0.3); margin-bottom: 1.2rem; }
     .cities-grid { display: flex; flex-wrap: wrap; gap: 0.6rem 1.2rem; }
     .city-chip { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 0.75rem 0.35rem 0.6rem; border: 1px solid rgba(180, 168, 155, 0.4); cursor: pointer; background: transparent; font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease; }
     .city-chip:hover { border-color: var(--rose); background: rgba(184, 144, 122, 0.06); color: var(--ink); }
     .city-chip-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--pin); flex-shrink: 0; }
+
+    /* ─── Tooltip ─────────────────────────────────────────────── */
     #map-tooltip { position: fixed; pointer-events: none; background: var(--ink); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.4rem 0.75rem; white-space: nowrap; opacity: 0; transition: opacity 0.15s ease; z-index: 200; }
-    .overview-section { padding: 1rem 2.5rem 0; opacity: 0; animation: fadeIn 0.8s ease 0.3s forwards; }
-    .overview-btn { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; border: 1px solid rgba(154, 144, 122, 0.35); padding: 0.45rem 0.9rem 0.45rem 0.75rem; transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease; }
-    .overview-btn:hover { color: var(--slate); border-color: var(--slate); background: rgba(200, 113, 122, 0.05); }
-    .overview-btn svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
-    .overview-btn:hover svg { transform: translateX(2px); }
+
     /* ─── GF Friendliness Section ─────────────────────────────── */
     .gf-section { padding: 0 2.5rem 2rem; opacity: 0; animation: fadeIn 0.8s ease 1.4s forwards; }
     .gf-section-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.2rem; }
@@ -60,6 +76,10 @@
     .gf-verdict-easy .gf-verdict-dot { background: #4c8c50; }
     .gf-verdict-moderate { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
     .gf-verdict-moderate .gf-verdict-dot { background: #b48c3c; }
+    .gf-verdict-challenging { background: rgba(200, 122, 80, 0.08); color: #8a5030; }
+    .gf-verdict-challenging .gf-verdict-dot { background: #c87a50; }
+    .gf-verdict-difficult { background: rgba(180, 70, 60, 0.08); color: #8a3a30; }
+    .gf-verdict-difficult .gf-verdict-dot { background: #b4463c; }
     .gf-section-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.4rem; }
     .gf-section-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
     .gf-section-summary { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.01em; margin-bottom: 1.4rem; }
@@ -82,13 +102,14 @@
     .gf-city-score-bar { display: flex; gap: 3px; align-items: center; }
     .gf-city-pip { width: 6px; height: 6px; border-radius: 50%; background: rgba(42, 32, 24, 0.08); }
     .gf-city-pip.is-filled { background: var(--slate); }
-    @media (max-width: 768px) { .gf-section-grid { grid-template-columns: 1fr; gap: 1.6rem; } }
+    @media (max-width: 768px) {
+      .gf-section-grid { grid-template-columns: 1fr; gap: 1.6rem; }
+    }
 
     /* ─── Animations ─────────────────────────────────────────── */
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
     @media (max-width: 600px) { .site-nav { padding: 0 1.2rem; } .nav-sub, .header, .overview-section, .map-section, .cities-section, .gf-section { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
-  
 
     /* ─── Mobile: Nav bar ─────────────────────────────────── */
     @media (max-width: 480px) {
@@ -100,7 +121,12 @@
     /* ─── Mobile: Header stacking ─────────────────────────── */
     @media (max-width: 480px) {
       .header { flex-direction: column; align-items: flex-start; gap: 0.2rem; }
-      .trip-dates, .trip-date { padding-bottom: 0; }
+      .trip-dates { padding-bottom: 0; }
+    }
+
+    /* ─── Mobile: GF section padding ──────────────────────── */
+    @media (max-width: 480px) {
+      .gf-section { padding-left: 1.2rem; padding-right: 1.2rem; }
     }
   </style>
 
@@ -112,7 +138,7 @@
     gtag('js', new Date());
     gtag('config', 'G-64V5CSB1DT');
 
-    // ─── Enhanced event tracking ──────────────────────────
+    // ─── Custom event tracking ─────────────────────────────
     document.addEventListener('DOMContentLoaded', function() {
 
       // Scroll depth tracking
@@ -137,30 +163,18 @@
       // Outbound link clicks
       document.querySelectorAll('a[target="_blank"]').forEach(function(link) {
         link.addEventListener('click', function() {
-          var href = this.href;
-          var linkType = href.includes('google.com/maps') ? 'google_maps' : 'other';
-          gtag('event', 'outbound_click', { event_category: 'engagement', event_label: href, link_type: linkType, transport_type: 'beacon' });
-        });
-      });
-
-      // City chip clicks (which cities interest people)
-      document.querySelectorAll('.city-chip').forEach(function(chip) {
-        chip.addEventListener('click', function() {
-          gtag('event', 'city_click', { event_category: 'navigation', event_label: this.textContent.trim(), page_title: document.title });
-        });
-      });
-
-      // Map pin clicks
-      document.querySelectorAll('.city-pin').forEach(function(pin) {
-        pin.addEventListener('click', function() {
-          gtag('event', 'map_pin_click', { event_category: 'engagement', event_label: document.title });
+          gtag('event', 'outbound_click', {
+            event_category: 'engagement',
+            event_label: this.href,
+            transport_type: 'beacon'
+          });
         });
       });
 
       // Internal navigation
-      document.querySelectorAll('.back-link, .nav-link, .nav-home, .nav-btn').forEach(function(link) {
+      document.querySelectorAll('.back-link, .nav-link, .nav-home').forEach(function(link) {
         link.addEventListener('click', function() {
-          gtag('event', 'internal_nav', { event_category: 'navigation', event_label: this.textContent.trim(), link_url: this.href || '' });
+          gtag('event', 'internal_nav', { event_category: 'navigation', event_label: this.textContent.trim(), link_url: this.href });
         });
       });
 
@@ -171,10 +185,11 @@
 
     });
   </script>
-  
+
 </head>
 <body>
 
+  <!-- ═══════════════ SITE NAV ═══════════════ -->
   <nav class="site-nav">
     <a href="../index.html" class="nav-home">GF Gone Global</a>
     <div class="nav-links">
@@ -184,6 +199,7 @@
     </div>
   </nav>
 
+  <!-- ═══════════════ BACK LINK ═══════════════ -->
   <div class="nav-sub">
     <a href="../index.html" class="back-link">
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -193,14 +209,16 @@
     </a>
   </div>
 
+  <!-- ═══════════════ HEADER ═══════════════ -->
   <header class="header">
-    <h1 class="country-name">Canada</h1>
-    <span class="trip-dates">November 2022</span>
+    <h1 class="country-name">Sri Lanka</h1>
+    <span class="trip-dates">April 2026</span>
   </header>
   <div class="header-rule"></div>
 
+  <!-- ═══════════════ GOOGLE MAPS BUTTON ═══════════════ -->
   <div class="overview-section">
-    <a class="overview-btn" href="https://www.google.com/maps/d/edit?mid=1dvP93FHep3AHm9-cXZeNgC2QkksOL8U&usp=sharing" target="_blank" rel="noopener">
+    <a class="overview-btn" href="https://www.google.com/maps/d/u/1/edit?mid=126cSKvHDaA_Zw9gba0EaqWsW6yXBA3I" target="_blank" rel="noopener">
       <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
         <path d="M6.5 1.5C4 1.5 2 3.5 2 6s2 4.5 4.5 4.5S11 8.5 11 6 9 1.5 6.5 1.5Z" stroke="currentColor" stroke-width="1.2"/>
         <path d="M8.5 11 11 8.5M8.5 11H11V8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -209,10 +227,12 @@
     </a>
   </div>
 
+  <!-- ═══════════════ D3 COUNTRY MAP ═══════════════ -->
   <section class="map-section">
     <div id="country-map"></div>
   </section>
 
+  <!-- ═══════════════ CITY CHIPS ═══════════════ -->
   <section class="cities-section">
     <div class="cities-rule"></div>
     <div class="cities-grid" id="city-chips"></div>
@@ -222,39 +242,46 @@
   <section class="gf-section">
     <div class="gf-section-header">
       <h2 class="gf-section-title">GF Friendliness</h2>
-      <span class="gf-verdict-tag gf-verdict-easy"><span class="gf-verdict-dot"></span>GF Friendly</span>
+      <span class="gf-verdict-tag gf-verdict-challenging"><span class="gf-verdict-dot"></span>Challenging</span>
     </div>
     <div class="gf-section-rule"></div>
 
     <div class="gf-section-grid">
       <div>
-        <p class="gf-section-summary">Canada has strict gluten-free labeling laws enforced by the CFIA since 2012, and cities like Vancouver are considered among the most celiac-friendly in North America. The multicultural food scene means abundant naturally GF cuisines &mdash; Japanese, Thai, Indian &mdash; alongside dedicated GF bakeries and restaurants. Outside major cities, options thin out, but supermarkets like Whole Foods and Choices Markets carry excellent free-from ranges nationwide.</p>
+        <p class="gf-section-summary">Sri Lanka's traditional cuisine is naturally rice-based, making many staple dishes like hoppers, string hoppers, and pittu inherently gluten-free. However, celiac disease is poorly understood and allergen labeling is virtually nonexistent, so communicating dietary needs requires patience and a translation card. The safest approach is sticking to small family-run restaurants serving traditional fare, and always verifying ingredients directly with the chef.</p>
 
         <div class="gf-city-scores">
           <div class="gf-city-scores-label">City Scores</div>
           <div class="gf-city-score-row">
-            <span class="gf-city-name"><a href="canada/vancouver.html">Vancouver</a></span>
+            <span class="gf-city-name"><a href="sri-lanka/kandy.html">Kandy</a></span>
             <div class="gf-city-score-bar">
-              <span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span>
+              <span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span>
             </div>
           </div>
           <div class="gf-city-score-row">
-            <span class="gf-city-name"><a href="canada/victoria.html">Victoria</a></span>
+            <span class="gf-city-name"><a href="sri-lanka/negombo.html">Negombo</a></span>
             <div class="gf-city-score-bar">
-              <span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span>
+              <span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span>
+            </div>
+          </div>
+          <div class="gf-city-score-row">
+            <span class="gf-city-name"><a href="sri-lanka/sigiriya.html">Sigiriya</a></span>
+            <div class="gf-city-score-bar">
+              <span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span>
             </div>
           </div>
         </div>
       </div>
 
       <div>
+        <!-- Country GF rubric: 5 categories, each scored 0-2 -->
         <div class="gf-score-row">
           <span class="gf-score-category">GF Culture &amp; Awareness</span>
-          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
+          <div class="gf-score-pips"><span class="gf-score-pip"></span><span class="gf-score-pip"></span></div>
         </div>
         <div class="gf-score-row">
           <span class="gf-score-category">Labeling &amp; Regulations</span>
-          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
+          <div class="gf-score-pips"><span class="gf-score-pip"></span><span class="gf-score-pip"></span></div>
         </div>
         <div class="gf-score-row">
           <span class="gf-score-category">Dining Options Nationwide</span>
@@ -262,43 +289,47 @@
         </div>
         <div class="gf-score-row">
           <span class="gf-score-category">Grocery &amp; Supermarket Access</span>
-          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div>
         </div>
         <div class="gf-score-row">
           <span class="gf-score-category">Naturally GF Cuisine</span>
-          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
         </div>
         <div class="gf-score-total">
-          <span class="gf-score-total-num">8</span>
+          <span class="gf-score-total-num">4</span>
           <span class="gf-score-total-label">out of 10</span>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ═══════════════ TOOLTIP ═══════════════ -->
   <div id="map-tooltip"></div>
 
+  <!-- ═══════════════ D3 MAP SCRIPT ═══════════════ -->
   <script>
     const CITIES = [
-      { name: 'Vancouver', slug: 'vancouver', lat: 49.2827, lon: -123.1207, trips: '' },
-      { name: 'Victoria',  slug: 'victoria',  lat: 48.4284, lon: -123.3656, trips: '' },
+      { name: 'Negombo', slug: 'negombo', lat: 7.209, lon: 79.838, trips: 'April 2026' },
+      { name: 'Kandy', slug: 'kandy', lat: 7.291, lon: 80.637, trips: 'April 2026' },
+      { name: 'Sigiriya', slug: 'sigiriya', lat: 7.957, lon: 80.760, trips: 'April 2026' }
     ];
 
     const LABEL_OPTS = {
-      'Vancouver': { dx:  10, dy:  4, anchor: 'start' },
-      'Victoria':  { dx: -10, dy:  4, anchor: 'end'   },
+      'Negombo': { dx: -10, dy: 4, anchor: 'end' },
+      'Kandy': { dx: 10, dy: 4, anchor: 'start' },
+      'Sigiriya': { dx: 10, dy: 4, anchor: 'start' }
     };
 
-    // British Columbia bounding box — zoom to the BC coast where both cities are
+    // Bounding box zoomed into Sri Lanka
     const REGION = {
       type: 'Feature',
       geometry: {
         type: 'Polygon',
-        coordinates: [[[-130, 52], [-118, 52], [-118, 47], [-130, 47], [-130, 52]]]
+        coordinates: [[[79.4, 5.9], [82.0, 5.9], [82.0, 9.9], [79.4, 9.9], [79.4, 5.9]]]
       }
     };
 
-    const W = 960, H = 540;
+    const W = 960, H = 700;
 
     const svg = d3.select('#country-map')
       .append('svg')
@@ -313,25 +344,25 @@
       .then(r => r.json())
       .then(world => {
         const countries = topojson.feature(world, world.objects.countries);
-        const canada = countries.features.find(f => +f.id === 124);
+        const target = countries.features.find(f => +f.id === 144);
 
-        projection.fitExtent([[60, 40], [W - 60, H - 50]], REGION);
+        projection.fitExtent([[120, 60], [W - 120, H - 60]], target);
 
         svg.append('rect').attr('width', W).attr('height', H).attr('fill', '#F3F3F3');
 
         svg.selectAll('.bg-country')
           .data(countries.features)
           .enter().append('path')
-          .attr("fill", "#E0E0E0")
+          .attr('fill', '#E0E0E0')
           .attr('stroke', 'rgba(255,255,255,0.7)')
           .attr('stroke-width', 0.5)
           .attr('d', path);
 
         svg.append('path')
-          .datum(canada)
+          .datum(target)
           .attr('fill', '#C8717A')
           .attr('stroke', '#AD5D65')
-          .attr('stroke-width', 1)
+          .attr('stroke-width', 1.5)
           .attr('d', path);
 
         const pinGroup = svg.selectAll('.city-pin')
@@ -360,7 +391,10 @@
             tooltip.style.top  = (event.clientY - 42) + 'px';
           })
           .on('mouseleave', () => { tooltip.style.opacity = '0'; })
-          .on('click', (event, d) => { window.location.href = `canada/${d.slug}.html`; });
+          .on('click', (event, d) => {
+            gtag('event', 'city_click', { event_category: 'navigation', event_label: d.name, page_title: document.title });
+            window.location.href = `sri-lanka/${d.slug}.html`;
+          });
 
         pinGroup.style('opacity', 0).each(function(d, i) {
           d3.select(this).transition().delay(800 + i * 100).duration(500).ease(d3.easeCubicOut).style('opacity', 1);
@@ -371,8 +405,11 @@
         CITIES.forEach(city => {
           const a = document.createElement('a');
           a.className = 'city-chip';
-          a.href = `canada/${city.slug}.html`;
+          a.href = `sri-lanka/${city.slug}.html`;
           a.innerHTML = `<span class="city-chip-dot"></span>${city.name}`;
+          a.addEventListener('click', function() {
+            gtag('event', 'city_click', { event_category: 'navigation', event_label: city.name, page_title: document.title });
+          });
           chipsEl.appendChild(a);
         });
       });
