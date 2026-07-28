@@ -9,6 +9,10 @@
 - **Maps registry:** `map downloads/maps_registry.json` — index of all Google My Maps (local KML files + Google Maps IDs).
 - **City pages:** `countries/[country]/[city].html` — self-contained HTML with inline CSS/JS.
 - **Photos:** `photos/[country]/[city]/[place-name]/` — exported from Apple Photos, organized by place. Each city folder has a `photo_manifest.json`.
+  - `photos/` is git-ignored by default, with an explicit per-country/city/place allowlist layered on in `.gitignore`. A photo referenced by a city page's HTML is NOT live on the deployed site until it's allowlisted and committed.
+  - Before staging, resize/compress each photo for web use — max ~1600px on the long edge, JPEG quality ~80 (e.g. `sips -Z 1600 -s format jpeg -s formatOptions 80 file.jpeg --out file.jpeg`). Do not commit full-resolution originals; a 20MB+ source photo should land well under 500KB after this step.
+  - After adding/changing photos on a city page, run `node scripts/sync-photo-gitignore.js countries/[country]/[city].html` (or `--all` to backfill every page) to update `.gitignore` and stage exactly the referenced photos.
+  - Committing is **pre-authorized only for the commit this script produces** — i.e. a commit containing *just* the `.gitignore` update and the photo files this script staged, with message `git commit -m "Add committed photos for [City] city page"`. Do not fold in other unrelated changes under this authorization, and do not extend it to any other kind of commit. Never `git push` without explicit confirmation, and never use `--all` without telling the user the file count/size first.
 - **Python venv:** `.venv/` — Python 3.13 virtual environment with `osxphotos` installed. Activate with `source .venv/bin/activate`. Note: `osxphotos` requires Full Disk Access; use AppleScript as fallback for Photos access.
 - **Node.js:** `/opt/homebrew/bin/node` — always set PATH before running Node scripts.
 
