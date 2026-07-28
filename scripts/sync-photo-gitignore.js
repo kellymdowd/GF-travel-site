@@ -8,9 +8,11 @@
  * Only photos actually used on the page get committed — unused shots left in
  * a place's photo folder stay ignored, same as the existing convention.
  *
- * Before staging, any oversized JPEG gets resized in place (max 1600px on
- * the long edge, quality 80 via sips) per CLAUDE.md — source exports from
- * Photos can run 10-20MB+ and shouldn't be committed at full resolution.
+ * Before staging, any oversized JPEG or PNG gets downsized in place (max
+ * 1600px on the long edge; JPEGs also get re-encoded at quality 80 via
+ * sips) per CLAUDE.md — source exports from Photos can run 10-20MB+, and
+ * Wikimedia-sourced PNGs can be similarly huge, so neither should be
+ * committed at full resolution.
  *
  * Usage:
  *   node scripts/sync-photo-gitignore.js countries/new-zealand/auckland.html
@@ -75,7 +77,10 @@ const MAX_EDGE = 1600;
 const resized = [];
 
 function resizeIfNeeded(absPath) {
-  if (!/\.jpe?g$/i.test(absPath)) return; // only JPEGs; leave png/gif/webp untouched
+  const isJpeg = /\.jpe?g$/i.test(absPath);
+  const isPng = /\.png$/i.test(absPath);
+  if (!isJpeg && !isPng) return; // leave gif/webp untouched
+
   let width;
   let height;
   try {
@@ -87,8 +92,17 @@ function resizeIfNeeded(absPath) {
     return;
   }
   if (!width || !height || Math.max(width, height) <= MAX_EDGE) return;
+
+  // JPEGs get format+quality re-encoded (lossy compression). PNGs are only
+  // downsized in place, keeping their format/transparency intact — sips'
+  // formatOptions quality flag is JPEG-only and forcing a format conversion
+  // could break alpha channels on downloaded logos/graphics.
+  const args = isJpeg
+    ? ['-Z', String(MAX_EDGE), '-s', 'format', 'jpeg', '-s', 'formatOptions', '80', absPath, '--out', absPath]
+    : ['-Z', String(MAX_EDGE), absPath, '--out', absPath];
+
   try {
-    execFileSync('sips', ['-Z', String(MAX_EDGE), '-s', 'format', 'jpeg', '-s', 'formatOptions', '80', absPath, '--out', absPath]);
+    execFileSync('sips', args);
     resized.push(path.relative(repoRoot, absPath));
   } catch (e) {
     console.warn(`  sips resize failed for ${absPath}: ${e.message}`);
