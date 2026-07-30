@@ -7,6 +7,7 @@ data/
 *.HEIC
 .claude/settings.local.json
 admin.html
+.validation-screenshots/
 
 # Ignore all photos except those used on city pages
 photos/*
@@ -1344,3 +1345,9 @@ photos/spain/madrid/*
 !photos/spain/madrid/taberna-la-concha/
 photos/spain/madrid/taberna-la-concha/*
 !photos/spain/madrid/taberna-la-concha/IMG_7634.jpeg
+!photos/spain/madrid/liabeny-hotel-madrid/
+photos/spain/madrid/liabeny-hotel-madrid/*
+!photos/spain/madrid/liabeny-hotel-madrid/madrid-skyline.jpeg
+!photos/spain/madrid/el-retiro-park/
+photos/spain/madrid/el-retiro-park/*
+!photos/spain/madrid/el-retiro-park/IMG_1136.jpeg
