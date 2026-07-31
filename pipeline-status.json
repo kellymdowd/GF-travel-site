@@ -1,0 +1,1548 @@
+{
+  "generatedAt": "2026-07-31T13:07:15.845Z",
+  "summary": {
+    "countries": 24,
+    "countryPagesCreated": 24,
+    "cities": 73,
+    "citiesSkipped": 4,
+    "cityPagesCreated": 67,
+    "cityPagesValidated": 58,
+    "cityPagesFailingValidation": 9,
+    "blogsGenerated": 0,
+    "instagramGenerated": 10
+  },
+  "countries": [
+    {
+      "type": "country",
+      "country": "Austria",
+      "countrySlug": "austria",
+      "pageCreated": true,
+      "pagePath": "countries/austria.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
+      "country": "Canada",
+      "countrySlug": "canada",
+      "pageCreated": true,
+      "pagePath": "countries/canada.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
+      "country": "Costa Rica",
+      "countrySlug": "costa-rica",
+      "pageCreated": true,
+      "pagePath": "countries/costa-rica.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
+      "country": "Czech Republic",
+      "countrySlug": "czech-republic",
+      "pageCreated": true,
+      "pagePath": "countries/czech-republic.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
+      "country": "England",
+      "countrySlug": "england",
+      "pageCreated": true,
+      "pagePath": "countries/england.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
+      "country": "Finland",
+      "countrySlug": "finland",
+      "pageCreated": true,
+      "pagePath": "countries/finland.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
+      "country": "France",
+      "countrySlug": "france",
+      "pageCreated": true,
+      "pagePath": "countries/france.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
+      "country": "Germany",
+      "countrySlug": "germany",
+      "pageCreated": true,
+      "pagePath": "countries/germany.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
+      "country": "Hungary",
+      "countrySlug": "hungary",
+      "pageCreated": true,
+      "pagePath": "countries/hungary.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
+      "country": "India",
+      "countrySlug": "india",
+      "pageCreated": true,
+      "pagePath": "countries/india.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
+      "country": "Ireland",
+      "countrySlug": "ireland",
+      "pageCreated": true,
+      "pagePath": "countries/ireland.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
+      "country": "Italy",
+      "countrySlug": "italy",
+      "pageCreated": true,
+      "pagePath": "countries/italy.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
+      "country": "Jamaica",
+      "countrySlug": "jamaica",
+      "pageCreated": true,
+      "pagePath": "countries/jamaica.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
+      "country": "Japan",
+      "countrySlug": "japan",
+      "pageCreated": true,
+      "pagePath": "countries/japan.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
+      "country": "Liechtenstein",
+      "countrySlug": "liechtenstein",
+      "pageCreated": true,
+      "pagePath": "countries/liechtenstein.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
+      "country": "Maldives",
+      "countrySlug": "maldives",
+      "pageCreated": true,
+      "pagePath": "countries/maldives.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
+      "country": "New Zealand",
+      "countrySlug": "new-zealand",
+      "pageCreated": true,
+      "pagePath": "countries/new-zealand.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
+      "country": "Norway",
+      "countrySlug": "norway",
+      "pageCreated": true,
+      "pagePath": "countries/norway.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
+      "country": "Scotland",
+      "countrySlug": "scotland",
+      "pageCreated": true,
+      "pagePath": "countries/scotland.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
+      "country": "Slovakia",
+      "countrySlug": "slovakia",
+      "pageCreated": true,
+      "pagePath": "countries/slovakia.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
+      "country": "Spain",
+      "countrySlug": "spain",
+      "pageCreated": true,
+      "pagePath": "countries/spain.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
+      "country": "Sri Lanka",
+      "countrySlug": "sri-lanka",
+      "pageCreated": true,
+      "pagePath": "countries/sri-lanka.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
+      "country": "Sweden",
+      "countrySlug": "sweden",
+      "pageCreated": true,
+      "pagePath": "countries/sweden.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
+      "country": "Switzerland",
+      "countrySlug": "switzerland",
+      "pageCreated": true,
+      "pagePath": "countries/switzerland.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    }
+  ],
+  "cities": [
+    {
+      "type": "city",
+      "country": "Austria",
+      "countrySlug": "austria",
+      "city": "Hallstatt",
+      "citySlug": "hallstatt",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/austria/hallstatt.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Austria",
+      "countrySlug": "austria",
+      "city": "Innsbruck",
+      "citySlug": "innsbruck",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/austria/innsbruck.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Austria",
+      "countrySlug": "austria",
+      "city": "Salzburg",
+      "citySlug": "salzburg",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/austria/salzburg.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 4,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Austria",
+      "countrySlug": "austria",
+      "city": "Vienna",
+      "citySlug": "vienna",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/austria/vienna.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 6,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Canada",
+      "countrySlug": "canada",
+      "city": "Vancouver",
+      "citySlug": "vancouver",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/canada/vancouver.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Canada",
+      "countrySlug": "canada",
+      "city": "Victoria",
+      "citySlug": "victoria",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/canada/victoria.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 3,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Costa Rica",
+      "countrySlug": "costa-rica",
+      "city": "Liberia",
+      "citySlug": "liberia",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/costa-rica/liberia.html",
+      "validated": false,
+      "validationCounts": {
+        "errors": 4,
+        "warnings": 0,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Czech Republic",
+      "countrySlug": "czech-republic",
+      "city": "Prague",
+      "citySlug": "prague",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/czech-republic/prague.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "England",
+      "countrySlug": "england",
+      "city": "London",
+      "citySlug": "london",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/england/london.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 7,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Finland",
+      "countrySlug": "finland",
+      "city": "Helsinki",
+      "citySlug": "helsinki",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/finland/helsinki.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Finland",
+      "countrySlug": "finland",
+      "city": "Tampere",
+      "citySlug": "tampere",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/finland/tampere.html",
+      "validated": false,
+      "validationCounts": {
+        "errors": 1,
+        "warnings": 1,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "France",
+      "countrySlug": "france",
+      "city": "Paris",
+      "citySlug": "paris",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/france/paris.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Germany",
+      "countrySlug": "germany",
+      "city": "Berlin",
+      "citySlug": "berlin",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/germany/berlin.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 3,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Germany",
+      "countrySlug": "germany",
+      "city": "Cologne",
+      "citySlug": "cologne",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/germany/cologne.html",
+      "validated": false,
+      "validationCounts": {
+        "errors": 1,
+        "warnings": 2,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Germany",
+      "countrySlug": "germany",
+      "city": "Dinslaken Duisburg",
+      "citySlug": "dinslaken-duisburg",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/germany/dinslaken-duisburg.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 4,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Germany",
+      "countrySlug": "germany",
+      "city": "Dusseldorf",
+      "citySlug": "dusseldorf",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/germany/dusseldorf.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 7,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Germany",
+      "countrySlug": "germany",
+      "city": "Frankfurt",
+      "citySlug": "frankfurt",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/germany/frankfurt.html",
+      "validated": false,
+      "validationCounts": {
+        "errors": 7,
+        "warnings": 2,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Germany",
+      "countrySlug": "germany",
+      "city": "Munich",
+      "citySlug": "munich",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/germany/munich.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 2,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Germany",
+      "countrySlug": "germany",
+      "city": "Stuttgart",
+      "citySlug": "stuttgart",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/germany/stuttgart.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 6,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Hungary",
+      "countrySlug": "hungary",
+      "city": "Budapest",
+      "citySlug": "budapest",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/hungary/budapest.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 6,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "India",
+      "countrySlug": "india",
+      "city": "Bengaluru",
+      "citySlug": "bengaluru",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/india/bengaluru.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "India",
+      "countrySlug": "india",
+      "city": "Goa",
+      "citySlug": "goa",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/india/goa.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "India",
+      "countrySlug": "india",
+      "city": "Hyderabad",
+      "citySlug": "hyderabad",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/india/hyderabad.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Ireland",
+      "countrySlug": "ireland",
+      "city": "Cork",
+      "citySlug": "cork",
+      "skipped": true,
+      "pageCreated": false,
+      "pagePath": null,
+      "validated": null,
+      "validationCounts": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Ireland",
+      "countrySlug": "ireland",
+      "city": "Doolin",
+      "citySlug": "doolin",
+      "skipped": true,
+      "pageCreated": false,
+      "pagePath": null,
+      "validated": null,
+      "validationCounts": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Ireland",
+      "countrySlug": "ireland",
+      "city": "Dublin",
+      "citySlug": "dublin",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/ireland/dublin.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Ireland",
+      "countrySlug": "ireland",
+      "city": "Galway",
+      "citySlug": "galway",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/ireland/galway.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 5,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Ireland",
+      "countrySlug": "ireland",
+      "city": "Killarney",
+      "citySlug": "killarney",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/ireland/killarney.html",
+      "validated": false,
+      "validationCounts": {
+        "errors": 1,
+        "warnings": 8,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Ireland",
+      "countrySlug": "ireland",
+      "city": "Limerick",
+      "citySlug": "limerick",
+      "skipped": true,
+      "pageCreated": false,
+      "pagePath": null,
+      "validated": null,
+      "validationCounts": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Italy",
+      "countrySlug": "italy",
+      "city": "Florence",
+      "citySlug": "florence",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/italy/florence.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 6,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Italy",
+      "countrySlug": "italy",
+      "city": "Rome",
+      "citySlug": "rome",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/italy/rome.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Jamaica",
+      "countrySlug": "jamaica",
+      "city": "Ocho Rios",
+      "citySlug": "ocho-rios",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/jamaica/ocho-rios.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Jamaica",
+      "countrySlug": "jamaica",
+      "city": "Rose Hall",
+      "citySlug": "rose-hall",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/jamaica/rose-hall.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Japan",
+      "countrySlug": "japan",
+      "city": "Hakone",
+      "citySlug": "hakone",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/japan/hakone.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": true
+    },
+    {
+      "type": "city",
+      "country": "Japan",
+      "countrySlug": "japan",
+      "city": "Hiroshima",
+      "citySlug": "hiroshima",
+      "skipped": true,
+      "pageCreated": false,
+      "pagePath": null,
+      "validated": null,
+      "validationCounts": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Japan",
+      "countrySlug": "japan",
+      "city": "Kyoto",
+      "citySlug": "kyoto",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/japan/kyoto.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 2,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": true
+    },
+    {
+      "type": "city",
+      "country": "Japan",
+      "countrySlug": "japan",
+      "city": "Nara",
+      "citySlug": "nara",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/japan/nara.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": true
+    },
+    {
+      "type": "city",
+      "country": "Japan",
+      "countrySlug": "japan",
+      "city": "Osaka",
+      "citySlug": "osaka",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/japan/osaka.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 3,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": true
+    },
+    {
+      "type": "city",
+      "country": "Japan",
+      "countrySlug": "japan",
+      "city": "Tokyo",
+      "citySlug": "tokyo",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/japan/tokyo.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 2,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": true
+    },
+    {
+      "type": "city",
+      "country": "Liechtenstein",
+      "countrySlug": "liechtenstein",
+      "city": "Vaduz",
+      "citySlug": "vaduz",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/liechtenstein/vaduz.html",
+      "validated": false,
+      "validationCounts": {
+        "errors": 1,
+        "warnings": 2,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Maldives",
+      "countrySlug": "maldives",
+      "city": "South Male Atoll",
+      "citySlug": "south-male-atoll",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/maldives/south-male-atoll.html",
+      "validated": false,
+      "validationCounts": {
+        "errors": 4,
+        "warnings": 0,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "New Zealand",
+      "countrySlug": "new-zealand",
+      "city": "Auckland",
+      "citySlug": "auckland",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/new-zealand/auckland.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 3,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "New Zealand",
+      "countrySlug": "new-zealand",
+      "city": "Blenheim",
+      "citySlug": "blenheim",
+      "skipped": false,
+      "pageCreated": false,
+      "pagePath": null,
+      "validated": null,
+      "validationCounts": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "New Zealand",
+      "countrySlug": "new-zealand",
+      "city": "Marlborough",
+      "citySlug": "marlborough",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/new-zealand/marlborough.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "New Zealand",
+      "countrySlug": "new-zealand",
+      "city": "Mt Cook",
+      "citySlug": "mt-cook",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/new-zealand/mt-cook.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 2,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "New Zealand",
+      "countrySlug": "new-zealand",
+      "city": "Queenstown",
+      "citySlug": "queenstown",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/new-zealand/queenstown.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 4,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "New Zealand",
+      "countrySlug": "new-zealand",
+      "city": "Wanaka",
+      "citySlug": "wanaka",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/new-zealand/wanaka.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 2,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "New Zealand",
+      "countrySlug": "new-zealand",
+      "city": "Wellington",
+      "citySlug": "wellington",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/new-zealand/wellington.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 3,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Norway",
+      "countrySlug": "norway",
+      "city": "Bergen",
+      "citySlug": "bergen",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/norway/bergen.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 2,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Norway",
+      "countrySlug": "norway",
+      "city": "Flam",
+      "citySlug": "flam",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/norway/flam.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Norway",
+      "countrySlug": "norway",
+      "city": "Flåm",
+      "citySlug": "fl-m",
+      "skipped": false,
+      "pageCreated": false,
+      "pagePath": null,
+      "validated": null,
+      "validationCounts": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Norway",
+      "countrySlug": "norway",
+      "city": "Oslo",
+      "citySlug": "oslo",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/norway/oslo.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 3,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Norway",
+      "countrySlug": "norway",
+      "city": "Stavanger",
+      "citySlug": "stavanger",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/norway/stavanger.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Scotland",
+      "countrySlug": "scotland",
+      "city": "Edinburgh",
+      "citySlug": "edinburgh",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/scotland/edinburgh.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 2,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": true
+    },
+    {
+      "type": "city",
+      "country": "Scotland",
+      "countrySlug": "scotland",
+      "city": "Fort William",
+      "citySlug": "fort-william",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/scotland/fort-william.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 5,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": true
+    },
+    {
+      "type": "city",
+      "country": "Scotland",
+      "countrySlug": "scotland",
+      "city": "Glasgow",
+      "citySlug": "glasgow",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/scotland/glasgow.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 3,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": true
+    },
+    {
+      "type": "city",
+      "country": "Scotland",
+      "countrySlug": "scotland",
+      "city": "Inverness",
+      "citySlug": "inverness",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/scotland/inverness.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": true
+    },
+    {
+      "type": "city",
+      "country": "Scotland",
+      "countrySlug": "scotland",
+      "city": "Portree",
+      "citySlug": "portree",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/scotland/portree.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 2,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": true
+    },
+    {
+      "type": "city",
+      "country": "Slovakia",
+      "countrySlug": "slovakia",
+      "city": "Bratislava",
+      "citySlug": "bratislava",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/slovakia/bratislava.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Spain",
+      "countrySlug": "spain",
+      "city": "Barcelona",
+      "citySlug": "barcelona",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/spain/barcelona.html",
+      "validated": false,
+      "validationCounts": {
+        "errors": 1,
+        "warnings": 1,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Spain",
+      "countrySlug": "spain",
+      "city": "Madrid",
+      "citySlug": "madrid",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/spain/madrid.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Spain",
+      "countrySlug": "spain",
+      "city": "Valencia",
+      "citySlug": "valencia",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/spain/valencia.html",
+      "validated": false,
+      "validationCounts": {
+        "errors": 1,
+        "warnings": 0,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Sri Lanka",
+      "countrySlug": "sri-lanka",
+      "city": "Kandy",
+      "citySlug": "kandy",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/sri-lanka/kandy.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Sri Lanka",
+      "countrySlug": "sri-lanka",
+      "city": "Negombo",
+      "citySlug": "negombo",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/sri-lanka/negombo.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 0,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Sri Lanka",
+      "countrySlug": "sri-lanka",
+      "city": "Sigiriya",
+      "citySlug": "sigiriya",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/sri-lanka/sigiriya.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 2,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Sweden",
+      "countrySlug": "sweden",
+      "city": "Stockholm",
+      "citySlug": "stockholm",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/sweden/stockholm.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 2,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Sweden",
+      "countrySlug": "sweden",
+      "city": "Uppsala",
+      "citySlug": "uppsala",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/sweden/uppsala.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Switzerland",
+      "countrySlug": "switzerland",
+      "city": "Basel",
+      "citySlug": "basel",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/switzerland/basel.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 3,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Switzerland",
+      "countrySlug": "switzerland",
+      "city": "Geneva",
+      "citySlug": "geneva",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/switzerland/geneva.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 2,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Switzerland",
+      "countrySlug": "switzerland",
+      "city": "Interlaken",
+      "citySlug": "interlaken",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/switzerland/interlaken.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 5,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Switzerland",
+      "countrySlug": "switzerland",
+      "city": "Lucerne",
+      "citySlug": "lucerne",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/switzerland/lucerne.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Switzerland",
+      "countrySlug": "switzerland",
+      "city": "Zermatt",
+      "citySlug": "zermatt",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/switzerland/zermatt.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 2,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Switzerland",
+      "countrySlug": "switzerland",
+      "city": "Zurich",
+      "citySlug": "zurich",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/switzerland/zurich.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 2,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    }
+  ]
+}
