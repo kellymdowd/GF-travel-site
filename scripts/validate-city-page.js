@@ -61,13 +61,34 @@ if (html.includes('GF Friendliness') && !html.includes('snapshot-score-bar')) {
   errors.push('GF Friendliness should use pip bar, not plain text');
 }
 
-// 3. Restaurant card order: visited before recommended before closed
-const orderMatches = [...bodyOnly.matchAll(/restaurant-source-(visited|researched)/g)].map((m) => m[1]);
-let sawResearched = false;
-orderMatches.forEach((status) => {
-  if (status === 'researched') sawResearched = true;
-  if (status === 'visited' && sawResearched) errors.push('Restaurant card order: a "Went here" card appears after a "Traveler recommended" card');
-});
+// 3. Restaurant card order: visited before recommended before closed.
+//    Scoped to the <section class="restaurants"> block only — landmark
+//    cards on some pages (e.g. Frankfurt) reuse the same `restaurant-source`
+//    class name for their own "Went here" badge (a real, CSS-supported
+//    pattern there, just an inconsistent name vs. newer pages' dedicated
+//    `landmark-source` class), which a body-wide regex misreads as
+//    out-of-order restaurant cards. Also tiers by closed-status per card
+//    (visited=0, researched=1, closed=2, closed overrides source) rather
+//    than a flat visited/researched sequence — a closed restaurant that
+//    Kelly actually visited legitimately carries "Went here" but must still
+//    sort after open "Traveler recommended" cards, which a 2-state check
+//    can't represent (confirmed false-positive on Vaduz's correctly-ordered
+//    visited→researched→researched→closed sequence).
+const restaurantsSectionMatch = html.match(/<section class="restaurants"[\s\S]*?<\/section>/);
+if (restaurantsSectionMatch) {
+  const restaurantsBodyOnly = restaurantsSectionMatch[0].replace(/<style[\s\S]*?<\/style>/, '');
+  const cardBlocks = restaurantsBodyOnly.split(/(?=<div class="restaurant-card")/).filter((b) => /restaurant-source-(visited|researched)/.test(b));
+  let lastTier = -1;
+  cardBlocks.forEach((block) => {
+    const sourceMatch = block.match(/restaurant-source-(visited|researched)/);
+    const isClosed = /restaurant-tag-closed/.test(block);
+    const nameMatch = block.match(/class="restaurant-name">([^<]+)/);
+    const name = nameMatch ? nameMatch[1].trim() : '(unnamed card)';
+    const tier = isClosed ? 2 : (sourceMatch[1] === 'visited' ? 0 : 1);
+    if (tier < lastTier) errors.push(`Restaurant card order: "${name}" (tier ${tier === 0 ? 'visited' : tier === 1 ? 'researched' : 'closed'}) appears after a later-tier card`);
+    lastTier = Math.max(lastTier, tier);
+  });
+}
 
 // 4. Map completeness — handles both literal bindPopup strings and data-array
 //    marker patterns (e.g. `var restaurants = [{name:'X', ...}]`), since the
@@ -109,10 +130,18 @@ if (nonHotelPlaceholders > 0) {
   if (!html.includes(sel)) warnings.push(`Lightbox selector missing ${sel}`);
 });
 
-// 10. FMGF link completeness — flag if zero FMGF links on a page with restaurants
+// 10. FMGF link completeness — flag if zero FMGF links on a page with restaurants.
+//     Warning, not Error: a structural check can't tell "fmgf_url values were
+//     dropped during generation" apart from "none of these restaurants are
+//     actually indexed on FMGF" (confirmed real for Tampere, Finland — a
+//     WebSearch-based research pass found zero FMGF listings for any of its
+//     3 restaurants, not a generation bug). city-page-validator's own deeper,
+//     WebSearch-capable audit already treats this as Info-level for exactly
+//     this reason — match that here rather than hard-failing pages in
+//     genuinely FMGF-sparse markets.
 const fmgfOnPage = (html.match(/findmeglutenfree\.com\/biz\//g) || []).length;
 if (fmgfOnPage === 0 && cardNames.length > 0) {
-  errors.push('No FMGF restaurant links on page — check if spreadsheet fmgf_url values were dropped during generation');
+  warnings.push('No FMGF restaurant links on page — check if spreadsheet fmgf_url values were dropped during generation, or confirm (via WebSearch) that none of these restaurants are actually listed on FMGF');
 }
 
 // 11. Packing order: Essential before country-tagged before city-tagged

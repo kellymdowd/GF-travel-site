@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-07-31T13:07:15.845Z",
+  "generatedAt": "2026-07-31T13:29:30.754Z",
   "summary": {
     "countries": 24,
     "countryPagesCreated": 24,
     "cities": 73,
     "citiesSkipped": 4,
     "cityPagesCreated": 67,
-    "cityPagesValidated": 58,
-    "cityPagesFailingValidation": 9,
+    "cityPagesValidated": 67,
+    "cityPagesFailingValidation": 0,
     "blogsGenerated": 0,
     "instagramGenerated": 10
   },
@@ -371,9 +371,9 @@
       "skipped": false,
       "pageCreated": true,
       "pagePath": "countries/costa-rica/liberia.html",
-      "validated": false,
+      "validated": true,
       "validationCounts": {
-        "errors": 4,
+        "errors": 0,
         "warnings": 0,
         "info": 0
       },
@@ -443,10 +443,10 @@
       "skipped": false,
       "pageCreated": true,
       "pagePath": "countries/finland/tampere.html",
-      "validated": false,
+      "validated": true,
       "validationCounts": {
-        "errors": 1,
-        "warnings": 1,
+        "errors": 0,
+        "warnings": 2,
         "info": 0
       },
       "blogGenerated": false,
@@ -497,9 +497,9 @@
       "skipped": false,
       "pageCreated": true,
       "pagePath": "countries/germany/cologne.html",
-      "validated": false,
+      "validated": true,
       "validationCounts": {
-        "errors": 1,
+        "errors": 0,
         "warnings": 2,
         "info": 0
       },
@@ -551,9 +551,9 @@
       "skipped": false,
       "pageCreated": true,
       "pagePath": "countries/germany/frankfurt.html",
-      "validated": false,
+      "validated": true,
       "validationCounts": {
-        "errors": 7,
+        "errors": 0,
         "warnings": 2,
         "info": 0
       },
@@ -741,9 +741,9 @@
       "skipped": false,
       "pageCreated": true,
       "pagePath": "countries/ireland/killarney.html",
-      "validated": false,
+      "validated": true,
       "validationCounts": {
-        "errors": 1,
+        "errors": 0,
         "warnings": 8,
         "info": 0
       },
@@ -949,9 +949,9 @@
       "skipped": false,
       "pageCreated": true,
       "pagePath": "countries/liechtenstein/vaduz.html",
-      "validated": false,
+      "validated": true,
       "validationCounts": {
-        "errors": 1,
+        "errors": 0,
         "warnings": 2,
         "info": 0
       },
@@ -967,9 +967,9 @@
       "skipped": false,
       "pageCreated": true,
       "pagePath": "countries/maldives/south-male-atoll.html",
-      "validated": false,
+      "validated": true,
       "validationCounts": {
-        "errors": 4,
+        "errors": 0,
         "warnings": 0,
         "info": 0
       },
@@ -1301,9 +1301,9 @@
       "skipped": false,
       "pageCreated": true,
       "pagePath": "countries/spain/barcelona.html",
-      "validated": false,
+      "validated": true,
       "validationCounts": {
-        "errors": 1,
+        "errors": 0,
         "warnings": 1,
         "info": 0
       },
@@ -1337,9 +1337,9 @@
       "skipped": false,
       "pageCreated": true,
       "pagePath": "countries/spain/valencia.html",
-      "validated": false,
+      "validated": true,
       "validationCounts": {
-        "errors": 1,
+        "errors": 0,
         "warnings": 0,
         "info": 0
       },
