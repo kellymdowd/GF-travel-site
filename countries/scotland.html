@@ -88,6 +88,36 @@
       .gf-section-grid { grid-template-columns: 1fr; gap: 1.6rem; }
     }
 
+    /* ─── What to Pack ────────────────────────────────────── */
+    .packing { padding: 0 2.5rem 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 1.5s forwards; }
+    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 0.6rem; }
+    .packing-group-label { font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin: 1.6rem 0 0.4rem; }
+    .packing-group-label:first-of-type { margin-top: 1rem; }
+    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .packing-item:last-child { border-bottom: none; }
+    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
+    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
+    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
+    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
+    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
+    .packing-tag-scotland { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
+    .packing-tag-highlands { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .packing-shop { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.4rem; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .packing-shop:hover { color: var(--slate); }
+    .packing-shop:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .packing-shop:active { color: var(--rose); }
+    .packing-shop svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .packing-shop:hover svg { transform: translateX(2px); }
+    @media (max-width: 768px) {
+      .packing-item { grid-template-columns: 20px 1fr; }
+      .packing-item-tag { grid-column: 2; }
+    }
+
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
     @media (max-width: 600px) { .site-nav { padding: 0 1.2rem; } .nav-sub, .header, .overview-section, .map-section, .cities-section { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
@@ -290,6 +320,132 @@
         </div>
       </div>
     </div>
+  </section>
+
+  <!-- ═══════════════ WHAT TO PACK ═══════════════ -->
+  <section class="packing" id="packing">
+    <div class="packing-header">
+      <h2 class="packing-title">What to Pack for Scotland</h2>
+      <span class="packing-season">Summer in Scotland</span>
+    </div>
+    <div class="packing-rule"></div>
+
+    <div class="packing-group-label">Essential</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Celiac travel card</span>
+          <span class="packing-item-why">A printed card explaining celiac disease in English. Useful for communicating with kitchen staff — even in an English-speaking country, having it written down helps.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable gluten-free snacks</span>
+          <span class="packing-item-why">Backup food for long travel days, hikes, and the stretches between towns in the Highlands and on Skye where GF options thin out.</span>
+          <a href="https://www.amazon.com/Vinegar-Delicious-Corn-Convenient-Commuting/dp/B07D6FKXKF/ref=sr_1_2?dib=eyJ2IjoiMSJ9.R3dYNFGasquKLbmaM_huKQFGQkN0gssAHV_2l4SvhVka0unf4iOKh503Q2MIESFzeXi6n31wVFphtqBQNRBzd2IQFP48Xjd0nHu3VHohpUcR0Zwwk1aURRTHVduCo6NqGJFf9F1defyPrUEJXglC8A.ENorVXbNz1Ae9Le7VnRsOVZKNyMM5kZKnmexLWZkNNc&dib_tag=se&m=A3OD0KBNCU2ZLW&nsdOptOutParam=true&qid=1773695184&s=merchant-items&sr=1-2&th=1" class="packing-shop" target="_blank" rel="noopener sponsored">
+            Shop recommendation <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable phone charger</span>
+          <span class="packing-item-why">Full days of walking, navigating, and hiking with no outlets in sight drain a battery fast.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Scotland-Wide</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">UK power adapter (Type G)</span>
+          <span class="packing-item-why">UK uses Type G plugs (three big rectangular pins). If you're coming from the US or Europe, you'll need an adapter from day one.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-scotland">Scotland</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Packable rain jacket</span>
+          <span class="packing-item-why">It will rain, even in July, regardless of which city you're in. Scottish weather changes by the hour — a lightweight shell you can stuff in your bag is the move. A compact umbrella works too for lighter town-day showers.</span>
+          <a href="https://shop.lululemon.com/p/jackets-and-hoodies-jackets/Pack-Lite-Anorak-MD/_/prod20001978?cid=Google_PMAX_US_NAT_EN_X_NB_WMTM-FEED-ONLY_ONLINE_GEN_Y24_ag-&color=0001&gad_campaignid=21471579982&gad_source=1&gbraid=0AAAAADL8AvmzjxqLSW_cZU-a6ffDDSr-f&gclid=CjwKCAjw1N7NBhAoEiwAcPchp09rrX19-gj2quv39LMQ_wWYLVp3WPWBTjI-yRZhebM9dvR14PDkmhoCfo0QAvD_BwE&gclsrc=aw.ds&locale=en_US&sl=US&sz=XS" class="packing-shop" target="_blank" rel="noopener sponsored">
+            Shop recommendation <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+        <span class="packing-item-tag packing-tag-scotland">Scotland</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Layers, layers, layers</span>
+          <span class="packing-item-why">You'll go from sunshine to wind to drizzle in a single afternoon, in any city. Dress like an onion — t-shirt, light fleece, and that rain jacket.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-scotland">Scotland</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">Cobblestones, hills, and cathedral steps show up in every Scottish city we visited — cushioned soles are non-negotiable by day two.</span>
+          <a href="https://www.on.com/en-us/products/cloudnova-2-3we3022/womens/ivory-sphinx-shoes-3WE30224798?variant=8.5&utm_source_platform=Google%20Ads&utm_source=google&utm_medium=cpc&utm_campaign=%5Bn%3AShopping%5D%5Bm%3AUS%5D%5Bl%3AEN%5D%5Bi%3ABrand%5D%5Bs%3AShoes%5D%5Bv%3AMix%5D%5Bp%3AICONS%5D&gad_source=1&gad_campaignid=21013243655&gbraid=0AAAAADSVac1GT7twi2vk0tBDfbs87-7zT&gclid=CjwKCAjw1N7NBhAoEiwAcPchp7nF3U0koOaab1uYDJs7FUkvta4lEpBPCYwTtWQQLoj67awrpp_vSBoCH_UQAvD_BwE" class="packing-shop" target="_blank" rel="noopener sponsored">
+            Shop recommendation <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+        <span class="packing-item-tag packing-tag-scotland">Scotland</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">For the Highlands &amp; Islands</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Waterproof hiking boots</span>
+          <span class="packing-item-why">Non-negotiable for Ben Nevis, the Quiraing, and the Fairy Pools — trails are rocky, muddy, and wet even in summer.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-highlands">Highlands</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Midge repellent</span>
+          <span class="packing-item-why">Scottish midges are brutal May–September, especially near water and at dawn/dusk in Fort William, on Skye, and around Loch Ness. Smidge brand works best.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-highlands">Highlands</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Reusable water bottle</span>
+          <span class="packing-item-why">Tap water is safe and excellent throughout Scotland — stay hydrated on the longer hikes.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-highlands">Highlands</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Binoculars</span>
+          <span class="packing-item-why">For wildlife watching — sea eagles, puffins, and seals near Skye, or scanning Loch Ness from a boat.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-highlands">Highlands</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sun protection</span>
+          <span class="packing-item-why">Highland summer days are long (sunrise ~4:30am, sunset ~10pm in July) with real UV exposure on exposed ridge hikes.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-highlands">Highlands</span>
+      </li>
+    </ul>
   </section>
 
   <div id="map-tooltip"></div>
