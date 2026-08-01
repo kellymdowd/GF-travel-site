@@ -35,6 +35,7 @@ const SITE_NAV_HTML = `  <nav class="site-nav">
     <a href="../../" class="nav-home">GF Gone Global</a>
     <div class="nav-links">
       <a href="../../" class="nav-link">Places</a>
+      <a href="../../itineraries/" class="nav-link">Itineraries</a>
       <a href="../../gf-scoring" class="nav-link">GF Scoring</a>
       <a href="../../about" class="nav-link">About Me</a>
     </div>
