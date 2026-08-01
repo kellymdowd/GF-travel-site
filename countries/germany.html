@@ -316,6 +316,41 @@
       .header { flex-direction: column; align-items: flex-start; gap: 0.2rem; }
       .trip-dates, .trip-date { padding-bottom: 0; }
     }
+
+    /* ─── Packing List ───────────────────────────────────────── */
+    .packing { padding: 0 2.5rem 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 1.5s forwards; }
+    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 0.6rem; }
+    .packing-group-label { font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin: 1.6rem 0 0.4rem; }
+    .packing-group-label:first-of-type { margin-top: 1rem; }
+    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .packing-item:last-child { border-bottom: none; }
+    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
+    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
+    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
+    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
+    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
+    .packing-tag-country { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
+    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
+
+    /* ─── FAQ ─────────────────────────────────────────────────── */
+    .faq { padding: 2.4rem 2.5rem 0; }
+    .faq-header { margin-bottom: 1.4rem; }
+    .faq-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); }
+    .faq-list { border-top: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-item { border-bottom: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: none; border: none; text-align: left; cursor: pointer; padding: 1.1rem 0; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); }
+    .faq-q:hover, .faq-q:focus-visible { color: var(--slate); }
+    .faq-q-icon { flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); color: var(--ink-light); }
+    .faq-item.is-open .faq-q-icon { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .faq-item.is-open .faq-a { max-height: 280px; }
+    .faq-a-inner { padding: 0 0 1.2rem; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.86rem; line-height: 1.75; color: var(--ink-mid); max-width: 62ch; }
   </style>
 
   <!-- Google Analytics (gtag.js) -->
@@ -385,7 +420,31 @@
 
     });
   </script>
-  
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do you need a car in Germany?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No, for most of this route — Deutsche Bahn's ICE network connects Frankfurt, Cologne, Düsseldorf, and Stuttgart directly, and Berlin and Munich are each a few hours further out by the same trains. Inside each city I got around on foot, tram, or U-Bahn/S-Bahn. Duisburg & Dinslaken is the exception: it's a smaller Ruhr Valley pairing with a more limited transit schedule, and I'd lean on a car or taxis there, especially for an evening visit to Landschaftspark." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Germany safe for celiacs?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, overall, though it varies a lot by city. Germany scores 7/10 for GF friendliness, and Berlin, Munich, and Düsseldorf each have a dedicated 100% GF bakery and score 7/10 on their own. Frankfurt and Cologne are more moderate at 6/10 and 5/10, where steakhouse chains were my most reliable option. Duisburg & Dinslaken scored just 3/10 in my experience — I found no dedicated GF restaurants there and would pack food rather than count on finding it." }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the best time to visit Germany?",
+      "acceptedAnswer": { "@type": "Answer", "text": "It depends on what you're after. I visited Berlin in May, which gave long sunny days that worked well for parks and flea markets. I visited the rest of these cities — Frankfurt, Munich, Cologne, Düsseldorf, Stuttgart, Duisburg & Dinslaken — in December for Christmas markets, and the atmosphere was worth the cold if you dress for it. If easy GF dining matters more to you than market season, I'd lean toward spring or summer, since December pushes a lot of eating outdoors to stalls with little to no GF labeling." }
+    }
+  ]
+}
+  </script>
+
 </head>
 <body>
 
@@ -500,6 +559,264 @@
           <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div>
         </div>
         <div class="gf-score-total"><span class="gf-score-total-num">7/10</span><span class="gf-score-total-label">Overall GF Score</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ WHAT TO PACK ═══════════════ -->
+  <section class="packing" id="packing">
+    <div class="packing-header">
+      <h2 class="packing-title">What to Pack for Germany</h2>
+      <span class="packing-season">Spring &amp; Winter</span>
+    </div>
+    <div class="packing-rule"></div>
+
+    <div class="packing-group-label">Essential</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Celiac travel card (German)</span>
+          <span class="packing-item-why">A printed card explaining celiac disease and cross-contamination in German. English fluency varies more than you'd expect between the bigger cities and smaller towns like Dinslaken, so having it in German helps everywhere.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable gluten-free snacks</span>
+          <span class="packing-item-why">Backup for train days and long sightseeing stretches, and close to mandatory around Christmas markets, where GF stalls are rare to nonexistent.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable phone charger</span>
+          <span class="packing-item-why">Long days of sightseeing and navigating between train stations will drain a battery fast.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Reusable water bottle</span>
+          <span class="packing-item-why">Tap water is safe to drink throughout Germany, in every city on this page.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">GF soy sauce packets</span>
+          <span class="packing-item-why">Worth carrying if sushi or other Asian food is on the itinerary — regular soy sauce contains wheat, and it's not always easy to find a GF substitute on the spot.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Germany-Wide</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">EU power adapter (Type C/F)</span>
+          <span class="packing-item-why">Germany uses the standard European two-pin plug nationwide.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Germany</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Heavy winter coat</span>
+          <span class="packing-item-why">If your trip falls in the Christmas-market window (roughly late November through December), expect temperatures near or below freezing in most of these cities, with hours spent outdoors.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Germany</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Thermal base layers</span>
+          <span class="packing-item-why">A base layer under your coat makes a real difference on long market days, or exploring Duisburg's Landschaftspark in winter.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Germany</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Warm accessories (hat, gloves, scarf)</span>
+          <span class="packing-item-why">The wind off the Rhine in Cologne and D&uuml;sseldorf, or along the Main in Frankfurt, cuts through fast in open squares and riverside walks.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Germany</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Waterproof boots</span>
+          <span class="packing-item-why">Rain, sleet, and occasional snow are all common across a German winter, and cobblestone streets get slick.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Germany</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Hand warmers</span>
+          <span class="packing-item-why">Cheap, disposable, and worth every cent for a long evening browsing outdoor Christmas markets in Cologne or Munich.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Germany</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Berlin</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Light layers</span>
+          <span class="packing-item-why">May weather in Berlin ranges from cool mornings to warm afternoons.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Berlin</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Rain jacket</span>
+          <span class="packing-item-why">Spring showers are common. A packable rain jacket saves the day.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Berlin</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sunglasses</span>
+          <span class="packing-item-why">May brings long sunny days in Berlin, useful for outdoor sightseeing and flea markets.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Berlin</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Crossbody bag</span>
+          <span class="packing-item-why">Pickpocket awareness &mdash; keep valuables secure, especially at flea markets and on transit.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Berlin</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Frankfurt</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">Frankfurt's centre is walkable, but cobblestones in the Altstadt can be uneven &mdash; sturdy, waterproof soles are ideal.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Frankfurt</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Munich</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">Munich's Altstadt is best explored on foot &mdash; you'll cover plenty of ground between Marienplatz and the English Garden.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Munich</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">D&uuml;sseldorf</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">You'll cover a lot of ground between K&ouml;nigsallee, the Altstadt, and the Rhine promenade.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">D&uuml;sseldorf</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Cologne</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">Cobblestones in the Old Town and long walks along the Rhine promenade.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Cologne</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Stuttgart</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">The car museums (Mercedes-Benz, Porsche) are huge &mdash; expect to be on your feet for hours.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Stuttgart</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Duisburg &amp; Dinslaken</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Extra gluten-free provisions</span>
+          <span class="packing-item-why">There are virtually no dedicated GF restaurant options in the Duisburg/Dinslaken area &mdash; pack enough to sustain yourself for the visit.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Duisburg &amp; Dinslaken</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Warm, sturdy boots</span>
+          <span class="packing-item-why">Landschaftspark has uneven industrial terrain &mdash; warm, waterproof boots with grip are a must.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Duisburg &amp; Dinslaken</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Flashlight or headlamp</span>
+          <span class="packing-item-why">Landschaftspark at night is atmospheric but dark in places. A small torch helps you navigate the park safely.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Duisburg &amp; Dinslaken</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="faq" id="faq">
+    <div class="faq-header">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Do you need a car in Germany?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">No, for most of this route &mdash; Deutsche Bahn's ICE network connects Frankfurt, Cologne, D&uuml;sseldorf, and Stuttgart directly, and Berlin and Munich are each a few hours further out by the same trains. Inside each city I got around on foot, tram, or U-Bahn/S-Bahn. Duisburg &amp; Dinslaken is the exception: it's a smaller Ruhr Valley pairing with a more limited transit schedule, and I'd lean on a car or taxis there, especially for an evening visit to Landschaftspark.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Is Germany safe for celiacs?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Yes, overall, though it varies a lot by city. Germany scores 7/10 for GF friendliness, and Berlin, Munich, and D&uuml;sseldorf each have a dedicated 100% GF bakery and score 7/10 on their own. Frankfurt and Cologne are more moderate at 6/10 and 5/10, where steakhouse chains were my most reliable option. Duisburg &amp; Dinslaken scored just 3/10 in my experience &mdash; I found no dedicated GF restaurants there and would pack food rather than count on finding it.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What's the best time to visit Germany?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">It depends on what you're after. I visited Berlin in May, which gave long sunny days that worked well for parks and flea markets. I visited the rest of these cities &mdash; Frankfurt, Munich, Cologne, D&uuml;sseldorf, Stuttgart, Duisburg &amp; Dinslaken &mdash; in December for Christmas markets, and the atmosphere was worth the cold if you dress for it. If easy GF dining matters more to you than market season, I'd lean toward spring or summer, since December pushes a lot of eating outdoors to stalls with little to no GF labeling.</div></div>
       </div>
     </div>
   </section>
@@ -622,6 +939,23 @@
           });
         }
       });
+  </script>
+
+  <script>
+    document.querySelectorAll('.faq-q').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.closest('.faq-item');
+        var wasOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.faq-item.is-open').forEach(function(open) {
+          open.classList.remove('is-open');
+          open.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
   </script>
 
 </body>

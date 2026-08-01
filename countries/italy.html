@@ -111,6 +111,41 @@
     @media (max-width: 480px) {
       .gf-section { padding-left: 1.2rem; padding-right: 1.2rem; }
     }
+
+    /* ─── Packing List ───────────────────────────────────────── */
+    .packing { padding: 0 2.5rem 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 1.5s forwards; }
+    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 0.6rem; }
+    .packing-group-label { font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin: 1.6rem 0 0.4rem; }
+    .packing-group-label:first-of-type { margin-top: 1rem; }
+    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .packing-item:last-child { border-bottom: none; }
+    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
+    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
+    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
+    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
+    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
+    .packing-tag-country { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
+    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
+
+    /* ─── FAQ ─────────────────────────────────────────────────── */
+    .faq { padding: 2.4rem 2.5rem 0; }
+    .faq-header { margin-bottom: 1.4rem; }
+    .faq-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); }
+    .faq-list { border-top: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-item { border-bottom: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: none; border: none; text-align: left; cursor: pointer; padding: 1.1rem 0; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); }
+    .faq-q:hover, .faq-q:focus-visible { color: var(--slate); }
+    .faq-q-icon { flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); color: var(--ink-light); }
+    .faq-item.is-open .faq-q-icon { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .faq-item.is-open .faq-a { max-height: 280px; }
+    .faq-a-inner { padding: 0 0 1.2rem; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.86rem; line-height: 1.75; color: var(--ink-mid); max-width: 62ch; }
   </style>
 
   <!-- Google Analytics (gtag.js) -->
@@ -180,7 +215,31 @@
 
     });
   </script>
-  
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do you need a car in Italy?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No — Florence and Rome are connected by a high-speed Frecciarossa train (about 1.5 hours), and both cities are compact and walkable once you're there. I didn't rent a car for this trip; between the train and walking, a car would have meant paying for parking and dealing with historic-center traffic restrictions without saving any real time." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Italy safe for celiacs?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes — Italy scores 9/10 for GF friendliness, one of the highest scores on this site. Celiac disease is a government-recognized medical condition there, with national screening for children and a monthly food stipend for diagnosed patients, which translates into unusually strong awareness among restaurant staff. The AIC (Associazione Italiana Celiachia) certifies thousands of restaurants, pizzerias, and hotels nationwide, and both Florence and Rome scored 9/10 individually with multiple dedicated GF kitchens." }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the best time to visit Italy?",
+      "acceptedAnswer": { "@type": "Answer", "text": "I visited Florence and Rome in May, and it worked well — warm enough for full days of walking without the peak-summer heat and crowds that hit central Italy in July and August. Spring showers are possible, so a compact umbrella is worth packing, but overall the shoulder season is a comfortable trade-off between weather and crowd levels." }
+    }
+  ]
+}
+  </script>
+
 </head>
 <body>
 
@@ -277,6 +336,179 @@
           <span class="gf-score-total-num">9</span>
           <span class="gf-score-total-label">out of 10</span>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="packing" id="packing">
+    <div class="packing-header">
+      <h2 class="packing-title">What to Pack for Italy</h2>
+      <span class="packing-season">Late Spring (May)</span>
+    </div>
+    <div class="packing-rule"></div>
+
+    <div class="packing-group-label">Essential</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Celiac dining card (Italian)</span>
+          <span class="packing-item-why">A printed card explaining celiac disease in Italian. Awareness is strong nationwide thanks to AIC certification, but it still helps at smaller, family-run trattorias.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable GF snacks</span>
+          <span class="packing-item-why">Useful for long museum queues, the Florence–Rome train, and travel days when a sit-down meal isn't practical.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable phone charger</span>
+          <span class="packing-item-why">Long days of walking and photography between sites drain a phone battery fast, especially with maps running in the background.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Italy-Wide</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">EU power adapter (Type C/F/L)</span>
+          <span class="packing-item-why">Italy uses Type C, F, and L plugs depending on the outlet — a universal EU adapter covers all three.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Italy</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">AIC Mobile app</span>
+          <span class="packing-item-why">The Associazione Italiana Celiachia's app lists thousands of certified GF restaurants, pizzerias, and hotels nationwide — worth downloading before the trip, not just for Florence and Rome.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Italy</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Reusable water bottle</span>
+          <span class="packing-item-why">Free public drinking fountains (nasoni) are common throughout Florence, Rome, and most historic Italian city centers, so refilling on the go is easy.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Italy</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">Cobblestone streets are standard in Italy's historic centers, in Florence and Rome alike — cushioned soles make a real difference by day two.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Italy</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Florence</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Light layers</span>
+          <span class="packing-item-why">May weather in Florence is warm (24-26°C) but evenings cool down by the river.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Florence</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Compact umbrella</span>
+          <span class="packing-item-why">Spring showers are possible in Florence in May.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Florence</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Small daypack</span>
+          <span class="packing-item-why">For water, snacks, and a light layer during long walking days between the Duomo, the Uffizi, and Piazzale Michelangelo.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Florence</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sunscreen &amp; sunglasses</span>
+          <span class="packing-item-why">Strong Mediterranean sun, especially at Piazzale Michelangelo.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Florence</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Rome</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Light layers</span>
+          <span class="packing-item-why">May temps in Rome run 18-26°C (65-79°F) — cool mornings, warm afternoons.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Rome</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Compact umbrella</span>
+          <span class="packing-item-why">Spring showers are common in Rome in May.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Rome</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Shoulder cover</span>
+          <span class="packing-item-why">Required for entry to the Vatican and most Roman churches.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Rome</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sun hat and sunscreen</span>
+          <span class="packing-item-why">Little shade at the Forum and Colosseum.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Rome</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="faq" id="faq">
+    <div class="faq-header">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Do you need a car in Italy?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">No — Florence and Rome are connected by a high-speed Frecciarossa train (about 1.5 hours), and both cities are compact and walkable once you're there. I didn't rent a car for this trip; between the train and walking, a car would have meant paying for parking and dealing with historic-center traffic restrictions without saving any real time.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Is Italy safe for celiacs?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Yes — Italy scores 9/10 for GF friendliness, one of the highest scores on this site. Celiac disease is a government-recognized medical condition there, with national screening for children and a monthly food stipend for diagnosed patients, which translates into unusually strong awareness among restaurant staff. The AIC (Associazione Italiana Celiachia) certifies thousands of restaurants, pizzerias, and hotels nationwide, and both Florence and Rome scored 9/10 individually with multiple dedicated GF kitchens.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What's the best time to visit Italy?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">I visited Florence and Rome in May, and it worked well — warm enough for full days of walking without the peak-summer heat and crowds that hit central Italy in July and August. Spring showers are possible, so a compact umbrella is worth packing, but overall the shoulder season is a comfortable trade-off between weather and crowd levels.</div></div>
       </div>
     </div>
   </section>
@@ -393,5 +625,21 @@
       });
   </script>
 
+  <script>
+    document.querySelectorAll('.faq-q').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.closest('.faq-item');
+        var wasOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.faq-item.is-open').forEach(function(open) {
+          open.classList.remove('is-open');
+          open.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
