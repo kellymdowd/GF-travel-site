@@ -376,6 +376,19 @@
       .header { flex-direction: column; align-items: flex-start; gap: 0.2rem; }
       .trip-date { padding-bottom: 0; }
     }
+    /* ─── FAQ ─────────────────────────────────────────────────── */
+    .faq { padding: 2.4rem 2.5rem 0; }
+    .faq-header { margin-bottom: 1.4rem; }
+    .faq-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); }
+    .faq-list { border-top: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-item { border-bottom: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: none; border: none; text-align: left; cursor: pointer; padding: 1.1rem 0; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); }
+    .faq-q:hover, .faq-q:focus-visible { color: var(--slate); }
+    .faq-q-icon { flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); color: var(--ink-light); }
+    .faq-item.is-open .faq-q-icon { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .faq-item.is-open .faq-a { max-height: 240px; }
+    .faq-a-inner { padding: 0 0 1.2rem; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.86rem; line-height: 1.75; color: var(--ink-mid); max-width: 62ch; }
   </style>
 
   <!-- Google Analytics (gtag.js) -->
@@ -828,7 +841,8 @@
       <li class="toc-item"><a href="#getting-around" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Getting around</a></li>
       <li class="toc-item"><a href="#landmarks" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Landmarks &amp; must-see spots</a></li>
       <li class="toc-item"><a href="#things-to-do" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Things to do</a></li>
-      <li class="toc-item"><a href="#what-to-pack" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>What to pack</a></li>
+      <li class="toc-item"><a href="../norway#packing" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>What to pack</a></li>
+      <li class="toc-item"><a href="#faq" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>FAQ</a></li>
       <li class="toc-item"><a href="#travel-tips" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Travel tips</a></li>
     </ul>
   </nav>
@@ -1400,127 +1414,37 @@
   </section>
 
   <!-- ═══════════════ WHAT TO PACK ═══════════════ -->
-  <section class="packing" id="what-to-pack">
-    <div class="packing-header">
-      <h2 class="packing-title">What to Pack</h2>
-      <span class="packing-season">September</span>
-    </div>
-    <div class="packing-rule"></div>
-
-    <ul class="packing-list">
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">GF snack bars and trail food</span>
-          <span class="packing-item-why">Critical for Pulpit Rock and Kjerag hikes &mdash; NO food options on the trails</span>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Celiac dining card</span>
-          <span class="packing-item-why">Laminated card explaining celiac disease for restaurant staff</span>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Reusable water bottle</span>
-          <span class="packing-item-why">Norway&rsquo;s tap water is excellent &mdash; refill everywhere</span>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Norwegian celiac card</span>
-          <span class="packing-item-why">Celiac dining card translated into Norwegian</span>
-        </div>
-        <span class="packing-item-tag packing-tag-norway">Norway</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">GF crispbread</span>
-          <span class="packing-item-why">Handy for quick meals in hotel or on the trail</span>
-        </div>
-        <span class="packing-item-tag packing-tag-norway">Norway</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Power adapter (Type C/F)</span>
-          <span class="packing-item-why">European two-pin plug &mdash; different from UK and US</span>
-        </div>
-        <span class="packing-item-tag packing-tag-norway">Norway</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Serious hiking boots</span>
-          <span class="packing-item-why">Pulpit Rock and Kjerag terrain is rocky and uneven</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Stavanger</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Rain gear</span>
-          <span class="packing-item-why">Stavanger gets rain year-round, especially on exposed hikes</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Stavanger</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Layers for 10&ndash;16&deg;C September</span>
-          <span class="packing-item-why">Temperatures can drop quickly on fjord-side hikes</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Stavanger</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Trekking poles (optional for Kjerag)</span>
-          <span class="packing-item-why">Helpful on the steep chain sections of the Kjerag trail</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Stavanger</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Daypack with snacks</span>
-          <span class="packing-item-why">Essential for full-day hikes &mdash; carry water, food, and a rain layer</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Stavanger</span>
-      </li>
-
-    </ul>
-
-    <!-- STOREFRONT: Uncomment when Amazon storefront URL is ready
-    <div class="packing-storefront">
-      <a href="STOREFRONT_URL_HERE" class="packing-storefront-link" target="_blank" rel="noopener sponsored">
-        Browse My Full Travel Storefront
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-      </a>
-    </div>
-    -->
-  </section>
 
   <!-- ═══════════════ TRAVEL TIPS ═══════════════ -->
+  <section class="faq" id="faq">
+    <div class="faq-header">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Is Stavanger safe for celiacs?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Stavanger scores 6/10 for GF friendliness (Moderate). There are 5 restaurants with GF options. Top picks: D\u00f8gnvill Burger, Re-naa, Sabi Sushi.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What are the best gluten-free restaurants in Stavanger?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">D\u00f8gnvill Burger (4/5 GF score, Burgers); Re-naa (4/5 GF score, Fine Dining); Sabi Sushi (3/5 GF score, Japanese).</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Can you find gluten-free food in Stavanger supermarkets?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Yes. Meny (Stavanger Sentrum), Coop Mega (Madla), Life health store (Arkaden), and Rema 1000 all carry GF products. Norway has excellent grocery GF availability.</div></div>
+      </div>
+    </div>
+  </section>
+
   <section class="travel-tips" id="travel-tips">
     <div class="tips-header">
       <h2 class="tips-title">Travel Tips</h2>
@@ -1601,5 +1525,21 @@
     <p class="page-disclosure">Some links on this page are affiliate links. I may earn a small commission if you book through them, at no extra cost to you. I only recommend places I&rsquo;ve personally visited or thoroughly researched.</p>
   </footer>
 
+  <script>
+    document.querySelectorAll('.faq-q').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.closest('.faq-item');
+        var wasOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.faq-item.is-open').forEach(function(open) {
+          open.classList.remove('is-open');
+          open.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  </script>
 </body>
 </html>
