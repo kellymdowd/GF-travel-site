@@ -141,6 +141,20 @@
     @media (max-width: 480px) {
       .gf-section { padding-left: 1.2rem; padding-right: 1.2rem; }
     }
+
+    /* ─── FAQ ─────────────────────────────────── */
+    .faq { padding: 2.4rem 2.5rem 0; }
+    .faq-header { margin-bottom: 1.4rem; }
+    .faq-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); }
+    .faq-list { border-top: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-item { border-bottom: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: none; border: none; text-align: left; cursor: pointer; padding: 1.1rem 0; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); }
+    .faq-q:hover, .faq-q:focus-visible { color: var(--slate); }
+    .faq-q-icon { flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); color: var(--ink-light); }
+    .faq-item.is-open .faq-q-icon { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .faq-item.is-open .faq-a { max-height: 280px; }
+    .faq-a-inner { padding: 0 0 1.2rem; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.86rem; line-height: 1.75; color: var(--ink-mid); max-width: 62ch; }
   </style>
 
   <!-- Google Analytics (gtag.js) -->
@@ -210,7 +224,30 @@
 
     });
   </script>
-  
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do you need a car in Scotland?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No — I did a 13-night route through Glasgow, Fort William, the Isle of Skye, Inverness, and Edinburgh entirely by train, ferry, local bus, and one guided minibus day-tour for Skye's more remote points. It takes more advance planning than driving, but it's very doable. A car gives more flexibility in the Highlands and on Skye specifically, if that matters to you." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Scotland safe for celiacs?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, overall — every city I visited scored GF Friendly or better, from Edinburgh's 10/10 down to Fort William's 5/10 in more remote spots. Availability drops the further into the Highlands and islands you go, so I'd book ahead in smaller towns rather than assume options will be there." }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the best time to visit Scotland?",
+      "acceptedAnswer": { "@type": "Answer", "text": "I visited in July, which gave long daylight hours for hiking in the Highlands — sunrise around 4:30am, sunset closer to 10pm. May through September is generally the more reliable window weather-wise. If Edinburgh is part of your trip, avoid the Fringe Festival in August unless you book everything months ahead, since the city triples in population." }
+    }
+  ]
+}
+  </script>
 </head>
 <body>
 
@@ -450,6 +487,35 @@
     </ul>
   </section>
 
+  <section class="faq" id="faq">
+    <div class="faq-header">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Do you need a car in Scotland?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">No — I did a 13-night route through Glasgow, Fort William, the Isle of Skye, Inverness, and Edinburgh entirely by train, ferry, local bus, and one guided minibus day-tour for Skye's more remote points. It takes more advance planning than driving, but it's very doable. A car gives more flexibility in the Highlands and on Skye specifically, if that matters to you.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Is Scotland safe for celiacs?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Yes, overall — every city I visited scored GF Friendly or better, from Edinburgh's 10/10 down to Fort William's 5/10 in more remote spots. Availability drops the further into the Highlands and islands you go, so I'd book ahead in smaller towns rather than assume options will be there.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What's the best time to visit Scotland?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">I visited in July, which gave long daylight hours for hiking in the Highlands — sunrise around 4:30am, sunset closer to 10pm. May through September is generally the more reliable window weather-wise. If Edinburgh is part of your trip, avoid the Fringe Festival in August unless you book everything months ahead, since the city triples in population.</div></div>
+      </div>
+    </div>
+  </section>
+
   <div id="map-tooltip"></div>
 
   <script>
@@ -556,6 +622,23 @@
           chipsEl.appendChild(a);
         });
       });
+  </script>
+
+  <script>
+    document.querySelectorAll('.faq-q').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.closest('.faq-item');
+        var wasOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.faq-item.is-open').forEach(function(open) {
+          open.classList.remove('is-open');
+          open.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
   </script>
 
 </body>

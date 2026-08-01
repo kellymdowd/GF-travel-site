@@ -8,6 +8,8 @@
   <title>2 Weeks in Scotland: A Gluten-Free Itinerary | GF Gone Global</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
   <script type="application/ld+json">
 {
@@ -45,12 +47,12 @@
         {
           "@type": "Question",
           "name": "Do you need a car for this Scotland itinerary?",
-          "acceptedAnswer": { "@type": "Answer", "text": "No. We did the entire route by train, ferry, local bus, and one guided minibus day-tour for Skye's more remote points. It takes more advance planning than driving, but it's very doable." }
+          "acceptedAnswer": { "@type": "Answer", "text": "No. I did the entire route by train, ferry, local bus, and one guided minibus day-tour for Skye's more remote points. It takes more advance planning than driving, but it's very doable." }
         },
         {
           "@type": "Question",
           "name": "How many days should you spend in Scotland?",
-          "acceptedAnswer": { "@type": "Answer", "text": "We used 13 nights across 5 stops, which felt unhurried. If you're tighter on time, Fort William and Inverness are the easiest stops to shorten to a single night each." }
+          "acceptedAnswer": { "@type": "Answer", "text": "I used 13 nights across 5 stops, which felt unhurried. If you're tighter on time, Fort William and Inverness are the easiest stops to shorten to a single night each." }
         },
         {
           "@type": "Question",
@@ -60,7 +62,7 @@
         {
           "@type": "Question",
           "name": "Is a 2-week Scotland trip manageable for celiacs?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every stop on this route has at least one restaurant we'd recommend without hesitation. The more remote stops, Fort William and Skye, have fewer options, so it's worth booking those specific restaurants ahead rather than winging it." }
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every stop on this route has at least one restaurant I'd recommend without hesitation. The more remote stops, Fort William and Skye, have fewer options, so it's worth booking those specific restaurants ahead rather than winging it." }
         }
       ]
     },
@@ -121,6 +123,16 @@
     .glance-table td.gd-stop { font-family: 'Cormorant Garamond', serif; font-size: 0.98rem; color: var(--ink); white-space: nowrap; }
     @media (max-width: 760px) { .glance-card { grid-template-columns: 1fr; } }
 
+    .route { padding: 2.6rem 2.5rem 0; opacity: 0; animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards; }
+    .route-label { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); margin-bottom: 1.2rem; }
+    .route-map { position: relative; border-radius: 4px; overflow: hidden; box-shadow: 0 8px 28px -12px rgba(42, 32, 24, 0.18), 0 2px 6px -2px rgba(42, 32, 24, 0.1); }
+    .route-map svg { width: 100%; display: block; }
+    .route-pin-label { font-family: 'Jost', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.06em; fill: var(--ink); }
+    .route-pin-order { font-family: 'Cormorant Garamond', serif; font-size: 10px; fill: #FFFFFF; }
+    .route-caption { margin-top: 0.9rem; font-family: 'Jost', sans-serif; font-size: 0.72rem; letter-spacing: 0.04em; color: var(--ink-light); display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; }
+    .route-caption b { font-weight: 500; color: var(--ink-mid); }
+    #route-tooltip { position: fixed; pointer-events: none; background: var(--ink); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.68rem; letter-spacing: 0.04em; padding: 0.3rem 0.6rem; border-radius: 3px; opacity: 0; transition: opacity 0.15s ease; z-index: 400; white-space: nowrap; }
+
     .days { padding: 3rem 2.5rem 0; }
     .days-label { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); margin-bottom: 2.2rem; }
     .day-rail { position: relative; }
@@ -180,7 +192,7 @@
     .page-disclosure { font-family: 'Jost', sans-serif; font-size: 0.68rem; color: var(--ink-light); line-height: 1.6; }
 
     @media (max-width: 600px) {
-      .site-nav, .crumbs, .header, .glance, .days, .faq, .related, .tip-cta, .page-footer { padding-left: 1.2rem; padding-right: 1.2rem; }
+      .site-nav, .crumbs, .header, .glance, .route, .days, .faq, .related, .tip-cta, .page-footer { padding-left: 1.2rem; padding-right: 1.2rem; }
       .header-rule { margin: 0 1.2rem; }
     }
   </style>
@@ -241,6 +253,15 @@
     </div>
   </section>
 
+  <section class="route">
+    <div class="route-label">The Route</div>
+    <div class="route-map" id="route-map"></div>
+    <div class="route-caption">
+      <b>Glasgow</b> → train → <b>Fort William</b> → train, ferry &amp; bus → <b>Portree</b> → bus → <b>Inverness</b> → train → <b>Edinburgh</b>
+    </div>
+  </section>
+  <div id="route-tooltip"></div>
+
   <section class="days" id="itinerary">
     <div class="days-label">Stop by Stop</div>
     <div class="day-rail">
@@ -286,7 +307,7 @@
             <div class="day-logistic"><svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.2V6L8 7.2" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg>Train Fort William → Mallaig, ferry Mallaig → Armadale, bus to Portree</div>
             <div class="day-logistic"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>Stayed: Bracken Hide Hotel</div>
           </div>
-          <p class="day-prose">Getting to Skye takes patience — a full travel day of train, ferry, then local bus. Four nights was deliberate once we arrived: the Quiraing walk (an early bus out to Flodigarry, then an 11km loop, 4-5 hours), a full free day to wander Portree, and a guided "Skye in a Day" minibus tour covering the Fairy Pools, Neist Point, Dunvegan Castle, and the Old Man of Storr in one go — worth it just to avoid renting a car for the more remote points.</p>
+          <p class="day-prose">Getting to Skye takes patience — a full travel day of train, ferry, then local bus. Four nights was deliberate once I arrived: the Quiraing walk (an early bus out to Flodigarry, then an 11km loop, 4-5 hours), a full free day to wander Portree, and a guided "Skye in a Day" minibus tour covering the Fairy Pools, Neist Point, Dunvegan Castle, and the Old Man of Storr in one go — worth it just to avoid renting a car for the more remote points.</p>
           <a href="../countries/scotland/portree" class="day-link">Full Portree / Skye guide →</a>
         </div>
       </div>
@@ -312,10 +333,10 @@
           <div class="day-date">July 15–18 · 3 Nights</div>
           <h2 class="day-title">Edinburgh</h2>
           <p class="day-tldr">The grand finale — Arthur's Seat, Edinburgh Castle, and three of the best celiac-safe dinners of the entire trip.</p>
-          <p class="day-prose">The last stop, and the one with the most restaurant options by far — Edinburgh's GF scene is genuinely excellent, scoring 10/10 on our GF friendliness scale. We've written up these three days in full detail separately, since they work just as well as their own standalone trip.</p>
+          <p class="day-prose">The last stop, and the one with the most restaurant options by far — Edinburgh's GF scene is genuinely excellent, scoring 10/10 on my GF friendliness scale. I've written up these three days in full detail separately, since they work just as well as their own standalone trip.</p>
           <div class="day-cta">
             <div class="day-cta-title">Read the full 3-Day Edinburgh Itinerary</div>
-            <div class="day-cta-note">Day-by-day breakdown of where we stayed, hiked, and ate — including the 10-course tasting menu at LYLA.</div>
+            <div class="day-cta-note">Day-by-day breakdown of where I stayed, hiked, and ate — including the 10-course tasting menu at LYLA.</div>
             <a href="edinburgh-3-days" class="day-cta-link">View the Edinburgh itinerary →</a>
           </div>
         </div>
@@ -332,14 +353,14 @@
           Do you need a car for this itinerary?
           <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-a"><div class="faq-a-inner">No. We did the entire route by train, ferry, local bus, and one guided minibus day-tour for Skye's more remote points. It takes more advance planning than driving, but it's very doable.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">No. I did the entire route by train, ferry, local bus, and one guided minibus day-tour for Skye's more remote points. It takes more advance planning than driving, but it's very doable.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false">
           How many days should you spend in Scotland?
           <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-a"><div class="faq-a-inner">We used 13 nights across 5 stops, which felt unhurried. If you're tighter on time, Fort William and Inverness are the easiest stops to shorten to a single night each.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">I used 13 nights across 5 stops, which felt unhurried. If you're tighter on time, Fort William and Inverness are the easiest stops to shorten to a single night each.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false">
@@ -353,7 +374,7 @@
           Is a 2-week Scotland trip manageable for celiacs?
           <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-a"><div class="faq-a-inner">Yes. Every stop on this route has at least one restaurant we'd recommend without hesitation. The more remote stops — Fort William and Skye — have fewer options, so it's worth booking those specific restaurants ahead rather than winging it.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Yes. Every stop on this route has at least one restaurant I'd recommend without hesitation. The more remote stops — Fort William and Skye — have fewer options, so it's worth booking those specific restaurants ahead rather than winging it.</div></div>
       </div>
     </div>
   </section>
@@ -385,8 +406,138 @@
 
   <footer class="page-footer">
     <div class="page-disclosure">This page may contain affiliate links. If you book through these links, I may earn a small commission at no extra cost to you.</div>
-    <div class="page-disclosure" style="margin-top:0.4rem;">Restaurant and GF safety details reflect our visit in July 2024 — always reconfirm with the restaurant directly, and check each city's full guide for the most current info.</div>
+    <div class="page-disclosure" style="margin-top:0.4rem;">Restaurant and GF safety details reflect my visit in July 2024 — always reconfirm with the restaurant directly, and check each city's full guide for the most current info.</div>
   </footer>
+
+  <script>
+    (function() {
+      const ROUTE = [
+        { name: 'Glasgow',      slug: 'glasgow',      lat: 55.8642, lon: -4.2518 },
+        { name: 'Fort William', slug: 'fort-william', lat: 56.8198, lon: -5.1052 },
+        { name: 'Portree',      slug: 'portree',      lat: 57.4128, lon: -6.1967 },
+        { name: 'Inverness',    slug: 'inverness',    lat: 57.4778, lon: -4.2247 },
+        { name: 'Edinburgh',    slug: 'edinburgh',    lat: 55.9533, lon: -3.1883 },
+      ];
+
+      const LABEL_OPTS = {
+        'Glasgow':      { dx: -11, dy:  4, anchor: 'end'   },
+        'Fort William': { dx: -11, dy: -9, anchor: 'end'   },
+        'Portree':      { dx: -11, dy:  4, anchor: 'end'   },
+        'Inverness':    { dx:  11, dy: -9, anchor: 'start' },
+        'Edinburgh':    { dx:  11, dy:  4, anchor: 'start' },
+      };
+
+      // One leg per pair of consecutive stops, each leg one or more transport modes in order taken
+      const LEGS = [
+        { modes: ['train'] },
+        { modes: ['train', 'ferry', 'bus'] },
+        { modes: ['bus'] },
+        { modes: ['train'] },
+      ];
+
+      const ICONS = {
+        train: '<rect x="-5" y="-5" width="10" height="8" rx="2" fill="none" stroke="currentColor" stroke-width="1.1"/><path d="M-5 -1H5" stroke="currentColor" stroke-width="1.1"/><circle cx="-2.5" cy="5" r="0.9" fill="currentColor"/><circle cx="2.5" cy="5" r="0.9" fill="currentColor"/>',
+        ferry: '<path d="M-6 2L-5 5H5L6 2" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/><path d="M-4 2V-2H0L2 2" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/><path d="M-1 -2V-4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>',
+        bus:   '<rect x="-7" y="-4" width="14" height="6.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.1"/><path d="M-3 -4V2.5M1 -4V2.5" stroke="currentColor" stroke-width="0.9"/><circle cx="-3" cy="4.5" r="1" fill="currentColor"/><circle cx="3" cy="4.5" r="1" fill="currentColor"/>',
+      };
+
+      const REGION = {
+        type: 'Feature',
+        geometry: { type: 'Polygon', coordinates: [[[-8.0, 61.0], [-0.5, 61.0], [-0.5, 54.5], [-8.0, 54.5], [-8.0, 61.0]]] }
+      };
+
+      const W = 960, H = 640;
+      const svg = d3.select('#route-map').append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('preserveAspectRatio', 'xMidYMid meet');
+      const projection = d3.geoMercator();
+      const path = d3.geoPath().projection(projection);
+      const tooltip = document.getElementById('route-tooltip');
+
+      fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json')
+        .then(r => r.json())
+        .then(world => {
+          const countries = topojson.feature(world, world.objects.countries);
+          const uk = countries.features.find(f => +f.id === 826);
+          projection.fitExtent([[50, 40], [W - 50, H - 50]], REGION);
+
+          svg.append('rect').attr('width', W).attr('height', H).attr('fill', '#F3F3F3');
+          svg.selectAll('.bg-country').data(countries.features).enter().append('path')
+            .attr('fill', '#E0E0E0').attr('stroke', 'rgba(255,255,255,0.7)').attr('stroke-width', 0.5).attr('d', path);
+          svg.append('path').datum(uk).attr('fill', '#EDE3D8').attr('stroke', '#D8C9B5').attr('stroke-width', 1.5).attr('d', path);
+
+          const pts = ROUTE.map(d => Object.assign({}, d, { xy: projection([d.lon, d.lat]) }));
+
+          const lineGen = d3.line().x(d => d.xy[0]).y(d => d.xy[1]).curve(d3.curveLinear);
+          const routeLine = svg.append('path')
+            .datum(pts)
+            .attr('fill', 'none')
+            .attr('stroke', '#C8717A')
+            .attr('stroke-width', 2.2)
+            .attr('stroke-linecap', 'round')
+            .attr('d', lineGen);
+
+          const totalLength = routeLine.node().getTotalLength();
+          routeLine
+            .attr('stroke-dasharray', `${totalLength} ${totalLength}`)
+            .attr('stroke-dashoffset', totalLength)
+            .transition().delay(300).duration(1800).ease(d3.easeCubicInOut)
+            .attr('stroke-dashoffset', 0)
+            .on('end', function() {
+              d3.select(this).attr('stroke-dasharray', '7 6').attr('stroke-dashoffset', 0);
+            });
+
+          const iconGroup = svg.append('g').attr('opacity', 0);
+          LEGS.forEach((leg, i) => {
+            const a = pts[i].xy, b = pts[i + 1].xy;
+            const n = leg.modes.length;
+            leg.modes.forEach((mode, j) => {
+              const t = (j + 1) / (n + 1);
+              const x = a[0] + (b[0] - a[0]) * t;
+              const y = a[1] + (b[1] - a[1]) * t;
+              const g = iconGroup.append('g').attr('transform', `translate(${x},${y})`);
+              g.append('circle').attr('r', 9.5).attr('fill', '#FFFFFF').attr('stroke', 'rgba(42,32,24,0.14)').attr('stroke-width', 1);
+              g.append('g').style('color', '#5A5048').html(ICONS[mode]);
+              g.style('cursor', 'default')
+                .on('mousemove', function(event) {
+                  tooltip.textContent = mode.charAt(0).toUpperCase() + mode.slice(1);
+                  tooltip.style.opacity = '1';
+                  tooltip.style.left = (event.clientX - 18) + 'px';
+                  tooltip.style.top = (event.clientY - 36) + 'px';
+                })
+                .on('mouseleave', () => { tooltip.style.opacity = '0'; });
+            });
+          });
+          iconGroup.transition().delay(1900).duration(500).attr('opacity', 1);
+
+          const pinGroup = svg.selectAll('.route-pin').data(pts).enter().append('g')
+            .attr('class', 'route-pin')
+            .attr('transform', d => `translate(${d.xy[0]},${d.xy[1]})`);
+
+          pinGroup.append('circle').attr('r', 9).attr('cy', 2).attr('fill', 'rgba(42, 32, 24, 0.15)');
+          pinGroup.append('circle').attr('r', 7.5).attr('fill', '#C8717A').attr('stroke', '#FFFFFF').attr('stroke-width', 1.5);
+          pinGroup.append('text').attr('class', 'route-pin-order').attr('text-anchor', 'middle').attr('dy', 3).text((d, i) => i + 1);
+          pinGroup.append('text')
+            .attr('class', 'route-pin-label')
+            .attr('dx', d => (LABEL_OPTS[d.name] || { dx: 10 }).dx)
+            .attr('dy', d => (LABEL_OPTS[d.name] || { dy: 4 }).dy)
+            .attr('text-anchor', d => (LABEL_OPTS[d.name] || { anchor: 'start' }).anchor)
+            .text(d => d.name);
+
+          pinGroup.style('cursor', 'pointer')
+            .on('mousemove', function(event, d) {
+              tooltip.textContent = d.name;
+              tooltip.style.opacity = '1';
+              tooltip.style.left = (event.clientX - tooltip.offsetWidth / 2) + 'px';
+              tooltip.style.top = (event.clientY - 42) + 'px';
+            })
+            .on('mouseleave', () => { tooltip.style.opacity = '0'; })
+            .on('click', (event, d) => { window.location.href = `../countries/scotland/${d.slug}`; });
+
+          pinGroup.style('opacity', 0).each(function(d, i) {
+            d3.select(this).transition().delay(300 + i * 350).duration(500).ease(d3.easeCubicOut).style('opacity', 1);
+          });
+        });
+    })();
+  </script>
 
   <script>
     document.querySelectorAll('.faq-q').forEach(function(btn) {
