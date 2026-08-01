@@ -288,13 +288,55 @@
       .gf-section-grid { grid-template-columns: 1fr; gap: 1.6rem; }
     }
 
+    /* ─── What to Pack ────────────────────────────────────────── */
+    .packing { padding: 0 2.5rem 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 1.5s forwards; }
+    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 0.6rem; }
+    .packing-group-label { font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin: 1.6rem 0 0.4rem; }
+    .packing-group-label:first-of-type { margin-top: 1rem; }
+    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .packing-item:last-child { border-bottom: none; }
+    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
+    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
+    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
+    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
+    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
+    .packing-tag-country { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
+    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    .packing-storefront { margin-top: 1.4rem; padding-top: 1.2rem; border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .packing-storefront-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1.1rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.64rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 3px; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 6px rgba(200, 113, 122, 0.15), 0 1px 2px rgba(200, 113, 122, 0.08); }
+    .packing-storefront-link:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200, 113, 122, 0.25), 0 2px 4px rgba(200, 113, 122, 0.12); }
+    .packing-storefront-link:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; }
+    .packing-storefront-link:active { background: #a85a63; transform: translateY(0); }
+    .packing-storefront-link svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .packing-storefront-link:hover svg { transform: translateX(2px); }
+    @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
+
+    /* ─── FAQ ─────────────────────────────────────────────────── */
+    .faq { padding: 2.4rem 2.5rem 0; }
+    .faq-header { margin-bottom: 1.4rem; }
+    .faq-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); }
+    .faq-list { border-top: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-item { border-bottom: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: none; border: none; text-align: left; cursor: pointer; padding: 1.1rem 0; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); }
+    .faq-q:hover, .faq-q:focus-visible { color: var(--slate); }
+    .faq-q-icon { flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); color: var(--ink-light); }
+    .faq-item.is-open .faq-q-icon { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .faq-item.is-open .faq-a { max-height: 280px; }
+    .faq-a-inner { padding: 0 0 1.2rem; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.86rem; line-height: 1.75; color: var(--ink-mid); max-width: 62ch; }
+
     /* ─── Animations ──────────────────────────────────────────── */
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
 
     @media (max-width: 600px) {
       .site-nav { padding: 0 1.2rem; }
-      .nav-sub, .header, .overview-section, .map-section, .cities-section, .gf-section { padding-left: 1.2rem; padding-right: 1.2rem; }
+      .nav-sub, .header, .overview-section, .map-section, .cities-section, .gf-section, .packing, .faq { padding-left: 1.2rem; padding-right: 1.2rem; }
       .header-rule { margin: 0 1.2rem; }
     }
   
@@ -399,6 +441,30 @@
   }
   </script>
 
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do you need a car in Switzerland?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No &mdash; Switzerland's rail network connects Basel, Geneva, Interlaken, Lucerne, and Zurich directly, and each city center is compact enough to get around on foot or by local tram and bus. Zermatt goes a step further: private cars aren't allowed in the village at all, so you park in T&auml;sch and take a 15-minute shuttle train in. A car would only add friction on this route &mdash; I'd skip it." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Switzerland safe for celiacs?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, overall &mdash; Switzerland scores 8/10 nationally, helped by strong supermarket infrastructure (Coop's 'Free From!' range and Migros' 'aha!' line are in every city I visited) and the national IG Z&ouml;liakie celiac association, whose member restaurants mark GF options clearly. That national score is stronger than any single city, though: Lucerne was my easiest stop at 8/10, while Zermatt's small alpine dining scene and seasonal restaurant closures brought it down to 4/10. I'd treat the country score as a baseline and check the specific city before assuming options will be there." }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the best time to visit Switzerland?",
+      "acceptedAnswer": { "@type": "Answer", "text": "It depends on the city, and this page actually covers two separate trips. I visited Basel, Geneva, Interlaken, Lucerne, and Zermatt in October 2022, which gave crisp, mild days good for walking and mountain views &mdash; except in Zermatt, where October falls in the gap between hiking season and ski season, so several restaurants and hotels were closed. Zurich was a one-night November 2023 stopover on a different trip, and that colder, rainier shoulder season worked fine for a short city visit but I wouldn't build a longer trip around it. For mountain towns like Zermatt or Interlaken, I'd aim for July&ndash;September or December&ndash;March instead, when everything is actually open." }
+    }
+  ]
+}
+  </script>
+
 </head>
 <body>
 
@@ -463,11 +529,11 @@
           <div class="gf-city-scores-label">City Scores</div>
           <div class="gf-city-score-row">
             <span class="gf-city-name"><a href="switzerland/basel">Basel</a></span>
-            <div class="gf-city-score-bar"><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span></div>
+            <div class="gf-city-score-bar"><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span></div>
           </div>
           <div class="gf-city-score-row">
             <span class="gf-city-name"><a href="switzerland/geneva">Geneva</a></span>
-            <div class="gf-city-score-bar"><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span></div>
+            <div class="gf-city-score-bar"><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span></div>
           </div>
           <div class="gf-city-score-row">
             <span class="gf-city-name"><a href="switzerland/interlaken">Interlaken</a></span>
@@ -475,11 +541,11 @@
           </div>
           <div class="gf-city-score-row">
             <span class="gf-city-name"><a href="switzerland/lucerne">Lucerne</a></span>
-            <div class="gf-city-score-bar"><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span></div>
+            <div class="gf-city-score-bar"><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span></div>
           </div>
           <div class="gf-city-score-row">
             <span class="gf-city-name"><a href="switzerland/zermatt">Zermatt</a></span>
-            <div class="gf-city-score-bar"><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span></div>
+            <div class="gf-city-score-bar"><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span></div>
           </div>
           <div class="gf-city-score-row">
             <span class="gf-city-name"><a href="switzerland/zurich">Zurich</a></span>
@@ -513,6 +579,372 @@
           <span class="gf-score-total-num">8</span>
           <span class="gf-score-total-label">out of 10</span>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ WHAT TO PACK ═══════════════ -->
+  <section class="packing" id="packing">
+    <div class="packing-header">
+      <h2 class="packing-title">What to Pack for Switzerland</h2>
+      <span class="packing-season">October &amp; November</span>
+    </div>
+    <div class="packing-rule"></div>
+
+    <div class="packing-group-label">Essential</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Celiac dining card (German)</span>
+          <span class="packing-item-why">Explains celiac disease and cross-contamination in German, which covers five of the six cities here &mdash; Basel, Interlaken, Lucerne, Zermatt, and Zurich. Geneva is French-speaking, so bring a French version for that stop (see the Geneva group below).</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">GF snack bars</span>
+          <span class="packing-item-why">Useful in every city on this page, and closer to essential in Zermatt and Interlaken, where mountain huts and shoulder-season closures can leave you without a safe option nearby.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable GF bread</span>
+          <span class="packing-item-why">For hotel breakfasts and meals where GF bread isn't on the menu. In Zermatt specifically, Du Pont and Old Zermatt will serve you fondue with your own bread.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">GF soy sauce packets</span>
+          <span class="packing-item-why">Worth carrying if Asian food is on the itinerary anywhere &mdash; regular soy sauce contains wheat, and a GF substitute isn't always available on the spot.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable phone charger</span>
+          <span class="packing-item-why">Long days of sightseeing, train transfers, and mountain excursions with no outlet in sight will drain a battery fast.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Switzerland-Wide</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Power adapter (Type J, 3-pin)</span>
+          <span class="packing-item-why">Switzerland uses its own Type J socket, different from the rest of Europe &mdash; a standard EU plug won't fit in any of these cities.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Switzerland</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Swiss francs (CHF)</span>
+          <span class="packing-item-why">Switzerland isn't in the Eurozone. Cards are widely accepted, but mountain huts and small vendors in Interlaken, Lucerne, and Zermatt in particular may only take cash.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Switzerland</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Swiss celiac card from IG Z&ouml;liakie</span>
+          <span class="packing-item-why">IG Z&ouml;liakie is Switzerland's national celiac association, and their card is recognized nationwide by restaurants that are IG Z&ouml;liakie gastronomy members &mdash; not just in one city.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Switzerland</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Reusable water bottle</span>
+          <span class="packing-item-why">Swiss tap water is safe and excellent everywhere I visited &mdash; refill freely instead of buying bottled water.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Switzerland</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Basel</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">Basel's Old Town is full of cobblestones &mdash; sturdy soles are a must.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Basel</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Layers for October weather</span>
+          <span class="packing-item-why">Temperatures ran roughly 5&ndash;15&deg;C when I visited &mdash; mornings were chilly, afternoons mild.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Basel</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Light rain jacket</span>
+          <span class="packing-item-why">October is one of the wetter months in Basel.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Basel</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Swimwear</span>
+          <span class="packing-item-why">Rhine swimming is a popular local tradition in summer, with locals floating downstream in waterproof bags &mdash; worth knowing about even if it's out of season for an October visit.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Basel</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Geneva</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Celiac dining card (French)</span>
+          <span class="packing-item-why">Geneva is French-speaking, unlike the rest of this itinerary &mdash; a card in French is essential for communicating with restaurant staff here.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Geneva</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Smart-casual outfit</span>
+          <span class="packing-item-why">Geneva is a dressy city &mdash; you'll feel more comfortable with at least one smart-casual option for dining out.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Geneva</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">The city centre is compact and walkable, though the Old Town has cobblestones.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Geneva</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sunscreen for lake activities</span>
+          <span class="packing-item-why">The lakefront sun can be strong even in autumn &mdash; useful for boat rides and waterfront walks.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Geneva</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Light layers for October</span>
+          <span class="packing-item-why">Temperatures ran roughly 5&ndash;15&deg;C when I visited &mdash; layering is key for variable lake-effect weather.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Geneva</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Interlaken</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sturdy hiking boots</span>
+          <span class="packing-item-why">Essential for mountain trails and uneven terrain around the Jungfrau region.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Interlaken</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Warm layers</span>
+          <span class="packing-item-why">Mountain weather changes fast &mdash; even sunny days at valley level can turn cold at altitude.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Interlaken</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Rain jacket</span>
+          <span class="packing-item-why">Alpine weather is unpredictable &mdash; I'd always have this on hand here.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Interlaken</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sunscreen + sunglasses</span>
+          <span class="packing-item-why">Alpine UV is significantly stronger than at sea level.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Interlaken</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Camera with good zoom</span>
+          <span class="packing-item-why">Mountain peaks and alpine scenery deserve proper glass.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Interlaken</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Lucerne</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Warm layers for mountain excursions</span>
+          <span class="packing-item-why">Summit temperatures on Rigi and Pilatus can run 15&deg;C+ cooler than lakeside.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Lucerne</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Rain jacket</span>
+          <span class="packing-item-why">Mountain weather changes fast; a waterproof layer is essential.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Lucerne</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">Old Town cobblestones and mountain trails both call for solid footwear.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Lucerne</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Binoculars</span>
+          <span class="packing-item-why">Ideal for mountain viewpoints and spotting wildlife on Rigi and Pilatus.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Lucerne</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Swimsuit</span>
+          <span class="packing-item-why">Lake swimming is popular in summer and early autumn, and the mineral baths at Rigi Kaltbad run year-round.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Lucerne</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Zermatt</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Warm layers</span>
+          <span class="packing-item-why">Temperatures drop significantly at altitude, and mountain weather changes fast.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Zermatt</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Waterproof hiking boots</span>
+          <span class="packing-item-why">Essential for trails, gorge walks, and unpredictable mountain conditions.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Zermatt</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sunscreen + sunglasses</span>
+          <span class="packing-item-why">Alpine UV is intense &mdash; the higher you go, the stronger it gets.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Zermatt</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Binoculars</span>
+          <span class="packing-item-why">For spotting detail on the Matterhorn and surrounding peaks from Gornergrat.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Zermatt</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">GF groceries from a bigger city</span>
+          <span class="packing-item-why">Zermatt's Denner has very limited GF options &mdash; stock up in Visp or T&auml;sch before arriving.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Zermatt</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Zurich</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Smart-casual outfit</span>
+          <span class="packing-item-why">Zurich is a chic city &mdash; useful for blending in at restaurants and on Bahnhofstrasse.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Zurich</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">The Old Town's cobblestone streets mean you'll be walking most places.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Zurich</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Compact umbrella</span>
+          <span class="packing-item-why">November in Zurich is rainy &mdash; I'd expect showers most days.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Zurich</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Warm coat</span>
+          <span class="packing-item-why">November temperatures hover around 2&ndash;8&deg;C, colder than my October visits to the other five cities on this page &mdash; layer up.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Zurich</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="faq" id="faq">
+    <div class="faq-header">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Do you need a car in Switzerland?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">No &mdash; Switzerland's rail network connects Basel, Geneva, Interlaken, Lucerne, and Zurich directly, and each city center is compact enough to get around on foot or by local tram and bus. Zermatt goes a step further: private cars aren't allowed in the village at all, so you park in T&auml;sch and take a 15-minute shuttle train in. A car would only add friction on this route &mdash; I'd skip it.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Is Switzerland safe for celiacs?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Yes, overall &mdash; Switzerland scores 8/10 nationally, helped by strong supermarket infrastructure (Coop's 'Free From!' range and Migros' 'aha!' line are in every city I visited) and the national IG Z&ouml;liakie celiac association, whose member restaurants mark GF options clearly. That national score is stronger than any single city, though: Lucerne was my easiest stop at 8/10, while Zermatt's small alpine dining scene and seasonal restaurant closures brought it down to 4/10. I'd treat the country score as a baseline and check the specific city before assuming options will be there.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What's the best time to visit Switzerland?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">It depends on the city, and this page actually covers two separate trips. I visited Basel, Geneva, Interlaken, Lucerne, and Zermatt in October 2022, which gave crisp, mild days good for walking and mountain views &mdash; except in Zermatt, where October falls in the gap between hiking season and ski season, so several restaurants and hotels were closed. Zurich was a one-night November 2023 stopover on a different trip, and that colder, rainier shoulder season worked fine for a short city visit but I wouldn't build a longer trip around it. For mountain towns like Zermatt or Interlaken, I'd aim for July&ndash;September or December&ndash;March instead, when everything is actually open.</div></div>
       </div>
     </div>
   </section>
@@ -629,6 +1061,23 @@
       a.href = `switzerland/${city.slug}`;
       a.innerHTML = `<span class="city-chip-dot"></span>${city.name}`;
       chipsEl.appendChild(a);
+    });
+  </script>
+
+  <script>
+    document.querySelectorAll('.faq-q').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.closest('.faq-item');
+        var wasOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.faq-item.is-open').forEach(function(open) {
+          open.classList.remove('is-open');
+          open.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
     });
   </script>
 

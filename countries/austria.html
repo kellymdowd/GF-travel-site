@@ -115,6 +115,41 @@
     @media (max-width: 480px) {
       .gf-section { padding-left: 1.2rem; padding-right: 1.2rem; }
     }
+
+    /* ─── What to Pack ────────────────────────────────────── */
+    .packing { padding: 0 2.5rem 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 1.5s forwards; }
+    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 0.6rem; }
+    .packing-group-label { font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin: 1.6rem 0 0.4rem; }
+    .packing-group-label:first-of-type { margin-top: 1rem; }
+    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .packing-item:last-child { border-bottom: none; }
+    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
+    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
+    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
+    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
+    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
+    .packing-tag-country { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
+    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
+
+    /* ─── FAQ ─────────────────────────────────────────────────── */
+    .faq { padding: 2.4rem 2.5rem 0; }
+    .faq-header { margin-bottom: 1.4rem; }
+    .faq-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); }
+    .faq-list { border-top: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-item { border-bottom: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: none; border: none; text-align: left; cursor: pointer; padding: 1.1rem 0; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); }
+    .faq-q:hover, .faq-q:focus-visible { color: var(--slate); }
+    .faq-q-icon { flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); color: var(--ink-light); }
+    .faq-item.is-open .faq-q-icon { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .faq-item.is-open .faq-a { max-height: 280px; }
+    .faq-a-inner { padding: 0 0 1.2rem; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.86rem; line-height: 1.75; color: var(--ink-mid); max-width: 62ch; }
   </style>
 
   <!-- Google Analytics (gtag.js) -->
@@ -184,7 +219,31 @@
 
     });
   </script>
-  
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do you need a car in Austria?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. I connected Vienna, Salzburg, and Innsbruck by ÖBB train, and visited Hallstatt as a day trip from Salzburg using a train-then-ferry connection across the lake. A car isn't necessary for this route and adds parking hassle in each city center — rail covered everything I needed." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Austria safe for celiacs?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, with some planning. Austria scores 6/10 for GF friendliness overall, and it varies by city — Vienna is the strongest at 7/10 with a couple of dedicated GF restaurants, Salzburg and Innsbruck sit at 6/10 with GF menus and labeled options at select spots, and Hallstatt drops to 4/10 since it's a tiny village with very limited dining. I'd stock up on GF groceries in a bigger city before the day trip out there." }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the best time to visit Austria?",
+      "acceptedAnswer": { "@type": "Answer", "text": "I visited in November, which meant Christmas markets were just getting underway in Vienna and Salzburg, but also cold temperatures (roughly 0–10°C) and shorter daylight hours across all four cities. If Christmas markets are the draw, November into December works well. If you'd rather have milder weather and longer days for hiking around Innsbruck and Hallstatt, I'd look at late spring through early autumn instead." }
+    }
+  ]
+}
+  </script>
+
 </head>
 <body>
 
@@ -304,6 +363,244 @@
     </div>
   </section>
 
+  <!-- ═══════════════ WHAT TO PACK ═══════════════ -->
+  <section class="packing" id="packing">
+    <div class="packing-header">
+      <h2 class="packing-title">What to Pack for Austria</h2>
+      <span class="packing-season">November in Austria</span>
+    </div>
+    <div class="packing-rule"></div>
+
+    <div class="packing-group-label">Essential</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Passport &amp; travel insurance docs</span>
+          <span class="packing-item-why">Keep digital and physical copies separate from the originals &mdash; standard practice for any international trip, celiac or not.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Celiac dining card (German)</span>
+          <span class="packing-item-why">A printed card explaining celiac disease and cross-contamination in German. Useful across all four cities &mdash; English fluency was solid in Vienna's tourist areas but thinned out in smaller towns like Hallstatt.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable gluten-free snacks</span>
+          <span class="packing-item-why">Backup for train days between cities and the stretches where GF options are thin, especially around Hallstatt. I kept mine in ziplock bags to stay fresh and separate from everything else in my bag.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">GF soy sauce packets</span>
+          <span class="packing-item-why">Worth carrying if sushi or other Asian food is on the itinerary &mdash; regular soy sauce contains wheat, and Austrian restaurants don't always stock a GF substitute.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Reusable water bottle</span>
+          <span class="packing-item-why">Tap water is excellent throughout Austria &mdash; refill at the hotel or from public fountains rather than buying bottled.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable phone charger</span>
+          <span class="packing-item-why">Full days of walking, train transfers, and navigating between cities drain a battery fast, especially in the cold.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">Cobblestone old towns in Vienna, Salzburg, and Hallstatt add up fast over a multi-city trip &mdash; cushioned soles matter by day two.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Austria-Wide</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">EU power adapter (Type C/F, 230V)</span>
+          <span class="packing-item-why">Standard European two-pin plug used nationwide, from Vienna to the smallest Salzkammergut villages.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Austria</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Warm layers for November</span>
+          <span class="packing-item-why">Temperatures hovered in the 0&ndash;10&deg;C range across all four cities on my November 2023 trip, colder at altitude in Innsbruck. Dress in layers &mdash; base layer, sweater, coat.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Austria</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Waterproof jacket</span>
+          <span class="packing-item-why">Rain and occasional sleet showed up in every city I visited. A packable waterproof shell earns its space over a heavier coat alone.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Austria</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sch&auml;r GF products</span>
+          <span class="packing-item-why">Sch&auml;r is the GF brand you'll see everywhere &mdash; Billa, Spar, Hofer, and DM Drogerie all carry it, in the cities and the small towns alike.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Austria</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">&Ouml;BB train app</span>
+          <span class="packing-item-why">I used this to book and track every train between Vienna, Salzburg, and Innsbruck, plus the connection out to Hallstatt. Worth installing before you land.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Austria</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Vienna</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Compact umbrella</span>
+          <span class="packing-item-why">November in Vienna averages 15-plus rainy days &mdash; worth keeping one in your bag rather than getting caught without.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Vienna</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Scarf and gloves</span>
+          <span class="packing-item-why">Essential for the Christmas markets and evening walks once the sun goes down in the late afternoon.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Vienna</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Dressier outfit for concerts/opera</span>
+          <span class="packing-item-why">Vienna's cultural venues expect smart-casual at minimum if a concert or the opera is on your itinerary.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Vienna</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Salzburg</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Compact umbrella</span>
+          <span class="packing-item-why">Alpine showers can appear with little warning in Salzburg, more so than in Vienna's flatter terrain.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Salzburg</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable GF bread/rolls</span>
+          <span class="packing-item-why">Austrian breakfasts lean bread-centric, and I found it easier to bring my own than count on GF bread being available at every hotel breakfast in Salzburg.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Salzburg</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Innsbruck</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Waterproof hiking boots</span>
+          <span class="packing-item-why">Needed for Nordkette and any mountain walks above the city &mdash; the terrain is rockier and wetter than Innsbruck's own streets.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Innsbruck</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Compact umbrella</span>
+          <span class="packing-item-why">November is Innsbruck's wettest month on average, on top of everything the Alps send down.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Innsbruck</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Hallstatt</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">GF bread/rolls from a city SPAR or BILLA</span>
+          <span class="packing-item-why">Hallstatt's own grocery has minimal GF stock &mdash; buy what you need in Salzburg or another bigger city before the day trip out.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Hallstatt</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sturdy walking shoes</span>
+          <span class="packing-item-why">Needed for the salt mine tour and the village's cobblestone streets along the lake.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Hallstatt</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Cash (Euros)</span>
+          <span class="packing-item-why">The ferry across the lake (&euro;3.50) and the Bone House (&euro;2) were cash-only when I visited, along with a few of the smaller shops.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Hallstatt</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="faq" id="faq">
+    <div class="faq-header">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Do you need a car in Austria?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">No. I connected Vienna, Salzburg, and Innsbruck by ÖBB train, and visited Hallstatt as a day trip from Salzburg using a train-then-ferry connection across the lake. A car isn't necessary for this route and adds parking hassle in each city center — rail covered everything I needed.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Is Austria safe for celiacs?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Yes, with some planning. Austria scores 6/10 for GF friendliness overall, and it varies by city — Vienna is the strongest at 7/10 with a couple of dedicated GF restaurants, Salzburg and Innsbruck sit at 6/10 with GF menus and labeled options at select spots, and Hallstatt drops to 4/10 since it's a tiny village with very limited dining. I'd stock up on GF groceries in a bigger city before the day trip out there.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What's the best time to visit Austria?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">I visited in November, which meant Christmas markets were just getting underway in Vienna and Salzburg, but also cold temperatures (roughly 0–10°C) and shorter daylight hours across all four cities. If Christmas markets are the draw, November into December works well. If you'd rather have milder weather and longer days for hiking around Innsbruck and Hallstatt, I'd look at late spring through early autumn instead.</div></div>
+      </div>
+    </div>
+  </section>
+
   <!-- ═══════════════ TOOLTIP ═══════════════ -->
   <div id="map-tooltip"></div>
 
@@ -401,6 +698,23 @@
           chipsEl.appendChild(a);
         });
       });
+  </script>
+
+  <script>
+    document.querySelectorAll('.faq-q').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.closest('.faq-item');
+        var wasOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.faq-item.is-open').forEach(function(open) {
+          open.classList.remove('is-open');
+          open.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
   </script>
 
 </body>

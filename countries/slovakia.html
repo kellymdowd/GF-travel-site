@@ -91,6 +91,41 @@
       .gf-section-grid { grid-template-columns: 1fr; gap: 1.6rem; }
     }
 
+    /* ─── What to Pack ────────────────────────────────────── */
+    .packing { padding: 0 2.5rem 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 1.5s forwards; }
+    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 0.6rem; }
+    .packing-group-label { font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin: 1.6rem 0 0.4rem; }
+    .packing-group-label:first-of-type { margin-top: 1rem; }
+    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .packing-item:last-child { border-bottom: none; }
+    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
+    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
+    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
+    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
+    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
+    .packing-tag-country { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
+    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
+
+    /* ─── FAQ ─────────────────────────────────────────────────── */
+    .faq { padding: 2.4rem 2.5rem 0; }
+    .faq-header { margin-bottom: 1.4rem; }
+    .faq-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); }
+    .faq-list { border-top: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-item { border-bottom: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: none; border: none; text-align: left; cursor: pointer; padding: 1.1rem 0; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); }
+    .faq-q:hover, .faq-q:focus-visible { color: var(--slate); }
+    .faq-q-icon { flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); color: var(--ink-light); }
+    .faq-item.is-open .faq-q-icon { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .faq-item.is-open .faq-a { max-height: 280px; }
+    .faq-a-inner { padding: 0 0 1.2rem; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.86rem; line-height: 1.75; color: var(--ink-mid); max-width: 62ch; }
+
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
     @media (max-width: 600px) { .site-nav { padding: 0 1.2rem; } .nav-sub, .header, .overview-section, .map-section, .cities-section, .gf-section { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
@@ -182,7 +217,31 @@
 
     });
   </script>
-  
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do you need a car in Slovakia?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No — I visited Bratislava as a day trip from Vienna, and the train between the two cities takes under an hour with frequent departures (around €12–16 one way). Once there, Old Town is compact and entirely walkable, with trams and buses covering anything further out. I only visited Bratislava on this trip, so I can't speak to driving logistics elsewhere in Slovakia." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Slovakia safe for celiacs?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Manageable — I'd put Slovakia at 6/10 overall. EU allergen labeling is solid and supermarkets like Lidl, Billa, and Kaufland stock decent free-from ranges, but traditional cuisine leans heavily on wheat flour (the national dish, bryndzové halušky, is off the table without a GF version), and awareness likely thins out fast once you leave the capital. Bratislava itself scored higher, 7/10, thanks to a handful of solid finds — Funki Punki Pancakes, Pizzeria Primavera, and Sweet Street among them. I only visited Bratislava, so I can't speak to the rest of the country firsthand." }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the best time to visit Slovakia?",
+      "acceptedAnswer": { "@type": "Answer", "text": "I visited Bratislava in November, and it was cold — temperatures hovering around 2–8°C (35–46°F). Bratislava's own shoulder-season sweet spot is April through June or September through October, which would give you comparable sightseeing weather without the winter chill or peak summer crowds." }
+    }
+  ]
+}
+  </script>
+
 </head>
 <body>
 
@@ -280,6 +339,113 @@
     </div>
   </section>
 
+  <!-- ═══════════════ WHAT TO PACK ═══════════════ -->
+  <section class="packing" id="packing">
+    <div class="packing-header">
+      <h2 class="packing-title">What to Pack for Slovakia</h2>
+      <span class="packing-season">November in Bratislava</span>
+    </div>
+    <div class="packing-rule"></div>
+
+    <div class="packing-group-label">Essential</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Celiac dining card (Slovak)</span>
+          <span class="packing-item-why">A printed card with "Mám celiakiu" and a longer explanation of celiac disease for kitchen staff — useful anywhere in the country, not just the capital.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">GF snack bars</span>
+          <span class="packing-item-why">Bratislava was a day trip from Vienna for me, so I kept snacks on hand for the train ride in case restaurant options didn't pan out.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Reusable water bottle</span>
+          <span class="packing-item-why">Tap water is safe throughout Slovakia, so I refilled instead of buying bottled water all day.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Slovakia-Wide</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">EU power adapter (Type C/E)</span>
+          <span class="packing-item-why">Standard European two-pin plug used throughout Slovakia.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Slovakia</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Bratislava</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Warm layers</span>
+          <span class="packing-item-why">I visited in November, when temperatures hovered around 2–8°C (35–46°F) — a warm coat and thermals made a full day of walking manageable.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Bratislava</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">Old Town is cobblestone throughout, and I was on my feet most of the day.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Bratislava</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Compact umbrella</span>
+          <span class="packing-item-why">November is one of Slovakia's drier months, but I still ran into a passing shower.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Bratislava</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ═══════════════ FAQ ═══════════════ -->
+  <section class="faq" id="faq">
+    <div class="faq-header">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Do you need a car in Slovakia?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">No — I visited Bratislava as a day trip from Vienna, and the train between the two cities takes under an hour with frequent departures (around €12–16 one way). Once there, Old Town is compact and entirely walkable, with trams and buses covering anything further out. I only visited Bratislava on this trip, so I can't speak to driving logistics elsewhere in Slovakia.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Is Slovakia safe for celiacs?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Manageable — I'd put Slovakia at 6/10 overall. EU allergen labeling is solid and supermarkets like Lidl, Billa, and Kaufland stock decent free-from ranges, but traditional cuisine leans heavily on wheat flour (the national dish, bryndzové halušky, is off the table without a GF version), and awareness likely thins out fast once you leave the capital. Bratislava itself scored higher, 7/10, thanks to a handful of solid finds — Funki Punki Pancakes, Pizzeria Primavera, and Sweet Street among them. I only visited Bratislava, so I can't speak to the rest of the country firsthand.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What's the best time to visit Slovakia?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">I visited Bratislava in November, and it was cold — temperatures hovering around 2–8°C (35–46°F). Bratislava's own shoulder-season sweet spot is April through June or September through October, which would give you comparable sightseeing weather without the winter chill or peak summer crowds.</div></div>
+      </div>
+    </div>
+  </section>
+
   <div id="map-tooltip"></div>
 
   <script>
@@ -369,6 +535,23 @@
           chipsEl.appendChild(a);
         });
       });
+  </script>
+
+  <script>
+    document.querySelectorAll('.faq-q').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.closest('.faq-item');
+        var wasOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.faq-item.is-open').forEach(function(open) {
+          open.classList.remove('is-open');
+          open.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
   </script>
 
 </body>

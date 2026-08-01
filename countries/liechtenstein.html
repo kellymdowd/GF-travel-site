@@ -91,6 +91,41 @@
       .gf-section-grid { grid-template-columns: 1fr; gap: 1.6rem; }
     }
 
+    /* ─── What to Pack ────────────────────────────────────── */
+    .packing { padding: 0 2.5rem 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 1.5s forwards; }
+    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 0.6rem; }
+    .packing-group-label { font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin: 1.6rem 0 0.4rem; }
+    .packing-group-label:first-of-type { margin-top: 1rem; }
+    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .packing-item:last-child { border-bottom: none; }
+    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
+    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
+    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
+    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
+    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
+    .packing-tag-country { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
+    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
+
+    /* ─── FAQ ─────────────────────────────────────────────────── */
+    .faq { padding: 2.4rem 2.5rem 0; }
+    .faq-header { margin-bottom: 1.4rem; }
+    .faq-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); }
+    .faq-list { border-top: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-item { border-bottom: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: none; border: none; text-align: left; cursor: pointer; padding: 1.1rem 0; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); }
+    .faq-q:hover, .faq-q:focus-visible { color: var(--slate); }
+    .faq-q-icon { flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); color: var(--ink-light); }
+    .faq-item.is-open .faq-q-icon { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .faq-item.is-open .faq-a { max-height: 280px; }
+    .faq-a-inner { padding: 0 0 1.2rem; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.86rem; line-height: 1.75; color: var(--ink-mid); max-width: 62ch; }
+
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
     @media (max-width: 600px) { .site-nav { padding: 0 1.2rem; } .nav-sub, .header, .overview-section, .map-section, .cities-section, .gf-section { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
@@ -182,7 +217,31 @@
 
     });
   </script>
-  
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do you need a car in Liechtenstein?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No — there's no train station in Liechtenstein itself. I took Swiss Rail to Sargans, then a LIEmobil bus into Vaduz (about 30 minutes), and once there, the entire town center was walkable in about 15 minutes. Hotels often provide a free Guest Mobility Card that covers LIEmobil bus travel, including cross-border routes into Switzerland, if you want to venture further." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Liechtenstein safe for celiacs?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Manageable, but it takes planning — I'd put Liechtenstein at 5/10, the most limited of the three countries on this trip. It benefits from EEA-aligned allergen labeling and excellent Coop Free From sections stocked with Schär products, but the restaurant scene is small simply because the country itself is small. Vaduz, the only city I visited, scored the same 5/10 — I found two options I felt comfortable with, Restaurant Marée and Adler, but I'd email ahead rather than count on more than that. Stocking up on GF bread and snacks at a Swiss Coop before crossing the border is worth doing just in case." }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the best time to visit Liechtenstein?",
+      "acceptedAnswer": { "@type": "Answer", "text": "I visited Vaduz in November, and while the mountain backdrop and quiet streets were nice, it was already cold with evenings that dropped quickly. Vaduz's own best-months guidance points to May through October, which would give you better weather for the walk up to the castle and the alpine scenery nearby." }
+    }
+  ]
+}
+  </script>
+
 </head>
 <body>
 
@@ -275,6 +334,137 @@
           <span class="gf-score-total-num">5</span>
           <span class="gf-score-total-label">out of 10</span>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ WHAT TO PACK ═══════════════ -->
+  <section class="packing" id="packing">
+    <div class="packing-header">
+      <h2 class="packing-title">What to Pack for Liechtenstein</h2>
+      <span class="packing-season">November in Vaduz</span>
+    </div>
+    <div class="packing-rule"></div>
+
+    <div class="packing-group-label">Essential</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Celiac dining card (German)</span>
+          <span class="packing-item-why">Explains celiac disease in German for restaurant staff — useful anywhere German is spoken, not just Vaduz.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable phone charger</span>
+          <span class="packing-item-why">Long days exploring and navigating between Sargans, Buchs, and Vaduz drain a battery fast.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Reusable water bottle</span>
+          <span class="packing-item-why">Tap water is excellent, with free refill stations around town.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Travel-size GF snacks</span>
+          <span class="packing-item-why">Dining options are limited given the country's tiny size — always good to have backup.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Liechtenstein-Wide</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Swiss power adapter (Type J — 3-pin)</span>
+          <span class="packing-item-why">Liechtenstein uses Swiss-style outlets, not the standard EU plug used in Austria and Hungary on this trip.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Liechtenstein</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Swiss Francs (CHF), not Euros</span>
+          <span class="packing-item-why">Liechtenstein uses the Swiss Franc despite bordering Austria and sharing German as its language — worth having on hand since the rest of this trip ran on euros.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Liechtenstein</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Schär GF bread (stock up at a Swiss Coop)</span>
+          <span class="packing-item-why">Best selection came from Coop stores in Switzerland before crossing into Liechtenstein.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Liechtenstein</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Vaduz</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Warm layers for alpine weather</span>
+          <span class="packing-item-why">I visited in November, when evening temperatures dropped quickly.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Vaduz</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Rain jacket or compact umbrella</span>
+          <span class="packing-item-why">Alpine weather is unpredictable, especially in autumn.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Vaduz</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sturdy shoes for the castle hill walk</span>
+          <span class="packing-item-why">The path up to Vaduz Castle is paved but steep — good traction and a comfortable pair of shoes helped throughout the rest of the compact town center too.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Vaduz</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ═══════════════ FAQ ═══════════════ -->
+  <section class="faq" id="faq">
+    <div class="faq-header">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Do you need a car in Liechtenstein?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">No — there's no train station in Liechtenstein itself. I took Swiss Rail to Sargans, then a LIEmobil bus into Vaduz (about 30 minutes), and once there, the entire town center was walkable in about 15 minutes. Hotels often provide a free Guest Mobility Card that covers LIEmobil bus travel, including cross-border routes into Switzerland, if you want to venture further.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Is Liechtenstein safe for celiacs?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Manageable, but it takes planning — I'd put Liechtenstein at 5/10, the most limited of the three countries on this trip. It benefits from EEA-aligned allergen labeling and excellent Coop Free From sections stocked with Schär products, but the restaurant scene is small simply because the country itself is small. Vaduz, the only city I visited, scored the same 5/10 — I found two options I felt comfortable with, Restaurant Marée and Adler, but I'd email ahead rather than count on more than that. Stocking up on GF bread and snacks at a Swiss Coop before crossing the border is worth doing just in case.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What's the best time to visit Liechtenstein?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">I visited Vaduz in November, and while the mountain backdrop and quiet streets were nice, it was already cold with evenings that dropped quickly. Vaduz's own best-months guidance points to May through October, which would give you better weather for the walk up to the castle and the alpine scenery nearby.</div></div>
       </div>
     </div>
   </section>
@@ -382,6 +572,23 @@
           chipsEl.appendChild(a);
         });
       });
+  </script>
+
+  <script>
+    document.querySelectorAll('.faq-q').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.closest('.faq-item');
+        var wasOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.faq-item.is-open').forEach(function(open) {
+          open.classList.remove('is-open');
+          open.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
   </script>
 
 </body>

@@ -395,7 +395,20 @@
       .nav-links { gap: 0.8rem; }
       .nav-home { font-size: 0.72rem; letter-spacing: 0.1em; }
     }
-  </style>
+  
+    .faq { padding: 2.4rem 2.5rem 0; }
+    .faq-header { margin-bottom: 1.4rem; }
+    .faq-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); }
+    .faq-list { border-top: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-item { border-bottom: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: none; border: none; text-align: left; cursor: pointer; padding: 1.1rem 0; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); }
+    .faq-q:hover, .faq-q:focus-visible { color: var(--slate); }
+    .faq-q-icon { flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); color: var(--ink-light); }
+    .faq-item.is-open .faq-q-icon { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .faq-item.is-open .faq-a { max-height: 240px; }
+    .faq-a-inner { padding: 0 0 1.2rem; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.86rem; line-height: 1.75; color: var(--ink-mid); max-width: 62ch; }
+</style>
 
   <!-- Google Analytics (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-J5LD1HTY75"></script>
@@ -768,7 +781,8 @@
       <li class="toc-item"><a href="#landmarks" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Landmarks &amp; must-see spots</a></li>
       <li class="toc-item"><a href="#neighborhoods" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Neighborhoods</a></li>
       <li class="toc-item"><a href="#things-to-do" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Things to do</a></li>
-      <li class="toc-item"><a href="#packing" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>What to pack</a></li>
+      <li class="toc-item"><a href="../austria#packing" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>What to pack</a></li>
+      <li class="toc-item"><a href="#faq" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>FAQ</a></li>
       <li class="toc-item"><a href="#tips" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Travel tips</a></li>
     </ul>
   </nav>
@@ -1572,98 +1586,33 @@
 
   </section>
 
-  <!-- ═══════════════ WHAT TO PACK ═══════════════ -->
-  <section class="packing" id="packing">
-    <div class="packing-header">
-      <h2 class="packing-title">What to Pack</h2>
-      <span class="packing-season">November</span>
+  <section class="faq" id="faq">
+    <div class="faq-header">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
     </div>
-    <div class="packing-rule"></div>
-
-    <ul class="packing-list">
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">GF snack bars</span>
-          <span class="packing-item-why">Long travel days and limited GF options at mountain huts</span>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Celiac dining card (German)</span>
-          <span class="packing-item-why">Print the Z&ouml;liakie-Karte for restaurant staff</span>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Portable phone charger</span>
-          <span class="packing-item-why">Navigation and photos drain battery in the cold</span>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">EU power adapter</span>
-          <span class="packing-item-why">Type C/F plug (standard European)</span>
-        </div>
-        <span class="packing-item-tag packing-tag-austria">Austria</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">GF soy sauce packets</span>
-          <span class="packing-item-why">For Asian restaurants that use wheat-based soy sauce</span>
-        </div>
-        <span class="packing-item-tag packing-tag-austria">Austria</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Warm layers for November</span>
-          <span class="packing-item-why">Average 0&ndash;7&deg;C, colder at altitude</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Innsbruck</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Waterproof hiking boots</span>
-          <span class="packing-item-why">Essential for Nordkette and mountain walks</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Innsbruck</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Compact umbrella</span>
-          <span class="packing-item-why">November is Innsbruck&rsquo;s wettest month</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Innsbruck</span>
-      </li>
-
-    </ul>
-
-    <!-- STOREFRONT: Uncomment when Amazon storefront URL is ready
-    <div class="packing-storefront">
-      <a href="STOREFRONT_URL_HERE" class="packing-storefront-link" target="_blank" rel="noopener sponsored">
-        Browse My Full Travel Storefront
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-      </a>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Is Innsbruck safe for celiacs?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Innsbruck scores 6/10 for celiac safety — moderate, doable with planning. Austrian restaurants are required to label allergens, but staff knowledge varies. Grocery stores like SPAR and MPREIS carry excellent GF ranges including Schär products. Traditional Tyrolean cuisine relies heavily on bread dumplings and flour-based dishes, so careful ordering is essential.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What are the best gluten-free restaurants in Innsbruck?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Top GF-friendly restaurants in Innsbruck include Ludwig (dedicated GF menu with separate prep space and GF buns, 4/5) and Restaurant Thai Li (allergen guide in menu, curry dishes with rice, 4/5). Breakfast Club offers GF bread wrapped in plastic to prevent cross-contamination.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Can you find gluten-free food in Innsbruck supermarkets?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Yes — Innsbruck scores 2/2 for grocery availability. SPAR and Interspar have dedicated free-from aisles with their own GF line. MPREIS (a Tyrolean chain) carries Schär products. DM Drogerie offers an affordable dmBio organic GF range. Billa Plus also has a solid free-from section.</div></div>
+      </div>
     </div>
-    -->
   </section>
 
   <!-- ═══════════════ TRAVEL TIPS ═══════════════ -->
@@ -1739,6 +1688,23 @@
       if(e.key === 'Escape') closeLightbox();
     });
   })();
+  </script>
+
+  <script>
+    document.querySelectorAll('.faq-q').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.closest('.faq-item');
+        var wasOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.faq-item.is-open').forEach(function(open) {
+          open.classList.remove('is-open');
+          open.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
   </script>
 
   <!-- ═══════════════ FOOTER ═══════════════ -->

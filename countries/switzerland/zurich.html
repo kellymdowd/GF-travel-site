@@ -352,7 +352,20 @@
       .header { flex-direction: column; align-items: flex-start; gap: 0.2rem; }
       .trip-date { padding-bottom: 0; }
     }
-  </style>
+  
+    .faq { padding: 2.4rem 2.5rem 0; }
+    .faq-header { margin-bottom: 1.4rem; }
+    .faq-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); }
+    .faq-list { border-top: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-item { border-bottom: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: none; border: none; text-align: left; cursor: pointer; padding: 1.1rem 0; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); }
+    .faq-q:hover, .faq-q:focus-visible { color: var(--slate); }
+    .faq-q-icon { flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); color: var(--ink-light); }
+    .faq-item.is-open .faq-q-icon { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .faq-item.is-open .faq-a { max-height: 240px; }
+    .faq-a-inner { padding: 0 0 1.2rem; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.86rem; line-height: 1.75; color: var(--ink-mid); max-width: 62ch; }
+</style>
 
   <!-- Google Analytics (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-J5LD1HTY75"></script>
@@ -677,7 +690,8 @@
       <li class="toc-item"><a href="#landmarks" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Landmarks</a></li>
       <li class="toc-item"><a href="#neighborhoods" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Neighborhoods</a></li>
       <li class="toc-item"><a href="#getting-around" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Getting around</a></li>
-      <li class="toc-item"><a href="#what-to-pack" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>What to pack</a></li>
+      <li class="toc-item"><a href="../switzerland#packing" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>What to pack</a></li>
+      <li class="toc-item"><a href="#faq" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>FAQ</a></li>
       <li class="toc-item"><a href="#travel-tips" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Travel tips</a></li>
     </ul>
   </nav>
@@ -1207,94 +1221,33 @@
        WHAT TO PACK
        Order: Essential first, then Switzerland, then Zurich
        ═══════════════════════════════════════════════════════════ -->
-  <section class="packing" id="what-to-pack">
-    <div class="packing-header">
-      <h2 class="packing-title">What to Pack</h2>
-      <span class="packing-season">November visit</span>
+  <section class="faq" id="faq">
+    <div class="faq-header">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
     </div>
-    <div class="packing-rule"></div>
-    <ul class="packing-list">
-
-      <!-- Essential -->
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Celiac dining card (German)</span>
-          <span class="packing-item-why">Explains celiac disease and cross-contamination in clear German for restaurant staff</span>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">GF snack bars</span>
-          <span class="packing-item-why">For transit days and when safe food isn&rsquo;t nearby</span>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-
-      <!-- Switzerland-specific -->
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Power adapter (Type J)</span>
-          <span class="packing-item-why">Switzerland uses the three-pin Type J plug &mdash; different from standard European adapters</span>
-        </div>
-        <span class="packing-item-tag packing-tag-switzerland">Switzerland</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Swiss francs (CHF)</span>
-          <span class="packing-item-why">Switzerland isn&rsquo;t in the Eurozone &mdash; have some cash for markets and smaller shops</span>
-        </div>
-        <span class="packing-item-tag packing-tag-switzerland">Switzerland</span>
-      </li>
-
-      <!-- Zurich-specific -->
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Smart-casual outfit</span>
-          <span class="packing-item-why">Zurich is chic &mdash; blend in at restaurants and Bahnhofstrasse</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Zurich</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Comfortable walking shoes</span>
-          <span class="packing-item-why">Cobblestone streets in the Old Town &mdash; you&rsquo;ll walk everywhere</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Zurich</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Compact umbrella</span>
-          <span class="packing-item-why">November in Zurich is rainy &mdash; expect showers most days</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Zurich</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Warm coat</span>
-          <span class="packing-item-why">November temps hover around 2&ndash;8&deg;C &mdash; layer up</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Zurich</span>
-      </li>
-
-    </ul>
-
-    <!-- STOREFRONT: Uncomment when Amazon storefront URL is ready
-    <div class="packing-storefront">
-      <a href="STOREFRONT_URL_HERE" class="packing-storefront-link" target="_blank" rel="noopener sponsored">
-        Browse My Full Travel Storefront
-        <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-      </a>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Is Zurich safe for celiacs?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Zurich scores 6/10 for GF friendliness. There are a couple of dedicated GF restaurants (like Grano and Zufreeden Glutenfree Cafe), and supermarkets like Coop and Migros have excellent free-from sections. Staff awareness at mainstream restaurants is moderate.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What are the best gluten-free restaurants in Zurich?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Top picks include Grano (100% GF Italian), Zufreeden Glutenfree Cafe (dedicated GF cafe), and Swiss Chuchi Restaurant (fondue with GF bread options).</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Can you find gluten-free food in Zurich supermarkets?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Yes. Coop and Migros both have extensive free-from sections with GF bread, pasta, snacks, and prepared meals. Look for the 'Free From' or 'glutenfrei' labels.</div></div>
+      </div>
     </div>
-    -->
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════
@@ -1446,6 +1399,23 @@
       .addTo(nMap)
       .bindPopup('<div style="font-family:Jost,sans-serif;font-size:12px;font-weight:400;letter-spacing:0.02em;">ibis Styles Zurich City Center</div>');
   })();
+  </script>
+
+  <script>
+    document.querySelectorAll('.faq-q').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.closest('.faq-item');
+        var wasOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.faq-item.is-open').forEach(function(open) {
+          open.classList.remove('is-open');
+          open.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
   </script>
 
 </body>
