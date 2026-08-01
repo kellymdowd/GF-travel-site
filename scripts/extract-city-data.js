@@ -41,8 +41,8 @@ const PLACE_FIELDS = [
 ];
 
 function slugify(name) {
-  return name.toLowerCase().replace(/[åä]/g, 'a').replace(/[öø]/g, 'o')
-    .replace(/[ü]/g, 'u').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  return name.normalize('NFD').replace(/[̀-ͯ]/g, '')
+    .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
 function cleanRow(row) {

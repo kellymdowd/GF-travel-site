@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-07-31T13:29:30.754Z",
+  "generatedAt": "2026-08-01T02:22:31.580Z",
   "summary": {
     "countries": 24,
     "countryPagesCreated": 24,
-    "cities": 73,
+    "cities": 74,
     "citiesSkipped": 4,
     "cityPagesCreated": 67,
     "cityPagesValidated": 67,
@@ -374,7 +374,7 @@
       "validated": true,
       "validationCounts": {
         "errors": 0,
-        "warnings": 0,
+        "warnings": 6,
         "info": 0
       },
       "blogGenerated": false,
@@ -970,9 +970,23 @@
       "validated": true,
       "validationCounts": {
         "errors": 0,
-        "warnings": 0,
+        "warnings": 1,
         "info": 0
       },
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "city",
+      "country": "Maldives",
+      "countrySlug": "maldives",
+      "city": "South Malé Atoll",
+      "citySlug": "south-mal-atoll",
+      "skipped": false,
+      "pageCreated": false,
+      "pagePath": null,
+      "validated": null,
+      "validationCounts": null,
       "blogGenerated": false,
       "instagramGenerated": false
     },
@@ -1196,7 +1210,7 @@
       "validated": true,
       "validationCounts": {
         "errors": 0,
-        "warnings": 2,
+        "warnings": 1,
         "info": 0
       },
       "blogGenerated": false,
