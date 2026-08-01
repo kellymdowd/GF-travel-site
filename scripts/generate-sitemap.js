@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 // Generates sitemap.xml by scanning all HTML files in the project.
-// Priority: root pages = 1.0, country pages = 0.8, city pages = 0.6
+// Priority: root pages = 1.0, country pages = 0.8, itinerary pages = 0.7, city pages = 0.6
+// URLs are emitted in clean form (no .html extension); index.html files collapse to
+// their directory path with a trailing slash. See scripts/clean-url-transform.js.
 // Usage: node scripts/generate-sitemap.js
 
 const fs = require('fs');
@@ -9,6 +11,9 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const BASE_URL = 'https://gfgoneglobal.com';
 const today = new Date().toISOString().slice(0, 10);
+
+// Internal-only pages that should never be publicly indexed.
+const EXCLUDED_ROOT_PAGES = new Set(['admin.html', 'pipeline-status.html']);
 
 function collectHtmlFiles(dir, relativeTo) {
   const entries = [];
@@ -31,25 +36,39 @@ const allFiles = collectHtmlFiles(ROOT, ROOT)
 const rootPages = [];
 const countryPages = [];
 const cityPages = [];
+const itineraryPages = [];
 
 for (const f of allFiles) {
   const parts = f.split(path.sep);
   if (parts.length === 1) {
-    rootPages.push(f);
+    if (!EXCLUDED_ROOT_PAGES.has(f)) rootPages.push(f);
   } else if (parts[0] === 'countries' && parts.length === 2) {
     countryPages.push(f);
   } else if (parts[0] === 'countries' && parts.length === 3) {
     cityPages.push(f);
+  } else if (parts[0] === 'itineraries') {
+    itineraryPages.push(f);
   }
+  // Anything else (instagram/*, etc.) is intentionally left out of the public sitemap.
 }
 
 rootPages.sort();
 countryPages.sort();
 cityPages.sort();
+itineraryPages.sort();
+
+// Clean-URL form: strip .html; a bare "index.html" (or a path ending in "/index.html")
+// collapses to its directory path with a trailing slash instead.
+function toCleanPath(filePath) {
+  const p = filePath.split(path.sep).join('/').replace(/\.html$/, '');
+  if (p === 'index') return '';
+  if (p.endsWith('/index')) return p.slice(0, -'index'.length);
+  return p;
+}
 
 function urlEntry(filePath, priority, changefreq) {
   return `  <url>
-    <loc>${BASE_URL}/${filePath}</loc>
+    <loc>${BASE_URL}/${toCleanPath(filePath)}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
@@ -59,6 +78,7 @@ function urlEntry(filePath, priority, changefreq) {
 const entries = [
   ...rootPages.map(f => urlEntry(f, '1.0', 'weekly')),
   ...countryPages.map(f => urlEntry(f, '0.8', 'monthly')),
+  ...itineraryPages.map(f => urlEntry(f, '0.7', 'monthly')),
   ...cityPages.map(f => urlEntry(f, '0.6', 'monthly')),
 ];
 
@@ -70,4 +90,5 @@ ${entries.join('\n')}
 
 const outPath = path.join(ROOT, 'sitemap.xml');
 fs.writeFileSync(outPath, sitemap);
-console.log(`Sitemap written: ${allFiles.length} pages total (${rootPages.length} root, ${countryPages.length} country, ${cityPages.length} city)`);
+const totalIncluded = rootPages.length + countryPages.length + itineraryPages.length + cityPages.length;
+console.log(`Sitemap written: ${totalIncluded} pages included (${rootPages.length} root, ${countryPages.length} country, ${itineraryPages.length} itinerary, ${cityPages.length} city)`);

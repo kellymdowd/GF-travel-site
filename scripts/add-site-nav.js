@@ -32,11 +32,11 @@ const SITE_NAV_MOBILE_CSS = `
 
 // HTML to inject (before the breadcrumb nav)
 const SITE_NAV_HTML = `  <nav class="site-nav">
-    <a href="../../index.html" class="nav-home">GF Gone Global</a>
+    <a href="../../" class="nav-home">GF Gone Global</a>
     <div class="nav-links">
-      <a href="../../index.html" class="nav-link">Places</a>
-      <a href="../../gf-scoring.html" class="nav-link">GF Scoring</a>
-      <a href="../../about.html" class="nav-link">About Me</a>
+      <a href="../../" class="nav-link">Places</a>
+      <a href="../../gf-scoring" class="nav-link">GF Scoring</a>
+      <a href="../../about" class="nav-link">About Me</a>
     </div>
   </nav>
 
