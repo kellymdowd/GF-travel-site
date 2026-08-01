@@ -51,6 +51,25 @@
     .overview-btn:hover { color: var(--slate); border-color: var(--slate); background: rgba(200, 113, 122, 0.05); }
     .overview-btn:focus-visible { outline: 2px solid var(--slate); outline-offset: 2px; }
     .overview-btn:active { background: rgba(200, 113, 122, 0.1); }
+    .packing { padding: 0 2.5rem 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 1.5s forwards; }
+    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 0.6rem; }
+    .packing-group-label { font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin: 1.6rem 0 0.4rem; }
+    .packing-group-label:first-of-type { margin-top: 1rem; }
+    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .packing-item:last-child { border-bottom: none; }
+    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
+    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
+    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
+    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
+    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
+    .packing-tag-country { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
+    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
     @media (max-width: 600px) { .site-nav { padding: 0 1.2rem; } .nav-sub, .header, .overview-section, .map-section, .cities-section { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
@@ -182,6 +201,82 @@
   <section class="cities-section">
     <div class="cities-rule"></div>
     <div class="cities-grid" id="city-chips"></div>
+  </section>
+
+  <section class="packing" id="packing">
+    <div class="packing-header">
+      <h2 class="packing-title">What to Pack for Costa Rica</h2>
+      <span class="packing-season">Dry Season</span>
+    </div>
+    <div class="packing-rule"></div>
+
+    <div class="packing-group-label">Essential</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Celiac travel card (Spanish)</span>
+          <span class="packing-item-why">"Soy celíaco/a" is the priority phrase locally — a printed card in Spanish explaining celiac disease helps communicate clearly with kitchen staff beyond what phrasebook Spanish can cover.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable GF snacks</span>
+          <span class="packing-item-why">Packaged GF options are limited outside tourist-area supermarkets like Auto Mercado — bring a stash for long park days or beach-town stretches.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Costa Rica-Wide</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Lightweight rain layer</span>
+          <span class="packing-item-why">Even in dry season, brief showers happen — a packable layer beats getting caught out on a park day.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Costa Rica</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Reef-safe sunscreen</span>
+          <span class="packing-item-why">The equatorial sun here is strong, especially around Guanacaste's beaches — reef-safe formulas protect the coastline too.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Costa Rica</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Insect repellent</span>
+          <span class="packing-item-why">Useful for evenings in town and especially for park visits and forested trails around Rincón de la Vieja.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Costa Rica</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Liberia</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">For covering Liberia's historic center — white gravel roads and uneven colonial-era sidewalks reward sturdier footwear.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Liberia</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Light day bag</span>
+          <span class="packing-item-why">For excursions to Rincón de la Vieja — pack a lunch, since food options at the park itself are limited.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Liberia</span>
+      </li>
+    </ul>
   </section>
 
   <div id="map-tooltip"></div>

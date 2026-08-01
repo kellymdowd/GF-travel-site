@@ -293,25 +293,6 @@
     @media (max-width: 768px) { .transport-grid { grid-template-columns: 1fr 1fr; } .transport-card { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } .transport-card:nth-child(2) { border-right: none; padding-right: 0; } .transport-card:nth-child(3) { padding-left: 0; border-right:none; } }
     @media (max-width: 480px) { .transport-grid { grid-template-columns: 1fr; } .transport-card { border-right: none; padding-left: 0; padding-right: 0; } .transport-card:last-child { border-bottom: none; } }
 
-    /* ─── What to Pack ─────────────────────────────────────── */
-    .packing { padding: 2.4rem 2.5rem 0; }
-    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
-    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
-    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
-    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
-    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
-    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
-    .packing-item:last-child { border-bottom: none; }
-    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
-    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
-    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
-    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
-    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
-    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
-    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
-    .packing-tag-country { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
-    @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
-
     /* ─── Travel Tips ──────────────────────────────────────── */
     .travel-tips { padding: 2.4rem 2.5rem 0; }
     .tips-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
@@ -356,7 +337,7 @@
     /* ─── Animations & Global Responsive ──────────────────── */
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
-    @media (max-width: 600px) { .site-nav, .nav, .header, .map-section, .snapshot, .toc, .gf-guide, .restaurants, .where-to-stay, .landmarks, .things-to-do, .packing, .travel-tips, .getting-around, .page-footer { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
+    @media (max-width: 600px) { .site-nav, .nav, .header, .map-section, .snapshot, .toc, .gf-guide, .restaurants, .where-to-stay, .landmarks, .things-to-do, .travel-tips, .getting-around, .page-footer { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
 
     /* ─── Mobile: Breadcrumb nav ──────────────────────────── */
     @media (max-width: 480px) {
@@ -428,7 +409,7 @@
         });
       }, { threshold: 0.3 });
 
-      document.querySelectorAll('section, .gf-guide-section, .restaurants-section, .landmarks-section, .things-section, .neighborhoods-section, .getting-around-section, .packing-section, .tips-section').forEach(function(section) {
+      document.querySelectorAll('section, .gf-guide-section, .restaurants-section, .landmarks-section, .things-section, .neighborhoods-section, .getting-around-section, .tips-section').forEach(function(section) {
         sectionObserver.observe(section);
       });
 
@@ -767,7 +748,7 @@
       <li class="toc-item"><a href="#getting-around" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Getting around</a></li>
       <li class="toc-item"><a href="#landmarks" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Landmarks &amp; must-see spots</a></li>
       <li class="toc-item"><a href="#things-to-do" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Things to do</a></li>
-      <li class="toc-item"><a href="#what-to-pack" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>What to pack</a></li>
+      <li class="toc-item"><a href="../maldives#packing" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>What to pack</a></li>
       <li class="toc-item"><a href="#travel-tips" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Travel tips</a></li>
     </ul>
   </nav>
@@ -1309,76 +1290,6 @@
 
       </div>
     </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════
-       WHAT TO PACK — Essential → Maldives → South Malé Atoll/Resort
-       ═══════════════════════════════════════════════════════════ -->
-  <section class="packing" id="what-to-pack">
-    <div class="packing-header">
-      <h2 class="packing-title">What to Pack</h2>
-      <span class="packing-season">July · Southwest Monsoon</span>
-    </div>
-    <div class="packing-rule"></div>
-
-    <ul class="packing-list">
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <div class="packing-item-content">
-          <div class="packing-item-name">Celiac travel card in English</div>
-          <div class="packing-item-why">Resort staff are English-fluent, so a local-language card isn't needed here — a clear English card is enough to hand to any restaurant manager.</div>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <div class="packing-item-content">
-          <div class="packing-item-name">Portable GF snacks for transfer day</div>
-          <div class="packing-item-why">Speedboat and airport connections have limited food options — pack something in your carry-on for the transfer window.</div>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <div class="packing-item-content">
-          <div class="packing-item-name">Reef-safe sunscreen</div>
-          <div class="packing-item-why">Mandatory at most Maldives resorts to protect the coral — bring it from home since selection on-island is limited.</div>
-        </div>
-        <span class="packing-item-tag packing-tag-country">Maldives</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <div class="packing-item-content">
-          <div class="packing-item-name">Lightweight rash guard</div>
-          <div class="packing-item-why">Doubles up on sun protection and comfort for the snorkeling excursions.</div>
-        </div>
-        <span class="packing-item-tag packing-tag-country">Maldives</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <div class="packing-item-content">
-          <div class="packing-item-name">Waterproof phone pouch</div>
-          <div class="packing-item-why">For the speedboat transfers and any boat-based excursions where spray is a given.</div>
-        </div>
-        <span class="packing-item-tag packing-tag-country">Maldives</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <div class="packing-item-content">
-          <div class="packing-item-name">Water shoes</div>
-          <div class="packing-item-why">Useful for walking out onto the reef flat at low tide without cutting your feet on coral or rocks.</div>
-        </div>
-        <span class="packing-item-tag packing-tag-city">South Malé Atoll</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <div class="packing-item-content">
-          <div class="packing-item-name">Printed dietary card for restaurant managers</div>
-          <div class="packing-item-why">Hand one to each restaurant's manager on arrival, and email the resort about GF needs 14 days before arrival too.</div>
-        </div>
-        <span class="packing-item-tag packing-tag-city">South Malé Atoll</span>
-      </li>
-    </ul>
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════

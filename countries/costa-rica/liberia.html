@@ -313,32 +313,6 @@
     @media (max-width: 768px) { .transport-grid { grid-template-columns: 1fr 1fr; } .transport-card { border-bottom: 1px solid rgba(42, 32, 24, 0.06); } .transport-card:nth-child(2) { border-right: none; padding-right: 0; } .transport-card:nth-child(3) { padding-left: 0; } .transport-card:nth-child(3), .transport-card:nth-child(4) { border-bottom: none; } }
     @media (max-width: 480px) { .transport-grid { grid-template-columns: 1fr; } .transport-card { border-right: none; padding-left: 0; padding-right: 0; } .transport-card:last-child { border-bottom: none; } }
 
-    /* ─── What to Pack ─────────────────────────────────────── */
-    .packing { padding: 2.4rem 2.5rem 0; }
-    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
-    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
-    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
-    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
-    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
-    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
-    .packing-item:last-child { border-bottom: none; }
-    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
-    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
-    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
-    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
-    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
-    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
-    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
-    .packing-tag-country { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
-    .packing-storefront { margin-top: 1.4rem; padding-top: 1.2rem; border-top: 1px solid rgba(42, 32, 24, 0.08); }
-    .packing-storefront-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1.1rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.64rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 3px; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 6px rgba(200, 113, 122, 0.15), 0 1px 2px rgba(200, 113, 122, 0.08); }
-    .packing-storefront-link:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200, 113, 122, 0.25), 0 2px 4px rgba(200, 113, 122, 0.12); }
-    .packing-storefront-link:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; }
-    .packing-storefront-link:active { background: #a85a63; transform: translateY(0); }
-    .packing-storefront-link svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
-    .packing-storefront-link:hover svg { transform: translateX(2px); }
-    @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
-
     /* ─── Travel Tips ──────────────────────────────────────── */
     .travel-tips { padding: 2.4rem 2.5rem 0; }
     .tips-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
@@ -383,7 +357,7 @@
     /* ─── Animations & Global Responsive ──────────────────── */
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
-    @media (max-width: 600px) { .site-nav, .nav, .header, .snapshot, .toc, .gf-guide, .restaurants, .where-to-stay, .landmarks, .neighborhoods, .things-to-do, .packing, .travel-tips, .getting-around, .page-footer { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
+    @media (max-width: 600px) { .site-nav, .nav, .header, .snapshot, .toc, .gf-guide, .restaurants, .where-to-stay, .landmarks, .neighborhoods, .things-to-do, .travel-tips, .getting-around, .page-footer { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
 
     /* ─── Mobile: Site nav bar ────────────────────────────── */
     @media (max-width: 480px) {
@@ -455,7 +429,7 @@
         });
       }, { threshold: 0.3 });
 
-      document.querySelectorAll('section, .gf-guide-section, .restaurants-section, .landmarks-section, .things-section, .neighborhoods-section, .getting-around-section, .packing-section, .tips-section').forEach(function(section) {
+      document.querySelectorAll('section, .gf-guide-section, .restaurants-section, .landmarks-section, .things-section, .neighborhoods-section, .getting-around-section, .tips-section').forEach(function(section) {
         sectionObserver.observe(section);
       });
 
@@ -794,7 +768,7 @@
       <li class="toc-item"><a href="#getting-around" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Getting around</a></li>
       <li class="toc-item"><a href="#landmarks" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Landmarks &amp; must-see spots</a></li>
       <li class="toc-item"><a href="#things-to-do" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Things to do</a></li>
-      <li class="toc-item"><a href="#what-to-pack" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>What to pack</a></li>
+      <li class="toc-item"><a href="../costa-rica#packing" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>What to pack</a></li>
       <li class="toc-item"><a href="#travel-tips" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Travel tips</a></li>
     </ul>
   </nav>
@@ -1365,83 +1339,6 @@
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════════════════
-       WHAT TO PACK
-       ═══════════════════════════════════════════════════════════ -->
-  <section class="packing" id="what-to-pack">
-    <div class="packing-header">
-      <h2 class="packing-title">What to Pack</h2>
-      <span class="packing-season">Dry Season</span>
-    </div>
-    <div class="packing-rule"></div>
-
-    <ul class="packing-list">
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Celiac travel card (Spanish)</span>
-          <span class="packing-item-why">"Soy celíaco/a" is the priority phrase locally — a printed card in Spanish explaining celiac disease helps communicate clearly with kitchen staff beyond what phrasebook Spanish can cover.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Portable GF snacks</span>
-          <span class="packing-item-why">Packaged GF options are limited outside tourist-area supermarkets like Auto Mercado — bring a stash for long park days or beach-town stretches.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Lightweight rain layer</span>
-          <span class="packing-item-why">Even in dry season, brief showers happen — a packable layer beats getting caught out on a park day.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-country">Costa Rica</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Reef-safe sunscreen</span>
-          <span class="packing-item-why">The equatorial sun here is strong, especially around Guanacaste's beaches — reef-safe formulas protect the coastline too.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-country">Costa Rica</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Insect repellent</span>
-          <span class="packing-item-why">Useful for evenings in town and especially for park visits and forested trails around Rincón de la Vieja.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-country">Costa Rica</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Comfortable walking shoes</span>
-          <span class="packing-item-why">For covering Liberia's historic center — white gravel roads and uneven colonial-era sidewalks reward sturdier footwear.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Liberia</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Light day bag</span>
-          <span class="packing-item-why">For excursions to Rincón de la Vieja — pack a lunch, since food options at the park itself are limited.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Liberia</span>
-      </li>
-
-    </ul>
-  </section>
 
   <!-- ═══════════════════════════════════════════════════════════
        TRAVEL TIPS + WHAT I'D DO DIFFERENTLY
