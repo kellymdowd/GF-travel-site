@@ -348,7 +348,7 @@
             tooltip.style.top  = (event.clientY - 42) + 'px';
           })
           .on('mouseleave', () => { tooltip.style.opacity = '0'; })
-          .on('click', (event, d) => { window.location.href = `maldives/${d.slug}.html`; });
+          .on('click', (event, d) => { window.location.href = `maldives/${d.slug}`; });
 
         pinGroup.style('opacity', 0).each(function(d, i) {
           d3.select(this).transition().delay(800 + i * 100).duration(500).ease(d3.easeCubicOut).style('opacity', 1);
@@ -359,7 +359,7 @@
         CITIES.forEach(city => {
           const a = document.createElement('a');
           a.className = 'city-chip';
-          a.href = `maldives/${city.slug}.html`;
+          a.href = `maldives/${city.slug}`;
           a.innerHTML = `<span class="city-chip-dot"></span>${city.name}`;
           chipsEl.appendChild(a);
         });

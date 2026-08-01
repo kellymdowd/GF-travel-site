@@ -578,7 +578,7 @@
             })
             .on('mouseleave', () => { tooltip.style.opacity = '0'; })
             .on('click', (event, d) => {
-              window.location.href = `norway/${d.slug}.html`;
+              window.location.href = `norway/${d.slug}`;
             });
 
           pinGroup.style('opacity', 0)
@@ -594,7 +594,7 @@
           CITIES.forEach(city => {
             const a = document.createElement('a');
             a.className = 'city-chip';
-            a.href = `norway/${city.slug}.html`;
+            a.href = `norway/${city.slug}`;
             a.innerHTML = `<span class="city-chip-dot"></span>${city.name}`;
             chipsEl.appendChild(a);
           });

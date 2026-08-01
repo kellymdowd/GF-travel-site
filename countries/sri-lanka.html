@@ -394,7 +394,7 @@
           .on('mouseleave', () => { tooltip.style.opacity = '0'; })
           .on('click', (event, d) => {
             gtag('event', 'city_click', { event_category: 'navigation', event_label: d.name, page_title: document.title });
-            window.location.href = `sri-lanka/${d.slug}.html`;
+            window.location.href = `sri-lanka/${d.slug}`;
           });
 
         pinGroup.style('opacity', 0).each(function(d, i) {
@@ -406,7 +406,7 @@
         CITIES.forEach(city => {
           const a = document.createElement('a');
           a.className = 'city-chip';
-          a.href = `sri-lanka/${city.slug}.html`;
+          a.href = `sri-lanka/${city.slug}`;
           a.innerHTML = `<span class="city-chip-dot"></span>${city.name}`;
           a.addEventListener('click', function() {
             gtag('event', 'city_click', { event_category: 'navigation', event_label: city.name, page_title: document.title });

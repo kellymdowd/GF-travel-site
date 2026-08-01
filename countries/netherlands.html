@@ -470,7 +470,7 @@
             })
             .on('mouseleave', () => { tooltip.style.opacity = '0'; })
             .on('click', (event, d) => {
-              window.location.href = `netherlands/${d.slug}.html`;
+              window.location.href = `netherlands/${d.slug}`;
             });
 
           pinGroup.style('opacity', 0)
@@ -485,7 +485,7 @@
           CITIES.forEach(city => {
             const a = document.createElement('a');
             a.className = 'city-chip';
-            a.href = `netherlands/${city.slug}.html`;
+            a.href = `netherlands/${city.slug}`;
             a.innerHTML = `<span class="city-chip-dot"></span>${city.name}`;
             chipsEl.appendChild(a);
           });

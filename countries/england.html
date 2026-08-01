@@ -311,11 +311,11 @@
         pinGroup.append('circle').attr('r', 7).attr('cy', 2).attr('fill', 'rgba(42, 32, 24, 0.15)');
         pinGroup.append('circle').attr('class', 'pin-fill').attr('r', 5).attr('fill', '#B8907A').attr('stroke', '#FFFFFF').attr('stroke-width', 1.5);
         pinGroup.append('text').attr('class', 'city-label').attr('dx', d => (LABEL_OPTS[d.name]||{dx:10}).dx).attr('dy', d => (LABEL_OPTS[d.name]||{dy:4}).dy).attr('text-anchor', d => (LABEL_OPTS[d.name]||{anchor:'start'}).anchor).text(d => d.name.toUpperCase());
-        pinGroup.on('mousemove', function(event, d) { tooltip.textContent = d.name; tooltip.style.opacity = '1'; tooltip.style.left = (event.clientX - tooltip.offsetWidth/2)+'px'; tooltip.style.top = (event.clientY-42)+'px'; }).on('mouseleave', () => { tooltip.style.opacity = '0'; }).on('click', (event, d) => { window.location.href = `england/${d.slug}.html`; });
+        pinGroup.on('mousemove', function(event, d) { tooltip.textContent = d.name; tooltip.style.opacity = '1'; tooltip.style.left = (event.clientX - tooltip.offsetWidth/2)+'px'; tooltip.style.top = (event.clientY-42)+'px'; }).on('mouseleave', () => { tooltip.style.opacity = '0'; }).on('click', (event, d) => { window.location.href = `england/${d.slug}`; });
         pinGroup.style('opacity', 0).each(function(d, i) { d3.select(this).transition().delay(800+i*100).duration(500).ease(d3.easeCubicOut).style('opacity', 1); });
         const chipsEl = document.getElementById('city-chips');
         chipsEl.innerHTML = '';
-        CITIES.forEach(city => { const a = document.createElement('a'); a.className = 'city-chip'; a.href = `england/${city.slug}.html`; a.innerHTML = `<span class="city-chip-dot"></span>${city.name}`; chipsEl.appendChild(a); });
+        CITIES.forEach(city => { const a = document.createElement('a'); a.className = 'city-chip'; a.href = `england/${city.slug}`; a.innerHTML = `<span class="city-chip-dot"></span>${city.name}`; chipsEl.appendChild(a); });
       });
   </script>
 </body>

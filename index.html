@@ -805,7 +805,7 @@
               if (+d._visited === 826) {
                 showUkPopup(event);
               } else {
-                window.location.href = `countries/${VISITED[d._visited].slug}.html`;
+                window.location.href = `countries/${VISITED[d._visited].slug}`;
               }
             }
           });
@@ -1006,7 +1006,7 @@
 
       const countryLink = document.createElement('a');
       countryLink.className = 'place-country';
-      countryLink.href = `countries/${country.slug}.html`;
+      countryLink.href = `countries/${country.slug}`;
       countryLink.textContent = country.name;
       item.appendChild(countryLink);
 
@@ -1016,7 +1016,7 @@
         country.cities.forEach(city => {
           const cityLink = document.createElement('a');
           cityLink.className = 'place-city';
-          cityLink.href = `countries/${country.slug}/${city.slug}.html`;
+          cityLink.href = `countries/${country.slug}/${city.slug}`;
           cityLink.textContent = city.name;
           cityList.appendChild(cityLink);
         });
