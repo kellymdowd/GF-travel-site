@@ -123,6 +123,47 @@
     @media (max-width: 480px) {
       .gf-section { padding-left: 1.2rem; padding-right: 1.2rem; }
     }
+
+    /* ─── What to Pack ────────────────────────────────────── */
+    .packing { padding: 0 2.5rem 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 1.5s forwards; }
+    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 0.6rem; }
+    .packing-group-label { font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin: 1.6rem 0 0.4rem; }
+    .packing-group-label:first-of-type { margin-top: 1rem; }
+    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .packing-item:last-child { border-bottom: none; }
+    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
+    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
+    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
+    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
+    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
+    .packing-tag-country { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
+    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    .packing-shop { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.4rem; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.04em; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .packing-shop:hover { color: var(--slate); }
+    .packing-shop:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .packing-shop:active { color: var(--rose); }
+    .packing-shop svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .packing-shop:hover svg { transform: translateX(2px); }
+    @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
+
+    /* ─── FAQ ─────────────────────────────────────────────────── */
+    .faq { padding: 2.4rem 2.5rem 0; }
+    .faq-header { margin-bottom: 1.4rem; }
+    .faq-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); }
+    .faq-list { border-top: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-item { border-bottom: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: none; border: none; text-align: left; cursor: pointer; padding: 1.1rem 0; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); }
+    .faq-q:hover, .faq-q:focus-visible { color: var(--slate); }
+    .faq-q-icon { flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); color: var(--ink-light); }
+    .faq-item.is-open .faq-q-icon { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .faq-item.is-open .faq-a { max-height: 280px; }
+    .faq-a-inner { padding: 0 0 1.2rem; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.86rem; line-height: 1.75; color: var(--ink-mid); max-width: 62ch; }
   </style>
 
   <!-- Google Analytics (gtag.js) -->
@@ -192,7 +233,31 @@
 
     });
   </script>
-  
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do you need a car in Japan?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. I covered this 13-night, 5-city route (Tokyo, Hakone, Kyoto, Osaka, back to Tokyo) entirely by JR trains and the Shinkansen, with a Suica IC card loaded onto my phone for local subways, buses, and convenience stores in each city. I even shipped a bag ahead from Tokyo to Hakone through a same-day luggage-forwarding service instead of hauling it on the trains myself. A car isn't necessary for this kind of multi-city itinerary and would add parking and driving complexity most of these cities aren't built for." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Japan safe for celiacs?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, with real planning. Japan scores 5/10 for GF friendliness overall — Manageable rather than easy. Tokyo and Osaka were the strongest cities on my trip at 7/10 each, with dedicated GF restaurants I could book ahead. Kyoto and Nara came in at 6/10, and Hakone was the toughest at 4/10 — its one dedicated GF café keeps irregular hours and was closed both times I tried to go. Three hidden hazards nationwide: soy sauce (wheat-based, shows up in almost everything), rice vinegar (often made with barley or malt in Japan, unlike most rice vinegar in the US), and Kewpie mayo (contains gluten in the Japanese version, unlike the GF US version). A Japanese celiac card and your own GF soy sauce packets go a long way." }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the best time to visit Japan?",
+      "acceptedAnswer": { "@type": "Answer", "text": "I visited in early March, which meant cooler temperatures throughout (roughly 5–18°C depending on the city) and Kyoto's cherry blossoms just starting to open toward the end of my stay. It also meant real snow in Hakone — heavy enough one day that the Hakone Loop got pushed back and a restaurant closed early. If you want milder weather and don't mind bigger crowds, late March into April (peak cherry blossom season) or October–November (autumn foliage) are the more popular windows — I'd budget extra layers either way if Hakone's mountains are part of your route." }
+    }
+  ]
+}
+  </script>
+
 </head>
 <body>
 
@@ -316,6 +381,268 @@
     </div>
   </section>
 
+  <!-- ═══════════════ WHAT TO PACK ═══════════════ -->
+  <section class="packing" id="packing">
+    <div class="packing-header">
+      <h2 class="packing-title">What to Pack for Japan</h2>
+      <span class="packing-season">March in Japan</span>
+    </div>
+    <div class="packing-rule"></div>
+
+    <div class="packing-group-label">Essential</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable phone charger</span>
+          <span class="packing-item-why">Navigation, translation apps, and finding GF restaurants all lean on your phone. Full days of temple-hopping and train transfers drain a battery fast.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable GF snacks</span>
+          <span class="packing-item-why">Backup food for train days and the stretches between meals where safe options are limited, especially outside the bigger cities.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">This was a 13-night, 5-city trip covering train station corridors, temple circuits, and mountain paths — I was regularly logging 15,000+ steps a day.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Reusable water bottle</span>
+          <span class="packing-item-why">Tap water is safe throughout Japan — refill rather than buying bottled, especially on the longer temple walks in Kyoto and Nara.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Japan-Wide</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Celiac dining card in Japanese</span>
+          <span class="packing-item-why">English fluency varies a lot outside major tourist areas, so a printed card explaining celiac disease carries real weight. Worth including the specific kanji restaurants may not think to flag on their own — 小麦 (wheat), plus less obvious ones like 水飴 (mizuame, a syrup that can contain barley or malt) and 澱粉/酵母 (starch/yeast, sometimes questionable). Two hazards that catch American celiacs off guard specifically because they're safe back home: Japanese rice vinegar (su) is often made with barley or malt, unlike most US rice vinegar, and Kewpie mayo — a staple condiment here — contains gluten in Japan even though the US version is GF.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Japan</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">GF soy sauce / tamari packets</span>
+          <span class="packing-item-why">Standard Japanese soy sauce is wheat-based and shows up in nearly everything — teriyaki, ramen broth, sashimi dipping sauce. Carry individual tamari packets so you always have a safe substitute on hand.</span>
+          <a href="https://www.amazon.com/San-J-Organic-Specially-Individual-Portioned/dp/B06XS2P1XG?th=1" class="packing-shop" target="_blank" rel="noopener sponsored">
+            Shop recommendation
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Japan</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">IC card (Suica/Pasmo/ICOCA)</span>
+          <span class="packing-item-why">I loaded a Suica card onto my phone's wallet app and used it to tap through subways, buses, and convenience stores in every city on this trip — Tokyo, Hakone, Kyoto, Osaka, and Nara alike. It doesn't cover the Shinkansen, which needs its own ticket.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Japan</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Cash in yen</span>
+          <span class="packing-item-why">I still needed cash regularly, even in Tokyo — plenty of smaller restaurants, shops, and temple admissions don't take cards.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Japan</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Japan power adapter (Type A/B)</span>
+          <span class="packing-item-why">Same plug shape as the US, so American travelers may not need one — a universal adapter covers anyone else.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Japan</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Offline translation app</span>
+          <span class="packing-item-why">Google Translate's camera mode was useful for scanning ingredient labels in real time, especially at supermarkets and convenience stores without English packaging.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Japan</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Tokyo</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Layers for March weather</span>
+          <span class="packing-item-why">Tokyo in March ranges roughly 8–16°C. Mornings are chilly, afternoons warm up — a light jacket and layers let you adapt through the day.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Tokyo</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Compact umbrella</span>
+          <span class="packing-item-why">March is shoulder season in Tokyo — rain showers are common. A small foldable umbrella fits easily in a day bag.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Tokyo</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Hakone</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Warm base layers</span>
+          <span class="packing-item-why">It snowed hard enough during my visit that plans changed — the Hakone Loop got pushed back a day and a restaurant I'd planned to eat at closed early. Hakone's mountain temperatures ran noticeably colder than the rest of the trip (roughly 5–12°C), so pack warmer than you would for Tokyo or Osaka.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Hakone</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Extra backup GF snacks</span>
+          <span class="packing-item-why">Hakone is a small mountain town without a proper grocery store, and its one dedicated GF café keeps irregular hours (closed Wednesdays and Thursdays, and it closed early the day I visited because of snow). Pack more backup food here than you would for a bigger city stop.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Hakone</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sturdy shoes for uneven terrain</span>
+          <span class="packing-item-why">Steep shrine paths and volcanic ground at Owakudani call for more traction and support than a typical city walking shoe.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Hakone</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Kyoto</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Layers for March</span>
+          <span class="packing-item-why">Kyoto in March averages 5–15°C, with cherry blossom season just getting underway toward the end of the month.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Kyoto</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Compact umbrella</span>
+          <span class="packing-item-why">March is the start of the rainier stretch of the year in Kyoto — afternoon showers are common.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Kyoto</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sturdy shoes for temple paths</span>
+          <span class="packing-item-why">Cobblestone approaches and hillside shrine stairs add up fast over a multi-temple day.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Kyoto</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Osaka</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Layers for March weather</span>
+          <span class="packing-item-why">Osaka in March runs about 8–16°C — a light jacket, cardigan, and something for cool evenings covers it.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Osaka</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Compact umbrella</span>
+          <span class="packing-item-why">March is one of the wetter months in Osaka — a small umbrella fits easily in a day bag.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Osaka</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Nara</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Layers for spring weather</span>
+          <span class="packing-item-why">March in Nara runs roughly 8–18°C — cool mornings, milder afternoons.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Nara</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Compact umbrella</span>
+          <span class="packing-item-why">Spring showers are common in Nara.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Nara</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sturdy shoes for the temple circuit</span>
+          <span class="packing-item-why">The Nara Park loop covers 5–7km of gravel paths and stone steps.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Nara</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Small crossbody bag</span>
+          <span class="packing-item-why">The deer in Nara Park will nibble at loose straps, bags, and paper — keep anything you're carrying zipped away securely.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Nara</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="faq" id="faq">
+    <div class="faq-header">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Do you need a car in Japan?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">No. I covered this 13-night, 5-city route (Tokyo, Hakone, Kyoto, Osaka, back to Tokyo) entirely by JR trains and the Shinkansen, with a Suica IC card loaded onto my phone for local subways, buses, and convenience stores in each city. I even shipped a bag ahead from Tokyo to Hakone through a same-day luggage-forwarding service instead of hauling it on the trains myself. A car isn't necessary for this kind of multi-city itinerary and would add parking and driving complexity most of these cities aren't built for.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Is Japan safe for celiacs?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Yes, with real planning. Japan scores 5/10 for GF friendliness overall — Manageable rather than easy. Tokyo and Osaka were the strongest cities on my trip at 7/10 each, with dedicated GF restaurants I could book ahead. Kyoto and Nara came in at 6/10, and Hakone was the toughest at 4/10 — its one dedicated GF café keeps irregular hours and was closed both times I tried to go. Three hidden hazards nationwide: soy sauce (wheat-based, shows up in almost everything), rice vinegar (often made with barley or malt in Japan, unlike most rice vinegar in the US), and Kewpie mayo (contains gluten in the Japanese version, unlike the GF US version). A Japanese celiac card and your own GF soy sauce packets go a long way.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What's the best time to visit Japan?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">I visited in early March, which meant cooler temperatures throughout (roughly 5–18°C depending on the city) and Kyoto's cherry blossoms just starting to open toward the end of my stay. It also meant real snow in Hakone — heavy enough one day that the Hakone Loop got pushed back and a restaurant closed early. If you want milder weather and don't mind bigger crowds, late March into April (peak cherry blossom season) or October–November (autumn foliage) are the more popular windows — I'd budget extra layers either way if Hakone's mountains are part of your route.</div></div>
+      </div>
+    </div>
+  </section>
+
   <!-- ═══════════════ TOOLTIP ═══════════════ -->
   <div id="map-tooltip"></div>
 
@@ -414,6 +741,23 @@
           chipsEl.appendChild(a);
         });
       });
+  </script>
+
+  <script>
+    document.querySelectorAll('.faq-q').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.closest('.faq-item');
+        var wasOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.faq-item.is-open').forEach(function(open) {
+          open.classList.remove('is-open');
+          open.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
   </script>
 
 </body>

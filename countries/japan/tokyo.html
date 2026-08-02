@@ -2208,6 +2208,20 @@
       .nav-links { gap: 0.8rem; }
       .nav-home { font-size: 0.72rem; letter-spacing: 0.1em; }
     }
+
+    /* ─── FAQ ─────────────────────────────────────────────────── */
+    .faq { padding: 2.4rem 2.5rem 0; }
+    .faq-header { margin-bottom: 1.4rem; }
+    .faq-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); }
+    .faq-list { border-top: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-item { border-bottom: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: none; border: none; text-align: left; cursor: pointer; padding: 1.1rem 0; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); }
+    .faq-q:hover, .faq-q:focus-visible { color: var(--slate); }
+    .faq-q-icon { flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); color: var(--ink-light); }
+    .faq-item.is-open .faq-q-icon { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .faq-item.is-open .faq-a { max-height: 240px; }
+    .faq-a-inner { padding: 0 0 1.2rem; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.86rem; line-height: 1.75; color: var(--ink-mid); max-width: 62ch; }
   </style>
 
   <!-- Google Analytics (gtag.js) -->
@@ -3008,7 +3022,8 @@
       <li class="toc-item"><a href="#landmarks" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Landmarks &amp; must-see spots</a></li>
       <li class="toc-item"><a href="#neighborhoods" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Neighborhoods</a></li>
       <li class="toc-item"><a href="#things-to-do" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Things to do</a></li>
-      <li class="toc-item"><a href="#what-to-pack" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>What to pack</a></li>
+      <li class="toc-item"><a href="../japan#packing" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>What to pack</a></li>
+      <li class="toc-item"><a href="#faq" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>FAQ</a></li>
       <li class="toc-item"><a href="#travel-tips" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Travel tips</a></li>
     </ul>
   </nav>
@@ -3162,7 +3177,7 @@
           <span class="gf-score-total-label">/ 10 — Easy</span>
         </div>
         <div class="gf-score-verdict">
-          <div class="gf-info-value">Tokyo has an impressive number of dedicated GF restaurants — more than most cities worldwide. The language barrier is the biggest challenge, but a celiac dining card in Japanese goes a long way. Soy sauce and rice vinegar (which often contains barley malt) are the biggest hidden dangers.</div>
+          <div class="gf-info-value">Tokyo has an impressive number of dedicated GF restaurants — more than most cities worldwide. The language barrier is the biggest challenge, but a celiac dining card in Japanese goes a long way. Soy sauce, rice vinegar (often made with barley malt in Japan, unlike most US rice vinegar), and Kewpie mayo (contains gluten here, though the US version is GF) are the biggest hidden dangers.</div>
         </div>
       </div>
     </div>
@@ -4426,74 +4441,33 @@
     </div>
   </section>
 
-  <section class="packing" id="what-to-pack">
-    <div class="packing-header">
-      <h2 class="packing-title">What to Pack</h2>
-      <span class="packing-season">Spring in Japan</span>
+  <section class="faq" id="faq">
+    <div class="faq-header">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
     </div>
-    <div class="packing-rule"></div>
-    <ul class="packing-list">
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Comfortable walking shoes</span>
-          <!-- RESEARCHED --><span class="packing-item-why">Tokyo is a walking city with endless train station corridors. Cushioned, supportive shoes are non-negotiable — you'll easily walk 15,000+ steps daily.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Portable GF snacks</span>
-          <span class="packing-item-why">Convenience stores have limited safe options beyond onigiri and edamame. Pack bars, crackers, or other GF snacks for long days of sightseeing.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Portable charger</span>
-          <!-- RESEARCHED --><span class="packing-item-why">You'll use Google Maps constantly for subway navigation. Your phone battery will drain fast — a portable charger is a lifesaver.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Celiac dining card in Japanese</span>
-          <span class="packing-item-why">Essential for communicating your needs at restaurants. Many staff don't speak English but will carefully read a Japanese card explaining celiac disease and wheat allergy.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-japan">Japan</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Gluten-free soy sauce — travel packets</span>
-          <span class="packing-item-why">Regular soy sauce contains wheat. Most restaurants won't have a GF alternative. Carry individual tamari packets so you always have safe soy sauce on hand.</span>
-          <a href="https://www.amazon.com/San-J-Organic-Specially-Individual-Portioned/dp/B06XS2P1XG?th=1" class="packing-shop" target="_blank" rel="noopener sponsored">
-            Shop recommendation
-            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-          </a>
-        </div>
-        <span class="packing-item-tag packing-tag-japan">Japan</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Layers for March weather</span>
-          <!-- RESEARCHED --><span class="packing-item-why">March in Tokyo ranges 8–16°C. Mornings are chilly, afternoons warm up. A light jacket and layers let you adapt throughout the day.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Tokyo</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Compact umbrella</span>
-          <!-- RESEARCHED --><span class="packing-item-why">March is shoulder season — rain showers are common. A small foldable umbrella fits easily in a day bag.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Tokyo</span>
-      </li>
-    </ul>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Is Tokyo safe for celiacs?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Tokyo scores 7/10 for GF friendliness (GF Friendly). There are 18 restaurants with GF options. Top picks: Gluten Free T's Kitchen, Gluten Free Kushiage Su, SUSHI KORIN Nishiazabu.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What are the best gluten-free restaurants in Tokyo?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Gluten Free T's Kitchen (5/5 GF score, Ramen / Gluten-Free); Gluten Free Kushiage Su (5/5 GF score, Kushiage / Gluten-Free); SUSHI KORIN Nishiazabu (4/5 GF score, Sushi / Omakase).</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Can you find gluten-free food in Tokyo supermarkets?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Check the full guide for grocery recommendations and naturally gluten-free local dishes in Tokyo, Japan.</div></div>
+      </div>
+    </div>
   </section>
 
   <section class="travel-tips" id="travel-tips">
@@ -4576,6 +4550,23 @@
       }
     });
   })();
+  </script>
+
+  <script>
+    document.querySelectorAll('.faq-q').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.closest('.faq-item');
+        var wasOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.faq-item.is-open').forEach(function(open) {
+          open.classList.remove('is-open');
+          open.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
   </script>
 
 </body>
