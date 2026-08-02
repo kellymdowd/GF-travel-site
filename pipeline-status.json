@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-02T14:23:00.805Z",
+  "generatedAt": "2026-08-02T14:28:33.979Z",
   "summary": {
     "countries": 24,
     "countryPagesCreated": 24,
     "cities": 74,
     "citiesSkipped": 4,
     "cityPagesCreated": 67,
-    "cityPagesValidated": 65,
-    "cityPagesFailingValidation": 2,
+    "cityPagesValidated": 67,
+    "cityPagesFailingValidation": 0,
     "blogsGenerated": 0,
     "instagramGenerated": 10,
     "contentAuditRun": 28,
@@ -879,9 +879,9 @@
       "skipped": false,
       "pageCreated": true,
       "pagePath": "countries/italy/rome.html",
-      "validated": false,
+      "validated": true,
       "validationCounts": {
-        "errors": 2,
+        "errors": 0,
         "warnings": 1,
         "info": 0
       },
@@ -1047,9 +1047,9 @@
       "skipped": false,
       "pageCreated": true,
       "pagePath": "countries/japan/tokyo.html",
-      "validated": false,
+      "validated": true,
       "validationCounts": {
-        "errors": 1,
+        "errors": 0,
         "warnings": 2,
         "info": 0
       },
