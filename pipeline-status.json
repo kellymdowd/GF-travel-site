@@ -1,15 +1,17 @@
 {
-  "generatedAt": "2026-08-01T21:16:50.984Z",
+  "generatedAt": "2026-08-02T14:23:00.805Z",
   "summary": {
     "countries": 24,
     "countryPagesCreated": 24,
     "cities": 74,
     "citiesSkipped": 4,
     "cityPagesCreated": 67,
-    "cityPagesValidated": 67,
-    "cityPagesFailingValidation": 0,
+    "cityPagesValidated": 65,
+    "cityPagesFailingValidation": 2,
     "blogsGenerated": 0,
-    "instagramGenerated": 10
+    "instagramGenerated": 10,
+    "contentAuditRun": 28,
+    "contentAuditNotRun": 39
   },
   "countries": [
     {
@@ -270,7 +272,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -288,7 +295,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -306,7 +318,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -324,7 +341,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -342,7 +364,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -360,7 +383,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -378,7 +402,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -396,7 +421,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -414,7 +444,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -432,7 +463,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -450,7 +482,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -468,7 +501,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -486,7 +520,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -504,7 +543,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -522,7 +566,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -540,7 +589,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -558,7 +612,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -576,7 +635,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -594,7 +658,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -612,7 +681,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -630,7 +704,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -648,7 +723,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -666,7 +742,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -680,7 +757,8 @@
       "validated": null,
       "validationCounts": null,
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -694,7 +772,8 @@
       "validated": null,
       "validationCounts": null,
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -712,7 +791,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -730,7 +810,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -748,7 +829,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -762,7 +844,8 @@
       "validated": null,
       "validationCounts": null,
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -780,7 +863,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -791,14 +879,19 @@
       "skipped": false,
       "pageCreated": true,
       "pagePath": "countries/italy/rome.html",
-      "validated": true,
+      "validated": false,
       "validationCounts": {
-        "errors": 0,
+        "errors": 2,
         "warnings": 1,
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -816,7 +909,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -834,7 +928,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -852,7 +947,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": true
+      "instagramGenerated": true,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -866,7 +966,8 @@
       "validated": null,
       "validationCounts": null,
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -884,7 +985,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": true
+      "instagramGenerated": true,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -902,7 +1008,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": true
+      "instagramGenerated": true,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -920,7 +1031,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": true
+      "instagramGenerated": true,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -931,14 +1047,19 @@
       "skipped": false,
       "pageCreated": true,
       "pagePath": "countries/japan/tokyo.html",
-      "validated": true,
+      "validated": false,
       "validationCounts": {
-        "errors": 0,
+        "errors": 1,
         "warnings": 2,
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": true
+      "instagramGenerated": true,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -956,7 +1077,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -974,7 +1100,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -988,7 +1115,8 @@
       "validated": null,
       "validationCounts": null,
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1006,7 +1134,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1020,7 +1149,8 @@
       "validated": null,
       "validationCounts": null,
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1038,7 +1168,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1056,7 +1187,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1074,7 +1206,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1092,7 +1225,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1110,7 +1244,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1128,7 +1263,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1146,7 +1282,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1160,7 +1297,8 @@
       "validated": null,
       "validationCounts": null,
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1178,7 +1316,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1196,7 +1335,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1214,7 +1354,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": true
+      "instagramGenerated": true,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1232,7 +1373,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": true
+      "instagramGenerated": true,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1250,7 +1392,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": true
+      "instagramGenerated": true,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1268,7 +1411,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": true
+      "instagramGenerated": true,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1286,7 +1430,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": true
+      "instagramGenerated": true,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1304,7 +1449,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -1322,7 +1472,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1340,7 +1491,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1358,7 +1510,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1376,7 +1529,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1394,7 +1548,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1412,7 +1567,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1430,7 +1586,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1448,7 +1605,8 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": null
     },
     {
       "type": "city",
@@ -1466,7 +1624,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -1484,7 +1647,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -1502,7 +1670,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -1520,7 +1693,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -1538,7 +1716,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     },
     {
       "type": "city",
@@ -1556,7 +1739,12 @@
         "info": 0
       },
       "blogGenerated": false,
-      "instagramGenerated": false
+      "instagramGenerated": false,
+      "contentAudit": {
+        "audited": true,
+        "lastAuditDate": "2026-08-02",
+        "status": "issues-found-and-fixed"
+      }
     }
   ]
 }

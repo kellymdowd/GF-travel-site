@@ -1,0 +1,33 @@
+{
+  "_comment": "Ledger of city-content-auditor runs, keyed by 'countrySlug/citySlug'. Read by scripts/generate-pipeline-status.js to populate the Content Safety Audit column. Not auto-regenerated — update manually (or via an agent) after each audit run, since the audit itself is on-demand, not part of the automated build pipeline.",
+  "audits": {
+    "austria/hallstatt": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "austria/innsbruck": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "austria/salzburg": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "austria/vienna": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "czech-republic/prague": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "germany/berlin": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "germany/cologne": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "germany/dinslaken-duisburg": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "germany/dusseldorf": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "germany/frankfurt": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "germany/munich": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "germany/stuttgart": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "hungary/budapest": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "italy/florence": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "italy/rome": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "japan/hakone": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "japan/kyoto": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "japan/nara": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "japan/osaka": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "japan/tokyo": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "liechtenstein/vaduz": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "slovakia/bratislava": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "switzerland/basel": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "switzerland/geneva": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "switzerland/interlaken": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "switzerland/lucerne": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "switzerland/zermatt": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
+    "switzerland/zurich": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" }
+  }
+}

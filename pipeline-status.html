@@ -35,13 +35,14 @@
 <body>
 <div class="wrap">
   <h1>Pipeline Status</h1>
-  <div class="timestamp">Generated 2026-08-01T21:16:50.984Z · regenerate anytime with <code>node scripts/generate-pipeline-status.js</code></div>
+  <div class="timestamp">Generated 2026-08-02T14:23:00.805Z · regenerate anytime with <code>node scripts/generate-pipeline-status.js</code></div>
 
   <div class="summary-strip">
     <span><strong>24</strong> countries tracked, <strong>24</strong> with a page</span>
     <span><strong>74</strong> cities tracked (<strong>4</strong> skipped — not visited)</span>
     <span><strong>67</strong> city pages built</span>
-    <span><strong>67</strong> passing validation, <strong>0</strong> failing</span>
+    <span><strong>65</strong> passing validation, <strong>2</strong> failing</span>
+    <span><strong>28</strong> content-safety audited, <strong>39</strong> not yet run</span>
     <span><strong>0</strong> blog posts generated</span>
     <span><strong>10</strong> cities with Instagram content</span>
   </div>
@@ -221,12 +222,13 @@
 
   <h2>Cities</h2>
   <table>
-    <tr><th>Country</th><th>City</th><th>Page Created</th><th>Validated</th><th>Blog Generated</th><th>Instagram Generated</th></tr>
+    <tr><th>Country</th><th>City</th><th>Page Created</th><th>Validated</th><th>Content Safety Audit</th><th>Blog Generated</th><th>Instagram Generated</th></tr>
     <tr class="">
     <td>Austria</td>
     <td><a href="countries/austria/hallstatt.html">Hallstatt</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -235,6 +237,7 @@
     <td><a href="countries/austria/innsbruck.html">Innsbruck</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -243,6 +246,7 @@
     <td><a href="countries/austria/salzburg.html">Salzburg</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -251,6 +255,7 @@
     <td><a href="countries/austria/vienna.html">Vienna</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -259,6 +264,7 @@
     <td><a href="countries/canada/vancouver.html">Vancouver</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -267,6 +273,7 @@
     <td><a href="countries/canada/victoria.html">Victoria</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -275,6 +282,7 @@
     <td><a href="countries/costa-rica/liberia.html">Liberia</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -283,6 +291,7 @@
     <td><a href="countries/czech-republic/prague.html">Prague</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -291,6 +300,7 @@
     <td><a href="countries/england/london.html">London</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -299,6 +309,7 @@
     <td><a href="countries/finland/helsinki.html">Helsinki</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -307,6 +318,7 @@
     <td><a href="countries/finland/tampere.html">Tampere</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -315,6 +327,7 @@
     <td><a href="countries/france/paris.html">Paris</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -323,6 +336,7 @@
     <td><a href="countries/germany/berlin.html">Berlin</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -331,6 +345,7 @@
     <td><a href="countries/germany/cologne.html">Cologne</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -339,6 +354,7 @@
     <td><a href="countries/germany/dinslaken-duisburg.html">Dinslaken Duisburg</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -347,6 +363,7 @@
     <td><a href="countries/germany/dusseldorf.html">Dusseldorf</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -355,6 +372,7 @@
     <td><a href="countries/germany/frankfurt.html">Frankfurt</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -363,6 +381,7 @@
     <td><a href="countries/germany/munich.html">Munich</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -371,6 +390,7 @@
     <td><a href="countries/germany/stuttgart.html">Stuttgart</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -379,6 +399,7 @@
     <td><a href="countries/hungary/budapest.html">Budapest</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -387,6 +408,7 @@
     <td><a href="countries/india/bengaluru.html">Bengaluru</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -395,6 +417,7 @@
     <td><a href="countries/india/goa.html">Goa</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -403,12 +426,14 @@
     <td><a href="countries/india/hyderabad.html">Hyderabad</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
 <tr class="row-skipped">
     <td>Ireland</td>
     <td>Cork</td>
+    <td><span class="dot dot-skip"></span>Skipped</td>
     <td><span class="dot dot-skip"></span>Skipped</td>
     <td><span class="dot dot-skip"></span>Skipped</td>
     <td><span class="dot dot-skip"></span>Skipped</td>
@@ -421,12 +446,14 @@
     <td><span class="dot dot-skip"></span>Skipped</td>
     <td><span class="dot dot-skip"></span>Skipped</td>
     <td><span class="dot dot-skip"></span>Skipped</td>
+    <td><span class="dot dot-skip"></span>Skipped</td>
   </tr>
 <tr class="">
     <td>Ireland</td>
     <td><a href="countries/ireland/dublin.html">Dublin</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -435,6 +462,7 @@
     <td><a href="countries/ireland/galway.html">Galway</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -443,6 +471,7 @@
     <td><a href="countries/ireland/killarney.html">Killarney</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -453,12 +482,14 @@
     <td><span class="dot dot-skip"></span>Skipped</td>
     <td><span class="dot dot-skip"></span>Skipped</td>
     <td><span class="dot dot-skip"></span>Skipped</td>
+    <td><span class="dot dot-skip"></span>Skipped</td>
   </tr>
 <tr class="">
     <td>Italy</td>
     <td><a href="countries/italy/florence.html">Florence</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -466,7 +497,8 @@
     <td>Italy</td>
     <td><a href="countries/italy/rome.html">Rome</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
-    <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-no"></span>No <span class="counts">(2 errs)</span></td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -475,6 +507,7 @@
     <td><a href="countries/jamaica/ocho-rios.html">Ocho Rios</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -483,6 +516,7 @@
     <td><a href="countries/jamaica/rose-hall.html">Rose Hall</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -491,6 +525,7 @@
     <td><a href="countries/japan/hakone.html">Hakone</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-yes"></span>Yes</td>
   </tr>
@@ -501,12 +536,14 @@
     <td><span class="dot dot-skip"></span>Skipped</td>
     <td><span class="dot dot-skip"></span>Skipped</td>
     <td><span class="dot dot-skip"></span>Skipped</td>
+    <td><span class="dot dot-skip"></span>Skipped</td>
   </tr>
 <tr class="">
     <td>Japan</td>
     <td><a href="countries/japan/kyoto.html">Kyoto</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-yes"></span>Yes</td>
   </tr>
@@ -515,6 +552,7 @@
     <td><a href="countries/japan/nara.html">Nara</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-yes"></span>Yes</td>
   </tr>
@@ -523,6 +561,7 @@
     <td><a href="countries/japan/osaka.html">Osaka</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-yes"></span>Yes</td>
   </tr>
@@ -530,7 +569,8 @@
     <td>Japan</td>
     <td><a href="countries/japan/tokyo.html">Tokyo</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
-    <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-no"></span>No <span class="counts">(1 err)</span></td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-yes"></span>Yes</td>
   </tr>
@@ -539,6 +579,7 @@
     <td><a href="countries/liechtenstein/vaduz.html">Vaduz</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -547,6 +588,7 @@
     <td><a href="countries/maldives/south-male-atoll.html">South Male Atoll</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -555,6 +597,7 @@
     <td>South Malé Atoll</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-na"></span>—</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -563,6 +606,7 @@
     <td><a href="countries/new-zealand/auckland.html">Auckland</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -571,6 +615,7 @@
     <td>Blenheim</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-na"></span>—</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -579,6 +624,7 @@
     <td><a href="countries/new-zealand/marlborough.html">Marlborough</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -587,6 +633,7 @@
     <td><a href="countries/new-zealand/mt-cook.html">Mt Cook</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -595,6 +642,7 @@
     <td><a href="countries/new-zealand/queenstown.html">Queenstown</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -603,6 +651,7 @@
     <td><a href="countries/new-zealand/wanaka.html">Wanaka</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -611,6 +660,7 @@
     <td><a href="countries/new-zealand/wellington.html">Wellington</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -619,6 +669,7 @@
     <td><a href="countries/norway/bergen.html">Bergen</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -627,6 +678,7 @@
     <td><a href="countries/norway/flam.html">Flam</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -635,6 +687,7 @@
     <td>Flåm</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-na"></span>—</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -643,6 +696,7 @@
     <td><a href="countries/norway/oslo.html">Oslo</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -651,6 +705,7 @@
     <td><a href="countries/norway/stavanger.html">Stavanger</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -659,6 +714,7 @@
     <td><a href="countries/scotland/edinburgh.html">Edinburgh</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-yes"></span>Yes</td>
   </tr>
@@ -667,6 +723,7 @@
     <td><a href="countries/scotland/fort-william.html">Fort William</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-yes"></span>Yes</td>
   </tr>
@@ -675,6 +732,7 @@
     <td><a href="countries/scotland/glasgow.html">Glasgow</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-yes"></span>Yes</td>
   </tr>
@@ -683,6 +741,7 @@
     <td><a href="countries/scotland/inverness.html">Inverness</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-yes"></span>Yes</td>
   </tr>
@@ -691,6 +750,7 @@
     <td><a href="countries/scotland/portree.html">Portree</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-yes"></span>Yes</td>
   </tr>
@@ -699,6 +759,7 @@
     <td><a href="countries/slovakia/bratislava.html">Bratislava</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -707,6 +768,7 @@
     <td><a href="countries/spain/barcelona.html">Barcelona</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -715,6 +777,7 @@
     <td><a href="countries/spain/madrid.html">Madrid</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -723,6 +786,7 @@
     <td><a href="countries/spain/valencia.html">Valencia</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -731,6 +795,7 @@
     <td><a href="countries/sri-lanka/kandy.html">Kandy</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -739,6 +804,7 @@
     <td><a href="countries/sri-lanka/negombo.html">Negombo</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -747,6 +813,7 @@
     <td><a href="countries/sri-lanka/sigiriya.html">Sigiriya</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -755,6 +822,7 @@
     <td><a href="countries/sweden/stockholm.html">Stockholm</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -763,6 +831,7 @@
     <td><a href="countries/sweden/uppsala.html">Uppsala</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-na"></span>Not run</td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -771,6 +840,7 @@
     <td><a href="countries/switzerland/basel.html">Basel</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -779,6 +849,7 @@
     <td><a href="countries/switzerland/geneva.html">Geneva</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -787,6 +858,7 @@
     <td><a href="countries/switzerland/interlaken.html">Interlaken</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -795,6 +867,7 @@
     <td><a href="countries/switzerland/lucerne.html">Lucerne</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -803,6 +876,7 @@
     <td><a href="countries/switzerland/zermatt.html">Zermatt</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>
@@ -811,6 +885,7 @@
     <td><a href="countries/switzerland/zurich.html">Zurich</a></td>
     <td><span class="dot dot-yes"></span>Yes</td>
     <td><span class="dot dot-yes"></span>Yes</td>
+    <td><span class="dot dot-yes"></span>Fixed <span class="counts">(2026-08-02)</span></td>
     <td><span class="dot dot-no"></span>No</td>
     <td><span class="dot dot-no"></span>No</td>
   </tr>

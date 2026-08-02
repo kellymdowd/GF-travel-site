@@ -108,6 +108,19 @@ function instagramGeneratedFor(countrySlug, cityName) {
   return instagramBatches.some((f) => f.startsWith(countrySlug) && instagramBatchContent[f].includes(needle));
 }
 
+// ─── 3.5. Content safety audit status — read from the ledger, since the
+//     city-content-auditor skill is on-demand (not part of the automated
+//     build pipeline) and has no live-recomputable signal like validation
+//     does. content-safety-audit-status.json is updated manually/by an
+//     agent after each audit run. ─────────────────────────────────────────
+const auditStatusPath = path.join(repoRoot, 'content-safety-audit-status.json');
+const auditStatus = fs.existsSync(auditStatusPath)
+  ? JSON.parse(fs.readFileSync(auditStatusPath, 'utf-8')).audits || {}
+  : {};
+function contentAuditFor(countrySlug, citySlug) {
+  return auditStatus[`${countrySlug}/${citySlug}`] || null;
+}
+
 // ─── 4. Validation — run the fast structural-only pass (no network, no
 //     puppeteer) live against every existing page. ─────────────────────────
 function validatePage(pagePath) {
@@ -156,6 +169,7 @@ for (const country of Object.values(countries).sort((a, b) => a.name.localeCompa
       validationCounts = validatePage(city.pagePath);
       validated = validationCounts.errors === 0;
     }
+    const contentAudit = city.pageExists && !skipped ? contentAuditFor(country.slug, city.slug) : null;
     cityRows.push({
       type: 'city',
       country: country.name,
@@ -169,6 +183,7 @@ for (const country of Object.values(countries).sort((a, b) => a.name.localeCompa
       validationCounts,
       blogGenerated: false,
       instagramGenerated: city.pageExists && !skipped ? instagramGeneratedFor(country.slug, city.name) : false,
+      contentAudit,
     });
   }
 }
@@ -184,6 +199,8 @@ const summary = {
   cityPagesFailingValidation: cityRows.filter((r) => r.validated === false).length,
   blogsGenerated: cityRows.filter((r) => r.blogGenerated).length,
   instagramGenerated: cityRows.filter((r) => r.instagramGenerated).length,
+  contentAuditRun: cityRows.filter((r) => r.contentAudit && r.contentAudit.audited).length,
+  contentAuditNotRun: cityRows.filter((r) => r.pageCreated && !r.skipped && !(r.contentAudit && r.contentAudit.audited)).length,
 };
 
 const output = { generatedAt, summary, countries: countryRows, cities: cityRows };
@@ -195,6 +212,19 @@ function statusCell(value, { skipped } = {}) {
   if (value === true) return '<span class="dot dot-yes"></span>Yes';
   if (value === false) return '<span class="dot dot-no"></span>No';
   return '<span class="dot dot-na"></span>—';
+}
+
+function contentAuditCell(contentAudit, { skipped } = {}) {
+  if (skipped) return '<span class="dot dot-skip"></span>Skipped';
+  if (!contentAudit || !contentAudit.audited) return '<span class="dot dot-na"></span>Not run';
+  const dateStr = contentAudit.lastAuditDate ? ` <span class="counts">(${contentAudit.lastAuditDate})</span>` : '';
+  if (contentAudit.status === 'issues-found-pending') {
+    return `<span class="dot dot-no"></span>Issues pending${dateStr}`;
+  }
+  if (contentAudit.status === 'issues-found-and-fixed') {
+    return `<span class="dot dot-yes"></span>Fixed${dateStr}`;
+  }
+  return `<span class="dot dot-yes"></span>Clean${dateStr}`;
 }
 
 const cityTableRows = cityRows.map((r) => {
@@ -213,6 +243,7 @@ const cityTableRows = cityRows.map((r) => {
     <td>${nameCell}</td>
     <td>${statusCell(r.skipped ? null : r.pageCreated, { skipped: r.skipped })}</td>
     <td>${validatedCell}</td>
+    <td>${contentAuditCell(r.contentAudit, { skipped: r.skipped })}</td>
     <td>${statusCell(r.skipped ? null : r.blogGenerated, { skipped: r.skipped })}</td>
     <td>${statusCell(r.skipped ? null : r.instagramGenerated, { skipped: r.skipped })}</td>
   </tr>`;
@@ -273,6 +304,7 @@ const html = `<!DOCTYPE html>
     <span><strong>${summary.cities}</strong> cities tracked (<strong>${summary.citiesSkipped}</strong> skipped — not visited)</span>
     <span><strong>${summary.cityPagesCreated}</strong> city pages built</span>
     <span><strong>${summary.cityPagesValidated}</strong> passing validation, <strong>${summary.cityPagesFailingValidation}</strong> failing</span>
+    <span><strong>${summary.contentAuditRun}</strong> content-safety audited, <strong>${summary.contentAuditNotRun}</strong> not yet run</span>
     <span><strong>${summary.blogsGenerated}</strong> blog posts generated</span>
     <span><strong>${summary.instagramGenerated}</strong> cities with Instagram content</span>
   </div>
@@ -285,7 +317,7 @@ const html = `<!DOCTYPE html>
 
   <h2>Cities</h2>
   <table>
-    <tr><th>Country</th><th>City</th><th>Page Created</th><th>Validated</th><th>Blog Generated</th><th>Instagram Generated</th></tr>
+    <tr><th>Country</th><th>City</th><th>Page Created</th><th>Validated</th><th>Content Safety Audit</th><th>Blog Generated</th><th>Instagram Generated</th></tr>
     ${cityTableRows}
   </table>
 </div>
