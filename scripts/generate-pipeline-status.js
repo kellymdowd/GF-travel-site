@@ -121,6 +121,22 @@ function contentAuditFor(countrySlug, citySlug) {
   return auditStatus[`${countrySlug}/${citySlug}`] || null;
 }
 
+// ─── 3.55. Packing/FAQ template migration — kept separate from the content
+//     safety audit on purpose. This is purely mechanical/structural (the
+//     Scotland-template rollout: packing consolidated onto the country
+//     page, visible FAQ accordion added) and is live-recomputable from the
+//     page itself, same PULL model as validation — it doesn't need a
+//     ledger. Conflating this with content-safety findings is what caused
+//     Bengaluru/Goa to show as "issues pending" in that column when their
+//     actual content was clean; the real gap was just template debt. ─────
+function templateMigrationFor(pagePath) {
+  const html = fs.readFileSync(path.join(repoRoot, pagePath), 'utf-8');
+  const hasOldPackingSection = /id="what-to-pack"/.test(html);
+  const hasVisibleFaq = /class="faq-item"/.test(html);
+  const hasFaqCss = /\.faq-item\.is-open \.faq-a/.test(html);
+  return !hasOldPackingSection && hasVisibleFaq && hasFaqCss;
+}
+
 // ─── 3.6. Itineraries — trips + per-city itinerary coverage. The master
 //     trip inventory is about.html's own "Where I've Been" timeline, not
 //     itineraries/index.html — the timeline lists every trip Kelly has
@@ -289,6 +305,7 @@ for (const country of Object.values(countries).sort((a, b) => a.name.localeCompa
     }
     const contentAudit = city.pageExists && !skipped ? contentAuditFor(country.slug, city.slug) : null;
     const itinerary = skipped ? null : itineraryLabelFor(country.slug, city.slug);
+    const templateMigrated = city.pageExists && !skipped ? templateMigrationFor(city.pagePath) : null;
     cityRows.push({
       type: 'city',
       country: country.name,
@@ -304,6 +321,7 @@ for (const country of Object.values(countries).sort((a, b) => a.name.localeCompa
       instagramGenerated: city.pageExists && !skipped ? instagramGeneratedFor(country.slug, city.name) : false,
       contentAudit,
       itinerary,
+      templateMigrated,
     });
   }
 }
@@ -347,6 +365,8 @@ const summary = {
   instagramGenerated: cityRows.filter((r) => r.instagramGenerated).length,
   contentAuditRun: cityRows.filter((r) => r.contentAudit && r.contentAudit.audited).length,
   contentAuditNotRun: cityRows.filter((r) => r.pageCreated && !r.skipped && !(r.contentAudit && r.contentAudit.audited)).length,
+  templateMigrated: cityRows.filter((r) => r.templateMigrated === true).length,
+  templateNotMigrated: cityRows.filter((r) => r.templateMigrated === false).length,
   trips: tripRows.length,
   tripsWithItinerary: tripRows.filter((r) => r.itineraryCreated).length,
   citiesWithItineraryCoverage: cityRows.filter((r) => r.pageCreated && !r.skipped && r.itinerary).length,
@@ -379,6 +399,14 @@ function contentAuditCell(contentAudit, { skipped } = {}) {
   return `<span class="dot dot-yes"></span>Clean${dateStr}`;
 }
 
+function templateCell(templateMigrated, { skipped } = {}) {
+  if (skipped) return '<span class="dot dot-skip"></span>Skipped';
+  if (templateMigrated === null) return '<span class="dot dot-na"></span>—';
+  return templateMigrated
+    ? '<span class="dot dot-yes"></span>Yes'
+    : '<span class="dot dot-no"></span>No';
+}
+
 function itineraryCell(itinerary, { skipped } = {}) {
   if (skipped) return '<span class="dot dot-skip"></span>Skipped';
   if (!itinerary) return '<span class="dot dot-na"></span>No';
@@ -405,6 +433,7 @@ const cityTableRows = cityRows.map((r) => {
     <td>${statusCell(r.skipped ? null : r.pageCreated, { skipped: r.skipped })}</td>
     <td>${validatedCell}</td>
     <td>${contentAuditCell(r.contentAudit, { skipped: r.skipped })}</td>
+    <td>${templateCell(r.templateMigrated, { skipped: r.skipped })}</td>
     <td>${itineraryCell(r.itinerary, { skipped: r.skipped })}</td>
     <td>${statusCell(r.skipped ? null : r.blogGenerated, { skipped: r.skipped })}</td>
     <td>${statusCell(r.skipped ? null : r.instagramGenerated, { skipped: r.skipped })}</td>
@@ -487,6 +516,7 @@ const html = `<!DOCTYPE html>
     <span><strong>${summary.cityPagesCreated}</strong> city pages built</span>
     <span><strong>${summary.cityPagesValidated}</strong> passing validation, <strong>${summary.cityPagesFailingValidation}</strong> failing</span>
     <span><strong>${summary.contentAuditRun}</strong> content-safety audited, <strong>${summary.contentAuditNotRun}</strong> not yet run</span>
+    <span><strong>${summary.templateMigrated}</strong> on the packing/FAQ template, <strong>${summary.templateNotMigrated}</strong> not yet migrated</span>
     <span><strong>${summary.tripsWithItinerary}</strong> of <strong>${summary.trips}</strong> trips have an itinerary, <strong>${summary.citiesWithItineraryCoverage}</strong> cities covered</span>
     <span><strong>${summary.blogsGenerated}</strong> blog posts generated</span>
     <span><strong>${summary.instagramGenerated}</strong> cities with Instagram content</span>
@@ -500,7 +530,7 @@ const html = `<!DOCTYPE html>
 
   <h2>Cities</h2>
   <table>
-    <tr><th>Country</th><th>City</th><th>Page Created</th><th>Validated</th><th>Content Safety Audit</th><th>Itinerary</th><th>Blog Generated</th><th>Instagram Generated</th></tr>
+    <tr><th>Country</th><th>City</th><th>Page Created</th><th>Validated</th><th>Content Safety Audit</th><th>Packing/FAQ Template</th><th>Itinerary</th><th>Blog Generated</th><th>Instagram Generated</th></tr>
     ${cityTableRows}
   </table>
 

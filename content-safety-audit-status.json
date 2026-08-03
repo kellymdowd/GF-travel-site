@@ -1,5 +1,5 @@
 {
-  "_comment": "Ledger of city-content-auditor runs, keyed by 'countrySlug/citySlug'. Read by scripts/generate-pipeline-status.js to populate the Content Safety Audit column. Not auto-regenerated — update manually (or via an agent) after each audit run, since the audit itself is on-demand, not part of the automated build pipeline.",
+  "_comment": "Ledger of city-content-auditor runs, keyed by 'countrySlug/citySlug'. Read by scripts/generate-pipeline-status.js to populate the Content Safety Audit column. Not auto-regenerated — update manually (or via an agent) after each audit run, since the audit itself is on-demand, not part of the automated build pipeline. Scope note (2026-08-03): this column is for true content-safety findings only (GF-safety wording, personal-photo anonymity, injection/bias, broken links) -- the audit skill's own design-compliance category also flags packing/FAQ template debt, but that's tracked live via the separate Packing/FAQ Template column instead (mechanically recomputed from the page, no ledger needed) so a page with zero content findings but old template markup reads as 'clean' here, not 'pending'.",
   "audits": {
     "austria/hallstatt": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
     "austria/innsbruck": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
@@ -37,8 +37,8 @@
     "finland/helsinki": { "audited": true, "lastAuditDate": "2026-08-02", "status": "clean" },
     "finland/tampere": { "audited": true, "lastAuditDate": "2026-08-02", "status": "clean" },
     "france/paris": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
-    "india/bengaluru": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-pending" },
-    "india/goa": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-pending" },
+    "india/bengaluru": { "audited": true, "lastAuditDate": "2026-08-02", "status": "clean" },
+    "india/goa": { "audited": true, "lastAuditDate": "2026-08-02", "status": "clean" },
     "india/hyderabad": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
 
     "ireland/dublin": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },

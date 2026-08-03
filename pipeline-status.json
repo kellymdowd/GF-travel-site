@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-03T23:48:32.432Z",
+  "generatedAt": "2026-08-03T23:55:27.864Z",
   "summary": {
     "countries": 24,
     "countryPagesCreated": 24,
@@ -12,6 +12,8 @@
     "instagramGenerated": 10,
     "contentAuditRun": 67,
     "contentAuditNotRun": 0,
+    "templateMigrated": 47,
+    "templateNotMigrated": 20,
     "trips": 21,
     "tripsWithItinerary": 5,
     "citiesWithItineraryCoverage": 32
@@ -284,7 +286,8 @@
       "itinerary": {
         "type": "day-trip",
         "tripSlug": "austria-slovakia-hungary-liechtenstein-switzerland-2023"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -311,7 +314,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "austria-slovakia-hungary-liechtenstein-switzerland-2023"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -338,7 +342,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "austria-slovakia-hungary-liechtenstein-switzerland-2023"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -365,7 +370,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "austria-slovakia-hungary-liechtenstein-switzerland-2023"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -389,7 +395,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "clean"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": false
     },
     {
       "type": "city",
@@ -413,7 +420,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": false
     },
     {
       "type": "city",
@@ -437,7 +445,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": false
     },
     {
       "type": "city",
@@ -464,7 +473,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "germany-czech-italy-2018"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -488,7 +498,8 @@
         "lastAuditDate": "2026-08-03",
         "status": "reviewed-kept-as-is"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": false
     },
     {
       "type": "city",
@@ -515,7 +526,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "norway-sweden-finland-2019"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -542,7 +554,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "norway-sweden-finland-2019"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -566,7 +579,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": false
     },
     {
       "type": "city",
@@ -593,7 +607,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "germany-czech-italy-2018"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -617,7 +632,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -641,7 +657,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -665,7 +682,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -692,7 +710,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "germany-czech-italy-2018"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -719,7 +738,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "germany-czech-italy-2018"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -743,7 +763,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -770,7 +791,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "austria-slovakia-hungary-liechtenstein-switzerland-2023"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -792,9 +814,10 @@
       "contentAudit": {
         "audited": true,
         "lastAuditDate": "2026-08-02",
-        "status": "issues-found-pending"
+        "status": "clean"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": false
     },
     {
       "type": "city",
@@ -816,9 +839,10 @@
       "contentAudit": {
         "audited": true,
         "lastAuditDate": "2026-08-02",
-        "status": "issues-found-pending"
+        "status": "clean"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": false
     },
     {
       "type": "city",
@@ -842,7 +866,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": false
     },
     {
       "type": "city",
@@ -858,7 +883,8 @@
       "blogGenerated": false,
       "instagramGenerated": false,
       "contentAudit": null,
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": null
     },
     {
       "type": "city",
@@ -874,7 +900,8 @@
       "blogGenerated": false,
       "instagramGenerated": false,
       "contentAudit": null,
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": null
     },
     {
       "type": "city",
@@ -898,7 +925,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": false
     },
     {
       "type": "city",
@@ -922,7 +950,8 @@
         "lastAuditDate": "2026-08-03",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": false
     },
     {
       "type": "city",
@@ -946,7 +975,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": false
     },
     {
       "type": "city",
@@ -962,7 +992,8 @@
       "blogGenerated": false,
       "instagramGenerated": false,
       "contentAudit": null,
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": null
     },
     {
       "type": "city",
@@ -989,7 +1020,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "germany-czech-italy-2018"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1016,7 +1048,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "germany-czech-italy-2018"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1040,7 +1073,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "clean"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": false
     },
     {
       "type": "city",
@@ -1064,7 +1098,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": false
     },
     {
       "type": "city",
@@ -1091,7 +1126,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "japan-2025"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1107,7 +1143,8 @@
       "blogGenerated": false,
       "instagramGenerated": false,
       "contentAudit": null,
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": null
     },
     {
       "type": "city",
@@ -1134,7 +1171,8 @@
       "itinerary": {
         "type": "city-stop",
         "tripSlug": "kyoto-4-days"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1161,7 +1199,8 @@
       "itinerary": {
         "type": "day-trip",
         "tripSlug": "japan-2025"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1188,7 +1227,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "japan-2025"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1215,7 +1255,8 @@
       "itinerary": {
         "type": "city-stop",
         "tripSlug": "tokyo-4-days"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1242,7 +1283,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "austria-slovakia-hungary-liechtenstein-switzerland-2023"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1266,7 +1308,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": false
     },
     {
       "type": "city",
@@ -1282,7 +1325,8 @@
       "blogGenerated": false,
       "instagramGenerated": false,
       "contentAudit": null,
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": null
     },
     {
       "type": "city",
@@ -1306,7 +1350,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1322,7 +1367,8 @@
       "blogGenerated": false,
       "instagramGenerated": false,
       "contentAudit": null,
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": null
     },
     {
       "type": "city",
@@ -1346,7 +1392,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-pending"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1370,7 +1417,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-pending"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1394,7 +1442,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1418,7 +1467,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1442,7 +1492,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "clean"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1469,7 +1520,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "norway-sweden-finland-2019"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1496,7 +1548,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "norway-sweden-finland-2019"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1512,7 +1565,8 @@
       "blogGenerated": false,
       "instagramGenerated": false,
       "contentAudit": null,
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": null
     },
     {
       "type": "city",
@@ -1539,7 +1593,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "norway-sweden-finland-2019"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1566,7 +1621,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "norway-sweden-finland-2019"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1593,7 +1649,8 @@
       "itinerary": {
         "type": "city-stop",
         "tripSlug": "edinburgh-3-days"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1620,7 +1677,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "scotland-2024-highlands-islands"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1647,7 +1705,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "scotland-2024-highlands-islands"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1674,7 +1733,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "scotland-2024-highlands-islands"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1701,7 +1761,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "scotland-2024-highlands-islands"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1728,7 +1789,8 @@
       "itinerary": {
         "type": "day-trip",
         "tripSlug": "austria-slovakia-hungary-liechtenstein-switzerland-2023"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1752,7 +1814,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": false
     },
     {
       "type": "city",
@@ -1776,7 +1839,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": false
     },
     {
       "type": "city",
@@ -1800,7 +1864,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": false
     },
     {
       "type": "city",
@@ -1824,7 +1889,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": false
     },
     {
       "type": "city",
@@ -1848,7 +1914,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "clean"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": false
     },
     {
       "type": "city",
@@ -1872,7 +1939,8 @@
         "lastAuditDate": "2026-08-03",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": false
     },
     {
       "type": "city",
@@ -1899,7 +1967,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "norway-sweden-finland-2019"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1926,7 +1995,8 @@
       "itinerary": {
         "type": "day-trip",
         "tripSlug": "norway-sweden-finland-2019"
-      }
+      },
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1950,7 +2020,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1974,7 +2045,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -1998,7 +2070,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -2022,7 +2095,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -2046,7 +2120,8 @@
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
       },
-      "itinerary": null
+      "itinerary": null,
+      "templateMigrated": true
     },
     {
       "type": "city",
@@ -2073,7 +2148,8 @@
       "itinerary": {
         "type": "stop",
         "tripSlug": "austria-slovakia-hungary-liechtenstein-switzerland-2023"
-      }
+      },
+      "templateMigrated": true
     }
   ],
   "trips": [
