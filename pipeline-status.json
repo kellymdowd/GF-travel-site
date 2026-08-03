@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-02T23:39:37.317Z",
+  "generatedAt": "2026-08-03T00:06:07.004Z",
   "summary": {
     "countries": 24,
     "countryPagesCreated": 24,
@@ -391,7 +391,7 @@
       "contentAudit": {
         "audited": true,
         "lastAuditDate": "2026-08-02",
-        "status": "issues-found-pending"
+        "status": "issues-found-and-fixed"
       }
     },
     {
@@ -1286,7 +1286,7 @@
       "contentAudit": {
         "audited": true,
         "lastAuditDate": "2026-08-02",
-        "status": "issues-found-pending"
+        "status": "issues-found-and-fixed"
       }
     },
     {
@@ -1309,7 +1309,7 @@
       "contentAudit": {
         "audited": true,
         "lastAuditDate": "2026-08-02",
-        "status": "clean"
+        "status": "issues-found-and-fixed"
       }
     },
     {
@@ -1355,7 +1355,7 @@
       "contentAudit": {
         "audited": true,
         "lastAuditDate": "2026-08-02",
-        "status": "issues-found-pending"
+        "status": "issues-found-and-fixed"
       }
     },
     {
@@ -1416,7 +1416,7 @@
       "contentAudit": {
         "audited": true,
         "lastAuditDate": "2026-08-02",
-        "status": "issues-found-pending"
+        "status": "issues-found-and-fixed"
       }
     },
     {
@@ -1439,7 +1439,7 @@
       "contentAudit": {
         "audited": true,
         "lastAuditDate": "2026-08-02",
-        "status": "issues-found-pending"
+        "status": "issues-found-and-fixed"
       }
     },
     {
@@ -1623,7 +1623,7 @@
       "contentAudit": {
         "audited": true,
         "lastAuditDate": "2026-08-02",
-        "status": "issues-found-pending"
+        "status": "issues-found-and-fixed"
       }
     },
     {
@@ -1669,7 +1669,7 @@
       "contentAudit": {
         "audited": true,
         "lastAuditDate": "2026-08-02",
-        "status": "issues-found-pending"
+        "status": "issues-found-and-fixed"
       }
     },
     {
