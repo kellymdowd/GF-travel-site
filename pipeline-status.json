@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-03T23:31:11.400Z",
+  "generatedAt": "2026-08-03T23:48:32.432Z",
   "summary": {
     "countries": 24,
     "countryPagesCreated": 24,
@@ -11,7 +11,10 @@
     "blogsGenerated": 0,
     "instagramGenerated": 10,
     "contentAuditRun": 67,
-    "contentAuditNotRun": 0
+    "contentAuditNotRun": 0,
+    "trips": 21,
+    "tripsWithItinerary": 5,
+    "citiesWithItineraryCoverage": 32
   },
   "countries": [
     {
@@ -277,6 +280,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "day-trip",
+        "tripSlug": "austria-slovakia-hungary-liechtenstein-switzerland-2023"
       }
     },
     {
@@ -300,6 +307,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "austria-slovakia-hungary-liechtenstein-switzerland-2023"
       }
     },
     {
@@ -323,6 +334,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "austria-slovakia-hungary-liechtenstein-switzerland-2023"
       }
     },
     {
@@ -346,6 +361,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "austria-slovakia-hungary-liechtenstein-switzerland-2023"
       }
     },
     {
@@ -369,7 +388,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "clean"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -392,7 +412,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -415,7 +436,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -438,6 +460,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "germany-czech-italy-2018"
       }
     },
     {
@@ -461,7 +487,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-03",
         "status": "reviewed-kept-as-is"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -484,6 +511,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "clean"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "norway-sweden-finland-2019"
       }
     },
     {
@@ -507,6 +538,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "clean"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "norway-sweden-finland-2019"
       }
     },
     {
@@ -530,7 +565,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -553,6 +589,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "germany-czech-italy-2018"
       }
     },
     {
@@ -576,7 +616,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -599,7 +640,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -622,7 +664,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -645,6 +688,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "germany-czech-italy-2018"
       }
     },
     {
@@ -668,6 +715,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "germany-czech-italy-2018"
       }
     },
     {
@@ -691,7 +742,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -714,6 +766,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "austria-slovakia-hungary-liechtenstein-switzerland-2023"
       }
     },
     {
@@ -737,7 +793,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-pending"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -760,7 +817,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-pending"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -782,8 +840,9 @@
       "contentAudit": {
         "audited": true,
         "lastAuditDate": "2026-08-02",
-        "status": "issues-found-pending"
-      }
+        "status": "issues-found-and-fixed"
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -798,7 +857,8 @@
       "validationCounts": null,
       "blogGenerated": false,
       "instagramGenerated": false,
-      "contentAudit": null
+      "contentAudit": null,
+      "itinerary": null
     },
     {
       "type": "city",
@@ -813,7 +873,8 @@
       "validationCounts": null,
       "blogGenerated": false,
       "instagramGenerated": false,
-      "contentAudit": null
+      "contentAudit": null,
+      "itinerary": null
     },
     {
       "type": "city",
@@ -836,7 +897,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -859,7 +921,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-03",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -882,7 +945,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -897,7 +961,8 @@
       "validationCounts": null,
       "blogGenerated": false,
       "instagramGenerated": false,
-      "contentAudit": null
+      "contentAudit": null,
+      "itinerary": null
     },
     {
       "type": "city",
@@ -920,6 +985,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "germany-czech-italy-2018"
       }
     },
     {
@@ -943,6 +1012,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "germany-czech-italy-2018"
       }
     },
     {
@@ -966,7 +1039,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "clean"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -989,7 +1063,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -1012,6 +1087,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "japan-2025"
       }
     },
     {
@@ -1027,7 +1106,8 @@
       "validationCounts": null,
       "blogGenerated": false,
       "instagramGenerated": false,
-      "contentAudit": null
+      "contentAudit": null,
+      "itinerary": null
     },
     {
       "type": "city",
@@ -1050,6 +1130,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "city-stop",
+        "tripSlug": "kyoto-4-days"
       }
     },
     {
@@ -1073,6 +1157,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "day-trip",
+        "tripSlug": "japan-2025"
       }
     },
     {
@@ -1096,6 +1184,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "japan-2025"
       }
     },
     {
@@ -1119,6 +1211,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "city-stop",
+        "tripSlug": "tokyo-4-days"
       }
     },
     {
@@ -1142,6 +1238,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "austria-slovakia-hungary-liechtenstein-switzerland-2023"
       }
     },
     {
@@ -1165,7 +1265,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -1180,7 +1281,8 @@
       "validationCounts": null,
       "blogGenerated": false,
       "instagramGenerated": false,
-      "contentAudit": null
+      "contentAudit": null,
+      "itinerary": null
     },
     {
       "type": "city",
@@ -1203,7 +1305,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -1218,7 +1321,8 @@
       "validationCounts": null,
       "blogGenerated": false,
       "instagramGenerated": false,
-      "contentAudit": null
+      "contentAudit": null,
+      "itinerary": null
     },
     {
       "type": "city",
@@ -1241,7 +1345,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-pending"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -1264,7 +1369,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-pending"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -1287,7 +1393,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -1310,7 +1417,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -1333,7 +1441,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "clean"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -1356,6 +1465,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "norway-sweden-finland-2019"
       }
     },
     {
@@ -1379,6 +1492,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "norway-sweden-finland-2019"
       }
     },
     {
@@ -1394,7 +1511,8 @@
       "validationCounts": null,
       "blogGenerated": false,
       "instagramGenerated": false,
-      "contentAudit": null
+      "contentAudit": null,
+      "itinerary": null
     },
     {
       "type": "city",
@@ -1417,6 +1535,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "norway-sweden-finland-2019"
       }
     },
     {
@@ -1440,6 +1562,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "norway-sweden-finland-2019"
       }
     },
     {
@@ -1463,6 +1589,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "city-stop",
+        "tripSlug": "edinburgh-3-days"
       }
     },
     {
@@ -1486,6 +1616,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "scotland-2024-highlands-islands"
       }
     },
     {
@@ -1509,6 +1643,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "scotland-2024-highlands-islands"
       }
     },
     {
@@ -1532,6 +1670,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-03",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "scotland-2024-highlands-islands"
       }
     },
     {
@@ -1555,6 +1697,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-03",
         "status": "reviewed-kept-as-is"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "scotland-2024-highlands-islands"
       }
     },
     {
@@ -1578,6 +1724,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "day-trip",
+        "tripSlug": "austria-slovakia-hungary-liechtenstein-switzerland-2023"
       }
     },
     {
@@ -1601,7 +1751,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -1624,7 +1775,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -1647,7 +1799,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -1670,7 +1823,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -1693,7 +1847,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "clean"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -1716,7 +1871,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-03",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -1739,6 +1895,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "norway-sweden-finland-2019"
       }
     },
     {
@@ -1762,6 +1922,10 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "day-trip",
+        "tripSlug": "norway-sweden-finland-2019"
       }
     },
     {
@@ -1785,7 +1949,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -1808,7 +1973,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -1831,7 +1997,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -1854,7 +2021,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -1877,7 +2045,8 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
-      }
+      },
+      "itinerary": null
     },
     {
       "type": "city",
@@ -1900,7 +2069,307 @@
         "audited": true,
         "lastAuditDate": "2026-08-02",
         "status": "issues-found-and-fixed"
+      },
+      "itinerary": {
+        "type": "stop",
+        "tripSlug": "austria-slovakia-hungary-liechtenstein-switzerland-2023"
       }
+    }
+  ],
+  "trips": [
+    {
+      "year": "2026",
+      "month": "Apr",
+      "destination": "Sri Lanka, India, England",
+      "cities": [
+        "Sigiriya",
+        "Kandy",
+        "Negombo",
+        "Bengaluru",
+        "Hyderabad",
+        "Goa",
+        "London"
+      ],
+      "itinerarySlug": null,
+      "itineraryCreated": false,
+      "cityStopSlugs": []
+    },
+    {
+      "year": "2025",
+      "month": "Nov",
+      "destination": "New Zealand",
+      "cities": [
+        "Auckland",
+        "Wellington",
+        "Marlborough",
+        "Wanaka",
+        "Mt. Cook",
+        "Queenstown"
+      ],
+      "itinerarySlug": null,
+      "itineraryCreated": false,
+      "cityStopSlugs": []
+    },
+    {
+      "year": "2025",
+      "month": "Jul",
+      "destination": "India, Maldives",
+      "cities": [
+        "Bengaluru",
+        "Hyderabad",
+        "South Malé Atoll"
+      ],
+      "itinerarySlug": null,
+      "itineraryCreated": false,
+      "cityStopSlugs": []
+    },
+    {
+      "year": "2025",
+      "month": "Jun",
+      "destination": "Mexico",
+      "cities": [
+        "Mexico City"
+      ],
+      "itinerarySlug": null,
+      "itineraryCreated": false,
+      "cityStopSlugs": []
+    },
+    {
+      "year": "2025",
+      "month": "Mar",
+      "destination": "Japan",
+      "cities": [
+        "Tokyo",
+        "Kyoto",
+        "Osaka",
+        "Nara",
+        "Hakone"
+      ],
+      "itinerarySlug": "japan-2025",
+      "itineraryCreated": true,
+      "cityStopSlugs": [
+        "tokyo-4-days",
+        "kyoto-4-days"
+      ]
+    },
+    {
+      "year": "2024",
+      "month": "Dec",
+      "destination": "Mexico",
+      "cities": [
+        "Cancún"
+      ],
+      "itinerarySlug": null,
+      "itineraryCreated": false,
+      "cityStopSlugs": []
+    },
+    {
+      "year": "2024",
+      "month": "Aug",
+      "destination": "England",
+      "cities": [
+        "London"
+      ],
+      "itinerarySlug": null,
+      "itineraryCreated": false,
+      "cityStopSlugs": []
+    },
+    {
+      "year": "2024",
+      "month": "Jul",
+      "destination": "Scotland",
+      "cities": [
+        "Edinburgh",
+        "Glasgow",
+        "Portree",
+        "Fort William",
+        "Inverness"
+      ],
+      "itinerarySlug": "scotland-2024-highlands-islands",
+      "itineraryCreated": true,
+      "cityStopSlugs": [
+        "edinburgh-3-days"
+      ]
+    },
+    {
+      "year": "2023",
+      "month": "Nov",
+      "destination": "Austria, Slovakia, Hungary, Liechtenstein, Switzerland",
+      "cities": [
+        "Vienna",
+        "Salzburg",
+        "Innsbruck",
+        "Hallstatt",
+        "Bratislava",
+        "Budapest",
+        "Vaduz",
+        "Zurich"
+      ],
+      "itinerarySlug": "austria-slovakia-hungary-liechtenstein-switzerland-2023",
+      "itineraryCreated": true,
+      "cityStopSlugs": []
+    },
+    {
+      "year": "2023",
+      "month": "Aug",
+      "destination": "Costa Rica",
+      "cities": [
+        "Liberia"
+      ],
+      "itinerarySlug": null,
+      "itineraryCreated": false,
+      "cityStopSlugs": []
+    },
+    {
+      "year": "2023",
+      "month": "Mar",
+      "destination": "Ireland",
+      "cities": [
+        "Dublin",
+        "Galway",
+        "Killarney"
+      ],
+      "itinerarySlug": null,
+      "itineraryCreated": false,
+      "cityStopSlugs": []
+    },
+    {
+      "year": "2022",
+      "month": "Dec",
+      "destination": "Netherlands &amp; Germany",
+      "cities": [
+        "Amsterdam",
+        "Nijmegen",
+        "Düsseldorf",
+        "Dinslaken-Duisburg"
+      ],
+      "itinerarySlug": null,
+      "itineraryCreated": false,
+      "cityStopSlugs": []
+    },
+    {
+      "year": "2022",
+      "month": "Nov",
+      "destination": "Canada",
+      "cities": [
+        "Vancouver",
+        "Victoria"
+      ],
+      "itinerarySlug": null,
+      "itineraryCreated": false,
+      "cityStopSlugs": []
+    },
+    {
+      "year": "2022",
+      "month": "Oct",
+      "destination": "Switzerland",
+      "cities": [
+        "Basel",
+        "Geneva",
+        "Interlaken",
+        "Lucerne",
+        "Zermatt"
+      ],
+      "itinerarySlug": null,
+      "itineraryCreated": false,
+      "cityStopSlugs": []
+    },
+    {
+      "year": "2022",
+      "month": "Sep",
+      "destination": "USA",
+      "cities": [
+        "Santa Barbara (CA)"
+      ],
+      "itinerarySlug": null,
+      "itineraryCreated": false,
+      "cityStopSlugs": []
+    },
+    {
+      "year": "2021",
+      "month": "Dec",
+      "destination": "Germany, Switzerland",
+      "cities": [
+        "Berlin",
+        "Cologne",
+        "Frankfurt",
+        "Munich",
+        "Zurich"
+      ],
+      "itinerarySlug": null,
+      "itineraryCreated": false,
+      "cityStopSlugs": []
+    },
+    {
+      "year": "2019",
+      "month": "Sep",
+      "destination": "Norway, Sweden, Finland",
+      "cities": [
+        "Oslo",
+        "Bergen",
+        "Flåm",
+        "Stavanger",
+        "Stockholm",
+        "Uppsala",
+        "Helsinki",
+        "Tampere"
+      ],
+      "itinerarySlug": "norway-sweden-finland-2019",
+      "itineraryCreated": true,
+      "cityStopSlugs": []
+    },
+    {
+      "year": "2018",
+      "month": "May",
+      "destination": "Italy, Czech Republic, Germany",
+      "cities": [
+        "Florence",
+        "Rome",
+        "Prague",
+        "Frankfurt",
+        "Berlin",
+        "Munich"
+      ],
+      "itinerarySlug": "germany-czech-italy-2018",
+      "itineraryCreated": true,
+      "cityStopSlugs": []
+    },
+    {
+      "year": "2017",
+      "month": "Dec",
+      "destination": "Jamaica",
+      "cities": [
+        "Montego Bay",
+        "Ocho Rios"
+      ],
+      "itinerarySlug": null,
+      "itineraryCreated": false,
+      "cityStopSlugs": []
+    },
+    {
+      "year": "2016",
+      "month": "Oct",
+      "destination": "Spain",
+      "cities": [
+        "Barcelona",
+        "Madrid",
+        "Valencia"
+      ],
+      "itinerarySlug": null,
+      "itineraryCreated": false,
+      "cityStopSlugs": []
+    },
+    {
+      "year": "2014",
+      "month": "May",
+      "destination": "England, France",
+      "cities": [
+        "London",
+        "Paris"
+      ],
+      "itinerarySlug": null,
+      "itineraryCreated": false,
+      "cityStopSlugs": []
     }
   ]
 }

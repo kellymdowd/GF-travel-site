@@ -121,6 +121,124 @@ function contentAuditFor(countrySlug, citySlug) {
   return auditStatus[`${countrySlug}/${citySlug}`] || null;
 }
 
+// ─── 3.6. Itineraries — trips + per-city itinerary coverage. The master
+//     trip inventory is about.html's own "Where I've Been" timeline, not
+//     itineraries/index.html — the timeline lists every trip Kelly has
+//     taken (including ones with no itinerary page yet), and a trip's
+//     destination is wrapped in <a href="itineraries/[slug]"> once that
+//     page exists. That gives both the full trip list AND the
+//     itinerary-created signal in one pass, instead of only seeing the
+//     trips someone already remembered to build. ───────────────────────────
+const aboutHtml = fs.readFileSync(path.join(repoRoot, 'about.html'), 'utf-8');
+const timelineSection = aboutHtml.match(/<div class="timeline">([\s\S]*?)<div class="bio-rule">/)[1];
+const yearChunks = timelineSection.split('<div class="timeline-year">').slice(1);
+
+const trips = []; // { year, month, destination, cities: [...], itinerarySlug }
+for (const chunk of yearChunks) {
+  const yearMatch = chunk.match(/<div class="timeline-year-label">(\d{4})<\/div>/);
+  if (!yearMatch) continue;
+  const year = yearMatch[1];
+  const tripBlocks = [...chunk.matchAll(/<div class="timeline-trip">([\s\S]*?)<\/div>/g)];
+  for (const [, tripHtml] of tripBlocks) {
+    const monthMatch = tripHtml.match(/<span class="timeline-month">([^<]+)<\/span>/);
+    const destOpenIdx = tripHtml.indexOf('<span class="timeline-dest">') + '<span class="timeline-dest">'.length;
+    const citiesOpenIdx = tripHtml.indexOf('<span class="timeline-cities">');
+    if (destOpenIdx < 0 || citiesOpenIdx < 0) continue;
+    const destInner = tripHtml.slice(destOpenIdx, citiesOpenIdx);
+    const linkMatch = destInner.match(/<a href="itineraries\/([^"]+)">([^<]+)<\/a>/);
+    const destination = (linkMatch ? linkMatch[2] : destInner).trim();
+    const itinerarySlug = linkMatch ? linkMatch[1] : null;
+    const citiesRaw = tripHtml.slice(citiesOpenIdx);
+    const citiesMatch = citiesRaw.match(/—\s*([^<]+)/);
+    const cities = citiesMatch ? citiesMatch[1].split(',').map((c) => c.trim()) : [];
+    trips.push({ year, month: monthMatch ? monthMatch[1] : '', destination, cities, itinerarySlug });
+  }
+}
+
+// itineraries/index.html tags each built page as "Full Trip" or "City Stop"
+// — reuse that human-curated tier rather than re-inferring it from page
+// content (e.g. presence of a route-map script).
+const itinerariesIndexPath = path.join(repoRoot, 'itineraries', 'index.html');
+const itineraryTier = {}; // slug -> 'Full Trip' | 'City Stop'
+if (fs.existsSync(itinerariesIndexPath)) {
+  const idxHtml = fs.readFileSync(itinerariesIndexPath, 'utf-8');
+  const cardMatches = [...idxHtml.matchAll(/<a href="([^"]+)" class="trip-card">\s*<span class="trip-card-tier">([^<]+)<\/span>/g)];
+  for (const [, slug, tier] of cardMatches) itineraryTier[slug] = tier;
+}
+
+// Build citySlug -> countrySlug lookup from the already-scanned countries
+// object (step 2), so a Full Trip's ROUTE array can be matched to a city
+// purely by slug — several Full Trip pages (e.g. the single-country
+// Scotland trip) don't bother setting a per-stop countrySlug at all.
+const citySlugToCountrySlug = {};
+for (const country of Object.values(countries)) {
+  for (const citySlug of Object.keys(country.cities)) {
+    citySlugToCountrySlug[citySlug] = country.slug;
+  }
+}
+
+// cityItinerary: `${countrySlug}/${citySlug}` -> { type, tripSlug, tripLabel }
+// type is 'city-stop' | 'stop' | 'day-trip'. City Stop pages win over a
+// Full Trip "stop" entry for the same city (more specific coverage).
+const cityItinerary = {};
+function setCityItinerary(countrySlug, citySlug, entry) {
+  const key = `${countrySlug}/${citySlug}`;
+  const existing = cityItinerary[key];
+  if (existing && existing.type === 'city-stop') return; // already the most specific
+  cityItinerary[key] = entry;
+}
+
+const itinerariesDir = path.join(repoRoot, 'itineraries');
+const itineraryFiles = fs.existsSync(itinerariesDir)
+  ? fs.readdirSync(itinerariesDir).filter((f) => f.endsWith('.html') && f !== 'index.html')
+  : [];
+
+const tripCityStops = {}; // tripSlug -> [{ slug, cityStopSlug|null }]
+for (const file of itineraryFiles) {
+  const slug = path.basename(file, '.html');
+  const tier = itineraryTier[slug];
+  const html = fs.readFileSync(path.join(itinerariesDir, file), 'utf-8');
+
+  if (tier === 'Full Trip') {
+    const routeMatch = html.match(/const ROUTE\s*=\s*\[([\s\S]*?)\];/);
+    const stops = [];
+    if (routeMatch) {
+      const entryMatches = [...routeMatch[1].matchAll(/slug:\s*'([^']+)'/g)];
+      for (const [, citySlug] of entryMatches) {
+        const countrySlug = citySlugToCountrySlug[citySlug];
+        if (!countrySlug) continue; // no matching built city page — skip rather than guess
+        setCityItinerary(countrySlug, citySlug, { type: 'stop', tripSlug: slug });
+        stops.push(citySlug);
+      }
+    }
+    tripCityStops[slug] = stops;
+  } else if (tier === 'City Stop') {
+    // Filename convention: {city-slug}-{N}-days.html
+    const cityMatch = slug.match(/^(.+)-\d+-days$/);
+    const citySlug = cityMatch ? cityMatch[1] : null;
+    const countrySlug = citySlug ? citySlugToCountrySlug[citySlug] : null;
+    if (countrySlug) setCityItinerary(countrySlug, citySlug, { type: 'city-stop', tripSlug: slug });
+  }
+}
+
+// Day-trip-only stops: mentioned in a Full Trip's day-prose but with no
+// route-map pin of their own (visited as a day trip from a nearby
+// overnight stop). Small, stable list — update when a new day-trip
+// itinerary pattern ships. Skipped if the parent Full Trip doesn't exist.
+const ITINERARY_DAY_TRIPS = [
+  { countrySlug: 'slovakia', citySlug: 'bratislava', tripSlug: 'austria-slovakia-hungary-liechtenstein-switzerland-2023' },
+  { countrySlug: 'austria', citySlug: 'hallstatt', tripSlug: 'austria-slovakia-hungary-liechtenstein-switzerland-2023' },
+  { countrySlug: 'sweden', citySlug: 'uppsala', tripSlug: 'norway-sweden-finland-2019' },
+  { countrySlug: 'japan', citySlug: 'nara', tripSlug: 'japan-2025' },
+];
+for (const { countrySlug, citySlug, tripSlug } of ITINERARY_DAY_TRIPS) {
+  if (itineraryTier[tripSlug]) setCityItinerary(countrySlug, citySlug, { type: 'day-trip', tripSlug });
+}
+
+function itineraryLabelFor(countrySlug, citySlug) {
+  return cityItinerary[`${countrySlug}/${citySlug}`] || null;
+}
+
 // ─── 4. Validation — run the fast structural-only pass (no network, no
 //     puppeteer) live against every existing page. ─────────────────────────
 function validatePage(pagePath) {
@@ -170,6 +288,7 @@ for (const country of Object.values(countries).sort((a, b) => a.name.localeCompa
       validated = validationCounts.errors === 0;
     }
     const contentAudit = city.pageExists && !skipped ? contentAuditFor(country.slug, city.slug) : null;
+    const itinerary = skipped ? null : itineraryLabelFor(country.slug, city.slug);
     cityRows.push({
       type: 'city',
       country: country.name,
@@ -184,9 +303,36 @@ for (const country of Object.values(countries).sort((a, b) => a.name.localeCompa
       blogGenerated: false,
       instagramGenerated: city.pageExists && !skipped ? instagramGeneratedFor(country.slug, city.name) : false,
       contentAudit,
+      itinerary,
     });
   }
 }
+
+// Trip rows — one per about.html timeline entry, newest first (timeline is
+// already in that order). "City Stops" lists any dedicated City Stop pages
+// nested under this trip: a city that's a ROUTE stop in this Full Trip
+// AND separately has its own city-stop.html itinerary page.
+const tripRows = trips.map((t) => {
+  const stopCitySlugs = t.itinerarySlug ? (tripCityStops[t.itinerarySlug] || []) : [];
+  const cityStopSlugs = [...new Set(
+    stopCitySlugs
+      .map((citySlug) => {
+        const countrySlug = citySlugToCountrySlug[citySlug];
+        const entry = countrySlug ? cityItinerary[`${countrySlug}/${citySlug}`] : null;
+        return entry && entry.type === 'city-stop' ? entry.tripSlug : null;
+      })
+      .filter(Boolean)
+  )];
+  return {
+    year: t.year,
+    month: t.month,
+    destination: t.destination,
+    cities: t.cities,
+    itinerarySlug: t.itinerarySlug,
+    itineraryCreated: !!t.itinerarySlug,
+    cityStopSlugs,
+  };
+});
 
 const generatedAt = new Date().toISOString();
 const summary = {
@@ -201,9 +347,12 @@ const summary = {
   instagramGenerated: cityRows.filter((r) => r.instagramGenerated).length,
   contentAuditRun: cityRows.filter((r) => r.contentAudit && r.contentAudit.audited).length,
   contentAuditNotRun: cityRows.filter((r) => r.pageCreated && !r.skipped && !(r.contentAudit && r.contentAudit.audited)).length,
+  trips: tripRows.length,
+  tripsWithItinerary: tripRows.filter((r) => r.itineraryCreated).length,
+  citiesWithItineraryCoverage: cityRows.filter((r) => r.pageCreated && !r.skipped && r.itinerary).length,
 };
 
-const output = { generatedAt, summary, countries: countryRows, cities: cityRows };
+const output = { generatedAt, summary, countries: countryRows, cities: cityRows, trips: tripRows };
 fs.writeFileSync(path.join(repoRoot, 'pipeline-status.json'), JSON.stringify(output, null, 2));
 
 // ─── 6. Render HTML table ───────────────────────────────────────────────
@@ -230,6 +379,15 @@ function contentAuditCell(contentAudit, { skipped } = {}) {
   return `<span class="dot dot-yes"></span>Clean${dateStr}`;
 }
 
+function itineraryCell(itinerary, { skipped } = {}) {
+  if (skipped) return '<span class="dot dot-skip"></span>Skipped';
+  if (!itinerary) return '<span class="dot dot-na"></span>No';
+  const href = `itineraries/${itinerary.tripSlug}`;
+  if (itinerary.type === 'city-stop') return `<span class="dot dot-yes"></span><a href="${href}">City Stop</a>`;
+  if (itinerary.type === 'day-trip') return `<span class="dot dot-yes"></span><a href="${href}">Day trip in Full Trip</a>`;
+  return `<span class="dot dot-yes"></span><a href="${href}">Full Trip stop</a>`;
+}
+
 const cityTableRows = cityRows.map((r) => {
   const nameCell = r.pagePath
     ? `<a href="${r.pagePath}">${r.city}</a>`
@@ -247,8 +405,29 @@ const cityTableRows = cityRows.map((r) => {
     <td>${statusCell(r.skipped ? null : r.pageCreated, { skipped: r.skipped })}</td>
     <td>${validatedCell}</td>
     <td>${contentAuditCell(r.contentAudit, { skipped: r.skipped })}</td>
+    <td>${itineraryCell(r.itinerary, { skipped: r.skipped })}</td>
     <td>${statusCell(r.skipped ? null : r.blogGenerated, { skipped: r.skipped })}</td>
     <td>${statusCell(r.skipped ? null : r.instagramGenerated, { skipped: r.skipped })}</td>
+  </tr>`;
+}).join('\n');
+
+const tripTableRows = tripRows.map((t) => {
+  const destCell = t.itineraryCreated
+    ? `<a href="itineraries/${t.itinerarySlug}">${t.destination}</a>`
+    : t.destination;
+  const itineraryCell = t.itineraryCreated
+    ? '<span class="dot dot-yes"></span>Yes'
+    : '<span class="dot dot-no"></span>No';
+  const cityStopsCell = t.cityStopSlugs.length
+    ? t.cityStopSlugs.map((s) => `<a href="itineraries/${s}">${titleCase(s.replace(/-\d+-days$/, ''))}</a>`).join(', ')
+    : '<span class="dot dot-na"></span>—';
+  return `<tr>
+    <td>${t.year}</td>
+    <td>${t.month}</td>
+    <td>${destCell}</td>
+    <td>${t.cities.join(', ')}</td>
+    <td>${itineraryCell}</td>
+    <td>${cityStopsCell}</td>
   </tr>`;
 }).join('\n');
 
@@ -308,6 +487,7 @@ const html = `<!DOCTYPE html>
     <span><strong>${summary.cityPagesCreated}</strong> city pages built</span>
     <span><strong>${summary.cityPagesValidated}</strong> passing validation, <strong>${summary.cityPagesFailingValidation}</strong> failing</span>
     <span><strong>${summary.contentAuditRun}</strong> content-safety audited, <strong>${summary.contentAuditNotRun}</strong> not yet run</span>
+    <span><strong>${summary.tripsWithItinerary}</strong> of <strong>${summary.trips}</strong> trips have an itinerary, <strong>${summary.citiesWithItineraryCoverage}</strong> cities covered</span>
     <span><strong>${summary.blogsGenerated}</strong> blog posts generated</span>
     <span><strong>${summary.instagramGenerated}</strong> cities with Instagram content</span>
   </div>
@@ -320,8 +500,14 @@ const html = `<!DOCTYPE html>
 
   <h2>Cities</h2>
   <table>
-    <tr><th>Country</th><th>City</th><th>Page Created</th><th>Validated</th><th>Content Safety Audit</th><th>Blog Generated</th><th>Instagram Generated</th></tr>
+    <tr><th>Country</th><th>City</th><th>Page Created</th><th>Validated</th><th>Content Safety Audit</th><th>Itinerary</th><th>Blog Generated</th><th>Instagram Generated</th></tr>
     ${cityTableRows}
+  </table>
+
+  <h2>Trips</h2>
+  <table>
+    <tr><th>Year</th><th>Month</th><th>Destination</th><th>Cities</th><th>Itinerary Created</th><th>City Stops</th></tr>
+    ${tripTableRows}
   </table>
 </div>
 </body>

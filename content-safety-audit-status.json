@@ -39,7 +39,7 @@
     "france/paris": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
     "india/bengaluru": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-pending" },
     "india/goa": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-pending" },
-    "india/hyderabad": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-pending" },
+    "india/hyderabad": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
 
     "ireland/dublin": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
     "ireland/galway": { "audited": true, "lastAuditDate": "2026-08-03", "status": "issues-found-and-fixed" },
