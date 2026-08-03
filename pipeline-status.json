@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-03T00:09:58.855Z",
+  "generatedAt": "2026-08-03T23:31:11.400Z",
   "summary": {
     "countries": 24,
     "countryPagesCreated": 24,
@@ -459,8 +459,8 @@
       "instagramGenerated": false,
       "contentAudit": {
         "audited": true,
-        "lastAuditDate": "2026-08-02",
-        "status": "issues-found-pending"
+        "lastAuditDate": "2026-08-03",
+        "status": "reviewed-kept-as-is"
       }
     },
     {
@@ -857,8 +857,8 @@
       "instagramGenerated": false,
       "contentAudit": {
         "audited": true,
-        "lastAuditDate": "2026-08-02",
-        "status": "issues-found-pending"
+        "lastAuditDate": "2026-08-03",
+        "status": "issues-found-and-fixed"
       }
     },
     {
@@ -1530,8 +1530,8 @@
       "instagramGenerated": true,
       "contentAudit": {
         "audited": true,
-        "lastAuditDate": "2026-08-02",
-        "status": "issues-found-pending"
+        "lastAuditDate": "2026-08-03",
+        "status": "issues-found-and-fixed"
       }
     },
     {
@@ -1553,8 +1553,8 @@
       "instagramGenerated": true,
       "contentAudit": {
         "audited": true,
-        "lastAuditDate": "2026-08-02",
-        "status": "issues-found-pending"
+        "lastAuditDate": "2026-08-03",
+        "status": "reviewed-kept-as-is"
       }
     },
     {
@@ -1714,8 +1714,8 @@
       "instagramGenerated": false,
       "contentAudit": {
         "audited": true,
-        "lastAuditDate": "2026-08-02",
-        "status": "issues-found-pending"
+        "lastAuditDate": "2026-08-03",
+        "status": "issues-found-and-fixed"
       }
     },
     {

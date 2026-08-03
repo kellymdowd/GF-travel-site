@@ -224,6 +224,9 @@ function contentAuditCell(contentAudit, { skipped } = {}) {
   if (contentAudit.status === 'issues-found-and-fixed') {
     return `<span class="dot dot-yes"></span>Fixed${dateStr}`;
   }
+  if (contentAudit.status === 'reviewed-kept-as-is') {
+    return `<span class="dot dot-yes"></span>Reviewed, kept${dateStr}`;
+  }
   return `<span class="dot dot-yes"></span>Clean${dateStr}`;
 }
 

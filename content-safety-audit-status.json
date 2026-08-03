@@ -33,7 +33,7 @@
     "canada/vancouver": { "audited": true, "lastAuditDate": "2026-08-02", "status": "clean" },
     "canada/victoria": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
     "costa-rica/liberia": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
-    "england/london": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-pending" },
+    "england/london": { "audited": true, "lastAuditDate": "2026-08-03", "status": "reviewed-kept-as-is" },
     "finland/helsinki": { "audited": true, "lastAuditDate": "2026-08-02", "status": "clean" },
     "finland/tampere": { "audited": true, "lastAuditDate": "2026-08-02", "status": "clean" },
     "france/paris": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
@@ -42,7 +42,7 @@
     "india/hyderabad": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-pending" },
 
     "ireland/dublin": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
-    "ireland/galway": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-pending" },
+    "ireland/galway": { "audited": true, "lastAuditDate": "2026-08-03", "status": "issues-found-and-fixed" },
     "ireland/killarney": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
     "jamaica/ocho-rios": { "audited": true, "lastAuditDate": "2026-08-02", "status": "clean" },
     "jamaica/rose-hall": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
@@ -61,8 +61,8 @@
     "scotland/edinburgh": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
     "scotland/fort-william": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
     "scotland/glasgow": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
-    "scotland/inverness": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-pending" },
-    "scotland/portree": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-pending" },
+    "scotland/inverness": { "audited": true, "lastAuditDate": "2026-08-03", "status": "issues-found-and-fixed" },
+    "scotland/portree": { "audited": true, "lastAuditDate": "2026-08-03", "status": "reviewed-kept-as-is" },
 
 
     "spain/barcelona": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
@@ -70,7 +70,7 @@
     "spain/valencia": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
     "sri-lanka/kandy": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
     "sri-lanka/negombo": { "audited": true, "lastAuditDate": "2026-08-02", "status": "clean" },
-    "sri-lanka/sigiriya": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-pending" },
+    "sri-lanka/sigiriya": { "audited": true, "lastAuditDate": "2026-08-03", "status": "issues-found-and-fixed" },
     "sweden/stockholm": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" },
     "sweden/uppsala": { "audited": true, "lastAuditDate": "2026-08-02", "status": "issues-found-and-fixed" }
   }
