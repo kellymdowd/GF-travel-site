@@ -286,15 +286,50 @@
       .gf-section-grid { grid-template-columns: 1fr; gap: 1.6rem; }
     }
 
+    /* ─── Packing List ───────────────────────────────────────── */
+    .packing { padding: 0 2.5rem 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 1.5s forwards; }
+    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 0.6rem; }
+    .packing-group-label { font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin: 1.6rem 0 0.4rem; }
+    .packing-group-label:first-of-type { margin-top: 1rem; }
+    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .packing-item:last-child { border-bottom: none; }
+    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
+    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
+    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
+    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
+    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
+    .packing-tag-country { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
+    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
+
+    /* ─── FAQ ─────────────────────────────────────────────────── */
+    .faq { padding: 2.4rem 2.5rem 0; }
+    .faq-header { margin-bottom: 1.4rem; }
+    .faq-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); }
+    .faq-list { border-top: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-item { border-bottom: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: none; border: none; text-align: left; cursor: pointer; padding: 1.1rem 0; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); }
+    .faq-q:hover, .faq-q:focus-visible { color: var(--slate); }
+    .faq-q-icon { flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); color: var(--ink-light); }
+    .faq-item.is-open .faq-q-icon { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .faq-item.is-open .faq-a { max-height: 280px; }
+    .faq-a-inner { padding: 0 0 1.2rem; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.86rem; line-height: 1.75; color: var(--ink-mid); max-width: 62ch; }
+
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
 
     @media (max-width: 600px) {
       .site-nav { padding: 0 1.2rem; }
-      .nav-sub, .header, .overview-section, .map-section, .cities-section, .gf-section { padding-left: 1.2rem; padding-right: 1.2rem; }
+      .nav-sub, .header, .overview-section, .map-section, .cities-section, .gf-section, .packing, .faq { padding-left: 1.2rem; padding-right: 1.2rem; }
       .header-rule { margin: 0 1.2rem; }
     }
-  
+
 
     /* ─── Mobile: Nav bar ─────────────────────────────────── */
     @media (max-width: 480px) {
@@ -311,7 +346,7 @@
 
     /* ─── Mobile: GF section padding ──────────────────────── */
     @media (max-width: 480px) {
-      .gf-section { padding-left: 1.2rem; padding-right: 1.2rem; }
+      .gf-section, .packing, .faq { padding-left: 1.2rem; padding-right: 1.2rem; }
     }
   </style>
 
@@ -382,7 +417,32 @@
 
     });
   </script>
-  
+
+  <!-- ═══════════════ FAQ SCHEMA ═══════════════ -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do you need a car in Ireland?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No — I connected Dublin, Galway, and Killarney by train and bus rather than renting a car. The Dublin-to-Galway leg runs about 2 hours 30 minutes either way, and Galway to Killarney (or Dublin to Killarney direct) takes closer to 3 to 4 hours depending on whether you take the train or bus. Within each city, I got around on foot — Galway and Killarney are both compact enough to walk everywhere, and Dublin has the Luas, city buses, and the DART for anything farther out. For day trips into the countryside — the Cliffs of Moher and Connemara from Galway, the Ring of Kerry and Gap of Dunloe from Killarney — I joined guided tours instead of self-driving, which meant I could look at the scenery instead of navigating narrow roads." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Ireland safe for celiacs?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, more than most places I've traveled with celiac disease. Ireland scored 8/10 overall for GF friendliness — EU allergen labeling law requires every restaurant to disclose gluten on request, and the country's high rate of celiac diagnosis (around 1 in 100 people) means most staff I dealt with already understood what cross-contamination meant without much explaining. That said, the three cities weren't identical: Dublin and Killarney both scored 7/10, with menus that marked GF items clearly and more than one fish-and-chip shop running a dedicated fryer, while Galway came in at 6/10 — still manageable, but I didn't find a single dedicated GF restaurant there, so I leaned more on allergen-labeled menus and the couple of spots with dedicated fryers. Traditional Irish cooking relies heavily on wheat (soda bread, battered fish, some puddings), so the potato- and seafood-based half of the cuisine did more of the work for me than the bread basket did." }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the best time to visit Ireland?",
+      "acceptedAnswer": { "@type": "Answer", "text": "I visited in March 2023, and Ireland in March means being ready for all kinds of weather in a single day — I saw sun, driving rain, and snow on the mountain peaks above Killarney within the same week. If I went back, I'd lean toward late spring (May) or early autumn (September) for a better shot at consistent weather without the summer crowds that build up around the Cliffs of Moher and the Ring of Kerry from June through August. March still worked fine for GF dining and sightseeing — just pack for rain and wind no matter when you go, since the weather on the west coast (Galway and Killarney both) changes fast regardless of season." }
+    }
+  ]
+}
+  </script>
+
 </head>
 <body>
 
@@ -483,6 +543,193 @@
           <span class="gf-score-total-num">8</span>
           <span class="gf-score-total-label">out of 10</span>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ WHAT TO PACK ═══════════════ -->
+  <section class="packing" id="packing">
+    <div class="packing-header">
+      <h2 class="packing-title">What to Pack for Ireland</h2>
+      <span class="packing-season">March &middot; Cold, Windy &amp; Rainy</span>
+    </div>
+    <div class="packing-rule"></div>
+
+    <div class="packing-group-label">Essential</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Celiac dining card (English + Irish)</span>
+          <span class="packing-item-why">English works everywhere in Ireland, but a bilingual card shows respect and helps in busier kitchens across all three cities.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">GF snack bars for day trips</span>
+          <span class="packing-item-why">Long days on the road with limited food stops &mdash; Cliffs of Moher and Connemara from Galway, Ring of Kerry and Gap of Dunloe from Killarney, train journeys between cities.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable GF bread/crackers</span>
+          <span class="packing-item-why">Useful for self-catered stays and park picnics &mdash; supermarkets stock some GF bread but it's harder to find fresh on short notice.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Reusable water bottle</span>
+          <span class="packing-item-why">Irish tap water is safe and good quality everywhere &mdash; handy for cycling and hiking in Killarney National Park especially.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable phone charger</span>
+          <span class="packing-item-why">Full days of walking and navigating between sights drain a phone battery fast in any of these cities.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Ireland-Wide</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">UK/Ireland power adapter (Type G, 3-pin)</span>
+          <span class="packing-item-why">Ireland uses the same plug as the UK &mdash; the big three-prong type. US and EU plugs won't fit.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Ireland</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Rain jacket</span>
+          <span class="packing-item-why">It rains frequently and unpredictably across Ireland &mdash; a packable waterproof is non-negotiable in every city on this trip.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Ireland</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Compact umbrella</span>
+          <span class="packing-item-why">A backup for the rain jacket &mdash; Irish weather changes quickly, even within a single walk through town.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Ireland</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Layers</span>
+          <span class="packing-item-why">Weather shifts fast in Ireland &mdash; sun, rain, and wind can all show up within the same hour, in any of these three cities.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Ireland</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Dublin</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">Cobblestones in Temple Bar and uneven paths at Phoenix Park make Dublin harder on footwear than it looks.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Dublin</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Galway</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Waterproof walking shoes</span>
+          <span class="packing-item-why">Cobblestones plus rain get slippery fast in Galway's old town &mdash; waterproof soles are essential, not optional.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Galway</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Windproof jacket for Salthill Promenade</span>
+          <span class="packing-item-why">The prom is fully exposed to Atlantic winds &mdash; a rain jacket alone won't cut it here.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Galway</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Day pack for Cliffs of Moher/Connemara trips</span>
+          <span class="packing-item-why">Full-day tours out of Galway mean carrying snacks, water, layers, and a camera for 8+ hours.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Galway</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Killarney</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Waterproof hiking boots</span>
+          <span class="packing-item-why">Trails can be muddy, especially around Torc Waterfall and the woodland paths in Killarney National Park.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Killarney</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Bike-friendly clothing/backpack</span>
+          <span class="packing-item-why">For cycling through the national park &mdash; a small daypack for water, snacks, and extra layers.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Killarney</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sunscreen</span>
+          <span class="packing-item-why">UV still gets through Killarney's cloud cover &mdash; easy to underestimate on an overcast day in the park.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Killarney</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ═══════════════ FAQ ═══════════════ -->
+  <section class="faq" id="faq">
+    <div class="faq-header">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Do you need a car in Ireland?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">No &mdash; I connected Dublin, Galway, and Killarney by train and bus rather than renting a car. The Dublin-to-Galway leg runs about 2 hours 30 minutes either way, and Galway to Killarney (or Dublin to Killarney direct) takes closer to 3 to 4 hours depending on whether you take the train or bus. Within each city, I got around on foot &mdash; Galway and Killarney are both compact enough to walk everywhere, and Dublin has the Luas, city buses, and the DART for anything farther out. For day trips into the countryside &mdash; the Cliffs of Moher and Connemara from Galway, the Ring of Kerry and Gap of Dunloe from Killarney &mdash; I joined guided tours instead of self-driving, which meant I could look at the scenery instead of navigating narrow roads.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Is Ireland safe for celiacs?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Yes, more than most places I've traveled with celiac disease. Ireland scored 8/10 overall for GF friendliness &mdash; EU allergen labeling law requires every restaurant to disclose gluten on request, and the country's high rate of celiac diagnosis (around 1 in 100 people) means most staff I dealt with already understood what cross-contamination meant without much explaining. That said, the three cities weren't identical: Dublin and Killarney both scored 7/10, with menus that marked GF items clearly and more than one fish-and-chip shop running a dedicated fryer, while Galway came in at 6/10 &mdash; still manageable, but I didn't find a single dedicated GF restaurant there, so I leaned more on allergen-labeled menus and the couple of spots with dedicated fryers. Traditional Irish cooking relies heavily on wheat (soda bread, battered fish, some puddings), so the potato- and seafood-based half of the cuisine did more of the work for me than the bread basket did.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What's the best time to visit Ireland?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">I visited in March 2023, and Ireland in March means being ready for all kinds of weather in a single day &mdash; I saw sun, driving rain, and snow on the mountain peaks above Killarney within the same week. If I went back, I'd lean toward late spring (May) or early autumn (September) for a better shot at consistent weather without the summer crowds that build up around the Cliffs of Moher and the Ring of Kerry from June through August. March still worked fine for GF dining and sightseeing &mdash; just pack for rain and wind no matter when you go, since the weather on the west coast (Galway and Killarney both) changes fast regardless of season.</div></div>
       </div>
     </div>
   </section>
@@ -597,6 +844,24 @@
           });
         }
       });
+  </script>
+
+  <!-- ═══════════════ FAQ TOGGLE ═══════════════ -->
+  <script>
+    document.querySelectorAll('.faq-q').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.closest('.faq-item');
+        var wasOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.faq-item.is-open').forEach(function(open) {
+          open.classList.remove('is-open');
+          open.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
   </script>
 
 </body>
