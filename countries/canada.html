@@ -85,10 +85,45 @@
     .gf-city-pip.is-filled { background: var(--slate); }
     @media (max-width: 768px) { .gf-section-grid { grid-template-columns: 1fr; gap: 1.6rem; } }
 
+    /* ─── Packing List ───────────────────────────────────────── */
+    .packing { padding: 0 2.5rem 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 1.5s forwards; }
+    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 0.6rem; }
+    .packing-group-label { font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin: 1.6rem 0 0.4rem; }
+    .packing-group-label:first-of-type { margin-top: 1rem; }
+    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .packing-item:last-child { border-bottom: none; }
+    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
+    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
+    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
+    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
+    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
+    .packing-tag-country { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
+    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
+
+    /* ─── FAQ ─────────────────────────────────────────────────── */
+    .faq { padding: 2.4rem 2.5rem 0; }
+    .faq-header { margin-bottom: 1.4rem; }
+    .faq-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); }
+    .faq-list { border-top: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-item { border-bottom: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: none; border: none; text-align: left; cursor: pointer; padding: 1.1rem 0; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); }
+    .faq-q:hover, .faq-q:focus-visible { color: var(--slate); }
+    .faq-q-icon { flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); color: var(--ink-light); }
+    .faq-item.is-open .faq-q-icon { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .faq-item.is-open .faq-a { max-height: 280px; }
+    .faq-a-inner { padding: 0 0 1.2rem; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.86rem; line-height: 1.75; color: var(--ink-mid); max-width: 62ch; }
+
     /* ─── Animations ─────────────────────────────────────────── */
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
-    @media (max-width: 600px) { .site-nav { padding: 0 1.2rem; } .nav-sub, .header, .overview-section, .map-section, .cities-section, .gf-section { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
+    @media (max-width: 600px) { .site-nav { padding: 0 1.2rem; } .nav-sub, .header, .overview-section, .map-section, .cities-section, .gf-section, .packing, .faq { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
   
 
     /* ─── Mobile: Nav bar ─────────────────────────────────── */
@@ -172,7 +207,32 @@
 
     });
   </script>
-  
+
+  <!-- ═══════════════ FAQ SCHEMA ═══════════════ -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do you need a car in Canada?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No — I connected Vancouver and Victoria by BC Ferries rather than renting a car. The Tsawwassen-to-Swartz Bay crossing takes about 95 minutes, with 10 to 17 sailings a day depending on the season, and walk-on passengers rarely need reservations even though vehicles should book ahead. Within Vancouver, the Canada Line SkyTrain gets you from YVR to downtown in about 26 minutes for a fraction of what a taxi costs, and both cities are compact enough to explore mostly on foot once you're there. I'd only consider a car for day trips well outside either downtown core — Vancouver's North Shore attractions like Capilano Suspension Bridge and Grouse Mountain are close together and easy to combine into one outing, but they're easier with a car or an organized tour than with transit." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Canada safe for celiacs?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes — Canada was one of the easier countries I've traveled with celiac disease. It has strict CFIA gluten-free labeling laws in place since 2012, and both cities I visited backed that up in practice: Vancouver scored 8/10 for GF friendliness, with dedicated bakeries like The Gluten Free Epicurean and Lemonade Gluten Free Bakery plus wide GF sections at Whole Foods and the BC-based Choices Markets chain. Victoria came in at 7/10 — a notch more limited on dedicated restaurants, but Origin Gluten-Free Bakery (100% GF since 2009) and Be Love (100% plant-based and GF) covered me well, and Bartholomew's Public House had a dedicated fryer for pub food. English is spoken everywhere in both cities, so explaining celiac needs to staff was never a communication barrier — the harder part was just narrowing down which of the many options to try." }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the best time to visit Canada?",
+      "acceptedAnswer": { "@type": "Answer", "text": "I visited in November 2022, which is the wrong answer if you want dry weather — it's Vancouver's wettest month, and I had rain most days. Victoria was a little milder and drier than Vancouver during the same week, but neither city was shorts-and-sunglasses weather. If I went back for better conditions, I'd aim for Vancouver's best months of June through October, or Victoria's May through September window, when both cities are noticeably drier and the North Shore trails and Butchart Gardens are more enjoyable without waterproofing everything. November still worked fine for GF dining and indoor sightseeing — just don't expect to spend much time outside without a rain jacket." }
+    }
+  ]
+}
+  </script>
+
 </head>
 <body>
 
@@ -278,6 +338,149 @@
     </div>
   </section>
 
+  <!-- ═══════════════ WHAT TO PACK ═══════════════ -->
+  <section class="packing" id="packing">
+    <div class="packing-header">
+      <h2 class="packing-title">What to Pack for Canada</h2>
+      <span class="packing-season">November &middot; Cool &amp; Rainy</span>
+    </div>
+    <div class="packing-rule"></div>
+
+    <div class="packing-group-label">Essential</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Celiac dining card</span>
+          <span class="packing-item-why">Explains celiac disease clearly &mdash; useful at Asian restaurants where soy sauce is a concern, and at any kitchen using shared fryers.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable GF snacks</span>
+          <span class="packing-item-why">For the BC Ferries crossing between Vancouver and Victoria, plus day trips with limited GF options nearby &mdash; the North Shore, Butchart Gardens.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Reusable water bottle</span>
+          <span class="packing-item-why">Tap water is excellent in both Vancouver and Victoria.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Canada-Wide</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Power adapter (if traveling from overseas)</span>
+          <span class="packing-item-why">Canada uses Type A/B plugs, the same as the US.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Canada</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Travel insurance with medical coverage</span>
+          <span class="packing-item-why">Healthcare is not free for visitors in Canada.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Canada</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Rain jacket or waterproof shell</span>
+          <span class="packing-item-why">November is the rainy season on the BC coast &mdash; Vancouver sees near-daily rain and Victoria a bit less, but pack for both.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Canada</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Vancouver</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Layers for 5&ndash;10&deg;C</span>
+          <span class="packing-item-why">Cool and damp; a light fleece under a waterproof jacket is ideal.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Vancouver</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Compact umbrella</span>
+          <span class="packing-item-why">For the constant drizzle between downpours.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Vancouver</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable waterproof shoes</span>
+          <span class="packing-item-why">Wet sidewalks and trails, especially on the North Shore.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Vancouver</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Victoria</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Layers for 5&ndash;12&deg;C</span>
+          <span class="packing-item-why">Milder than Vancouver in November &mdash; a light fleece under a waterproof jacket works well.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Victoria</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">Victoria is very walkable &mdash; you'll cover a lot of ground on foot along the harbour and through its parks.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Victoria</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ═══════════════ FAQ ═══════════════ -->
+  <section class="faq" id="faq">
+    <div class="faq-header">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Do you need a car in Canada?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">No &mdash; I connected Vancouver and Victoria by BC Ferries rather than renting a car. The Tsawwassen-to-Swartz Bay crossing takes about 95 minutes, with 10 to 17 sailings a day depending on the season, and walk-on passengers rarely need reservations even though vehicles should book ahead. Within Vancouver, the Canada Line SkyTrain gets you from YVR to downtown in about 26 minutes for a fraction of what a taxi costs, and both cities are compact enough to explore mostly on foot once you're there. I'd only consider a car for day trips well outside either downtown core &mdash; Vancouver's North Shore attractions like Capilano Suspension Bridge and Grouse Mountain are close together and easy to combine into one outing, but they're easier with a car or an organized tour than with transit.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Is Canada safe for celiacs?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Yes &mdash; Canada was one of the easier countries I've traveled with celiac disease. It has strict CFIA gluten-free labeling laws in place since 2012, and both cities I visited backed that up in practice: Vancouver scored 8/10 for GF friendliness, with dedicated bakeries like The Gluten Free Epicurean and Lemonade Gluten Free Bakery plus wide GF sections at Whole Foods and the BC-based Choices Markets chain. Victoria came in at 7/10 &mdash; a notch more limited on dedicated restaurants, but Origin Gluten-Free Bakery (100% GF since 2009) and Be Love (100% plant-based and GF) covered me well, and Bartholomew's Public House had a dedicated fryer for pub food. English is spoken everywhere in both cities, so explaining celiac needs to staff was never a communication barrier &mdash; the harder part was just narrowing down which of the many options to try.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What's the best time to visit Canada?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">I visited in November 2022, which is the wrong answer if you want dry weather &mdash; it's Vancouver's wettest month, and I had rain most days. Victoria was a little milder and drier than Vancouver during the same week, but neither city was shorts-and-sunglasses weather. If I went back for better conditions, I'd aim for Vancouver's best months of June through October, or Victoria's May through September window, when both cities are noticeably drier and the North Shore trails and Butchart Gardens are more enjoyable without waterproofing everything. November still worked fine for GF dining and indoor sightseeing &mdash; just don't expect to spend much time outside without a rain jacket.</div></div>
+      </div>
+    </div>
+  </section>
+
   <div id="map-tooltip"></div>
 
   <script>
@@ -378,6 +581,24 @@
           chipsEl.appendChild(a);
         });
       });
+  </script>
+
+  <!-- ═══════════════ FAQ TOGGLE ═══════════════ -->
+  <script>
+    document.querySelectorAll('.faq-q').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.closest('.faq-item');
+        var wasOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.faq-item.is-open').forEach(function(open) {
+          open.classList.remove('is-open');
+          open.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
   </script>
 
 </body>
