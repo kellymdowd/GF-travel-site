@@ -107,10 +107,45 @@
       .gf-section-grid { grid-template-columns: 1fr; gap: 1.6rem; }
     }
 
+    /* ─── Packing List ───────────────────────────────────────── */
+    .packing { padding: 0 2.5rem 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 1.5s forwards; }
+    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 0.6rem; }
+    .packing-group-label { font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin: 1.6rem 0 0.4rem; }
+    .packing-group-label:first-of-type { margin-top: 1rem; }
+    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .packing-item:last-child { border-bottom: none; }
+    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
+    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
+    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
+    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
+    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
+    .packing-tag-country { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
+    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
+
+    /* ─── FAQ ─────────────────────────────────────────────────── */
+    .faq { padding: 2.4rem 2.5rem 0; }
+    .faq-header { margin-bottom: 1.4rem; }
+    .faq-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); }
+    .faq-list { border-top: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-item { border-bottom: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: none; border: none; text-align: left; cursor: pointer; padding: 1.1rem 0; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); }
+    .faq-q:hover, .faq-q:focus-visible { color: var(--slate); }
+    .faq-q-icon { flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); color: var(--ink-light); }
+    .faq-item.is-open .faq-q-icon { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .faq-item.is-open .faq-a { max-height: 280px; }
+    .faq-a-inner { padding: 0 0 1.2rem; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.86rem; line-height: 1.75; color: var(--ink-mid); max-width: 62ch; }
+
     /* ─── Animations ─────────────────────────────────────────── */
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
-    @media (max-width: 600px) { .site-nav { padding: 0 1.2rem; } .nav-sub, .header, .overview-section, .map-section, .cities-section, .gf-section { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
+    @media (max-width: 600px) { .site-nav { padding: 0 1.2rem; } .nav-sub, .header, .overview-section, .map-section, .cities-section, .gf-section, .packing, .faq { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
 
     /* ─── Mobile: Nav bar ─────────────────────────────────── */
     @media (max-width: 480px) {
@@ -127,7 +162,7 @@
 
     /* ─── Mobile: GF section padding ──────────────────────── */
     @media (max-width: 480px) {
-      .gf-section { padding-left: 1.2rem; padding-right: 1.2rem; }
+      .gf-section, .packing, .faq { padding-left: 1.2rem; padding-right: 1.2rem; }
     }
   </style>
 
@@ -174,6 +209,31 @@
       });
 
     });
+  </script>
+
+  <!-- ═══════════════ FAQ SCHEMA ═══════════════ -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do you need a car in India?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. I flew between Bengaluru, Hyderabad, and Goa rather than driving — the cities are 500+ km apart, and domestic flights are the practical way to link a multi-city India itinerary like this one. Within each city, autos and rideshare apps covered everything: Uber, Ola, and Namma Yatri in Bengaluru; Ola Auto, Uber Auto, and Rapido bike-taxis in Hyderabad; fixed-fare taxis in Goa. I never needed to rent a car or drive myself anywhere." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is India safe for celiacs?",
+      "acceptedAnswer": { "@type": "Answer", "text": "With planning, yes, though it takes more effort than a well-labeled country. India scores 5/10 overall — Manageable rather than easy — and that average hides a real range: Hyderabad's upscale dining scene scored 8/10 with two fully dedicated GF restaurants, while Bengaluru and Goa each came in at 4/10, where celiac-aware options exist but take more research and clear communication with staff. There's no formal national GF certification body — the Celiac Society of India is an advocacy and support organization, not a labeling authority — so I verified ingredients restaurant by restaurant rather than looking for a seal. Naturally gluten-free staples like dosa, idli, and rice-and-dal dishes make everyday eating more manageable than the score alone suggests, but hidden gluten in ingredients like asafoetida (hing) and curry thickeners means it's worth staying alert everywhere, not just at unfamiliar restaurants." }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the best time to visit India?",
+      "acceptedAnswer": { "@type": "Answer", "text": "I visited in April 2026, which is past the ideal window for two of these three cities — Bengaluru and Hyderabad are both better in the cooler months, roughly October through February, and even Goa, whose season runs later into April, was firmly in pre-monsoon heat by the time I got there. If your schedule is flexible, I'd aim for November through February across all three cities instead. April meant real heat management — electrolytes, sun protection, pacing outdoor time — that a cooler-month trip wouldn't require." }
+    }
+  ]
+}
   </script>
 
 </head>
@@ -293,6 +353,209 @@
     </div>
   </section>
 
+  <!-- ═══════════════ WHAT TO PACK ═══════════════ -->
+  <section class="packing" id="packing">
+    <div class="packing-header">
+      <h2 class="packing-title">What to Pack for India</h2>
+      <span class="packing-season">April · Pre-Monsoon Heat</span>
+    </div>
+    <div class="packing-rule"></div>
+
+    <div class="packing-group-label">Essential</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">Sidewalks, market lanes, and temple or fort grounds get uneven fast across all three cities — Bengaluru's tech-park sprawl, Hyderabad's Old City cobblestones, and Goa's beach paths and church grounds all call for something sturdy.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Reusable water bottle</span>
+          <span class="packing-item-why">Tap water isn't safe to drink anywhere in India — refill from filtered stations at hotels instead of buying bottled water constantly.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Universal power adapter</span>
+          <span class="packing-item-why">India uses Type C/D/M sockets at 230V — most western plugs won't fit without one.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Hand sanitizer &amp; wet wipes</span>
+          <span class="packing-item-why">Useful before meals and after handling cash, street food stalls, or market surfaces.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable charger</span>
+          <span class="packing-item-why">Long days out with rideshare apps and maps running will drain your battery fast in any of these cities.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">India-Wide</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Printed celiac dining card (English + Hindi)</span>
+          <span class="packing-item-why">English works well at upscale restaurants and hotels in Bengaluru and Hyderabad, but Hindi travels more broadly across India than a state language like Kannada or Konkani — useful for street vendors and smaller restaurants anywhere staff may be less fluent in English.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">India</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Backup GF snack bars</span>
+          <span class="packing-item-why">Dining can be inconsistent outside hotels and the handful of celiac-aware restaurants in each city — pack enough for travel days and gaps between meals.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">India</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Electrolyte packets</span>
+          <span class="packing-item-why">Standard advice for any first trip to India — heat, humidity, and dietary changes can catch up with you, especially outside the cooler months.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">India</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Basic digestive aid</span>
+          <span class="packing-item-why">Standard travel-to-India precaution, not GF-specific — pack something familiar just in case.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">India</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Bengaluru</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Light, breathable cotton layers</span>
+          <span class="packing-item-why">April marks the start of Bengaluru's hot season (30–35°C) — light natural fabrics help.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Bengaluru</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sunglasses &amp; a sun hat</span>
+          <span class="packing-item-why">Bengaluru's climate is mild for India overall, but April sun is strong by midday.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Bengaluru</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Hyderabad</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sun hat &amp; high-SPF sunscreen</span>
+          <span class="packing-item-why">April approaches Hyderabad's intense pre-monsoon heat, which can hit the mid-30s°C.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Hyderabad</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Extra electrolyte / hydration packets</span>
+          <span class="packing-item-why">The heat and humidity add up fast while sightseeing outdoors — pack more than you think you'll need on top of the India-wide supply.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Hyderabad</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Breathable, loose-fitting fabrics</span>
+          <span class="packing-item-why">For walking around Charminar and the Old City in full sun.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Hyderabad</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Goa</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Reef-safe sunscreen</span>
+          <span class="packing-item-why">For beach days on Goa's coast.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Goa</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Swimwear and a light sarong/cover-up</span>
+          <span class="packing-item-why">For beach clubs, pools, and covering up at religious sites.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Goa</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Breathable beachwear</span>
+          <span class="packing-item-why">April is hot and humid, pre-monsoon — lightweight fabrics make a real difference.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Goa</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Dry bag</span>
+          <span class="packing-item-why">Keeps electronics and cards safe on scooter rides and beach days.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Goa</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ═══════════════ FAQ ═══════════════ -->
+  <section class="faq" id="faq">
+    <div class="faq-header">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Do you need a car in India?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">No. I flew between Bengaluru, Hyderabad, and Goa rather than driving — the cities are 500+ km apart, and domestic flights are the practical way to link a multi-city India itinerary like this one. Within each city, autos and rideshare apps covered everything: Uber, Ola, and Namma Yatri in Bengaluru; Ola Auto, Uber Auto, and Rapido bike-taxis in Hyderabad; fixed-fare taxis in Goa. I never needed to rent a car or drive myself anywhere.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Is India safe for celiacs?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">With planning, yes, though it takes more effort than a well-labeled country. India scores 5/10 overall — Manageable rather than easy — and that average hides a real range: Hyderabad's upscale dining scene scored 8/10 with two fully dedicated GF restaurants, while Bengaluru and Goa each came in at 4/10, where celiac-aware options exist but take more research and clear communication with staff. There's no formal national GF certification body — the Celiac Society of India is an advocacy and support organization, not a labeling authority — so I verified ingredients restaurant by restaurant rather than looking for a seal. Naturally gluten-free staples like dosa, idli, and rice-and-dal dishes make everyday eating more manageable than the score alone suggests, but hidden gluten in ingredients like asafoetida (hing) and curry thickeners means it's worth staying alert everywhere, not just at unfamiliar restaurants.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What's the best time to visit India?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">I visited in April 2026, which is past the ideal window for two of these three cities — Bengaluru and Hyderabad are both better in the cooler months, roughly October through February, and even Goa, whose season runs later into April, was firmly in pre-monsoon heat by the time I got there. If your schedule is flexible, I'd aim for November through February across all three cities instead. April meant real heat management — electrolytes, sun protection, pacing outdoor time — that a cooler-month trip wouldn't require.</div></div>
+      </div>
+    </div>
+  </section>
+
   <!-- ═══════════════ TOOLTIP ═══════════════ -->
   <div id="map-tooltip"></div>
 
@@ -397,6 +660,24 @@
           chipsEl.appendChild(a);
         });
       });
+  </script>
+
+  <!-- ═══════════════ FAQ TOGGLE ═══════════════ -->
+  <script>
+    document.querySelectorAll('.faq-q').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.closest('.faq-item');
+        var wasOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.faq-item.is-open').forEach(function(open) {
+          open.classList.remove('is-open');
+          open.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
   </script>
 
 </body>
