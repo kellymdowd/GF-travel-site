@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-04T01:59:56.721Z",
+  "generatedAt": "2026-08-05T00:07:15.624Z",
   "summary": {
     "countries": 24,
     "countryPagesCreated": 24,
@@ -12,8 +12,8 @@
     "instagramGenerated": 10,
     "contentAuditRun": 67,
     "contentAuditNotRun": 0,
-    "templateMigrated": 60,
-    "templateNotMigrated": 7,
+    "templateMigrated": 61,
+    "templateNotMigrated": 6,
     "trips": 21,
     "tripsWithItinerary": 5,
     "citiesWithItineraryCoverage": 32
@@ -580,7 +580,7 @@
         "status": "issues-found-and-fixed"
       },
       "itinerary": null,
-      "templateMigrated": false
+      "templateMigrated": true
     },
     {
       "type": "city",
