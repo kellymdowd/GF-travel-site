@@ -48,7 +48,22 @@
     #map-tooltip { position: fixed; pointer-events: none; background: var(--ink); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.4rem 0.75rem; white-space: nowrap; opacity: 0; transition: opacity 0.15s ease; z-index: 200; }
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
-    @media (max-width: 600px) { .site-nav { padding: 0 1.2rem; } .nav-sub, .header, .map-section, .cities-section { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
+    @media (max-width: 600px) { .site-nav { padding: 0 1.2rem; } .nav-sub, .header, .map-section, .cities-section, .packing, .faq { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
+
+    /* ─── FAQ ─────────────────────────────────────────────────── */
+    .faq { padding: 2.4rem 2.5rem 0; }
+    .faq-header { margin-bottom: 1.4rem; }
+    .faq-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); }
+    .faq-list { border-top: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-item { border-bottom: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: none; border: none; text-align: left; cursor: pointer; padding: 1.1rem 0; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); }
+    .faq-q:hover, .faq-q:focus-visible { color: var(--slate); }
+    .faq-q-icon { flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); color: var(--ink-light); }
+    .faq-item.is-open .faq-q-icon { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .faq-item.is-open .faq-a { max-height: 280px; }
+    .faq-a-inner { padding: 0 0 1.2rem; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.86rem; line-height: 1.75; color: var(--ink-mid); max-width: 62ch; }
+
     .packing { padding: 0 2.5rem 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 1.5s forwards; }
     .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
     .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
@@ -151,7 +166,32 @@
 
     });
   </script>
-  
+
+  <!-- ═══════════════ FAQ SCHEMA ═══════════════ -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do you need to arrange your own transport in the Maldives?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No &mdash; it's built into the resort stay, not something you arrange yourself. Anantara Veli in South Mal&eacute; Atoll is reached by a speedboat transfer from Velana International Airport, roughly 30 to 90 minutes depending on the exact resort. South Mal&eacute; Atoll's proximity to the airport means resorts here use speedboats rather than the seaplanes required for more remote atolls. Once on the island, everything is walkable &mdash; restaurants, villas, and the beach are all just a few minutes apart." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the Maldives safe for celiacs?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Based on South Mal&eacute; Atoll, the one atoll I've visited so far, yes &mdash; it scored 8/10 for GF friendliness. All four on-site restaurants at Anantara Veli actively accommodated gluten-free diets with advance notice, even though there's no formal national celiac association in the Maldives." }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the best time to visit the Maldives?",
+      "acceptedAnswer": { "@type": "Answer", "text": "I visited South Mal&eacute; Atoll in July, outside the ideal window &mdash; the site's own data points to December through April as the better stretch for consistent dry-season weather. July still worked fine for GF dining and resort life, but if you want the best odds against rain, aim for that December&ndash;April window instead." }
+    }
+  ]
+}
+  </script>
+
 </head>
 <body>
 
@@ -265,6 +305,36 @@
     </ul>
   </section>
 
+  <!-- ═══════════════ FAQ ═══════════════ -->
+  <section class="faq" id="faq">
+    <div class="faq-header">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Do you need to arrange your own transport in the Maldives?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">No &mdash; it's built into the resort stay, not something you arrange yourself. Anantara Veli in South Malé Atoll is reached by a speedboat transfer from Velana International Airport, roughly 30 to 90 minutes depending on the exact resort. South Malé Atoll's proximity to the airport means resorts here use speedboats rather than the seaplanes required for more remote atolls. Once on the island, everything is walkable &mdash; restaurants, villas, and the beach are all just a few minutes apart.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Is the Maldives safe for celiacs?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Based on South Malé Atoll, the one atoll I've visited so far, yes &mdash; it scored 8/10 for GF friendliness. All four on-site restaurants at Anantara Veli actively accommodated gluten-free diets with advance notice, even though there's no formal national celiac association in the Maldives.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What's the best time to visit the Maldives?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">I visited South Malé Atoll in July, outside the ideal window &mdash; the site's own data points to December through April as the better stretch for consistent dry-season weather. July still worked fine for GF dining and resort life, but if you want the best odds against rain, aim for that December&ndash;April window instead.</div></div>
+      </div>
+    </div>
+  </section>
+
   <div id="map-tooltip"></div>
 
   <script>
@@ -365,6 +435,24 @@
           chipsEl.appendChild(a);
         });
       });
+  </script>
+
+  <!-- ═══════════════ FAQ TOGGLE ═══════════════ -->
+  <script>
+    document.querySelectorAll('.faq-q').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.closest('.faq-item');
+        var wasOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.faq-item.is-open').forEach(function(open) {
+          open.classList.remove('is-open');
+          open.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
   </script>
 
 </body>
