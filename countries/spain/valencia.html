@@ -341,33 +341,19 @@
     }
 
     /* ─── What to Pack ─────────────────────────────────────── */
-    .packing { padding: 2.4rem 2.5rem 0; }
-    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
-    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
-    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
-    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.6rem; }
-    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
-    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
-    .packing-item:last-child { border-bottom: none; }
-    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
-    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
-    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
-    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
-    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
-    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
-    .packing-tag-spain { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
-    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
-    .packing-storefront { margin-top: 1.4rem; padding-top: 1.2rem; border-top: 1px solid rgba(42, 32, 24, 0.08); }
-    .packing-storefront-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1.1rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.64rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 3px; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 6px rgba(200, 113, 122, 0.15), 0 1px 2px rgba(200, 113, 122, 0.08); }
-    .packing-storefront-link:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200, 113, 122, 0.25), 0 2px 4px rgba(200, 113, 122, 0.12); }
-    .packing-storefront-link:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; }
-    .packing-storefront-link:active { background: #a85a63; transform: translateY(0); }
-    .packing-storefront-link svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
-    .packing-storefront-link:hover svg { transform: translateX(2px); }
-    @media (max-width: 768px) {
-      .packing-item { grid-template-columns: 20px 1fr; }
-      .packing-item-tag { grid-column: 2; }
-    }
+    /* ─── FAQ ─────────────────────────────────────────────────── */
+    .faq { padding: 2.4rem 2.5rem 0; }
+    .faq-header { margin-bottom: 1.4rem; }
+    .faq-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); }
+    .faq-list { border-top: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-item { border-bottom: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: none; border: none; text-align: left; cursor: pointer; padding: 1.1rem 0; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); }
+    .faq-q:hover, .faq-q:focus-visible { color: var(--slate); }
+    .faq-q-icon { flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); color: var(--ink-light); }
+    .faq-item.is-open .faq-q-icon { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .faq-item.is-open .faq-a { max-height: 280px; }
+    .faq-a-inner { padding: 0 0 1.2rem; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.86rem; line-height: 1.75; color: var(--ink-mid); max-width: 62ch; }
 
     /* ─── Travel Tips ──────────────────────────────────────── */
     .travel-tips { padding: 2.4rem 2.5rem 0; }
@@ -412,7 +398,7 @@
 
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
-    @media (max-width: 600px) { .site-nav, .nav, .header, .snapshot, .toc, .gf-guide, .restaurants, .where-to-stay, .landmarks, .neighborhoods, .things-to-do, .packing, .travel-tips, .getting-around, .page-footer { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
+    @media (max-width: 600px) { .site-nav, .nav, .header, .snapshot, .toc, .gf-guide, .restaurants, .where-to-stay, .landmarks, .neighborhoods, .things-to-do, .faq, .travel-tips, .getting-around, .page-footer { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
 
     /* ─── Mobile: Breadcrumb nav ──────────────────────────── */
     @media (max-width: 480px) {
@@ -779,7 +765,7 @@
       <li class="toc-item"><a href="#landmarks" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Landmarks &amp; must-see spots</a></li>
       <li class="toc-item"><a href="#neighborhoods" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Neighborhoods</a></li>
       <li class="toc-item"><a href="#things-to-do" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Things to do</a></li>
-      <li class="toc-item"><a href="#what-to-pack" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>What to pack</a></li>
+      <li class="toc-item"><a href="../spain#packing" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>What to pack</a></li>
       <li class="toc-item"><a href="#travel-tips" class="toc-link"><svg class="toc-arrow" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M3 1.5L7 5L3 8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Travel tips</a></li>
     </ul>
   </nav>
@@ -1327,95 +1313,33 @@
   </section>
 
   <!-- ═══════════════ WHAT TO PACK ═══════════════ -->
-  <section class="packing" id="what-to-pack">
-    <div class="packing-header">
-      <h2 class="packing-title">What to Pack</h2>
-      <span class="packing-season">October in Valencia · ~16-25°C</span>
+  <section class="faq" id="faq">
+    <div class="faq-header">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
     </div>
-    <div class="packing-rule"></div>
-
-    <ul class="packing-list">
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Comfortable walking shoes</span>
-          <span class="packing-item-why">Valencia is very flat and you'll do plenty of walking — the old town, Turia Gardens, and the City of Arts complex add up quickly.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Celiac travel card (Spanish)</span>
-          <span class="packing-item-why">A printed card explaining celiac disease in Spanish. English is limited in Valencia — a card makes conversations with restaurant staff much easier.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Portable GF snacks</span>
-          <span class="packing-item-why">Useful backup for long days at the City of Arts or the beach where safe GF options may be limited.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Spanish celiac dining card</span>
-          <span class="packing-item-why">Carry the FACE (Spanish celiac federation) dining card — widely recognised by restaurants across Spain including Valencia.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-spain">Spain</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">EU power adapter (Type C/F)</span>
-          <span class="packing-item-why">Spain uses European-standard plugs. Bring a converter if travelling from the US or UK.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-spain">Spain</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Sunscreen</span>
-          <span class="packing-item-why">October in Valencia is warmer than most of Spain — afternoons regularly hit 25°C and the Mediterranean sun is strong, especially at the beach.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Valencia</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Swimsuit</span>
-          <span class="packing-item-why">The Mediterranean is still warm enough for swimming in early October — Malvarrosa Beach is very swimmable.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Valencia</span>
-      </li>
-
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Light clothing</span>
-          <span class="packing-item-why">Warmer than Madrid in October. T-shirts and a light layer for evenings is all you need for most of the trip.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Valencia</span>
-      </li>
-    </ul>
-
-    <!-- STOREFRONT: Uncomment when Amazon storefront URL is ready
-    <div class="packing-storefront">
-      <a href="STOREFRONT_URL_HERE" class="packing-storefront-link" target="_blank" rel="noopener sponsored">
-        Browse My Full Travel Storefront
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
-      </a>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Is Valencia safe for celiacs?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Valencia scores 5/10 for GF friendliness — a moderate level of safety. There are no dedicated GF restaurants, but menu labeling and staff knowledge are reasonably good, especially at spots affiliated with ACECOVA (the Valencian celiac association). English is limited outside tourist areas, so carrying a Spanish celiac dining card and learning a few key phrases makes communicating with restaurant staff much easier.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What are the best gluten-free restaurants in Valencia?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Casa Carmela, a traditional wood-fire paella restaurant near Malvarrosa Beach, has an ACECOVA agreement and offers GF bread with adaptable dishes. Restaurante Copenhagen, a vegetarian restaurant in Ruzafa, has clearly GF-marked dishes and a full allergen table available on request. Neither is a dedicated GF facility, so it's worth contacting ahead about cross-contamination protocols.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Can you find gluten-free food in Valencia supermarkets?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Yes. Mercadona, headquartered in Valencia, has the widest GF product range in Spain with over 1,000 GF products. Consum, a local Valencia-based chain, also has a solid GF selection, and Carrefour carries a dedicated free-from section with Schär products. Herbolario Navarro, a health food chain, is excellent for GF specialty items.</div></div>
+      </div>
     </div>
-    -->
   </section>
 
   <!-- ═══════════════ TRAVEL TIPS ═══════════════ -->
@@ -1525,6 +1449,26 @@
       }
     });
   })();
+  </script>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FAQ TOGGLE
+       ═══════════════════════════════════════════════════════════ -->
+  <script>
+    document.querySelectorAll('.faq-q').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.closest('.faq-item');
+        var wasOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.faq-item.is-open').forEach(function(open) {
+          open.classList.remove('is-open');
+          open.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
   </script>
 
 </body>

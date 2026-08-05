@@ -62,7 +62,7 @@
     #map-tooltip { position: fixed; pointer-events: none; background: var(--ink); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.4rem 0.75rem; white-space: nowrap; opacity: 0; transition: opacity 0.15s ease; z-index: 200; }
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
-    @media (max-width: 600px) { .site-nav { padding: 0 1.2rem; } .nav-sub, .header, .overview-section, .map-section, .cities-section, .gf-section { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
+    @media (max-width: 600px) { .site-nav { padding: 0 1.2rem; } .nav-sub, .header, .overview-section, .map-section, .cities-section, .gf-section, .packing, .faq { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
 
 
     /* ─── Mobile: Nav bar ─────────────────────────────────── */
@@ -120,7 +120,67 @@
     @media (max-width: 480px) {
       .gf-section { padding-left: 1.2rem; padding-right: 1.2rem; }
     }
+
+    /* ─── Packing List ───────────────────────────────────────── */
+    .packing { padding: 0 2.5rem 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 1.5s forwards; }
+    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 0.6rem; }
+    .packing-group-label { font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin: 1.6rem 0 0.4rem; }
+    .packing-group-label:first-of-type { margin-top: 1rem; }
+    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .packing-item:last-child { border-bottom: none; }
+    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
+    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
+    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
+    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
+    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
+    .packing-tag-country { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
+    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
+
+    /* ─── FAQ ─────────────────────────────────────────────────── */
+    .faq { padding: 2.4rem 2.5rem 0; }
+    .faq-header { margin-bottom: 1.4rem; }
+    .faq-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); }
+    .faq-list { border-top: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-item { border-bottom: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: none; border: none; text-align: left; cursor: pointer; padding: 1.1rem 0; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); }
+    .faq-q:hover, .faq-q:focus-visible { color: var(--slate); }
+    .faq-q-icon { flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); color: var(--ink-light); }
+    .faq-item.is-open .faq-q-icon { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .faq-item.is-open .faq-a { max-height: 280px; }
+    .faq-a-inner { padding: 0 0 1.2rem; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.86rem; line-height: 1.75; color: var(--ink-mid); max-width: 62ch; }
   </style>
+
+  <!-- ═══════════════ FAQ SCHEMA ═══════════════ -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do you need a car in Spain?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No, not for this itinerary. Barcelona, Madrid, and Valencia are each easy to get around without one — extensive metro and bus networks in Barcelona and Madrid, and in Valencia, a flat city where a Valenbisi bike or a walk along the Turia Gardens covers most of the sights. Getting between the three is straightforward too: Madrid's Atocha station is the country's main hub for AVE high-speed trains to both Barcelona and Valencia, so trains are the practical way to connect this itinerary without renting a car." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Spain safe for celiacs?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Spain scored an 8/10 for GF friendliness on my trip, helped by FACE, the national celiac association that certifies restaurant kitchens with a blue \"sin gluten\" sticker and pushes gluten-free menus into everyday dining. Coverage wasn't identical across all three cities: Madrid was the easiest at 8/10, with a fully dedicated GF bakery (CELICIOSO Gluten Free Bakery) and a certified GF menu at Il Piccolino della Farfalla. Barcelona came in at 7/10, including one fully dedicated GF restaurant, Restaurant en Ville. Valencia was more of a hunt at 5/10 — no dedicated GF restaurants, though spots affiliated with ACECOVA, the regional celiac association, still labeled menus clearly. Fried tapas and croquetas are the main cross-contamination risk to watch for anywhere in the country." }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the best time to visit Spain?",
+      "acceptedAnswer": { "@type": "Answer", "text": "I visited all three cities in October, which lined up with what each page's own data flags as shoulder season: Valencia and Madrid both list October directly in their best-months window, and Barcelona's window (May–June, September) sits right next to it. Barcelona's own travel notes call October \"the sweet spot — warm enough for the beach, cool enough for walking, and far fewer crowds than summer,\" and Madrid's page specifically flags August as worth skipping because of the heat and how empty the city gets. If you're weighing shoulder-season months across all three, aim for May or October." }
+    }
+  ]
+}
+  </script>
 
   <!-- Google Analytics (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-J5LD1HTY75"></script>
@@ -300,6 +360,177 @@
     </div>
   </section>
 
+  <!-- ═══════════════ WHAT TO PACK ═══════════════ -->
+  <section class="packing" id="packing">
+    <div class="packing-header">
+      <h2 class="packing-title">What to Pack for Spain</h2>
+      <span class="packing-season">October · Shoulder Season</span>
+    </div>
+    <div class="packing-rule"></div>
+
+    <div class="packing-group-label">Essential</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Celiac dining card (Spanish)</span>
+          <span class="packing-item-why">A printed card explaining celiac disease and cross-contamination — faster and clearer than explaining it yourself at a busy counter.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable GF snacks</span>
+          <span class="packing-item-why">Useful for travel days and long stretches at sights like Park Güell, the City of Arts, or Madrid's museums, where safe options can run out.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">The historic centers in Barcelona, Madrid, and Valencia are best explored on foot, often over cobblestones.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Travel insurance with medical coverage</span>
+          <span class="packing-item-why">Worth having on any trip, and particularly if a serious glutening ever means seeing a doctor abroad.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Spain-Wide</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">FACE-certified Spain dining card</span>
+          <span class="packing-item-why">A more detailed Spanish-language card referencing FACE, the national celiac federation — most restaurant staff already recognize the blue "sin gluten" sticker and understand what it means.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Spain</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">EU power adapter (Type C/F)</span>
+          <span class="packing-item-why">Spain uses the standard two-round-pin European plug at 230V.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Spain</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Barcelona</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Light layers</span>
+          <span class="packing-item-why">October mornings are cool (~15°C) but afternoons warm up (~22°C) — a light jacket covers most conditions.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Barcelona</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sunscreen</span>
+          <span class="packing-item-why">The Mediterranean sun is strong even in October, especially on the beach or at Park Güell.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Barcelona</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Swimsuit</span>
+          <span class="packing-item-why">The sea is still warm enough for swimming in early October.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Barcelona</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Compact umbrella</span>
+          <span class="packing-item-why">October brings occasional rain showers — pack something light for sudden downpours.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Barcelona</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Madrid</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Light layers</span>
+          <span class="packing-item-why">Mild days, cool evenings in shoulder season.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Madrid</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Valencia</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sunscreen</span>
+          <span class="packing-item-why">October in Valencia runs warmer than the rest of Spain — afternoons regularly hit 25°C and the Mediterranean sun is strong, especially at the beach.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Valencia</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Swimsuit</span>
+          <span class="packing-item-why">The Mediterranean is still warm enough for swimming in early October — Malvarrosa Beach is very swimmable.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Valencia</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Light clothing</span>
+          <span class="packing-item-why">Warmer than Madrid or Barcelona in October — t-shirts and a light layer for evenings covers most of the trip.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Valencia</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ═══════════════ FAQ ═══════════════ -->
+  <section class="faq" id="faq">
+    <div class="faq-header">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Do you need a car in Spain?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">No, not for this itinerary. Barcelona, Madrid, and Valencia are each easy to get around without one — extensive metro and bus networks in Barcelona and Madrid, and in Valencia, a flat city where a Valenbisi bike or a walk along the Turia Gardens covers most of the sights. Getting between the three is straightforward too: Madrid's Atocha station is the country's main hub for AVE high-speed trains to both Barcelona and Valencia, so trains are the practical way to connect this itinerary without renting a car.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Is Spain safe for celiacs?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Spain scored an 8/10 for GF friendliness on my trip, helped by FACE, the national celiac association that certifies restaurant kitchens with a blue "sin gluten" sticker and pushes gluten-free menus into everyday dining. Coverage wasn't identical across all three cities: Madrid was the easiest at 8/10, with a fully dedicated GF bakery (CELICIOSO Gluten Free Bakery) and a certified GF menu at Il Piccolino della Farfalla. Barcelona came in at 7/10, including one fully dedicated GF restaurant, Restaurant en Ville. Valencia was more of a hunt at 5/10 — no dedicated GF restaurants, though spots affiliated with ACECOVA, the regional celiac association, still labeled menus clearly. Fried tapas and croquetas are the main cross-contamination risk to watch for anywhere in the country.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What's the best time to visit Spain?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">I visited all three cities in October, which lined up with what each page's own data flags as shoulder season: Valencia and Madrid both list October directly in their best-months window, and Barcelona's window (May–June, September) sits right next to it. Barcelona's own travel notes call October "the sweet spot — warm enough for the beach, cool enough for walking, and far fewer crowds than summer," and Madrid's page specifically flags August as worth skipping because of the heat and how empty the city gets. If you're weighing shoulder-season months across all three, aim for May or October.</div></div>
+      </div>
+    </div>
+  </section>
+
   <div id="map-tooltip"></div>
 
   <script>
@@ -412,6 +643,24 @@
           chipsEl.appendChild(a);
         });
       });
+  </script>
+
+  <!-- ═══════════════ FAQ TOGGLE ═══════════════ -->
+  <script>
+    document.querySelectorAll('.faq-q').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.closest('.faq-item');
+        var wasOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.faq-item.is-open').forEach(function(open) {
+          open.classList.remove('is-open');
+          open.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
   </script>
 
 </body>
