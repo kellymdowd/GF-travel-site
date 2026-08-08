@@ -59,8 +59,8 @@ function main() {
   let match;
 
   while ((match = destRe.exec(timelineHtml))) {
-    const countryPart = decodeEntities(match[1]).trim();
-    const citiesPart = decodeEntities(match[2]).replace(/^—\s*/, '').trim();
+    const countryPart = decodeEntities(match[1]).replace(/<[^>]+>/g, '').trim();
+    const citiesPart = decodeEntities(match[2]).replace(/<[^>]+>/g, '').replace(/^—\s*/, '').trim();
 
     countryPart.split(/,|&/).map(s => s.trim()).filter(Boolean).forEach(c => {
       countries.add(c);
