@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://gfgoneglobal.com/countries/usa">
+  <title>United States — GF Gone Global</title>
+  <meta name="description" content="A celiac traveler's guide to gluten-free United States — coming soon.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --cream: #FFFFFF; --slate: #C8717A; --slate-dark: #AD5D65; --rose: #B8907A; --ink: #2A2018; --ink-mid: #5A5048; --ink-light: #9A907A; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body { background: var(--cream); color: var(--ink); font-family: 'Jost', sans-serif; font-weight: 300; min-height: 100vh; padding-top: 52px; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 100; opacity: 0.6; }
+
+    .site-nav { position: fixed; top: 0; left: 0; right: 0; height: 52px; background: var(--cream); border-bottom: 1px solid rgba(42, 32, 24, 0.08); display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; z-index: 300; }
+    .nav-home { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.85rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); text-decoration: none; transition: color 0.2s ease; }
+    .nav-home:hover { color: var(--slate); }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-link { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; transition: color 0.2s ease; }
+    .nav-link:hover { color: var(--ink); }
+
+    .nav-sub { padding: 1.2rem 2.5rem 0; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards; }
+    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .back-link:hover { color: var(--slate); }
+    .back-link:hover svg { transform: translateX(-3px); }
+    .back-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+
+    .header { display: flex; justify-content: space-between; align-items: flex-end; padding: 1.4rem 2.5rem 1.2rem; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
+    .country-name { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1; }
+    .header-rule { height: 1px; background: linear-gradient(to right, var(--rose), transparent 60%); margin: 0 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 0.6s forwards; }
+
+    .coming-soon { min-height: 50vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 4rem 2.5rem; opacity: 0; animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
+    .coming-soon-tag { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0.8rem 0.3rem 0.6rem; border-radius: 100px; background: rgba(184, 144, 122, 0.08); color: var(--rose); font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1.6rem; }
+    .coming-soon-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rose); flex-shrink: 0; }
+    .coming-soon-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.6rem, 3.5vw, 2.4rem); letter-spacing: 0.02em; color: var(--ink); max-width: 30ch; line-height: 1.3; margin-bottom: 1rem; }
+    .coming-soon-body { font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.9rem; line-height: 1.7; color: var(--ink-mid); max-width: 42ch; }
+    .coming-soon-back { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 2.2rem; font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; border: 1px solid rgba(154, 144, 122, 0.35); padding: 0.55rem 1.1rem; transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease; }
+    .coming-soon-back:hover { color: var(--slate); border-color: var(--slate); background: rgba(200, 113, 122, 0.05); }
+
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    @media (max-width: 600px) {
+      .site-nav { padding: 0 1.2rem; }
+      .nav-sub, .header, .coming-soon { padding-left: 1.2rem; padding-right: 1.2rem; }
+      .header-rule { margin: 0 1.2rem; }
+    }
+    @media (max-width: 480px) {
+      .nav-links { gap: 0.8rem; }
+      .nav-home { font-size: 0.72rem; letter-spacing: 0.1em; }
+      .nav-link { font-size: 0.56rem; letter-spacing: 0.1em; }
+    }
+  </style>
+
+  <!-- Google Analytics (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J5LD1HTY75"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J5LD1HTY75');
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.back-link, .nav-link, .nav-home, .coming-soon-back').forEach(function(link) {
+        link.addEventListener('click', function() {
+          gtag('event', 'internal_nav', { event_category: 'navigation', event_label: this.textContent.trim(), link_url: this.href || '' });
+        });
+      });
+    });
+  </script>
+
+</head>
+<body>
+
+  <nav class="site-nav">
+    <a href="../" class="nav-home">GF Gone Global</a>
+    <div class="nav-links">
+      <a href="../" class="nav-link">Places</a>
+      <a href="../itineraries/" class="nav-link">Itineraries</a>
+      <a href="../gf-scoring" class="nav-link">GF Scoring</a>
+      <a href="../about" class="nav-link">About Me</a>
+    </div>
+  </nav>
+
+  <div class="nav-sub">
+    <a href="../" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      All Countries
+    </a>
+  </div>
+
+  <header class="header">
+    <h1 class="country-name">United States</h1>
+  </header>
+  <div class="header-rule"></div>
+
+  <section class="coming-soon">
+    <span class="coming-soon-tag"><span class="coming-soon-dot"></span>Coming Soon</span>
+    <h2 class="coming-soon-title">The celiac guide to the United States is on its way</h2>
+    <p class="coming-soon-body">I've traveled plenty within the US, but haven't built out the gluten-free guide for it yet. Check back soon for restaurant picks, city guides, and practical tips.</p>
+    <a href="../" class="coming-soon-back">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M9 2L4 6.5L9 11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Explore Other Countries
+    </a>
+  </section>
+
+</body>
+</html>
