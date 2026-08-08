@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-08-08T01:28:10.437Z",
+  "generatedAt": "2026-08-08T20:27:29.822Z",
   "summary": {
-    "countries": 24,
-    "countryPagesCreated": 24,
-    "cities": 74,
+    "countries": 25,
+    "countryPagesCreated": 25,
+    "cities": 76,
     "citiesSkipped": 4,
-    "cityPagesCreated": 67,
-    "cityPagesValidated": 67,
+    "cityPagesCreated": 69,
+    "cityPagesValidated": 69,
     "cityPagesFailingValidation": 0,
     "blogsGenerated": 0,
     "instagramGenerated": 10,
     "contentAuditRun": 67,
-    "contentAuditNotRun": 0,
-    "templateMigrated": 67,
+    "contentAuditNotRun": 2,
+    "templateMigrated": 69,
     "templateNotMigrated": 0,
     "trips": 21,
     "tripsWithItinerary": 5,
@@ -175,6 +175,16 @@
       "countrySlug": "maldives",
       "pageCreated": true,
       "pagePath": "countries/maldives.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
+      "country": "Netherlands",
+      "countrySlug": "netherlands",
+      "pageCreated": true,
+      "pagePath": "countries/netherlands.html",
       "validated": null,
       "blogGenerated": false,
       "instagramGenerated": false
@@ -1327,6 +1337,48 @@
       "contentAudit": null,
       "itinerary": null,
       "templateMigrated": null
+    },
+    {
+      "type": "city",
+      "country": "Netherlands",
+      "countrySlug": "netherlands",
+      "city": "Amsterdam",
+      "citySlug": "amsterdam",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/netherlands/amsterdam.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 4,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false,
+      "contentAudit": null,
+      "itinerary": null,
+      "templateMigrated": true
+    },
+    {
+      "type": "city",
+      "country": "Netherlands",
+      "countrySlug": "netherlands",
+      "city": "Nijmegen",
+      "citySlug": "nijmegen",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/netherlands/nijmegen.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 4,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false,
+      "contentAudit": null,
+      "itinerary": null,
+      "templateMigrated": true
     },
     {
       "type": "city",

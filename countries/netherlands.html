@@ -260,9 +260,82 @@
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
 
+    /* ─── GF Friendliness Section ───────────────────────────────── */
+    .gf-section { padding: 0 2.5rem 2rem; opacity: 0; animation: fadeIn 0.8s ease 1.4s forwards; }
+    .gf-section-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.2rem; }
+    .gf-section-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .gf-verdict-tag { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.25rem 0.7rem 0.25rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; }
+    .gf-verdict-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .gf-verdict-easy { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .gf-verdict-easy .gf-verdict-dot { background: #4c8c50; }
+    .gf-verdict-moderate { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
+    .gf-verdict-moderate .gf-verdict-dot { background: #b48c3c; }
+    .gf-verdict-challenging { background: rgba(200, 122, 80, 0.08); color: #8a5030; }
+    .gf-verdict-challenging .gf-verdict-dot { background: #c87a50; }
+    .gf-verdict-difficult { background: rgba(180, 70, 60, 0.08); color: #8a3a30; }
+    .gf-verdict-difficult .gf-verdict-dot { background: #b4463c; }
+    .gf-section-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.4rem; }
+    .gf-section-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    .gf-section-summary { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.01em; margin-bottom: 1.4rem; }
+    .gf-score-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.05); }
+    .gf-score-row:first-of-type { border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .gf-score-category { font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; color: var(--ink-mid); letter-spacing: 0.02em; }
+    .gf-score-pips { display: flex; gap: 4px; align-items: center; }
+    .gf-score-pip { width: 8px; height: 8px; border-radius: 50%; background: rgba(42, 32, 24, 0.08); }
+    .gf-score-pip.is-filled { background: var(--slate); }
+    .gf-score-total { display: flex; align-items: baseline; gap: 0.5rem; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid rgba(42, 32, 24, 0.12); }
+    .gf-score-total-num { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 2.4rem; color: var(--ink); line-height: 1; letter-spacing: -0.02em; }
+    .gf-score-total-label { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .gf-city-scores { margin-top: 1.4rem; }
+    .gf-city-scores-label { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.6rem; }
+    .gf-city-score-row { display: flex; justify-content: space-between; align-items: center; padding: 0.45rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.05); }
+    .gf-city-score-row:first-of-type { border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .gf-city-name { font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; color: var(--ink-mid); }
+    .gf-city-name a { color: var(--ink-mid); text-decoration: none; transition: color 0.2s ease; }
+    .gf-city-name a:hover { color: var(--slate); }
+    .gf-city-score-bar { display: flex; gap: 3px; align-items: center; }
+    .gf-city-pip { width: 6px; height: 6px; border-radius: 50%; background: rgba(42, 32, 24, 0.08); }
+    .gf-city-pip.is-filled { background: var(--slate); }
+    @media (max-width: 768px) { .gf-section-grid { grid-template-columns: 1fr; gap: 1.6rem; } }
+
+    /* ─── Packing ───────────────────────────────────────────────── */
+    .packing { padding: 0 2.5rem 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 1.5s forwards; }
+    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 0.6rem; }
+    .packing-group-label { font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin: 1.6rem 0 0.4rem; }
+    .packing-group-label:first-of-type { margin-top: 1rem; }
+    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .packing-item:last-child { border-bottom: none; }
+    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
+    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
+    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
+    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
+    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
+    .packing-tag-country { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
+    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
+
+    /* ─── FAQ ───────────────────────────────────────────────────── */
+    .faq { padding: 2.4rem 2.5rem 0; }
+    .faq-header { margin-bottom: 1.4rem; }
+    .faq-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); }
+    .faq-list { border-top: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-item { border-bottom: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: none; border: none; text-align: left; cursor: pointer; padding: 1.1rem 0; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); }
+    .faq-q:hover, .faq-q:focus-visible { color: var(--slate); }
+    .faq-q-icon { flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); color: var(--ink-light); }
+    .faq-item.is-open .faq-q-icon { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .faq-item.is-open .faq-a { max-height: 280px; }
+    .faq-a-inner { padding: 0 0 1.2rem; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.86rem; line-height: 1.75; color: var(--ink-mid); max-width: 62ch; }
+
     @media (max-width: 600px) {
       .site-nav { padding: 0 1.2rem; }
-      .nav-sub, .header, .overview-section, .map-section, .cities-section { padding-left: 1.2rem; padding-right: 1.2rem; }
+      .nav-sub, .header, .overview-section, .map-section, .cities-section, .gf-section, .packing, .faq { padding-left: 1.2rem; padding-right: 1.2rem; }
       .header-rule { margin: 0 1.2rem; }
     }
 
@@ -346,6 +419,31 @@
     });
   </script>
 
+  <!-- ═══════════════ FAQ SCHEMA ═══════════════ -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do you need a car in the Netherlands?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Not for Amsterdam itself &mdash; it's compact and genuinely built for trams, bikes, and walking. But we drove there, and a car turned out to be the right call for how we actually did this trip: a day trip from a friend's place in Dinslaken, Germany, with a stop in Nijmegen on the way back. If you're combining the two cities or crossing the border like we did, a car makes sense; if Amsterdam is your only stop, leave it at home." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the Netherlands safe for celiacs?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, especially in Amsterdam, which scores 9/10 (Easy) &mdash; a real cluster of 100%-dedicated GF restaurants, EU allergen-labeling laws, and the Nederlandse Coeliakie Vereniging's \"Zorgeloos Glutenvrij\" certification for restaurants with verified protocols. Nijmegen, a smaller city we only passed through after dark, scores 5/10 (Moderate) &mdash; a more modest but still real GF scene, worth planning ahead for rather than winging it." }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the best time to visit the Netherlands?",
+      "acceptedAnswer": { "@type": "Answer", "text": "We went in December, which meant short days and cold, occasionally rainy weather &mdash; workable for a single day trip, but not when I'd pick for a longer stay. Shoulder season (April&ndash;May or September&ndash;October) gets you milder weather and, in spring, tulip season, without peak summer's crowds and prices." }
+    }
+  ]
+}
+  </script>
+
 </head>
 <body>
 
@@ -374,6 +472,16 @@
   </header>
   <div class="header-rule"></div>
 
+  <div class="overview-section">
+    <a class="overview-btn" href="https://www.google.com/maps/d/u/0/edit?mid=1JXfAVWzJBic4Jdfo19TfwQwWNtfhHSE&usp=sharing" target="_blank" rel="noopener">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+        <path d="M6.5 1.5C4 1.5 2 3.5 2 6s2 4.5 4.5 4.5S11 8.5 11 6 9 1.5 6.5 1.5Z" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M8.5 11 11 8.5M8.5 11H11V8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Open Google Map
+    </a>
+  </div>
+
   <section class="map-section">
     <div id="country-map"></div>
   </section>
@@ -381,6 +489,179 @@
   <section class="cities-section">
     <div class="cities-rule"></div>
     <div class="cities-grid" id="city-chips"></div>
+  </section>
+
+  <!-- ═══════════════ GF FRIENDLINESS ═══════════════ -->
+  <section class="gf-section">
+    <div class="gf-section-header">
+      <h2 class="gf-section-title">GF Friendliness</h2>
+      <span class="gf-verdict-tag gf-verdict-easy"><span class="gf-verdict-dot"></span>GF Friendly</span>
+    </div>
+    <div class="gf-section-rule"></div>
+
+    <div class="gf-section-grid">
+      <div>
+        <p class="gf-section-summary">The Netherlands is a genuinely easy country for celiac travelers, anchored by Amsterdam's real cluster of 100%-dedicated GF restaurants and the Nederlandse Coeliakie Vereniging's (NCV) "Zorgeloos Glutenvrij" certification for verified-safe kitchens. EU allergen-labeling laws apply nationwide, and Albert Heijn's "AH Vrij van Gluten" range puts GF groceries within reach even outside the big cities. That said, traditional Dutch cuisine leans heavily on wheat &mdash; kroketten, bitterballen, and beer-battered fried foods are gluten traps everywhere &mdash; and dining options thin out noticeably once you're away from Amsterdam, as our brief stop in Nijmegen made clear.</p>
+
+        <div class="gf-city-scores">
+          <div class="gf-city-scores-label">City Scores</div>
+          <div class="gf-city-score-row">
+            <span class="gf-city-name"><a href="netherlands/amsterdam">Amsterdam</a></span>
+            <div class="gf-city-score-bar">
+              <span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span>
+            </div>
+          </div>
+          <div class="gf-city-score-row">
+            <span class="gf-city-name"><a href="netherlands/nijmegen">Nijmegen</a></span>
+            <div class="gf-city-score-bar">
+              <span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">GF Culture &amp; Awareness</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Labeling &amp; Regulations</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Dining Options Nationwide</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Grocery &amp; Supermarket Access</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Naturally GF Cuisine</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip"></span></div>
+        </div>
+        <div class="gf-score-total">
+          <span class="gf-score-total-num">8</span>
+          <span class="gf-score-total-label">out of 10</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: 1.6rem; padding: 1.2rem 1.4rem; background: #FBF0F1; border-left: 2px solid #C8717A; border-radius: 0 6px 6px 0;">
+      <p style="font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--ink-mid); line-height: 1.6;"><strong style="font-weight: 500; color: var(--ink); font-style: normal;">Country scores are not city averages.</strong> The Netherlands' 8/10 reflects national infrastructure &mdash; EU-wide labeling law, a real certification body, nationwide grocery access &mdash; even though Amsterdam (9/10) and Nijmegen (5/10) land at very different points individually. Amsterdam is the fuller data point here; Nijmegen was a brief, after-dark stopover, not a full day of testing the local dining scene.</p>
+    </div>
+  </section>
+
+  <!-- ═══════════════ PACKING ═══════════════ -->
+  <section class="packing" id="packing">
+    <div class="packing-header">
+      <h2 class="packing-title">What to Pack for the Netherlands</h2>
+      <span class="packing-season">Winter</span>
+    </div>
+    <div class="packing-rule"></div>
+
+    <div class="packing-group-label">Essential</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Celiac travel card (Dutch)</span>
+          <span class="packing-item-why">"Ik heb coeliakie" is the priority phrase &mdash; a printed Dutch card explaining celiac disease helps communicate clearly with kitchen staff beyond phrasebook Dutch, especially outside Amsterdam's excellent English.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable GF snacks</span>
+          <span class="packing-item-why">Handy for a long driving day between cities &mdash; especially useful the way we did this trip, crossing from Germany with no guaranteed GF stop along the way.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Netherlands-Wide</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Compact umbrella or rain shell</span>
+          <span class="packing-item-why">Dutch weather turns quickly regardless of season &mdash; a packable layer beats getting caught out between the car and a canal-side walk.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Netherlands</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Warm layers</span>
+          <span class="packing-item-why">We visited in December — cold enough that a proper coat and layers mattered for a full day outdoors between two cities.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Netherlands</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">EU power adapter (Type C/F)</span>
+          <span class="packing-item-why">Standard European two-round-pin sockets throughout the country.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Netherlands</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Amsterdam</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Comfortable walking shoes</span>
+          <span class="packing-item-why">Cobblestones and canal-side paths add up fast — and watch for the bike lanes, which are as much a part of Amsterdam traffic as the road.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Amsterdam</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Nijmegen</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Phone flashlight / headlamp</span>
+          <span class="packing-item-why">We only saw Nijmegen after dark on the drive back — useful if you're walking the Waalbrug or old city streets in the evening too.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Nijmegen</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ═══════════════ FAQ ═══════════════ -->
+  <section class="faq" id="faq">
+    <div class="faq-header">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Do you need a car in the Netherlands?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Not for Amsterdam itself — it's compact and genuinely built for trams, bikes, and walking. But we drove there, and a car turned out to be the right call for how we actually did this trip: a day trip from a friend's place in Dinslaken, Germany, with a stop in Nijmegen on the way back. If you're combining the two cities or crossing the border like we did, a car makes sense; if Amsterdam is your only stop, leave it at home.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Is the Netherlands safe for celiacs?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Yes, especially in Amsterdam, which scores 9/10 (Easy) — a real cluster of 100%-dedicated GF restaurants, EU allergen-labeling laws, and the Nederlandse Coeliakie Vereniging's "Zorgeloos Glutenvrij" certification for restaurants with verified protocols. Nijmegen, a smaller city we only passed through after dark, scores 5/10 (Moderate) — a more modest but still real GF scene, worth planning ahead for rather than winging it.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What's the best time to visit the Netherlands?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">We went in December, which meant short days and cold, occasionally rainy weather — workable for a single day trip, but not when I'd pick for a longer stay. Shoulder season (April–May or September–October) gets you milder weather and, in spring, tulip season, without peak summer's crowds and prices.</div></div>
+      </div>
+    </div>
   </section>
 
   <div id="map-tooltip"></div>
@@ -493,6 +774,24 @@
           });
         }
       });
+  </script>
+
+  <!-- ═══════════════ FAQ TOGGLE ═══════════════ -->
+  <script>
+    document.querySelectorAll('.faq-q').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.closest('.faq-item');
+        var wasOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.faq-item.is-open').forEach(function(open) {
+          open.classList.remove('is-open');
+          open.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
   </script>
 
 </body>

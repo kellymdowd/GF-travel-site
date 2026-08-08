@@ -445,6 +445,18 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://gfgoneglobal.com/countries/netherlands/amsterdam</loc>
+    <lastmod>2026-08-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://gfgoneglobal.com/countries/netherlands/nijmegen</loc>
+    <lastmod>2026-08-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://gfgoneglobal.com/countries/new-zealand/auckland</loc>
     <lastmod>2026-08-08</lastmod>
     <changefreq>monthly</changefreq>
