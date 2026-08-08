@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="canonical" href="https://gfgoneglobal.com/countries/maldives">
   <title>Maldives — GF Gone Global</title>
+  <meta name="description" content="A celiac traveler's guide to gluten-free Maldives, covering the South Malé Atoll — resort dining tips and practical advice for celiac-safe travel.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
@@ -31,6 +32,11 @@
     .country-name { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1; }
     .trip-dates { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(0.85rem, 1.3vw, 1rem); color: var(--ink-light); letter-spacing: 0.04em; padding-bottom: 0.2rem; }
     .header-rule { height: 1px; background: linear-gradient(to right, var(--rose), transparent 60%); margin: 0 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 0.6s forwards; }
+    .overview-section { padding: 1rem 2.5rem 0; opacity: 0; animation: fadeIn 0.8s ease 0.3s forwards; }
+    .overview-btn { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; border: 1px solid rgba(154, 144, 122, 0.35); padding: 0.45rem 0.9rem 0.45rem 0.75rem; transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease; }
+    .overview-btn:hover { color: var(--slate); border-color: var(--slate); background: rgba(200, 113, 122, 0.05); }
+    .overview-btn svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .overview-btn:hover svg { transform: translateX(2px); }
     .map-section { padding: 1.5rem 2.5rem 1rem; opacity: 0; animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
     #country-map { width: 100%; display: block; }
     #country-map svg { width: 100%; display: block; overflow: hidden; }
@@ -48,7 +54,7 @@
     #map-tooltip { position: fixed; pointer-events: none; background: var(--ink); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.4rem 0.75rem; white-space: nowrap; opacity: 0; transition: opacity 0.15s ease; z-index: 200; }
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeIn { to { opacity: 1; } }
-    @media (max-width: 600px) { .site-nav { padding: 0 1.2rem; } .nav-sub, .header, .map-section, .cities-section, .packing, .faq { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
+    @media (max-width: 600px) { .site-nav { padding: 0 1.2rem; } .nav-sub, .header, .overview-section, .map-section, .cities-section, .packing, .faq { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
 
     /* ─── FAQ ─────────────────────────────────────────────────── */
     .faq { padding: 2.4rem 2.5rem 0; }
@@ -219,6 +225,16 @@
     <span class="trip-dates"><!-- Add trip dates when known --></span>
   </header>
   <div class="header-rule"></div>
+
+  <div class="overview-section">
+    <a class="overview-btn" href="https://www.google.com/maps/d/u/0/edit?mid=1fYRoyemANmxYpaSDHG1XwoAMv-BNt_s&usp=sharing" target="_blank" rel="noopener">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+        <path d="M6.5 1.5C4 1.5 2 3.5 2 6s2 4.5 4.5 4.5S11 8.5 11 6 9 1.5 6.5 1.5Z" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M8.5 11 11 8.5M8.5 11H11V8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Open Google Map
+    </a>
+  </div>
 
   <section class="map-section">
     <div id="country-map"></div>
