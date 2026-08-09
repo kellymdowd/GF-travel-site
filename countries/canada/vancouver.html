@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="description" content="First-hand celiac travel guide to Vancouver with 1 GF-rated restaurant, 8/10 safety score, hotel reviews, and interactive maps. Visited November 2022.">
+  <meta name="description" content="First-hand celiac travel guide to Vancouver with 3 GF-rated restaurants, 8/10 safety score, hotel reviews, and interactive maps. Visited November 2022.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="canonical" href="https://gfgoneglobal.com/countries/canada/vancouver">
   <title>Gluten-Free Restaurants &amp; Celiac Guide to Vancouver, Canada | GF Gone Global</title>
@@ -520,7 +520,7 @@
     {
       "@type": "Article",
       "headline": "Gluten-Free Restaurants & Celiac Guide to Vancouver, Canada",
-      "description": "First-hand celiac travel guide to Vancouver with 1 GF-rated restaurant, 8/10 GF friendliness score. Visited November 2022.",
+      "description": "First-hand celiac travel guide to Vancouver with 3 GF-rated restaurants, 8/10 GF friendliness score. Visited November 2022.",
       "author": {
         "@type": "Person",
         "name": "GF Gone Global"
@@ -560,6 +560,54 @@
           "worstRating": 0
         },
         "reviewBody": "Not a dedicated GF facility. Fries-only fryer reduces cross-contamination risk, but mixed reviews on staff celiac knowledge. Call ahead to verify. Fries with GF gravy available."
+      }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "The Gluten Free Epicurean",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Vancouver",
+        "addressCountry": "CA"
+      },
+      "servesCuisine": "Bakery, Cafe",
+      "review": {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "GF Gone Global"
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": 5,
+          "bestRating": 5,
+          "worstRating": 0
+        },
+        "reviewBody": "100% dedicated gluten-free bakery and kitchen — no gluten on premises. Zero cross-contamination risk. Traveler recommended, not personally visited."
+      }
+    },
+    {
+      "@type": "Restaurant",
+      "name": "Lemonade Gluten Free Bakery",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Vancouver",
+        "addressCountry": "CA"
+      },
+      "servesCuisine": "Bakery",
+      "review": {
+        "@type": "Review",
+        "author": {
+          "@type": "Person",
+          "name": "GF Gone Global"
+        },
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": 5,
+          "bestRating": 5,
+          "worstRating": 0
+        },
+        "reviewBody": "100% dedicated gluten-free bakery, baked fresh daily since 2012 — no gluten on premises. Zero cross-contamination risk. Traveler recommended, not personally visited."
       }
     },
     {
@@ -811,10 +859,6 @@
             <span class="gf-phrase-local">"Is this cooked in a shared fryer?"</span>
             <span class="gf-phrase-meaning">Critical for fry shops</span>
           </div>
-          <div class="gf-phrase">
-            <span class="gf-phrase-local">"Can you confirm your soy sauce is gluten-free?"</span>
-            <span class="gf-phrase-meaning">Essential for Asian cuisine</span>
-          </div>
         </div>
         <div class="gf-info-group">
           <div class="gf-info-label">GF Grocery Stores</div>
@@ -871,13 +915,14 @@
   <section class="restaurants" id="restaurants">
     <div class="restaurants-header">
       <h2 class="restaurants-title">GF Friendly Restaurants</h2>
-      <span class="restaurants-count">2 spots</span>
+      <span class="restaurants-count">4 spots</span>
     </div>
     <div class="restaurants-rule"></div>
 
     <div id="gf-map" style="width:100%; min-height:260px; border-radius:4px; border:1px solid rgba(42,32,24,0.08); margin-bottom:1.6rem;"></div>
     <div style="display:flex; align-items:center; gap:1.2rem; flex-wrap:wrap; margin-bottom:2.4rem; font-family:'Jost',sans-serif; font-size:0.58rem; font-weight:400; letter-spacing:0.08em; text-transform:uppercase; color:var(--ink-light);">
       <span>GF Score</span>
+      <span style="display:inline-flex;align-items:center;gap:0.3rem;"><span style="width:10px;height:10px;border-radius:50%;background:#3d6e40;"></span> 5/5</span>
       <span style="display:inline-flex;align-items:center;gap:0.3rem;"><span style="width:10px;height:10px;border-radius:50%;background:#c87a50;"></span> 2/5</span>
       <span style="display:inline-flex;align-items:center;gap:0.3rem;"><span style="width:10px;height:10px;border-radius:50%;background:#2A2018;"></span> Hotel</span>
     </div>
@@ -891,7 +936,9 @@
       var colors = { 5:'#3d6e40', 4:'#6a9a40', 3:'#b48c3c', 2:'#c87a50', 1:'#b4463c', 0:'#9a9a9a' };
 
       var restaurants = [
-        { name:'Fritz European Fry House', score:2, lat:49.2773095, lng:-123.1266968 }
+        { name:'Fritz European Fry House', score:2, lat:49.2773095, lng:-123.1266968 },
+        { name:'The Gluten Free Epicurean', score:5, lat:49.2573157, lng:-123.0904884 },
+        { name:'Lemonade Gluten Free Bakery', score:5, lat:49.2551992, lng:-123.1153347 }
       ];
 
       var hotelIcon = L.divIcon({
@@ -977,6 +1024,88 @@
           <div class="restaurant-detail-label">Note</div>
           <div class="restaurant-detail-value"><!-- RESEARCHED -->Permanently closed March 2026. Was a top celiac-friendly spot with dedicated GF fryer and red toothpick system for safe meals. Parent company MeeT on Main is still operating.</div>
         </div>
+      </div>
+    </div>
+
+    <!-- The Gluten Free Epicurean — 5/5, traveler recommended -->
+    <div class="restaurant-card">
+      <div class="restaurant-card-inner">
+      <div class="restaurant-card-content">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">The Gluten Free Epicurean</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-gf">100% GF</span></div>
+      </div>
+      <div class="restaurant-cuisine">Bakery &middot; Caf&eacute;</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled" style="background: #3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background: #3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background: #3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background: #3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background: #3d6e40;"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value"><!-- RESEARCHED -->100% dedicated gluten-free bakery and kitchen &mdash; no gluten on premises. Zero cross-contamination risk. Menu changes daily; popular items sell out by afternoon.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value"><!-- RESEARCHED -->Donuts (apple fritters Wednesdays, Boston cream Fridays), chocolate miso donut, tiramisu.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">633 E 15th Avenue, Mount Pleasant</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/the-gluten-free-epicurean/12115831" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+      </div>
+      </div>
+    </div>
+
+    <!-- Lemonade Gluten Free Bakery — 5/5, traveler recommended -->
+    <div class="restaurant-card">
+      <div class="restaurant-card-inner">
+      <div class="restaurant-card-content">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Lemonade Gluten Free Bakery</h3>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-gf">100% GF</span></div>
+      </div>
+      <div class="restaurant-cuisine">Bakery</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled" style="background: #3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background: #3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background: #3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background: #3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background: #3d6e40;"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value"><!-- RESEARCHED -->100% dedicated gluten-free bakery, baked fresh daily since 2012 &mdash; no gluten on premises. Zero cross-contamination risk.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value"><!-- RESEARCHED -->Italian cheese bun, chocolate passionfruit tart, chocolate croissant, lemon cheesecake.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">3385 Cambie Street, South Cambie</span>
+          </div>
+        </div>
+      </div>
+      <div class="restaurant-fmgf">
+        <a href="https://www.findmeglutenfree.com/biz/lemonade-gluten-free-bakery/43657591" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+          See reviews on Find Me Gluten Free
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+        </a>
+      </div>
+      </div>
       </div>
     </div>
 
@@ -1477,7 +1606,7 @@
         </li>
         <li class="hindsight-item">
           <svg class="hindsight-icon" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 11L6 1L11 11H1Z" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/></svg>
-          <span class="hindsight-text">Should have booked whale watching further in advance &mdash; November is late in the season and tours fill up.</span>
+          <span class="hindsight-text">Wish we had booked a whale watching tour.</span>
         </li>
       </ul>
     </div>
