@@ -120,14 +120,24 @@
     .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
     .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
     .packing-item:last-child { border-bottom: none; }
-    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-check { color: var(--rose); opacity: 0.55; position: relative; top: 1px; }
     .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
     .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
     .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
     .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
-    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
-    .packing-tag-country { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
-    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    .packing-tag-optional { background: rgba(42, 32, 24, 0.05); color: var(--ink-light); }
+    .packing-group-note { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.92rem; color: var(--ink-light); letter-spacing: 0.01em; margin: -0.2rem 0 0.8rem; }
+    .packing-shop { display: inline-flex; align-self: flex-start; align-items: center; gap: 0.4rem; margin-top: 0.6rem; padding: 0.32rem 0.7rem 0.32rem 0.6rem; border: 1px solid rgba(200, 113, 122, 0.4); border-radius: 100px; background: rgba(200, 113, 122, 0.06); box-shadow: 0 1px 3px rgba(173, 93, 101, 0.1); font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--slate); text-decoration: none; transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    .packing-shop:hover { color: #fff; background: var(--slate); border-color: var(--slate); box-shadow: 0 4px 12px rgba(173, 93, 101, 0.3); transform: translateY(-1px); }
+    .packing-shop:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; }
+    .packing-shop:active { transform: translateY(0); box-shadow: 0 1px 4px rgba(173, 93, 101, 0.25); }
+    .packing-shop svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .packing-shop:hover svg { transform: translateX(2px); }
+    .is-optional .packing-shop { color: var(--ink-mid); border-color: rgba(42, 32, 24, 0.18); background: rgba(42, 32, 24, 0.03); box-shadow: 0 1px 3px rgba(42, 32, 24, 0.06); }
+    .is-optional .packing-shop:hover { color: #fff; background: var(--ink-mid); border-color: var(--ink-mid); box-shadow: 0 4px 12px rgba(42, 32, 24, 0.2); }
+    .is-optional .packing-shop:focus-visible { outline-color: var(--ink-mid); }
+    .packing-shop-group { display: flex; flex-wrap: wrap; column-gap: 0.5rem; row-gap: 0.5rem; margin-top: 0.6rem; }
+    .packing-shop-group .packing-shop { margin-top: 0; }
     @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
   
 
@@ -344,75 +354,492 @@
   <section class="packing" id="packing">
     <div class="packing-header">
       <h2 class="packing-title">What to Pack for the Maldives</h2>
-      <span class="packing-season">July · Southwest Monsoon</span>
+      <span class="packing-season">July &middot; Southwest Monsoon</span>
     </div>
     <div class="packing-rule"></div>
 
-    <div class="packing-group-label">Essential</div>
+    <div class="packing-group-label">GF Snacks &amp; Essentials</div>
     <ul class="packing-list">
       <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
         <div class="packing-item-content">
-          <span class="packing-item-name">Celiac travel card in English</span>
-          <span class="packing-item-why">Resort staff are English-fluent, so a local-language card isn't needed here — a clear English card is enough to hand to any restaurant manager.</span>
+          <span class="packing-item-name">Nuts &amp; crunchy snacks</span>
+          <span class="packing-item-why">Speedboat and airport transfer connections have limited food options &mdash; pack something in your carry-on for the transfer window, plus day-to-day snacking on the island.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/4wJNcAY" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Texas pecans
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/45Rr3EY" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Pistachios
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4hoJg42" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Edamame
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4fX6j4R" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Crunchy corn
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
         </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
       </li>
       <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
         <div class="packing-item-content">
-          <span class="packing-item-name">Portable GF snacks for transfer day</span>
-          <span class="packing-item-why">Speedboat and airport connections have limited food options — pack something in your carry-on for the transfer window.</span>
+          <span class="packing-item-name">Bars &amp; crackers</span>
+          <span class="packing-item-why">Easy to toss in a bag for the boat transfer or a day out on the water.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/45gtMYs" class="packing-shop" target="_blank" rel="noopener sponsored">
+              KIND protein bars
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4g6gy5v" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Simple Mills cheddar crackers
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
         </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Condiment packets</span>
+          <span class="packing-item-why">Many traditional soy sauces contain wheat, so I carry tamari packets rather than relying on every restaurant having a GF option. PB packets turn any bread or fruit into a real snack.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/4wKUk01" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Tamari packets
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4glHu2n" class="packing-shop" target="_blank" rel="noopener sponsored">
+              PB packets
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Backup GF meals</span>
+          <span class="packing-item-why">Just-add-hot-water options for nights when resort dining falls through &mdash; useful insurance on a small, isolated island with one or two restaurants total.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/45ATHud" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Instant GF noodles
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4wQj0V2" class="packing-shop" target="_blank" rel="noopener sponsored">
+              GF mac &amp; cheese
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Hydration &amp; energy</span>
+          <span class="packing-item-why">Electrolytes for hot, humid island days, plus a caffeine boost for early transfers.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/4xtKaRg" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Electrolytes
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/45j95Lv" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Energy sticks
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Resort dining advance notice</span>
+          <span class="packing-item-why">Email the resort about your GF needs about 14 days before arrival, then hand a printed dietary card to each restaurant's manager on arrival &mdash; small, isolated islands often have just one or two restaurants total, so getting ahead of it matters more than in a city with options.</span>
+        </div>
       </li>
     </ul>
 
-    <div class="packing-group-label">Maldives-Wide</div>
+    <div class="packing-group-label">Travel Essentials</div>
     <ul class="packing-list">
       <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
         <div class="packing-item-content">
-          <span class="packing-item-name">Reef-safe sunscreen</span>
-          <span class="packing-item-why">Mandatory at most Maldives resorts to protect the coral — bring it from home since selection on-island is limited.</span>
+          <span class="packing-item-name">Documents &amp; money</span>
+          <span class="packing-item-why">Passport, ID, and any entry paperwork the Maldives requires, plus cards and some cash. Photograph everything on your phone and leave a copy with someone at home, along with emergency contact details.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/4hrt95z" class="packing-shop" target="_blank" rel="noopener sponsored">
+              RFID card wallet
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/3U5zH00" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Passport holder &amp; organizer
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
         </div>
-        <span class="packing-item-tag packing-tag-country">Maldives</span>
       </li>
       <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Clothing basics</span>
+          <span class="packing-item-why">Underwear, everyday socks, sleepwear, and a couple of casual outfits for dinner, plus swimwear &mdash; you'll likely live in it most days. For shoes that aren't water shoes, something light and breathable works well for the resort.</span>
+          <a href="https://amzn.to/4cwtpNc" class="packing-shop" target="_blank" rel="noopener sponsored">
+            My Pick: everyday shoes
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Reusable water bottle</span>
+          <span class="packing-item-why">Most resorts provide filtered water refill stations &mdash; stay hydrated in the heat and humidity.</span>
+          <a href="https://www.amazon.com/IRON-%C2%B0FLASK-Narrow-Mouth-Bottle/dp/B0F1TL887L?dib=eyJ2IjoiMSJ9.LMuc_wJHHmkOotdeqrLznDcgQjonCvhzM69h1Rcinj8b8_VCrZBTqIIBoy4-KqEM-B5TX8KWwRMxWLIx2OhQsG4l5b87KiTbzlmdvBoCwVK_1pO4ni3lj_WMkjvikXchsN4cVx-AIDiSwEXJNd8WNlNRrUqm2Z2qwIzYnwzm6tVax9ktrVeiPNKM1TSQ8KGTktWwrbepvkkaYo_WRvWWV_VncPxYgTMTlvENizjiXZz1ZquDF9u_fz1QwYsbCF5SRZrqlS69C_J7GrxFkzMnLJnJtfSzY8RqKPHQ49eYj4E.7BobgYJXnMKL7BvC-yC2qLrivGywfqQbvC-5EQBQkRY&dib_tag=se&keywords=reusable%2Bwater%2Bbottle&qid=1786310358&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1&linkCode=ll2&tag=gfgoneglobal-20&linkId=d879cf53dcaac811b404c27d8b8c5a84&language=en_US&gaOptInStatus=true&ref_=as_li_ss_tl" class="packing-shop" target="_blank" rel="noopener sponsored">
+            My Pick
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Toiletries</span>
+          <span class="packing-item-why">Travel-size essentials for the resort bathroom &mdash; one less thing to shop for once you land. Round it out with any skincare, makeup, or period products you use daily.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/4x0BFNG" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Electric travel toothbrush
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4fVPE08" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Travel toothpaste (4-pack)
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/3TOkJeP" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Detangler hairbrush
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4x0CR3C" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Shampoo &amp; conditioner
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4xpAYgQ" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Body wash
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4csPzjq" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Lotion
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/3RYPi0E" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Contact solution
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4g1Wotp" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Razor
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/3U2DpaH" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Toilet spray
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4bzeQs4" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Hair ties
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4zn8Rkm" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Claw clip
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4z4beZb" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Hand sanitizer
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4g7ypZW" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Deodorant
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/45TOptC" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Floss
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4woYEkL" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Lip balm
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4bHDBlX" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Face wash
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4fOAomW" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Travel tissues
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4go7pXh" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Wet wipes
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Travel medicine cabinet</span>
+          <span class="packing-item-why">Small over-the-counter basics so a headache, allergy flare-up, or rough boat transfer doesn't derail the trip. Pack any prescriptions in their original bottles with a few extra days' buffer.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/3S2rxEZ" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Travel Advil
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4wBFJTX" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Benadryl
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4wRwhg7" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Dramamine
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Bags &amp; packing organization</span>
+          <span class="packing-item-why">Keeps everything corralled and easy to pull out at airport security &mdash; or find in a shared resort drawer. A plastic bag works fine for separating wet swimwear, no need to buy anything special there.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/45h9yhi" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Makeup brush holder
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4zdGwNo" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Hanging makeup bag
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/3TMMi8n" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Compression packing cubes
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4hSQlKc" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Hardside carry-on
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/3U2JTX5" class="packing-shop" target="_blank" rel="noopener sponsored">
+              60L travel backpack
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4x8ikdT" class="packing-shop" target="_blank" rel="noopener sponsored">
+              50L travel backpack
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4xvW794" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Personal item daybag
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/3TF6UPU" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Luggage tags
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4gbxPdM" class="packing-shop" target="_blank" rel="noopener sponsored">
+              TSA-approved lock
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Technology</span>
+          <span class="packing-item-why">A portable charger for full days out on the water with no outlets in sight. Round out the tech bag with a charging cable, a wall charger, and an AirTag if you want to track your luggage.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/3RSznBb" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Portable charger
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4hlFg49" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Multi-device charging cable
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/3SnLmXC" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Wall charger block
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/3U8uQet" class="packing-shop" target="_blank" rel="noopener sponsored">
+              AirTag
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="packing-item is-optional">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Hair styling tools</span>
+          <span class="packing-item-why">Universal voltage on both, so they're safe to plug in anywhere &mdash; no separate converter needed. Humidity may be the bigger battle here than the styling itself.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/4q3ZSjE" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Universal-voltage hair straightener
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4z95FbR" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Universal-voltage travel hair dryer
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+        <span class="packing-item-tag packing-tag-optional">Optional</span>
+      </li>
+      <li class="packing-item is-optional">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Travel laundry detergent</span>
+          <span class="packing-item-why">Sink packets for handwashing salty swimwear if the trip runs long enough to need a rewear. A stain remover pen and a travel-size fabric refresher cover the rest.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/4wdjlzP" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Detergent sheets
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4wjAKXG" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Stain remover pen
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4bBuwLq" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Febreze fabric refresher
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+        <span class="packing-item-tag packing-tag-optional">Optional</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Flight Essentials</div>
+    <div class="packing-group-note">Only relevant if you're flying in &mdash; skip this section if you're arriving another way.</div>
+    <ul class="packing-list">
+      <li class="packing-item is-optional">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sleep &amp; comfort</span>
+          <span class="packing-item-why">A proper neck pillow, a sleep mask that doubles as headphones, and real noise cancellation make a long flight actually restful.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/4hXRvnB" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Trtl neck pillow
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/3TLRwkI" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Sleep mask with headphones
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4hjpSVX" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Bose noise-cancelling headphones
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+        <span class="packing-item-tag packing-tag-optional">Optional</span>
+      </li>
+      <li class="packing-item is-optional">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Compression socks</span>
+          <span class="packing-item-why">Helps with circulation and swelling on longer flights, especially if you're connecting through a second airport to get here.</span>
+          <a href="https://amzn.to/3Um8UN0" class="packing-shop" target="_blank" rel="noopener sponsored">
+            My Pick
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+        <span class="packing-item-tag packing-tag-optional">Optional</span>
+      </li>
+      <li class="packing-item is-optional">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">In-flight wellness</span>
+          <span class="packing-item-why">Cabin air is dry and germy &mdash; small things that make arriving feel less rough.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/4q7kg3h" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Nasal spray
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4fWzd3x" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Warm eye compress
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4wmuXjX" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Antimicrobial face spray
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4xvctyX" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Hydrating face mask
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+        <span class="packing-item-tag packing-tag-optional">Optional</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Maldives-Wide Essentials</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Reef-safe sunscreen</span>
+          <span class="packing-item-why">Mandatory at most Maldives resorts to protect the coral &mdash; bring it from home since selection on-island is limited. This is a different formulation than the everyday sunscreen above.</span>
+          <a href="https://amzn.to/3SmzMfn" class="packing-shop" target="_blank" rel="noopener sponsored">
+            My Pick
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Waterproof phone pouch</span>
+          <span class="packing-item-why">For the speedboat transfers and any boat-based excursions where spray is a given &mdash; you'll take at least one boat ride here regardless of whether you snorkel.</span>
+          <a href="https://amzn.to/45k1tbG" class="packing-shop" target="_blank" rel="noopener sponsored">
+            My Pick
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Water Activities Essentials</div>
+    <div class="packing-group-note">Skip this section if you're not planning to snorkel or spend time in the water beyond the pool.</div>
+    <ul class="packing-list">
+      <li class="packing-item is-optional">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
         <div class="packing-item-content">
           <span class="packing-item-name">Lightweight rash guard</span>
           <span class="packing-item-why">Doubles up on sun protection and comfort for the snorkeling excursions.</span>
+          <a href="https://amzn.to/4wUfrx9" class="packing-shop" target="_blank" rel="noopener sponsored">
+            My Pick
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
         </div>
-        <span class="packing-item-tag packing-tag-country">Maldives</span>
+        <span class="packing-item-tag packing-tag-optional">Optional</span>
       </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <li class="packing-item is-optional">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
         <div class="packing-item-content">
-          <span class="packing-item-name">Waterproof phone pouch</span>
-          <span class="packing-item-why">For the speedboat transfers and any boat-based excursions where spray is a given.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-country">Maldives</span>
-      </li>
-    </ul>
-
-    <div class="packing-group-label">South Malé Atoll</div>
-    <ul class="packing-list">
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Water shoes</span>
+          <span class="packing-item-name">Water footwear</span>
           <span class="packing-item-why">Useful for walking out onto the reef flat at low tide without cutting your feet on coral or rocks.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/4hm9kg1" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Water shoes
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/3SqNbmz" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Water sandals
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
         </div>
-        <span class="packing-item-tag packing-tag-city">South Malé Atoll</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6.5 12L13 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Printed dietary card for restaurant managers</span>
-          <span class="packing-item-why">Hand one to each restaurant's manager on arrival, and email the resort about GF needs 14 days before arrival too.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">South Malé Atoll</span>
+        <span class="packing-item-tag packing-tag-optional">Optional</span>
       </li>
     </ul>
   </section>
