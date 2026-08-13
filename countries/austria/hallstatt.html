@@ -643,10 +643,17 @@
       "review": { "@type": "Review", "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5 }, "author": { "@type": "Person", "name": "Kelly" } }
     },
     {
+      "@type": "Restaurant",
+      "name": "Zum Bader Gastwirtschaft",
+      "servesCuisine": "Traditional Austrian",
+      "address": { "@type": "PostalAddress", "addressLocality": "Hallstatt", "addressCountry": "Austria" },
+      "review": { "@type": "Review", "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5 }, "author": { "@type": "Person", "name": "GF Gone Global" } }
+    },
+    {
       "@type": "FAQPage",
       "mainEntity": [
         { "@type": "Question", "name": "Is Hallstatt safe for celiacs?", "acceptedAnswer": { "@type": "Answer", "text": "Hallstatt scores 4/10 for GF friendliness. Austria has excellent allergen labeling (Allergen A = gluten), but Hallstatt is a tiny village with very limited dining options. Grilled lake fish is your safest bet. Stock up on GF groceries before arriving." } },
-        { "@type": "Question", "name": "What are the best gluten-free restaurants in Hallstatt?", "acceptedAnswer": { "@type": "Answer", "text": "Bräugasthof is the standout option — a historic lakeside inn with knowledgeable staff who can modify dishes. Order grilled Reinanke or Saibling (lake fish) with potatoes and salad." } },
+        { "@type": "Question", "name": "What are the best gluten-free restaurants in Hallstatt?", "acceptedAnswer": { "@type": "Answer", "text": "Bräugasthof is the standout option — a historic lakeside inn with knowledgeable staff who can modify dishes. Order grilled Reinanke or Saibling (lake fish) with potatoes and salad. Zum Bader Gastwirtschaft is a backup worth knowing about, though it's not a dedicated GF kitchen and the menu doesn't mark gluten, so confirm with the kitchen before ordering." } },
         { "@type": "Question", "name": "Can you find gluten-free food in Hallstatt supermarkets?", "acceptedAnswer": { "@type": "Answer", "text": "There is a small SPAR on Seestraße with a modest free-from shelf (SPAR free from brand and Schär products). For better selection, stock up at BILLA, SPAR, or Hofer in Bad Ischl or Salzburg before arriving." } }
       ]
     }
@@ -852,12 +859,13 @@
   <section class="restaurants" id="restaurants">
     <div class="restaurants-header">
       <h2 class="restaurants-title">GF Friendly Restaurants</h2>
-      <span class="restaurants-count">1 spot</span>
+      <span class="restaurants-count">2 spots</span>
     </div>
     <div class="restaurants-rule"></div>
 
-    <!-- Single card — full width, no 2-column grid -->
-    <div class="restaurant-card" style="border-right: none; border-bottom: none; padding-right: 0;">
+    <div class="restaurants-grid">
+
+    <div class="restaurant-card">
       <div class="restaurant-card-inner">
         <div class="restaurant-card-content">
           <div class="restaurant-top">
@@ -875,7 +883,7 @@
           <div class="restaurant-details">
             <div class="restaurant-detail">
               <div class="restaurant-detail-label">Safety Notes</div>
-              <div class="restaurant-detail-value">Staff knowledgeable about allergens. Austrian &ldquo;A&rdquo; labeling system in use. Not a dedicated GF kitchen &mdash; cross-contamination possible. Bring a celiac dining card.</div>
+              <div class="restaurant-detail-value">Staff knowledgeable about allergens. Austrian &ldquo;A&rdquo; labeling system in use. Not a dedicated GF kitchen &mdash; cross-contamination possible. Bringing a celiac dining card can help if that makes you feel more comfortable ordering.</div>
             </div>
             <div class="restaurant-detail">
               <div class="restaurant-detail-label">What to Order</div>
@@ -900,9 +908,46 @@
             </a>
           </div>
         </div>
-        <img src="../../photos/austria/hallstatt/bräugasthof/IMG_8235.jpeg" alt="Bräugasthof" class="restaurant-photo" loading="lazy">
       </div>
     </div>
+
+    <div class="restaurant-card">
+      <div class="restaurant-top">
+        <h3 class="restaurant-name">Zum Bader Gastwirtschaft</h3>
+        <div class="restaurant-tags">
+          <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+        </div>
+      </div>
+      <div class="restaurant-cuisine">Traditional Austrian &middot; Tavern</div>
+      <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+      <div class="restaurant-gf-score">
+        <span class="restaurant-gf-score-label">GF Score</span>
+        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled" style="background: #b48c3c;"></span><span class="restaurant-gf-pip is-filled" style="background: #b48c3c;"></span><span class="restaurant-gf-pip is-filled" style="background: #b48c3c;"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+      </div>
+      <div class="restaurant-details">
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Safety Notes</div>
+          <div class="restaurant-detail-value">Not a dedicated GF kitchen, and gluten isn&rsquo;t marked on the menu &mdash; celiac diners report the waitstaff checking with the kitchen directly on request. Confirm before ordering, and a celiac dining card can help if that makes you feel more comfortable.</div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">What to Order</div>
+          <div class="restaurant-detail-value">Celiac reviewers have had good luck with a large salad and simply prepared fish &mdash; ask the kitchen what else can be made GF given the limited menu labeling.</div>
+        </div>
+        <div class="restaurant-detail restaurant-location">
+          <div class="restaurant-detail-label">Location</div>
+          <div class="restaurant-detail-value restaurant-location-value">
+            <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+            <span class="restaurant-detail-value">Badergraben, Hallstatt &middot; Small, intimate dining room</span>
+          </div>
+        </div>
+        <div class="restaurant-detail">
+          <div class="restaurant-detail-label">Note</div>
+          <div class="restaurant-detail-value">Seats about 25 &mdash; no reservations taken</div>
+        </div>
+      </div>
+    </div>
+
+    </div><!-- /restaurants-grid -->
 
   </section>
 
@@ -1165,7 +1210,7 @@
           What are the best gluten-free restaurants in Hallstatt?
           <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-a"><div class="faq-a-inner">Bräugasthof is the standout option — a historic lakeside inn with knowledgeable staff who can modify dishes. Order grilled Reinanke or Saibling (lake fish) with potatoes and salad.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Bräugasthof is the standout option — a historic lakeside inn with knowledgeable staff who can modify dishes. Order grilled Reinanke or Saibling (lake fish) with potatoes and salad. Zum Bader Gastwirtschaft is a backup worth knowing about, though it's not a dedicated GF kitchen and the menu doesn't mark gluten, so confirm with the kitchen before ordering.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false">
