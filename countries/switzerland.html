@@ -299,21 +299,24 @@
     .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
     .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
     .packing-item:last-child { border-bottom: none; }
-    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-group-note { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.92rem; color: var(--ink-light); letter-spacing: 0.01em; margin: -0.2rem 0 0.8rem; }
+    .packing-check { color: var(--rose); opacity: 0.55; position: relative; top: 1px; }
     .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
     .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
     .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
     .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
-    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
-    .packing-tag-country { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
-    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
-    .packing-storefront { margin-top: 1.4rem; padding-top: 1.2rem; border-top: 1px solid rgba(42, 32, 24, 0.08); }
-    .packing-storefront-link { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.55rem 1.1rem; background: var(--slate); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.64rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; border-radius: 3px; transition: background 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease; box-shadow: 0 2px 6px rgba(200, 113, 122, 0.15), 0 1px 2px rgba(200, 113, 122, 0.08); }
-    .packing-storefront-link:hover { background: #b5636c; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200, 113, 122, 0.25), 0 2px 4px rgba(200, 113, 122, 0.12); }
-    .packing-storefront-link:focus-visible { outline: 2px solid var(--slate); outline-offset: 3px; }
-    .packing-storefront-link:active { background: #a85a63; transform: translateY(0); }
-    .packing-storefront-link svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
-    .packing-storefront-link:hover svg { transform: translateX(2px); }
+    .packing-tag-optional { background: rgba(42, 32, 24, 0.05); color: var(--ink-light); }
+    .packing-shop { display: inline-flex; align-self: flex-start; align-items: center; gap: 0.4rem; margin-top: 0.6rem; padding: 0.32rem 0.7rem 0.32rem 0.6rem; border: 1px solid rgba(200, 113, 122, 0.4); border-radius: 100px; background: rgba(200, 113, 122, 0.06); box-shadow: 0 1px 3px rgba(173, 93, 101, 0.1); font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--slate); text-decoration: none; transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    .packing-shop:hover { color: #fff; background: var(--slate); border-color: var(--slate); box-shadow: 0 4px 12px rgba(173, 93, 101, 0.3); transform: translateY(-1px); }
+    .packing-shop:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; }
+    .packing-shop:active { transform: translateY(0); box-shadow: 0 1px 4px rgba(173, 93, 101, 0.25); }
+    .packing-shop svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .packing-shop:hover svg { transform: translateX(2px); }
+    .is-optional .packing-shop { color: var(--ink-mid); border-color: rgba(42, 32, 24, 0.18); background: rgba(42, 32, 24, 0.03); box-shadow: 0 1px 3px rgba(42, 32, 24, 0.06); }
+    .is-optional .packing-shop:hover { color: #fff; background: var(--ink-mid); border-color: var(--ink-mid); box-shadow: 0 4px 12px rgba(42, 32, 24, 0.2); }
+    .is-optional .packing-shop:focus-visible { outline-color: var(--ink-mid); }
+    .packing-shop-group { display: flex; flex-wrap: wrap; column-gap: 0.5rem; row-gap: 0.5rem; margin-top: 0.6rem; }
+    .packing-shop-group .packing-shop { margin-top: 0; }
     @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
 
     /* ─── FAQ ─────────────────────────────────────────────────── */
@@ -454,7 +457,7 @@
     {
       "@type": "Question",
       "name": "Is Switzerland safe for celiacs?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Yes, overall &mdash; Switzerland scores 8/10 nationally, helped by strong supermarket infrastructure (Coop's 'Free From!' range and Migros' 'aha!' line are in every city I visited) and the national IG Z&ouml;liakie celiac association, whose member restaurants mark GF options clearly. That national score is stronger than any single city, though: Lucerne was my easiest stop at 8/10, while Zermatt's small alpine dining scene and seasonal restaurant closures brought it down to 4/10. I'd treat the country score as a baseline and check the specific city before assuming options will be there." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, overall &mdash; Switzerland scores 8/10 nationally, helped by strong supermarket infrastructure (Coop's 'Free From!' range and Migros' 'aha!' line are in every city I visited) and the national IG Z&ouml;liakie celiac association, whose member restaurants mark GF options clearly. That national score is stronger than any single city, though: Lucerne was one of the stronger stops at 7/10, while Zermatt's small alpine dining scene and seasonal restaurant closures brought it down to 4/10. I'd treat the country score as a baseline and check the specific city before assuming options will be there." }
     },
     {
       "@type": "Question",
@@ -541,7 +544,7 @@
           </div>
           <div class="gf-city-score-row">
             <span class="gf-city-name"><a href="switzerland/lucerne">Lucerne</a></span>
-            <div class="gf-city-score-bar"><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span></div>
+            <div class="gf-city-score-bar"><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span></div>
           </div>
           <div class="gf-city-score-row">
             <span class="gf-city-name"><a href="switzerland/zermatt">Zermatt</a></span>
@@ -591,331 +594,593 @@
     </div>
     <div class="packing-rule"></div>
 
-    <div class="packing-group-label">Essential</div>
+    <div class="packing-group-label">GF Snacks &amp; Essentials</div>
     <ul class="packing-list">
       <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Nuts &amp; crunchy snacks</span>
+          <span class="packing-item-why">Protein-dense and shelf-stable for train transfers between cities and mountain excursions to the Jungfrau region, Rigi, Pilatus, and Gornergrat &mdash; closer to essential in Zermatt and Interlaken, where mountain huts and shoulder-season closures can leave you without a safe option nearby.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/4wJNcAY" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Texas pecans
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/45Rr3EY" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Pistachios
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4hoJg42" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Edamame
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4fX6j4R" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Crunchy corn
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Bars &amp; crackers</span>
+          <span class="packing-item-why">Easy to toss in a daypack for museum visits, ferry rides, or long walks between meals.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/45gtMYs" class="packing-shop" target="_blank" rel="noopener sponsored">
+              KIND protein bars
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4g6gy5v" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Simple Mills cheddar crackers
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Condiment packets</span>
+          <span class="packing-item-why">Many traditional soy sauces contain wheat, so I carry tamari packets rather than relying on every restaurant having a GF option &mdash; worth having if Asian food is on the itinerary anywhere on this trip. PB packets turn any bread or fruit into a real snack.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/4wKUk01" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Tamari packets
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4glHu2n" class="packing-shop" target="_blank" rel="noopener sponsored">
+              PB packets
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Backup GF meals</span>
+          <span class="packing-item-why">Just-add-hot-water options for hotel or hostel kitchens on nights when GF dining falls through.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/45ATHud" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Instant GF noodles
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4wQj0V2" class="packing-shop" target="_blank" rel="noopener sponsored">
+              GF mac &amp; cheese
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Hydration &amp; energy</span>
+          <span class="packing-item-why">Electrolytes for long travel days, plus a caffeine boost for early train departures or steeper trail stretches.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/4xtKaRg" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Electrolytes
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/45j95Lv" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Energy sticks
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
         <div class="packing-item-content">
           <span class="packing-item-name">Celiac dining card (German)</span>
-          <span class="packing-item-why">Explains celiac disease and cross-contamination in German, which covers five of the six cities here &mdash; Basel, Interlaken, Lucerne, Zermatt, and Zurich. Geneva is French-speaking, so bring a French version for that stop (see the Geneva group below).</span>
+          <span class="packing-item-why">Explains celiac disease and cross-contamination in German, which covers five of the six cities here &mdash; Basel, Interlaken, Lucerne, Zermatt, and Zurich. IG Z&ouml;liakie, Switzerland's national celiac association, also issues a card recognized nationwide by restaurants that are IG Z&ouml;liakie gastronomy members, worth carrying alongside it. Geneva is French-speaking, so bring a French version for that stop.</span>
         </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
       </li>
       <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
         <div class="packing-item-content">
-          <span class="packing-item-name">GF snack bars</span>
-          <span class="packing-item-why">Useful in every city on this page, and closer to essential in Zermatt and Interlaken, where mountain huts and shoulder-season closures can leave you without a safe option nearby.</span>
+          <span class="packing-item-name">Portable GF bread &amp; backup groceries</span>
+          <span class="packing-item-why">For hotel breakfasts and meals where GF bread isn't on the menu &mdash; in Zermatt specifically, Du Pont and Old Zermatt will serve you fondue with your own bread. Zermatt's Denner also has very limited GF stock, so pick up backup groceries in Visp or T&auml;sch before heading up.</span>
         </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Portable GF bread</span>
-          <span class="packing-item-why">For hotel breakfasts and meals where GF bread isn't on the menu. In Zermatt specifically, Du Pont and Old Zermatt will serve you fondue with your own bread.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">GF soy sauce packets</span>
-          <span class="packing-item-why">Worth carrying if Asian food is on the itinerary anywhere &mdash; regular soy sauce contains wheat, and a GF substitute isn't always available on the spot.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Portable phone charger</span>
-          <span class="packing-item-why">Long days of sightseeing, train transfers, and mountain excursions with no outlet in sight will drain a battery fast.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-essential">Essential</span>
       </li>
     </ul>
 
-    <div class="packing-group-label">Switzerland-Wide</div>
+    <div class="packing-group-label">Travel Essentials</div>
     <ul class="packing-list">
       <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
         <div class="packing-item-content">
-          <span class="packing-item-name">Power adapter (Type J, 3-pin)</span>
-          <span class="packing-item-why">Switzerland uses its own Type J socket, different from the rest of Europe &mdash; a standard EU plug won't fit in any of these cities.</span>
+          <span class="packing-item-name">Documents &amp; money</span>
+          <span class="packing-item-why">Passport, ID, and any visa or entry paperwork Switzerland requires, plus cards and some cash. Photograph everything on your phone and leave a copy with someone at home, along with emergency contact details.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/4hrt95z" class="packing-shop" target="_blank" rel="noopener sponsored">
+              RFID card wallet
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/3U5zH00" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Passport holder &amp; organizer
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
         </div>
-        <span class="packing-item-tag packing-tag-country">Switzerland</span>
       </li>
       <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Clothing basics</span>
+          <span class="packing-item-why">Underwear, everyday socks, sleepwear, and a couple of casual outfits for evenings out, plus a sweater or sweatshirt as a mid-layer option beyond the technical pieces below. For shoes that aren't hiking boots or a rain shoe, something like this works well for everyday wear.</span>
+          <a href="https://amzn.to/4cwtpNc" class="packing-shop" target="_blank" rel="noopener sponsored">
+            My Pick: everyday shoes
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Reusable water bottle</span>
+          <span class="packing-item-why">Swiss tap water is safe and excellent everywhere &mdash; refill freely instead of buying bottled water.</span>
+          <a href="https://www.amazon.com/IRON-%C2%B0FLASK-Narrow-Mouth-Bottle/dp/B0F1TL887L?dib=eyJ2IjoiMSJ9.LMuc_wJHHmkOotdeqrLznDcgQjonCvhzM69h1Rcinj8b8_VCrZBTqIIBoy4-KqEM-B5TX8KWwRMxWLIx2OhQsG4l5b87KiTbzlmdvBoCwVK_1pO4ni3lj_WMkjvikXchsN4cVx-AIDiSwEXJNd8WNlNRrUqm2Z2qwIzYnwzm6tVax9ktrVeiPNKM1TSQ8KGTktWwrbepvkkaYo_WRvWWV_VncPxYgTMTlvENizjiXZz1ZquDF9u_fz1QwYsbCF5SRZrqlS69C_J7GrxFkzMnLJnJtfSzY8RqKPHQ49eYj4E.7BobgYJXnMKL7BvC-yC2qLrivGywfqQbvC-5EQBQkRY&dib_tag=se&keywords=reusable%2Bwater%2Bbottle&qid=1786310358&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&th=1&linkCode=ll2&tag=gfgoneglobal-20&linkId=d879cf53dcaac811b404c27d8b8c5a84&language=en_US&gaOptInStatus=true&ref_=as_li_ss_tl" class="packing-shop" target="_blank" rel="noopener sponsored">
+            My Pick
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Toiletries</span>
+          <span class="packing-item-why">Travel-size essentials for hotel bathrooms and shared showers &mdash; one less thing to shop for once you land. Round it out with any skincare, makeup, or period products you use daily.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/4x0BFNG" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Electric travel toothbrush
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4fVPE08" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Travel toothpaste (4-pack)
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/3TOkJeP" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Detangler hairbrush
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4x0CR3C" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Shampoo &amp; conditioner
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4xpAYgQ" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Body wash
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4csPzjq" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Lotion
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4gnh6VS" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Sunscreen
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/3RYPi0E" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Contact solution
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4g1Wotp" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Razor
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/3U2DpaH" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Toilet spray
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4bzeQs4" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Hair ties
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4zn8Rkm" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Claw clip
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4z4beZb" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Hand sanitizer
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4g7ypZW" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Deodorant
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/45TOptC" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Floss
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4woYEkL" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Lip balm
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4bHDBlX" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Face wash
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4fOAomW" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Travel tissues
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4go7pXh" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Wet wipes
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Travel medicine cabinet</span>
+          <span class="packing-item-why">Small over-the-counter basics so a headache, allergy flare-up, or rough train transfer doesn't derail the day. Pack any prescriptions in their original bottles with a few extra days' buffer, plus bandages or blister treatment for the walking-heavy days.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/3S2rxEZ" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Travel Advil
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4wBFJTX" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Benadryl
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4wRwhg7" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Dramamine
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Bags &amp; packing organization</span>
+          <span class="packing-item-why">Keeps everything corralled and easy to pull out at airport security &mdash; or find in a shared hotel drawer. A plastic bag works fine for separating dirty laundry, no need to buy anything special there.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/45h9yhi" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Makeup brush holder
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4zdGwNo" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Hanging makeup bag
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/3TMMi8n" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Compression packing cubes
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4hSQlKc" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Hardside carry-on
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/3U2JTX5" class="packing-shop" target="_blank" rel="noopener sponsored">
+              60L travel backpack
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4x8ikdT" class="packing-shop" target="_blank" rel="noopener sponsored">
+              50L travel backpack
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4xvW794" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Personal item daybag
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/3TF6UPU" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Luggage tags
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4gbxPdM" class="packing-shop" target="_blank" rel="noopener sponsored">
+              TSA-approved lock
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Technology</span>
+          <span class="packing-item-why">A portable charger for long days of sightseeing, train transfers, and mountain excursions with no outlet in sight &mdash; battery drains fast. Round out the tech bag with a charging cable, a wall charger for the hotel room, and an AirTag if you want to track your luggage.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/3RSznBb" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Portable charger
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4hlFg49" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Multi-device charging cable
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/3SnLmXC" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Wall charger block
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/3U8uQet" class="packing-shop" target="_blank" rel="noopener sponsored">
+              AirTag
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="packing-item is-optional">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Hair styling tools</span>
+          <span class="packing-item-why">Universal voltage on both, so they're safe to plug in anywhere &mdash; no separate converter needed.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/4q3ZSjE" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Universal-voltage hair straightener
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4z95FbR" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Universal-voltage travel hair dryer
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+        <span class="packing-item-tag packing-tag-optional">Optional</span>
+      </li>
+      <li class="packing-item is-optional">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Travel laundry detergent</span>
+          <span class="packing-item-why">Sink packets for handwashing essentials if the trip runs long enough to need a rewear. A stain remover pen and a travel-size fabric refresher cover the rest.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/4wdjlzP" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Detergent sheets
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4wjAKXG" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Stain remover pen
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4bBuwLq" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Febreze fabric refresher
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+        <span class="packing-item-tag packing-tag-optional">Optional</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Switzerland-Wide Essentials</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Power adapter (Type J, 3-pin)</span>
+          <span class="packing-item-why">Switzerland uses its own recessed Type J socket, different from the rest of Europe and not covered by most universal adapters built around Type C &mdash; a standard EU plug won't fit in any of these cities.</span>
+        </div>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
         <div class="packing-item-content">
           <span class="packing-item-name">Swiss francs (CHF)</span>
           <span class="packing-item-why">Switzerland isn't in the Eurozone. Cards are widely accepted, but mountain huts and small vendors in Interlaken, Lucerne, and Zermatt in particular may only take cash.</span>
         </div>
-        <span class="packing-item-tag packing-tag-country">Switzerland</span>
       </li>
       <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
         <div class="packing-item-content">
-          <span class="packing-item-name">Swiss celiac card from IG Z&ouml;liakie</span>
-          <span class="packing-item-why">IG Z&ouml;liakie is Switzerland's national celiac association, and their card is recognized nationwide by restaurants that are IG Z&ouml;liakie gastronomy members &mdash; not just in one city.</span>
+          <span class="packing-item-name">Comfortable waterproof walking shoes</span>
+          <span class="packing-item-why">Old Town cobblestones in Basel, Geneva, Lucerne, and Zurich all call for solid, sturdy soles.</span>
+          <a href="https://amzn.to/4fWtsCX" class="packing-shop" target="_blank" rel="noopener sponsored">
+            My Pick
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
         </div>
-        <span class="packing-item-tag packing-tag-country">Switzerland</span>
       </li>
       <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Reusable water bottle</span>
-          <span class="packing-item-why">Swiss tap water is safe and excellent everywhere I visited &mdash; refill freely instead of buying bottled water.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-country">Switzerland</span>
-      </li>
-    </ul>
-
-    <div class="packing-group-label">Basel</div>
-    <ul class="packing-list">
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Comfortable walking shoes</span>
-          <span class="packing-item-why">Basel's Old Town is full of cobblestones &mdash; sturdy soles are a must.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Basel</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Layers for October weather</span>
-          <span class="packing-item-why">Temperatures ran roughly 5&ndash;15&deg;C when I visited &mdash; mornings were chilly, afternoons mild.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Basel</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Light rain jacket</span>
-          <span class="packing-item-why">October is one of the wetter months in Basel.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Basel</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Swimwear</span>
-          <span class="packing-item-why">Rhine swimming is a popular local tradition in summer, with locals floating downstream in waterproof bags &mdash; worth knowing about even if it's out of season for an October visit.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Basel</span>
-      </li>
-    </ul>
-
-    <div class="packing-group-label">Geneva</div>
-    <ul class="packing-list">
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Celiac dining card (French)</span>
-          <span class="packing-item-why">Geneva is French-speaking, unlike the rest of this itinerary &mdash; a card in French is essential for communicating with restaurant staff here.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Geneva</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Smart-casual outfit</span>
-          <span class="packing-item-why">Geneva is a dressy city &mdash; you'll feel more comfortable with at least one smart-casual option for dining out.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Geneva</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Comfortable walking shoes</span>
-          <span class="packing-item-why">The city centre is compact and walkable, though the Old Town has cobblestones.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Geneva</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Sunscreen for lake activities</span>
-          <span class="packing-item-why">The lakefront sun can be strong even in autumn &mdash; useful for boat rides and waterfront walks.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Geneva</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Light layers for October</span>
-          <span class="packing-item-why">Temperatures ran roughly 5&ndash;15&deg;C when I visited &mdash; layering is key for variable lake-effect weather.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Geneva</span>
-      </li>
-    </ul>
-
-    <div class="packing-group-label">Interlaken</div>
-    <ul class="packing-list">
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Sturdy hiking boots</span>
-          <span class="packing-item-why">Essential for mountain trails and uneven terrain around the Jungfrau region.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Interlaken</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Warm layers</span>
-          <span class="packing-item-why">Mountain weather changes fast &mdash; even sunny days at valley level can turn cold at altitude.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Interlaken</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
         <div class="packing-item-content">
           <span class="packing-item-name">Rain jacket</span>
-          <span class="packing-item-why">Alpine weather is unpredictable &mdash; I'd always have this on hand here.</span>
+          <span class="packing-item-why">October is one of the wetter months in Basel, and alpine weather is unpredictable in Interlaken and Lucerne &mdash; I'd always have this on hand.</span>
+          <a href="https://amzn.to/4q65kT3" class="packing-shop" target="_blank" rel="noopener sponsored">
+            My Pick
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
         </div>
-        <span class="packing-item-tag packing-tag-city">Interlaken</span>
       </li>
       <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Sunscreen + sunglasses</span>
-          <span class="packing-item-why">Alpine UV is significantly stronger than at sea level.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Interlaken</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Camera with good zoom</span>
-          <span class="packing-item-why">Mountain peaks and alpine scenery deserve proper glass.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Interlaken</span>
-      </li>
-    </ul>
-
-    <div class="packing-group-label">Lucerne</div>
-    <ul class="packing-list">
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Warm layers for mountain excursions</span>
-          <span class="packing-item-why">Summit temperatures on Rigi and Pilatus can run 15&deg;C+ cooler than lakeside.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Lucerne</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Rain jacket</span>
-          <span class="packing-item-why">Mountain weather changes fast; a waterproof layer is essential.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Lucerne</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Comfortable walking shoes</span>
-          <span class="packing-item-why">Old Town cobblestones and mountain trails both call for solid footwear.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Lucerne</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Binoculars</span>
-          <span class="packing-item-why">Ideal for mountain viewpoints and spotting wildlife on Rigi and Pilatus.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Lucerne</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Swimsuit</span>
-          <span class="packing-item-why">Lake swimming is popular in summer and early autumn, and the mineral baths at Rigi Kaltbad run year-round.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Lucerne</span>
-      </li>
-    </ul>
-
-    <div class="packing-group-label">Zermatt</div>
-    <ul class="packing-list">
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Warm layers</span>
-          <span class="packing-item-why">Temperatures drop significantly at altitude, and mountain weather changes fast.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Zermatt</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Waterproof hiking boots</span>
-          <span class="packing-item-why">Essential for trails, gorge walks, and unpredictable mountain conditions.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Zermatt</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Sunscreen + sunglasses</span>
-          <span class="packing-item-why">Alpine UV is intense &mdash; the higher you go, the stronger it gets.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Zermatt</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Binoculars</span>
-          <span class="packing-item-why">For spotting detail on the Matterhorn and surrounding peaks from Gornergrat.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Zermatt</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">GF groceries from a bigger city</span>
-          <span class="packing-item-why">Zermatt's Denner has very limited GF options &mdash; stock up in Visp or T&auml;sch before arriving.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Zermatt</span>
-      </li>
-    </ul>
-
-    <div class="packing-group-label">Zurich</div>
-    <ul class="packing-list">
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Smart-casual outfit</span>
-          <span class="packing-item-why">Zurich is a chic city &mdash; useful for blending in at restaurants and on Bahnhofstrasse.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Zurich</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
-        <div class="packing-item-content">
-          <span class="packing-item-name">Comfortable walking shoes</span>
-          <span class="packing-item-why">The Old Town's cobblestone streets mean you'll be walking most places.</span>
-        </div>
-        <span class="packing-item-tag packing-tag-city">Zurich</span>
-      </li>
-      <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
         <div class="packing-item-content">
           <span class="packing-item-name">Compact umbrella</span>
-          <span class="packing-item-why">November in Zurich is rainy &mdash; I'd expect showers most days.</span>
+          <span class="packing-item-why">November in Zurich is rainy &mdash; expect showers most days.</span>
+          <a href="https://amzn.to/4hpJHLh" class="packing-shop" target="_blank" rel="noopener sponsored">
+            My Pick
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
         </div>
-        <span class="packing-item-tag packing-tag-city">Zurich</span>
       </li>
       <li class="packing-item">
-        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
         <div class="packing-item-content">
-          <span class="packing-item-name">Warm coat</span>
-          <span class="packing-item-why">November temperatures hover around 2&ndash;8&deg;C, colder than my October visits to the other five cities on this page &mdash; layer up.</span>
+          <span class="packing-item-name">Layers: Tops</span>
+          <span class="packing-item-why">A merino base layer, softshell vest, and quarter-zip fleece cover everything from cool to cold &mdash; October ran roughly 5&ndash;15&deg;C in Basel and Geneva, dropping to 2&ndash;8&deg;C in Zurich come November.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/4qePJko" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Merino base layer
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4fWpNFf" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Softshell vest
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/3RJ6asq" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Quarter-zip fleece
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
         </div>
-        <span class="packing-item-tag packing-tag-city">Zurich</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sunscreen (stronger SPF)</span>
+          <span class="packing-item-why">Alpine UV is significantly stronger than at sea level in Interlaken and Zermatt &mdash; the higher you go, the stronger it gets &mdash; and Geneva's lakefront sun can be strong even in autumn. A different formulation than the everyday sunscreen above.</span>
+          <a href="https://amzn.to/4fQS3uk" class="packing-shop" target="_blank" rel="noopener sponsored">
+            My Pick
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sunglasses</span>
+          <span class="packing-item-why">Alpine glare and lakefront brightness both call for real UV protection, not just squinting through it.</span>
+          <a href="https://amzn.to/4z9YyQf" class="packing-shop" target="_blank" rel="noopener sponsored">
+            My Pick
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Smart-casual outfit</span>
+          <span class="packing-item-why">Geneva and Zurich are both dressier cities &mdash; useful for blending in at restaurants and on Bahnhofstrasse, and for dining out in Geneva.</span>
+        </div>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Swimsuit</span>
+          <span class="packing-item-why">Rhine swimming is a popular local tradition in Basel come summer, and Lucerne offers lake swimming plus the mineral baths at Rigi Kaltbad, which run year-round &mdash; worth packing even for an autumn visit.</span>
+        </div>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Flight Essentials</div>
+    <div class="packing-group-note">Only relevant if you're flying into Switzerland &mdash; skip this section if you're already local or connecting overland.</div>
+    <ul class="packing-list">
+      <li class="packing-item is-optional">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sleep &amp; comfort</span>
+          <span class="packing-item-why">A proper neck pillow, a sleep mask that doubles as headphones, and real noise cancellation make a long flight actually restful.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/4hXRvnB" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Trtl neck pillow
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/3TLRwkI" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Sleep mask with headphones
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4hjpSVX" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Bose noise-cancelling headphones
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+        <span class="packing-item-tag packing-tag-optional">Optional</span>
+      </li>
+      <li class="packing-item is-optional">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Compression socks</span>
+          <span class="packing-item-why">Helps with circulation and swelling on longer flights, especially if you're connecting through a second airport to get here.</span>
+          <a href="https://amzn.to/3Um8UN0" class="packing-shop" target="_blank" rel="noopener sponsored">
+            My Pick
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+        <span class="packing-item-tag packing-tag-optional">Optional</span>
+      </li>
+      <li class="packing-item is-optional">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">In-flight wellness</span>
+          <span class="packing-item-why">Cabin air is dry and germy &mdash; small things that make arriving feel less rough.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/4q7kg3h" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Nasal spray
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4fWzd3x" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Warm eye compress
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4wmuXjX" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Antimicrobial face spray
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/4xvctyX" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Hydrating face mask
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+        <span class="packing-item-tag packing-tag-optional">Optional</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Hiking &amp; Outdoor Essentials</div>
+    <div class="packing-group-note">Only relevant if mountain excursions are on the itinerary &mdash; the Jungfrau region near Interlaken, Rigi and Pilatus near Lucerne, or the trails and gorge walks around Zermatt. Skip this section if you're sticking to the cities.</div>
+    <ul class="packing-list">
+      <li class="packing-item is-optional">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Waterproof hiking boots</span>
+          <span class="packing-item-why">Essential for mountain trails and uneven terrain around the Jungfrau region, gorge walks near Zermatt, and the Rigi/Pilatus trails above Lucerne.</span>
+          <a href="https://amzn.to/4xpH2G8" class="packing-shop" target="_blank" rel="noopener sponsored">
+            My Pick
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+        <span class="packing-item-tag packing-tag-optional">Optional</span>
+      </li>
+      <li class="packing-item is-optional">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Hiking daypack</span>
+          <span class="packing-item-why">Enough room for water, layers, and snacks on mountain excursions out of Interlaken, Lucerne, and Zermatt. A rain cover keeps everything dry, and downloading offline maps before you go means you're not relying on trail signal.</span>
+          <a href="https://amzn.to/45MsODs" class="packing-shop" target="_blank" rel="noopener sponsored">
+            My Pick
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+        <span class="packing-item-tag packing-tag-optional">Optional</span>
+      </li>
+      <li class="packing-item is-optional">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="3" fill="currentColor"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Cold-weather trail accessories</span>
+          <span class="packing-item-why">Summit temperatures on Rigi and Pilatus can run 15&deg;C+ cooler than lakeside, and mountain weather changes fast around Interlaken and Zermatt &mdash; a warm hat and gloves are the first thing you'll miss; touchscreen gloves mean you're not stuck taking them off for photos.</span>
+          <div class="packing-shop-group">
+            <a href="https://amzn.to/4wdjyD7" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Ear warmer headband
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+            <a href="https://amzn.to/3SpTKps" class="packing-shop" target="_blank" rel="noopener sponsored">
+              Touchscreen gloves
+              <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+            </a>
+          </div>
+        </div>
+        <span class="packing-item-tag packing-tag-optional">Optional</span>
       </li>
     </ul>
   </section>
@@ -937,7 +1202,7 @@
           Is Switzerland safe for celiacs?
           <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-a"><div class="faq-a-inner">Yes, overall &mdash; Switzerland scores 8/10 nationally, helped by strong supermarket infrastructure (Coop's 'Free From!' range and Migros' 'aha!' line are in every city I visited) and the national IG Z&ouml;liakie celiac association, whose member restaurants mark GF options clearly. That national score is stronger than any single city, though: Lucerne was my easiest stop at 8/10, while Zermatt's small alpine dining scene and seasonal restaurant closures brought it down to 4/10. I'd treat the country score as a baseline and check the specific city before assuming options will be there.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Yes, overall &mdash; Switzerland scores 8/10 nationally, helped by strong supermarket infrastructure (Coop's 'Free From!' range and Migros' 'aha!' line are in every city I visited) and the national IG Z&ouml;liakie celiac association, whose member restaurants mark GF options clearly. That national score is stronger than any single city, though: Lucerne was one of the stronger stops at 7/10, while Zermatt's small alpine dining scene and seasonal restaurant closures brought it down to 4/10. I'd treat the country score as a baseline and check the specific city before assuming options will be there.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false">
