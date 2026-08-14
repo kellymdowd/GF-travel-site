@@ -8,35 +8,29 @@ Running list of every unlinked packing item across migrated country pages, pulle
 
 ## Genuine physical products — need a shop link
 
-### Footwear & rain gear
-- **Rain pants** — Canada (`Hiking & Outdoor Essentials`). Optional/situational — only for longer, more exposed hikes than a typical day trip.
-- **Comfortable sandals** — Jamaica (`Jamaica-Wide Essentials`). Resort/beach/pool sandal, worn constantly per the copy ("you'll live in these").
-- **Modest-dress scarf/sarong** — needed in **Italy** (`Italy-Wide Essentials`, "Shoulder cover" for Vatican/Roman church entry), **India** (`India-Wide Essentials`, part of the "Swimwear & a light sarong or cover-up" item, for religious sites), and now **Sri Lanka** (`Sri Lanka-Wide Essentials`, "Modest clothing for temples" — cover knees and shoulders at the Temple of the Tooth and Dambulla Cave Temple). Same underlying need each time (a lightweight scarf or sarong for temple/church dress codes) — one product could plausibly cover all three.
-- **Large water bottle (1.5L+)** — Sri Lanka (`Hiking & Outdoor Essentials`), for the Lion Rock/Pidurangala climb where there are no water vendors along the way. Distinct from the everyday reusable-bottle product already linked in Travel Essentials — this one's specifically about carrying capacity for a multi-hour climb.
+Only one open item left:
 
-### Power adapters (destination-specific, don't assume the generic TESSAN worldwide adapter covers these)
-- **Power adapter (Type J, 3-pin)** — needed in both **Switzerland** (`Switzerland-Wide Essentials`) and **Liechtenstein** (`Liechtenstein-Wide Essentials`, listed there as "Swiss power adapter"). Same plug type, same product need — one link covers both pages. Switzerland's copy specifically notes this is a *recessed* socket that most universal/worldwide adapters (including the TESSAN one already linked elsewhere on the site) aren't built to reach — worth actually checking a candidate product's listing for "Swiss/Type J compatible" before picking one, not just assuming a "worldwide" label covers it.
-- **Universal power adapter (Type C/D/M)** — needed in both **India** (`India-Wide Essentials`) and **Sri Lanka** (`Sri Lanka-Wide Essentials`, listed as "Type D/G/M power adapter"). Same caution as Type J above: subcontinent sockets are deep and recessed, and Type D/M in particular is notorious for not fitting generic "worldwide" adapters. Worth checking a candidate product's listing for explicit compatibility before reusing the TESSAN link — one link could plausibly cover both pages if it explicitly supports D/G/M.
-
-### Bug repellent
-- **Midge repellent** — Scotland (`Hiking & Outdoor Essentials`). Copy specifically calls out the Smidge brand by name — if you want a link, that's probably the product to find, not a generic DEET spray.
-
-### Swimwear / light layers
-- **Swimsuit / swimwear** — appears unlinked in New Zealand, Hungary, Jamaica, Switzerland (Rhine swimming in Basel, lake swimming + Rigi Kaltbad baths in Lucerne), India (`India-Wide Essentials`, Goa's beach clubs/pools — paired there with the sarong/cover-up need tracked separately above), Spain (`Spain-Wide Essentials`, Barcelona and Valencia's Malvarrosa Beach — Mediterranean is swimmable into early October), and now **Finland** (`Finland-Wide Essentials`, paired with the sauna towel item for Helsinki's Löyly sauna culture). Same generic swimwear need each time — one link would cover all seven.
 - **Light layers for evening tours** — Jamaica (`Jamaica-Wide Essentials`). For the Rose Hall Great House evening tour once it cools off after sundown. Could probably reuse the existing "Light layers" product already linked elsewhere (`amzn.to/3S1M2BG`) rather than sourcing new — worth confirming it fits a warm-climate "cools off in the evening" use case, not just cold-country layering.
-- **Quick-dry clothing** — Jamaica (`Water Activities Essentials`). For getting soaked at Dunn's River Falls / Mystic Mountain.
-- **Light, breathable clothing** — needed in both **India** (`India-Wide Essentials`, Bengaluru/Hyderabad/Goa's pre-monsoon heat) and **Sri Lanka** (`Sri Lanka-Wide Essentials`, 30–33°C with high humidity across Negombo/Kandy/Sigiriya). Generic linen/lightweight-fabric need — worth checking if this overlaps with an existing site product before sourcing new. One link could cover both.
-- **Sun hat** — needed in both **India** (`India-Wide Essentials`, Bengaluru and Hyderabad's strong April sun) and **Sri Lanka** (`Hiking & Outdoor Essentials`, no shade at all on the Lion Rock/Pidurangala summit). No established sun-hat product anywhere on the site yet, despite several countries mentioning sun protection — one link could cover both.
-- **Dry bag** — India (`India-Wide Essentials`), for Goa scooter rides and beach days — protects electronics/cards. Different from the Maldives waterproof phone pouch (`45k1tbG`), which is phone-sized only.
 
-### Dressy/smart-casual clothing
-- **Smart-casual outfit** — Switzerland (`Switzerland-Wide Essentials`), covering both Geneva and Zurich. Not really a single "product" — more a styling note (bring one nicer outfit for dining out) than something to link. Flagging for your call on whether this needs a link at all.
+**Linked 2026-08-14** (batch-shopped and wired into every page that needed them):
+- Rain pants — Canada
+- Comfortable sandals — Jamaica
+- Modest-dress scarf/sarong — one link covering Italy (Shoulder cover), India (Swimwear & sarong item), and Sri Lanka (Modest clothing for temples)
+- Large water bottle — Sri Lanka. Note: the linked product is 1L, not the 1.5L+ originally called for, so the item name was trimmed to just "Large water bottle" to stay accurate.
+- Power adapter (Type J) — one link covering Switzerland and Liechtenstein
+- Universal power adapter (Type C/D/M) — one link covering India and Sri Lanka
+- Swimsuit/swimwear — one link covering New Zealand, Hungary, Jamaica, Switzerland, Spain, Finland (added as a second chip alongside the sauna towel), and India (added as a second chip alongside the sarong)
+- Sun hat — one link covering India and Sri Lanka
+- Dry bag — India
 
-### GF food & specialty items
-- **GF crispbread for self-catering** — Norway (`Norway-Wide Essentials`). Backup breakfast/hotel-room food, especially for Flåm's limited grocery selection.
-- **Portable GF bread/rolls** — needed in both **Austria** (`Austria-Wide Essentials`, bread-centric breakfasts, ties to the Hallstatt grocery-stock note below) and **Switzerland** (`GF Snacks & Essentials`, phrased as "Portable GF bread & backup groceries" — Zermatt fondue restaurants will serve GF fondue with your own bread, and Zermatt's Denner has very limited GF stock so it also covers a Visp/Täsch grocery stock-up tip). Same product need, one link could cover both.
-- **Schär GF products** — Austria (`Austria-Wide Essentials`). Not a single product — it's a brand callout (Billa/Spar/Hofer/DM Drogerie all carry it). May not need a traditional "shop" link at all; could instead be a "look for this brand in stores" note. Flagging for your call.
-- **Schär GF bread (stock up at a Swiss Coop)** — Liechtenstein (`Liechtenstein-Wide Essentials`). Same brand-callout situation as above, tied to a specific Swiss retailer rather than Amazon.
+**Decided 2026-08-14, no link needed:**
+- Midge repellent (Scotland), light/breathable clothing (India, Sri Lanka), and quick-dry clothing (Jamaica) — staying unlinked by your call.
+- Switzerland's "Smart-casual outfit" (Geneva/Zurich) — kept as styling-advice text only, not a shoppable item.
+
+**Removed entirely 2026-08-14** (not just unlinked — the items themselves were cut):
+- Norway's "GF crispbread for self-catering" item.
+- Switzerland's "Portable GF bread & backup groceries" item (the Zermatt fondue-with-your-own-bread and Denner grocery-stock tips went with it).
+- Liechtenstein's "Schär GF bread (stock up at a Swiss Coop)" item — not a packable item, it's a buy-it-there callout. (Austria never actually had a matching item on the page, despite an earlier tracker note suggesting it did.)
 
 ---
 
