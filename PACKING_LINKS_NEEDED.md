@@ -8,9 +8,7 @@ Running list of every unlinked packing item across migrated country pages, pulle
 
 ## Genuine physical products — need a shop link
 
-Only one open item left:
-
-- **Light layers for evening tours** — Jamaica (`Jamaica-Wide Essentials`). For the Rose Hall Great House evening tour once it cools off after sundown. Could probably reuse the existing "Light layers" product already linked elsewhere (`amzn.to/3S1M2BG`) rather than sourcing new — worth confirming it fits a warm-climate "cools off in the evening" use case, not just cold-country layering.
+Nothing open. Every flagged item has been either linked or explicitly decided against.
 
 **Linked 2026-08-14** (batch-shopped and wired into every page that needed them):
 - Rain pants — Canada
@@ -24,7 +22,7 @@ Only one open item left:
 - Dry bag — India
 
 **Decided 2026-08-14, no link needed:**
-- Midge repellent (Scotland), light/breathable clothing (India, Sri Lanka), and quick-dry clothing (Jamaica) — staying unlinked by your call.
+- Midge repellent (Scotland), light/breathable clothing (India, Sri Lanka), quick-dry clothing (Jamaica), and light layers for evening tours (Jamaica) — staying unlinked by your call.
 - Switzerland's "Smart-casual outfit" (Geneva/Zurich) — kept as styling-advice text only, not a shoppable item.
 
 **Removed entirely 2026-08-14** (not just unlinked — the items themselves were cut):
