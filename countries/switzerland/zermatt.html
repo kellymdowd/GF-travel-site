@@ -812,7 +812,7 @@
     <script>
     (function(){
       var map = L.map('gf-map', { scrollWheelZoom: false }).setView([46.022, 7.749], 14);
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 18 }).addTo(map);
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxNativeZoom: 16, attribution: 'Tiles &copy; Esri', maxZoom: 18 }).addTo(map);
       var colors = { 5:'#3d6e40', 4:'#6a9a40', 3:'#b48c3c', 2:'#c87a50', 1:'#b4463c', 0:'#9a9a9a' };
       var restaurants = [
         { name:'Grampi\u2019s', score:3, lat:46.020642, lng:7.746376 },

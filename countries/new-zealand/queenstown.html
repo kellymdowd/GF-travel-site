@@ -558,7 +558,7 @@
     <script>
     (function(){
       var map = L.map('gf-map', { scrollWheelZoom: false }).setView([-45.032, 168.661], 15);
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 18 }).addTo(map);
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxNativeZoom: 16, attribution: 'Tiles &copy; Esri', maxZoom: 18 }).addTo(map);
       var colors = { 5:'#3d6e40', 4:'#6a9a40', 3:'#b48c3c', 2:'#c87a50', 1:'#b4463c', 0:'#9a9a9a' };
       var restaurants = [
         { name:'Rata', score:3, lat:-45.0315412, lng:168.662842 },
@@ -635,7 +635,7 @@
     <script>
     (function(){
       var nMap = L.map('neighborhoods-map', { scrollWheelZoom: false }).setView([-45.030, 168.660], 13);
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 18 }).addTo(nMap);
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxNativeZoom: 16, attribution: 'Tiles &copy; Esri', maxZoom: 18 }).addTo(nMap);
       var neighborhoods = [ { name: 'Queenstown CBD', center: [-45.032, 168.661], radius: 500 }, { name: 'Steamer Wharf', center: [-45.033, 168.658], radius: 250 }, { name: 'Frankton', center: [-45.020, 168.725], radius: 800 }, { name: 'Arrowtown', center: [-44.942, 168.828], radius: 600 } ];
       neighborhoods.forEach(function(n) { L.circle(n.center, { radius: n.radius, color: '#2A2018', weight: 1.2, fillColor: 'transparent', fillOpacity: 0, dashArray: '3 5', opacity: 0.35 }).addTo(nMap); L.marker(n.center, { icon: L.divIcon({ className: '', html: '<div style="font-family:Jost,sans-serif;font-size:8.5px;font-weight:400;letter-spacing:0.2em;text-transform:uppercase;color:#2A2018;white-space:nowrap;text-align:center;opacity:0.6;">'+n.name+'</div>', iconSize: [0, 0], iconAnchor: [0, 8] }), interactive: false }).addTo(nMap); });
       var hotelIcon = L.divIcon({ className: '', html: '<div style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;background:#2A2018;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.25);"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 21V13h6v8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 21h22" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><rect x="7" y="8" width="3" height="3" rx="0.5" fill="#fff"/><rect x="14" y="8" width="3" height="3" rx="0.5" fill="#fff"/></svg></div>', iconSize: [22, 22], iconAnchor: [11, 11] });

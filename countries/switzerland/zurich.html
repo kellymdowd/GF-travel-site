@@ -1347,7 +1347,7 @@
   (function() {
     // ── Restaurant Map ──
     var restMap = L.map('restaurant-map', { scrollWheelZoom: false, attributionControl: false }).setView([47.376, 8.542], 14);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 18 }).addTo(restMap);
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxNativeZoom: 16, attribution: 'Tiles &copy; Esri', maxZoom: 18 }).addTo(restMap);
 
     var restaurants = [
       { name: 'Swiss Chuchi Restaurant', lat: 47.3731639, lon: 8.5436592, visited: true },
@@ -1364,7 +1364,7 @@
 
     // ── Neighborhood Map ──
     var nMap = L.map('neighborhood-map', { scrollWheelZoom: false, attributionControl: false }).setView([47.3765, 8.5385], 14);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 18 }).addTo(nMap);
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxNativeZoom: 16, attribution: 'Tiles &copy; Esri', maxZoom: 18 }).addTo(nMap);
 
     var neighborhoods = [
       { name: 'Altstadt', center: [47.3720, 8.5420], radius: 500 },

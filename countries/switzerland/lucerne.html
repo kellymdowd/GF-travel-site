@@ -1306,7 +1306,7 @@
 
     // ── Restaurant Map ──
     var rmap = L.map('restaurant-map', { scrollWheelZoom: false, attributionControl: false }).setView([47.053, 8.308], 13);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 18 }).addTo(rmap);
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxNativeZoom: 16, attribution: 'Tiles &copy; Esri', maxZoom: 18 }).addTo(rmap);
 
     var restaurants = [
       { name: "Sandra's Naschwerk GmbH", lat: 47.0832667, lng: 8.4426315, color: '#3d6e40' },
@@ -1336,7 +1336,7 @@
 
     // ── Neighborhood Map ──
     var nmap = L.map('neighborhood-map', { scrollWheelZoom: false, attributionControl: false }).setView([47.051, 8.307], 15);
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 18 }).addTo(nmap);
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxNativeZoom: 16, attribution: 'Tiles &copy; Esri', maxZoom: 18 }).addTo(nmap);
 
     var neighborhoods = [
       { name: 'Old Town', center: [47.0520, 8.3050], radius: 400 },

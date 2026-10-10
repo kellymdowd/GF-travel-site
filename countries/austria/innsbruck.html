@@ -944,8 +944,8 @@
     <script>
     (function(){
       var map = L.map('gf-map', { scrollWheelZoom: false }).setView([47.265, 11.400], 14);
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap &copy; CARTO',
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxNativeZoom: 16,
+        attribution: 'Tiles &copy; Esri',
         maxZoom: 18
       }).addTo(map);
 
@@ -1409,8 +1409,8 @@
     <script>
     (function(){
       var nMap = L.map('neighborhood-map', { scrollWheelZoom: false }).setView([47.267, 11.397], 13);
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap &copy; CARTO',
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxNativeZoom: 16,
+        attribution: 'Tiles &copy; Esri',
         maxZoom: 18
       }).addTo(nMap);
 

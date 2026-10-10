@@ -792,7 +792,7 @@
     <script>
     (function(){
       var map = L.map('restaurant-map', {scrollWheelZoom:false}).setView([60.8635, 7.116], 15);
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {attribution:'&copy; OSM &copy; CARTO', maxZoom:19}).addTo(map);
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxNativeZoom: 16,attribution:'Tiles &copy; Esri', maxZoom:19}).addTo(map);
       var restaurants = [
         {name:'Ægir BryggeriPub', lat:60.863776, lng:7.117319, score:3}
       ];

@@ -936,8 +936,8 @@
     <script>
     (function(){
       var map = L.map('gf-map', { scrollWheelZoom: false }).setView([60.172, 24.940], 13);
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 18
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxNativeZoom: 16,
+        attribution: 'Tiles &copy; Esri', maxZoom: 18
       }).addTo(map);
 
       var restaurants = [
@@ -1305,8 +1305,8 @@
     <script>
     (function(){
       var nMap = L.map('neighborhoods-map', { scrollWheelZoom: false }).setView([60.170, 24.945], 13);
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 18
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxNativeZoom: 16,
+        attribution: 'Tiles &copy; Esri', maxZoom: 18
       }).addTo(nMap);
 
       var neighborhoods = [

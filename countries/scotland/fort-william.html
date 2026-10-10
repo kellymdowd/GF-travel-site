@@ -1298,7 +1298,7 @@
     // ─── Restaurant Map ──────────────────────────────────────
     document.addEventListener('DOMContentLoaded', function() {
       var rMap = L.map('restaurant-map', { scrollWheelZoom: false, attributionControl: false }).setView([56.818, -5.108], 14);
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(rMap);
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxNativeZoom: 16, attribution: 'Tiles &copy; Esri', maxZoom: 19 }).addTo(rMap);
 
       function scoreColor(s) {
         return { 5:'#3d6e40', 4:'#6a9a40', 3:'#b48c3c', 2:'#c87a50', 1:'#b4463c', 0:'#9a9a9a' }[s] || '#9a9a9a';

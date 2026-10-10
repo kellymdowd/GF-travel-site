@@ -648,7 +648,7 @@
     <script>
     (function(){
       var map = L.map('gf-map', { scrollWheelZoom: false }).setView([48.140, 11.572], 13);
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 18 }).addTo(map);
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxNativeZoom: 16, attribution: 'Tiles &copy; Esri', maxZoom: 18 }).addTo(map);
       var colors = { 5:'#3d6e40', 4:'#6a9a40', 3:'#b48c3c', 2:'#c87a50', 1:'#b4463c', 0:'#9a9a9a' };
       var restaurants = [
         { name:'echt jetzt - 100% glutenfrei', score:5, lat:48.149646, lng:11.57261 },
@@ -780,7 +780,7 @@
     <script>
     (function(){
       var nMap = L.map('neighborhoods-map', { scrollWheelZoom: false }).setView([48.148, 11.570], 13);
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', { attribution: '&copy; OpenStreetMap &copy; CARTO', maxZoom: 18 }).addTo(nMap);
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxNativeZoom: 16, attribution: 'Tiles &copy; Esri', maxZoom: 18 }).addTo(nMap);
       var neighborhoods = [
         { name: 'Altstadt', center: [48.137, 11.576], radius: 600 },
         { name: 'Schwabing', center: [48.162, 11.585], radius: 1200 },
