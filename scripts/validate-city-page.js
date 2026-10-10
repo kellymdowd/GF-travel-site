@@ -108,6 +108,11 @@ cardNames.forEach((name) => {
 const realHashLinks = [...bodyOnly.matchAll(/href="#"(?!\s*class="toc)/g)];
 if (realHashLinks.length > 0) warnings.push(`Found ${realHashLinks.length} placeholder # link(s)`);
 
+// 5b. mailto links may only use the site inbox — never Kelly's personal email
+//     or a nonexistent @gfgoneglobal.com address (hello@/kelly@ both bounced).
+const badMailtos = [...html.matchAll(/mailto:([^"?<'\s]+)/g)].map((m) => m[1]).filter((a) => a !== 'gfgoneglobal@gmail.com');
+if (badMailtos.length > 0) errors.push(`Disallowed mailto address(es): ${[...new Set(badMailtos)].join(', ')} — use gfgoneglobal@gmail.com`);
+
 // 6. No transition-all
 if (html.includes('transition-all')) warnings.push('Found transition-all — use specific properties');
 
