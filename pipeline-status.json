@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-08-08T22:31:58.275Z",
+  "generatedAt": "2026-10-09T18:10:28.406Z",
   "summary": {
-    "countries": 25,
-    "countryPagesCreated": 25,
-    "cities": 76,
+    "countries": 26,
+    "countryPagesCreated": 26,
+    "cities": 82,
     "citiesSkipped": 4,
-    "cityPagesCreated": 69,
-    "cityPagesValidated": 69,
-    "cityPagesFailingValidation": 0,
+    "cityPagesCreated": 74,
+    "cityPagesValidated": 73,
+    "cityPagesFailingValidation": 1,
     "blogsGenerated": 0,
     "instagramGenerated": 10,
     "contentAuditRun": 67,
-    "contentAuditNotRun": 2,
-    "templateMigrated": 69,
+    "contentAuditNotRun": 7,
+    "templateMigrated": 74,
     "templateNotMigrated": 0,
-    "trips": 21,
+    "trips": 22,
     "tripsWithItinerary": 5,
     "citiesWithItineraryCoverage": 32
   },
@@ -231,6 +231,16 @@
     },
     {
       "type": "country",
+      "country": "Slovenia",
+      "countrySlug": "slovenia",
+      "pageCreated": true,
+      "pagePath": "countries/slovenia.html",
+      "validated": null,
+      "blogGenerated": false,
+      "instagramGenerated": false
+    },
+    {
+      "type": "country",
       "country": "Spain",
       "countrySlug": "spain",
       "pageCreated": true,
@@ -283,7 +293,7 @@
       "validated": true,
       "validationCounts": {
         "errors": 0,
-        "warnings": 1,
+        "warnings": 2,
         "info": 0
       },
       "blogGenerated": false,
@@ -495,10 +505,10 @@
       "skipped": false,
       "pageCreated": true,
       "pagePath": "countries/england/london.html",
-      "validated": true,
+      "validated": false,
       "validationCounts": {
-        "errors": 0,
-        "warnings": 7,
+        "errors": 1,
+        "warnings": 8,
         "info": 0
       },
       "blogGenerated": false,
@@ -1846,6 +1856,128 @@
     },
     {
       "type": "city",
+      "country": "Slovenia",
+      "countrySlug": "slovenia",
+      "city": "Bled",
+      "citySlug": "bled",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/slovenia/bled.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false,
+      "contentAudit": null,
+      "itinerary": null,
+      "templateMigrated": true
+    },
+    {
+      "type": "city",
+      "country": "Slovenia",
+      "countrySlug": "slovenia",
+      "city": "Bohinj",
+      "citySlug": "bohinj",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/slovenia/bohinj.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 2,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false,
+      "contentAudit": null,
+      "itinerary": null,
+      "templateMigrated": true
+    },
+    {
+      "type": "city",
+      "country": "Slovenia",
+      "countrySlug": "slovenia",
+      "city": "Kranjska Gora",
+      "citySlug": "kranjska-gora",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/slovenia/kranjska-gora.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false,
+      "contentAudit": null,
+      "itinerary": null,
+      "templateMigrated": true
+    },
+    {
+      "type": "city",
+      "country": "Slovenia",
+      "countrySlug": "slovenia",
+      "city": "Ljubljana",
+      "citySlug": "ljubljana",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/slovenia/ljubljana.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false,
+      "contentAudit": null,
+      "itinerary": null,
+      "templateMigrated": true
+    },
+    {
+      "type": "city",
+      "country": "Slovenia",
+      "countrySlug": "slovenia",
+      "city": "Soca Valley",
+      "citySlug": "soca-valley",
+      "skipped": false,
+      "pageCreated": true,
+      "pagePath": "countries/slovenia/soca-valley.html",
+      "validated": true,
+      "validationCounts": {
+        "errors": 0,
+        "warnings": 1,
+        "info": 0
+      },
+      "blogGenerated": false,
+      "instagramGenerated": false,
+      "contentAudit": null,
+      "itinerary": null,
+      "templateMigrated": true
+    },
+    {
+      "type": "city",
+      "country": "Slovenia",
+      "countrySlug": "slovenia",
+      "city": "Soča Valley",
+      "citySlug": "so-a-valley",
+      "skipped": false,
+      "pageCreated": false,
+      "pagePath": null,
+      "validated": null,
+      "validationCounts": null,
+      "blogGenerated": false,
+      "instagramGenerated": false,
+      "contentAudit": null,
+      "itinerary": null,
+      "templateMigrated": null
+    },
+    {
+      "type": "city",
       "country": "Spain",
       "countrySlug": "spain",
       "city": "Barcelona",
@@ -2205,6 +2337,21 @@
     }
   ],
   "trips": [
+    {
+      "year": "2026",
+      "month": "Sep",
+      "destination": "Slovenia",
+      "cities": [
+        "Ljubljana",
+        "Kranjska Gora",
+        "Soča Valley (Bovec)",
+        "Bohinj",
+        "Bled"
+      ],
+      "itinerarySlug": null,
+      "itineraryCreated": false,
+      "cityStopSlugs": []
+    },
     {
       "year": "2026",
       "month": "Apr",

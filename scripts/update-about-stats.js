@@ -27,7 +27,7 @@ const CONTINENT_MAP = {
   'Switzerland': 'Europe', 'Ireland': 'Europe', 'Netherlands': 'Europe', 'Germany': 'Europe',
   'Norway': 'Europe', 'Sweden': 'Europe', 'Finland': 'Europe', 'Italy': 'Europe',
   'Czech Republic': 'Europe', 'Spain': 'Europe', 'England': 'Europe', 'France': 'Europe',
-  'Scotland': 'Europe',
+  'Scotland': 'Europe', 'Slovenia': 'Europe',
   'Sri Lanka': 'Asia', 'India': 'Asia', 'Maldives': 'Asia', 'Japan': 'Asia',
   'Mexico': 'North America', 'Canada': 'North America', 'USA': 'North America',
   'Costa Rica': 'North America', 'Jamaica': 'North America',

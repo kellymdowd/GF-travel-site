@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://gfgoneglobal.com/countries/slovenia">
+  <title>Slovenia — GF Gone Global</title>
+  <meta name="description" content="A celiac traveler's guide to gluten-free Slovenia, covering Ljubljana, Kranjska Gora, the Soča Valley (Bovec), Bohinj and Bled, with GF restaurant picks, city safety scores and tips for getting around by bus.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3"></script>
+  <style>
+    /* ─── Design Tokens ──────────────────────────────────────── */
+    :root { --cream: #FFFFFF; --slate: #C8717A; --slate-dark: #AD5D65; --rose: #B8907A; --ink: #2A2018; --ink-mid: #5A5048; --ink-light: #9A907A; --pin: #B8907A; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body { background: var(--cream); color: var(--ink); font-family: 'Jost', sans-serif; font-weight: 300; min-height: 100vh; padding-top: 52px; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 100; opacity: 0.6; }
+
+    /* ─── Site Nav ────────────────────────────────────────────── */
+    .site-nav { position: fixed; top: 0; left: 0; right: 0; height: 52px; background: var(--cream); border-bottom: 1px solid rgba(42, 32, 24, 0.08); display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem; z-index: 300; }
+    .nav-home { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.85rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); text-decoration: none; transition: color 0.2s ease; }
+    .nav-home:hover { color: var(--slate); }
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+    .nav-link { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; transition: color 0.2s ease; }
+    .nav-link:hover { color: var(--ink); }
+
+    /* ─── Back Link ──────────────────────────────────────────── */
+    .nav-sub { padding: 1.2rem 2.5rem 0; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards; }
+    .back-link { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s ease; }
+    .back-link:hover { color: var(--slate); }
+    .back-link:hover svg { transform: translateX(-3px); }
+    .back-link svg { transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+
+    /* ─── Header ─────────────────────────────────────────────── */
+    .header { display: flex; justify-content: space-between; align-items: flex-end; padding: 1.4rem 2.5rem 1.2rem; opacity: 0; transform: translateY(-12px); animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards; }
+    .country-name { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2rem, 4vw, 3.5rem); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1; }
+    .trip-dates { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: clamp(0.85rem, 1.3vw, 1rem); color: var(--ink-light); letter-spacing: 0.04em; padding-bottom: 0.2rem; }
+    .header-rule { height: 1px; background: linear-gradient(to right, var(--rose), transparent 60%); margin: 0 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 0.6s forwards; }
+
+    /* ─── Overview Button ────────────────────────────────────── */
+    .overview-section { padding: 1rem 2.5rem 0; opacity: 0; animation: fadeIn 0.8s ease 0.3s forwards; }
+    .overview-btn { display: inline-flex; align-items: center; gap: 0.5rem; font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; border: 1px solid rgba(154, 144, 122, 0.35); padding: 0.45rem 0.9rem 0.45rem 0.75rem; transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease; }
+    .overview-btn:hover { color: var(--slate); border-color: var(--slate); background: rgba(200, 113, 122, 0.05); }
+    .overview-btn svg { flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .overview-btn:hover svg { transform: translateX(2px); }
+
+    /* ─── Map ────────────────────────────────────────────────── */
+    .map-section { padding: 1.5rem 2.5rem 1rem; opacity: 0; animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
+    #country-map { width: 100%; display: block; }
+    #country-map svg { width: 100%; display: block; overflow: hidden; }
+    .city-pin { cursor: pointer; }
+    .city-pin circle.pin-fill { transition: r 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), fill 0.2s ease; }
+    .city-pin:hover circle.pin-fill { r: 7; fill: #C8A088; }
+    .city-label { font-family: 'Jost', sans-serif; font-size: 10px; font-weight: 400; letter-spacing: 0.1em; fill: var(--ink-mid); pointer-events: none; transition: fill 0.2s ease; }
+    .city-pin:hover .city-label { fill: var(--ink); }
+
+    /* ─── City Chips ─────────────────────────────────────────── */
+    .cities-section { padding: 0.5rem 2.5rem 2rem; opacity: 0; animation: fadeIn 0.8s ease 1.2s forwards; }
+    .cities-rule { height: 1px; background: rgba(170, 170, 170, 0.3); margin-bottom: 1.2rem; }
+    .cities-grid { display: flex; flex-wrap: wrap; gap: 0.6rem 1.2rem; }
+    .city-chip { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.35rem 0.75rem 0.35rem 0.6rem; border: 1px solid rgba(180, 168, 155, 0.4); cursor: pointer; background: transparent; font-family: 'Jost', sans-serif; font-size: 0.72rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mid); text-decoration: none; transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease; }
+    .city-chip:hover { border-color: var(--rose); background: rgba(184, 144, 122, 0.06); color: var(--ink); }
+    .city-chip-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--pin); flex-shrink: 0; }
+
+    /* ─── Tooltip ─────────────────────────────────────────────── */
+    #map-tooltip { position: fixed; pointer-events: none; background: var(--ink); color: #fff; font-family: 'Jost', sans-serif; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; padding: 0.4rem 0.75rem; white-space: nowrap; opacity: 0; transition: opacity 0.15s ease; z-index: 200; }
+
+    /* ─── GF Friendliness Section ─────────────────────────────── */
+    .gf-section { padding: 0 2.5rem 2rem; opacity: 0; animation: fadeIn 0.8s ease 1.4s forwards; }
+    .gf-section-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.2rem; }
+    .gf-section-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .gf-verdict-tag { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.25rem 0.7rem 0.25rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; }
+    .gf-verdict-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .gf-verdict-easy { background: rgba(76, 140, 80, 0.08); color: #3d6e40; }
+    .gf-verdict-easy .gf-verdict-dot { background: #4c8c50; }
+    .gf-verdict-moderate { background: rgba(180, 140, 60, 0.08); color: #8a7030; }
+    .gf-verdict-moderate .gf-verdict-dot { background: #b48c3c; }
+    .gf-verdict-challenging { background: rgba(200, 122, 80, 0.08); color: #8a5030; }
+    .gf-verdict-challenging .gf-verdict-dot { background: #c87a50; }
+    .gf-verdict-difficult { background: rgba(180, 70, 60, 0.08); color: #8a3a30; }
+    .gf-verdict-difficult .gf-verdict-dot { background: #b4463c; }
+    .gf-section-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 1.4rem; }
+    .gf-section-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    .gf-section-summary { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink-mid); line-height: 1.7; letter-spacing: 0.01em; margin-bottom: 1.4rem; }
+    .gf-score-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.05); }
+    .gf-score-row:first-of-type { border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .gf-score-category { font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; color: var(--ink-mid); letter-spacing: 0.02em; }
+    .gf-score-pips { display: flex; gap: 4px; align-items: center; }
+    .gf-score-pip { width: 8px; height: 8px; border-radius: 50%; background: rgba(42, 32, 24, 0.08); }
+    .gf-score-pip.is-filled { background: var(--slate); }
+    .gf-score-total { display: flex; align-items: baseline; gap: 0.5rem; margin-top: 1.2rem; padding-top: 1rem; border-top: 1px solid rgba(42, 32, 24, 0.12); }
+    .gf-score-total-num { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 2.4rem; color: var(--ink); line-height: 1; letter-spacing: -0.02em; }
+    .gf-score-total-label { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .gf-city-scores { margin-top: 1.4rem; }
+    .gf-city-scores-label { font-family: 'Jost', sans-serif; font-size: 0.58rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.6rem; }
+    .gf-city-score-row { display: flex; justify-content: space-between; align-items: center; padding: 0.45rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.05); }
+    .gf-city-score-row:first-of-type { border-top: 1px solid rgba(42, 32, 24, 0.08); }
+    .gf-city-name { font-family: 'Jost', sans-serif; font-size: 0.78rem; font-weight: 300; color: var(--ink-mid); }
+    .gf-city-name a { color: var(--ink-mid); text-decoration: none; transition: color 0.2s ease; }
+    .gf-city-name a:hover { color: var(--slate); }
+    .gf-city-score-bar { display: flex; gap: 3px; align-items: center; }
+    .gf-city-pip { width: 6px; height: 6px; border-radius: 50%; background: rgba(42, 32, 24, 0.08); }
+    .gf-city-pip.is-filled { background: var(--slate); }
+    @media (max-width: 768px) {
+      .gf-section-grid { grid-template-columns: 1fr; gap: 1.6rem; }
+    }
+
+    /* ─── Packing List ───────────────────────────────────────── */
+    .packing { padding: 0 2.5rem 2.5rem; opacity: 0; animation: fadeIn 0.8s ease 1.5s forwards; }
+    .packing-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.4rem; }
+    .packing-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); line-height: 1; }
+    .packing-season { font-family: 'Jost', sans-serif; font-size: 0.62rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); }
+    .packing-rule { height: 1px; background: rgba(42, 32, 24, 0.08); margin-bottom: 0.6rem; }
+    .packing-group-label { font-family: 'Jost', sans-serif; font-size: 0.6rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin: 1.6rem 0 0.4rem; }
+    .packing-group-label:first-of-type { margin-top: 1rem; }
+    .packing-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
+    .packing-item { display: grid; grid-template-columns: 20px 1fr auto; gap: 0.8rem; align-items: baseline; padding: 0.9rem 0; border-bottom: 1px solid rgba(42, 32, 24, 0.06); }
+    .packing-item:last-child { border-bottom: none; }
+    .packing-check { color: var(--ink-light); opacity: 0.3; position: relative; top: 1px; }
+    .packing-item-content { display: flex; flex-direction: column; gap: 0.2rem; }
+    .packing-item-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
+    .packing-item-why { font-family: 'Jost', sans-serif; font-size: 0.68rem; font-weight: 300; color: var(--ink-mid); line-height: 1.6; letter-spacing: 0.02em; }
+    .packing-item-tag { display: inline-block; padding: 0.18rem 0.5rem; border-radius: 100px; font-family: 'Jost', sans-serif; font-size: 0.5rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; align-self: start; margin-top: 0.15rem; }
+    .packing-tag-essential { background: rgba(200, 113, 122, 0.08); color: var(--slate); }
+    .packing-tag-country { background: rgba(60, 90, 160, 0.08); color: #3a5080; }
+    .packing-tag-city { background: rgba(90, 130, 180, 0.08); color: #3a6080; }
+    @media (max-width: 768px) { .packing-item { grid-template-columns: 20px 1fr; } .packing-item-tag { grid-column: 2; } }
+
+    /* ─── FAQ ─────────────────────────────────────────────────── */
+    .faq { padding: 2.4rem 2.5rem 0; }
+    .faq-header { margin-bottom: 1.4rem; }
+    .faq-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.3rem, 2.5vw, 1.7rem); letter-spacing: 0.06em; color: var(--ink); }
+    .faq-list { border-top: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-item { border-bottom: 1px solid rgba(42, 32, 24, 0.1); }
+    .faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1rem; background: none; border: none; text-align: left; cursor: pointer; padding: 1.1rem 0; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--ink); }
+    .faq-q:hover, .faq-q:focus-visible { color: var(--slate); }
+    .faq-q-icon { flex-shrink: 0; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); color: var(--ink-light); }
+    .faq-item.is-open .faq-q-icon { transform: rotate(45deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .faq-item.is-open .faq-a { max-height: 280px; }
+    .faq-a-inner { padding: 0 0 1.2rem; font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.86rem; line-height: 1.75; color: var(--ink-mid); max-width: 62ch; }
+
+    /* ─── Animations ─────────────────────────────────────────── */
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { to { opacity: 1; } }
+    @media (max-width: 600px) { .site-nav { padding: 0 1.2rem; } .nav-sub, .header, .overview-section, .map-section, .cities-section, .gf-section, .packing, .faq { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
+
+    /* ─── Mobile: Nav bar ─────────────────────────────────── */
+    @media (max-width: 480px) {
+      .nav-links { gap: 0.8rem; }
+      .nav-home { font-size: 0.72rem; letter-spacing: 0.1em; }
+      .nav-link, .nav-btn { font-size: 0.56rem; letter-spacing: 0.1em; }
+    }
+
+    /* ─── Mobile: Header stacking ─────────────────────────── */
+    @media (max-width: 480px) {
+      .header { flex-direction: column; align-items: flex-start; gap: 0.2rem; }
+      .trip-dates { padding-bottom: 0; }
+    }
+
+    /* ─── Mobile: GF section padding ──────────────────────── */
+    @media (max-width: 480px) {
+      .gf-section, .packing, .faq { padding-left: 1.2rem; padding-right: 1.2rem; }
+    }
+  </style>
+
+  <!-- Google Analytics (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-64V5CSB1DT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-64V5CSB1DT');
+
+    // ─── Custom event tracking ─────────────────────────────
+    document.addEventListener('DOMContentLoaded', function() {
+
+      // Outbound link clicks (links with target="_blank")
+      document.querySelectorAll('a[target="_blank"]').forEach(function(link) {
+        link.addEventListener('click', function() {
+          gtag('event', 'outbound_click', {
+            event_category: 'engagement',
+            event_label: this.href,
+            transport_type: 'beacon'
+          });
+        });
+      });
+
+      // Section navigation (TOC / anchor links)
+      document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+        link.addEventListener('click', function() {
+          gtag('event', 'section_nav', {
+            event_category: 'navigation',
+            event_label: this.getAttribute('href')
+          });
+        });
+      });
+
+      // Map interactions — clicks on map containers, SVGs, and iframes
+      document.querySelectorAll('.map-container, [class*="map"], svg.map, iframe[src*="google.com/maps"]').forEach(function(el) {
+        el.addEventListener('click', function() {
+          gtag('event', 'map_interaction', {
+            event_category: 'engagement',
+            event_label: document.title
+          });
+        });
+      });
+
+    });
+  </script>
+
+  <!-- ═══════════════ FAQ SCHEMA ═══════════════ -->
+  <!-- 3 questions: transit/car, celiac safety, best time to visit. Write real, specific
+       answers grounded in the trip and the country's GF Friendliness data above — never
+       generic filler. See brand_assets/voice-and-tone.md before drafting. -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do you need a car in Slovenia?",
+      "acceptedAnswer": { "@type": "Answer", "text": "I did the whole trip without a car, using intercity and local buses plus a prebooked taxi and one Uber (when the last bus from Ljubljana to Kranjska Gora never showed up). It works, but the buses can't be tracked live, and off-season schedules in the Soča Valley are thin, so a car would have opened up places I couldn't reach. If you go by bus, don't count on the last departure of the day, and check whether the summer-only Vršič Pass bus is still running." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Slovenia safe for celiacs?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Mostly, yes. Ljubljana is the easiest (7/10), with dedicated gluten-free bakeries like Glutines. The Alpine towns land in the 5–6 range: Kranjska Gora, the Soča Valley, Bohinj and Bled all have a few genuinely good options (Felix in Bovec, Oštarija in Kranjska Gora, the 100% gluten-free Lincer a short bus ride from Bled), but I had a couple of iffy meals and was turned away once in Bled because they couldn't guarantee gluten-free. Allergens are marked on most menus, which helps a lot." }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the best time to visit Slovenia?",
+      "acceptedAnswer": { "@type": "Answer", "text": "I went in late September into October, which was lovely: quieter trails, autumn color and mild days. The tradeoffs were off-season bus schedules, the Vršič Pass bus ending for the season, a cable car closed for maintenance, and Boka Waterfall mostly dried up. For full transport and every hut and lift open, go in summer; for fewer crowds, aim for June or September." }
+    }
+  ]
+}
+  </script>
+
+</head>
+<body>
+
+  <!-- ═══════════════ SITE NAV ═══════════════ -->
+  <nav class="site-nav">
+    <a href="../" class="nav-home">GF Gone Global</a>
+    <div class="nav-links">
+      <a href="../" class="nav-link">Places</a>
+      <a href="../itineraries/" class="nav-link">Itineraries</a>
+      <a href="../gf-scoring" class="nav-link">GF Scoring</a>
+      <a href="../about" class="nav-link">About Me</a>
+    </div>
+  </nav>
+
+  <!-- ═══════════════ BACK LINK ═══════════════ -->
+  <div class="nav-sub">
+    <a href="../" class="back-link">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M9 2L4 7L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      All Countries
+    </a>
+  </div>
+
+  <!-- ═══════════════ HEADER ═══════════════ -->
+  <header class="header">
+    <h1 class="country-name">Slovenia</h1>
+    <span class="trip-dates">September &ndash; October 2026</span>
+  </header>
+  <div class="header-rule"></div>
+
+  <!-- ═══════════════ GOOGLE MAPS BUTTON ═══════════════ -->
+  <!-- Only include if Google My Maps URL is available -->
+  <div class="overview-section">
+    <a class="overview-btn" href="https://www.google.com/maps/d/u/0/edit?mid=1j9AeBPTvtgYFjnPdDWFlMFLkuwrMNyE&amp;usp=sharing" target="_blank" rel="noopener">
+      <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+        <path d="M6.5 1.5C4 1.5 2 3.5 2 6s2 4.5 4.5 4.5S11 8.5 11 6 9 1.5 6.5 1.5Z" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M8.5 11 11 8.5M8.5 11H11V8.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Open Google Map
+    </a>
+  </div>
+
+  <!-- ═══════════════ D3 COUNTRY MAP ═══════════════ -->
+  <section class="map-section">
+    <div id="country-map"></div>
+  </section>
+
+  <!-- ═══════════════ CITY CHIPS ═══════════════ -->
+  <section class="cities-section">
+    <div class="cities-rule"></div>
+    <div class="cities-grid" id="city-chips"></div>
+  </section>
+
+  <!-- ═══════════════ GF FRIENDLINESS ═══════════════ -->
+  <section class="gf-section">
+    <div class="gf-section-header">
+      <h2 class="gf-section-title">GF Friendliness</h2>
+      <!-- Verdict classes: gf-verdict-easy (7-10), gf-verdict-moderate (5-6), gf-verdict-challenging (3-4), gf-verdict-difficult (0-2) -->
+      <span class="gf-verdict-tag gf-verdict-moderate"><span class="gf-verdict-dot"></span>Manageable</span>
+    </div>
+    <div class="gf-section-rule"></div>
+
+    <div class="gf-section-grid">
+      <div>
+        <p class="gf-section-summary">Slovenia is very doable for celiacs, especially in Ljubljana, where there are fully gluten-free bakeries and restaurants and most menus list the 14 EU allergens. The mountain towns are thinner: options exist, but you'll lean on a few knowledgeable spots and on hotel restaurants, and staff caution swings from &ldquo;we can make that for you&rdquo; to &ldquo;please don't eat here.&rdquo; Plan your meals a little more carefully once you leave the capital.</p>
+
+        <div class="gf-city-scores">
+          <div class="gf-city-scores-label">City Scores</div>
+          <div class="gf-city-score-row">
+            <span class="gf-city-name"><a href="slovenia/ljubljana">Ljubljana</a></span>
+            <div class="gf-city-score-bar">
+              <span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span>
+            </div>
+          </div>
+          <div class="gf-city-score-row">
+            <span class="gf-city-name"><a href="slovenia/kranjska-gora">Kranjska Gora</a></span>
+            <div class="gf-city-score-bar">
+              <span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span>
+            </div>
+          </div>
+          <div class="gf-city-score-row">
+            <span class="gf-city-name"><a href="slovenia/soca-valley">Soča Valley</a></span>
+            <div class="gf-city-score-bar">
+              <span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span>
+            </div>
+          </div>
+          <div class="gf-city-score-row">
+            <span class="gf-city-name"><a href="slovenia/bohinj">Bohinj</a></span>
+            <div class="gf-city-score-bar">
+              <span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span>
+            </div>
+          </div>
+          <div class="gf-city-score-row">
+            <span class="gf-city-name"><a href="slovenia/bled">Bled</a></span>
+            <div class="gf-city-score-bar">
+              <span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip is-filled"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span><span class="gf-city-pip"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <!-- Country GF rubric: 5 categories, each scored 0-2 (2 pips each) -->
+        <div class="gf-score-row">
+          <span class="gf-score-category">GF Culture &amp; Awareness</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip "></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Labeling &amp; Regulations</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip is-filled"></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Dining Options Nationwide</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip "></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Grocery &amp; Supermarket Access</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip "></span></div>
+        </div>
+        <div class="gf-score-row">
+          <span class="gf-score-category">Naturally GF Cuisine</span>
+          <div class="gf-score-pips"><span class="gf-score-pip is-filled"></span><span class="gf-score-pip "></span></div>
+        </div>
+        <div class="gf-score-total">
+          <span class="gf-score-total-num">6</span>
+          <span class="gf-score-total-label">out of 10</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ PACKING LIST ═══════════════ -->
+  <!-- Order per CLAUDE.md: Essential first, then country-wide, then one group per city
+       (only cities with something genuinely city-specific to pack for — don't force one).
+       Every item needs a real, specific "why" — no generic filler. -->
+  <section class="packing" id="packing">
+    <div class="packing-header">
+      <h2 class="packing-title">What to Pack for Slovenia</h2>
+      <span class="packing-season">September &ndash; October &middot; Shoulder Season</span>
+    </div>
+    <div class="packing-rule"></div>
+
+    <div class="packing-group-label">Essential</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">GF tamari or soy sauce packets</span>
+          <span class="packing-item-why">Spica in Bled’s poke bowl sauce wasn’t gluten-free. My own tamari packets fixed that in two seconds.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Portable GF snacks for hiking days</span>
+          <span class="packing-item-why">Mountain huts can be closed off-season, and you can easily walk 20+ km between safe food. Stock up at Glutines in Ljubljana or Lincer near Bled.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Slovenian celiac phrase card (optional)</span>
+          <span class="packing-item-why">Most staff speak good English, but a card saying “Imam celiakijo” can help if that makes you feel more comfortable, especially in smaller mountain towns.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-essential">Essential</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Slovenia-Wide</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">EU plug adapter (Type C/F)</span>
+          <span class="packing-item-why">Slovenia uses the standard European two-pin plugs.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Slovenia</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Warm layers</span>
+          <span class="packing-item-why">Mornings in the Julian Alps are cool in autumn, even when afternoons by the lakes feel like summer.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Slovenia</span>
+      </li>
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Offline maps</span>
+          <span class="packing-item-why">Cell service disappears on many trails. Download the maps and check they actually work before you set off. Mine didn’t, and I got very lost.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-country">Slovenia</span>
+      </li>
+    </ul>
+
+    <div class="packing-group-label">Bohinj</div>
+    <ul class="packing-list">
+      <li class="packing-item">
+        <svg class="packing-check" width="14" height="14" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.2"/></svg>
+        <div class="packing-item-content">
+          <span class="packing-item-name">Sturdy hiking boots</span>
+          <span class="packing-item-why">The Seven Lakes Valley hike is long, rocky and steep on the way down. Trail runners won’t cut it.</span>
+        </div>
+        <span class="packing-item-tag packing-tag-city">Bohinj</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ═══════════════ FAQ ═══════════════ -->
+  <section class="faq" id="faq">
+    <div class="faq-header">
+      <h2 class="faq-title">Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Do you need a car in Slovenia?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">I did the whole trip without a car, using intercity and local buses plus a prebooked taxi and one Uber (when the last bus from Ljubljana to Kranjska Gora never showed up). It works, but the buses can't be tracked live, and off-season schedules in the Soča Valley are thin, so a car would have opened up places I couldn't reach. If you go by bus, don't count on the last departure of the day, and check whether the summer-only Vršič Pass bus is still running.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          Is Slovenia safe for celiacs?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Mostly, yes. Ljubljana is the easiest (7/10), with dedicated gluten-free bakeries like Glutines. The Alpine towns land in the 5&ndash;6 range: Kranjska Gora, the Soča Valley, Bohinj and Bled all have a few genuinely good options (Felix in Bovec, Oštarija in Kranjska Gora, the 100% gluten-free Lincer a short bus ride from Bled), but I had a couple of iffy meals and was turned away once in Bled because they couldn't guarantee gluten-free. Allergens are marked on most menus, which helps a lot.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          What's the best time to visit Slovenia?
+          <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">I went in late September into October, which was lovely: quieter trails, autumn color and mild days. The tradeoffs were off-season bus schedules, the Vršič Pass bus ending for the season, a cable car closed for maintenance, and Boka Waterfall mostly dried up. For full transport and every hut and lift open, go in summer; for fewer crowds, aim for June or September.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════ TOOLTIP ═══════════════ -->
+  <div id="map-tooltip"></div>
+
+  <!-- ═══════════════ D3 MAP SCRIPT ═══════════════ -->
+  <script>
+    const CITIES = [
+      { name: 'Ljubljana', slug: 'ljubljana', lat: 46.0511, lon: 14.5061, trips: '' },
+      { name: 'Kranjska Gora', slug: 'kranjska-gora', lat: 46.4869, lon: 13.7868, trips: '' },
+      { name: 'Soča Valley', slug: 'soca-valley', lat: 46.3381, lon: 13.5525, trips: '' },
+      { name: 'Bohinj', slug: 'bohinj', lat: 46.28, lon: 13.886, trips: '' },
+      { name: 'Bled', slug: 'bled', lat: 46.3683, lon: 14.1146, trips: '' }
+    ];
+
+    const LABEL_OPTS = {
+      'Ljubljana': { dx: 10, dy: 4, anchor: 'start' },
+      'Kranjska Gora': { dx: 10, dy: -6, anchor: 'start' },
+      'Soča Valley': { dx: -10, dy: 4, anchor: 'end' },
+      'Bohinj': { dx: -10, dy: 14, anchor: 'end' },
+      'Bled': { dx: 10, dy: 4, anchor: 'start' }
+    };
+
+    // Bounding box zoomed into the country
+    const REGION = {
+      type: 'Feature',
+      geometry: {
+        type: 'Polygon',
+        coordinates: [[[13.0, 47.1], [16.9, 47.1], [16.9, 45.2], [13.0, 45.2], [13.0, 47.1]]]
+      }
+    };
+
+    const W = 960, H = 520;
+
+    const svg = d3.select('#country-map')
+      .append('svg')
+      .attr('viewBox', `0 0 ${W} ${H}`)
+      .attr('preserveAspectRatio', 'xMidYMid meet');
+
+    const projection = d3.geoMercator();
+    const path = d3.geoPath().projection(projection);
+    const tooltip = document.getElementById('map-tooltip');
+
+    fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json')
+      .then(r => r.json())
+      .then(world => {
+        const countries = topojson.feature(world, world.objects.countries);
+        const target = countries.features.find(f => +f.id === 705);
+
+        projection.fitExtent([[60, 40], [W - 60, H - 50]], REGION);
+
+        svg.append('rect').attr('width', W).attr('height', H).attr('fill', '#F3F3F3');
+
+        svg.selectAll('.bg-country')
+          .data(countries.features)
+          .enter().append('path')
+          .attr('fill', '#E0E0E0')
+          .attr('stroke', 'rgba(255,255,255,0.7)')
+          .attr('stroke-width', 0.5)
+          .attr('d', path);
+
+        svg.append('path')
+          .datum(target)
+          .attr('fill', '#C8717A')
+          .attr('stroke', '#AD5D65')
+          .attr('stroke-width', 1.5)
+          .attr('d', path);
+
+        const pinGroup = svg.selectAll('.city-pin')
+          .data(CITIES).enter()
+          .append('g')
+          .attr('class', 'city-pin')
+          .attr('transform', d => {
+            const [x, y] = projection([d.lon, d.lat]);
+            return `translate(${x},${y})`;
+          });
+
+        pinGroup.append('circle').attr('r', 7).attr('cy', 2).attr('fill', 'rgba(42, 32, 24, 0.15)');
+        pinGroup.append('circle').attr('class', 'pin-fill').attr('r', 5).attr('fill', '#B8907A').attr('stroke', '#FFFFFF').attr('stroke-width', 1.5);
+        pinGroup.append('text')
+          .attr('class', 'city-label')
+          .attr('dx', d => (LABEL_OPTS[d.name] || { dx: 10 }).dx)
+          .attr('dy', d => (LABEL_OPTS[d.name] || { dy: 4 }).dy)
+          .attr('text-anchor', d => (LABEL_OPTS[d.name] || { anchor: 'start' }).anchor)
+          .text(d => d.name.toUpperCase());
+
+        pinGroup
+          .on('mousemove', function(event, d) {
+            tooltip.textContent = d.name;
+            tooltip.style.opacity = '1';
+            tooltip.style.left = (event.clientX - tooltip.offsetWidth / 2) + 'px';
+            tooltip.style.top  = (event.clientY - 42) + 'px';
+          })
+          .on('mouseleave', () => { tooltip.style.opacity = '0'; })
+          .on('click', (event, d) => { window.location.href = `slovenia/${d.slug}`; });
+
+        pinGroup.style('opacity', 0).each(function(d, i) {
+          d3.select(this).transition().delay(800 + i * 100).duration(500).ease(d3.easeCubicOut).style('opacity', 1);
+        });
+
+        const chipsEl = document.getElementById('city-chips');
+        chipsEl.innerHTML = '';
+        CITIES.forEach(city => {
+          const a = document.createElement('a');
+          a.className = 'city-chip';
+          a.href = `slovenia/${city.slug}`;
+          a.innerHTML = `<span class="city-chip-dot"></span>${city.name}`;
+          chipsEl.appendChild(a);
+        });
+      });
+  </script>
+
+  <!-- ═══════════════ FAQ TOGGLE ═══════════════ -->
+  <script>
+    document.querySelectorAll('.faq-q').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var item = btn.closest('.faq-item');
+        var wasOpen = item.classList.contains('is-open');
+        document.querySelectorAll('.faq-item.is-open').forEach(function(open) {
+          open.classList.remove('is-open');
+          open.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+        });
+        if (!wasOpen) {
+          item.classList.add('is-open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
