@@ -19,7 +19,7 @@ Generate via the hotels.com affiliate tool. Existing pages use the `hotels.com/a
 | Bohinj | Sunrose 7 Gourmet & SPA Hotel | *(no button yet)* | Research only found the hotel's own site. Add a Hotels.com link if it's listed there |
 | Soča Valley | Hotel Soča | https://www.hotelsoca.si/en/hotel/ *(direct, "Book direct")* | Swap for a Hotels.com link if it's listed there |
 
-## Viator (8)
+## Viator (7)
 
 Existing pages append `?pid=P00313515&mcid=42383&medium=link`.
 
@@ -27,7 +27,6 @@ Existing pages append `?pid=P00313515&mcid=42383&medium=link`.
 |---|---|---|---|
 | Ljubljana | Ljubljana Castle Funicular | https://www.viator.com/en-CA/Ljubljana-attractions/Ljubljana-Castle-Funicular/d5257-a27861 | Attraction page (`/en-CA/` locale), not a single product |
 | Ljubljana | Ljubljana Food & Walking Tour | https://www.viator.com/en-CA/tours/Ljubljana/Ljubljana-Food-and-Wine-Walking-Tour/d5257-7125FOOD | |
-| Soča Valley | Soča River Rafting | https://www.viator.com/tours/Bovec/Rafting-in-Soca-River/d24351-16413P1 | |
 | Soča Valley | Canyoning | https://www.viator.com/tours/Bovec/Canyoning-Susec/d24351-34461P4 | Sušec canyon, not the Fratarica one you booked |
 | Bled | Bled Castle Tickets | https://www.viator.com/en-CA/Bled-attractions/Bled-Castle-Blejski-Grad/d22044-a21354 | Attraction page |
 | Bled | Pletna Boat to Bled Island | https://www.viator.com/en-IE/tours/Bled/Lake-Bled-and-Bled-Castle-Tour-from-Ljubljana/d22044-6993LAKEBLED | ⚠️ This is a day tour from Ljubljana, not a boat-only ticket. A better product may exist |
@@ -45,6 +44,7 @@ None used yet. If you'd rather book any of the above through GYG, or add GYG opt
 | Page | Card | URL |
 |---|---|---|
 | Bohinj | Vogel Cable Car | https://www.vogel.si/ (official site. The Viator link research found couldn't be verified) |
+| Soča Valley | Soča River Rafting (Aktivni Planet) | https://aktivniplanet.si/en/ (Kelly booked here; check Viator/GYG for an Aktivni Planet listing) |
 | Soča Valley | Bovec Zipline (Soča Rafting) | https://www.zipline.si/en/ (official site; check Viator/GYG for a listing) |
 
 ## No booking link at all (by design; nothing real found)
