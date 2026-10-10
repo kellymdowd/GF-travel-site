@@ -214,6 +214,21 @@ if (newRules.length > 0) {
   fs.writeFileSync(gitignorePath, updated);
 }
 
+// Strip EXIF (GPS location, capture time, device) before anything is staged —
+// published photos must never carry where/when Kelly took them. Lossless via
+// jpegtran; photos relying on an EXIF Orientation flag are rotated upright first.
+const jpegsToStage = toStage.filter((p) => /\.jpe?g$/i.test(p));
+if (jpegsToStage.length > 0) {
+  const py = fs.existsSync(path.join(repoRoot, '.venv/bin/python3')) ? path.join(repoRoot, '.venv/bin/python3') : 'python3';
+  try {
+    const out = execFileSync(py, [path.join(repoRoot, 'scripts/strip-photo-metadata.py'), ...jpegsToStage], { cwd: repoRoot }).toString().trim();
+    console.log(`Metadata: ${out}`);
+  } catch (e) {
+    console.error('Photo metadata strip failed — not staging photos that may still contain GPS:', e.message);
+    process.exit(1);
+  }
+}
+
 if (toStage.length > 0 || newRules.length > 0) {
   try {
     execFileSync('git', ['add', '.gitignore', ...toStage], { cwd: repoRoot });
