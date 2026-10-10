@@ -359,6 +359,17 @@
     @media (max-width: 480px) {
       .gf-section, .packing, .faq { padding-left: 1.2rem; padding-right: 1.2rem; }
     }
+  
+    /* ─── Footer privacy link ─────────────────────────────── */
+    .footer-privacy { margin-top: 0.5rem; }
+    .footer-privacy a { color: inherit; text-decoration: none; border-bottom: 1px solid currentColor; transition: opacity 0.2s ease; }
+    .footer-privacy a:hover { color: var(--slate); }
+    .footer-privacy a:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .footer-privacy a:active { opacity: 0.6; }
+
+    /* ─── Footer ──────────────────────────────────────────── */
+    .page-footer { padding: 2rem 2.5rem 2.5rem; text-align: center; }
+    .page-disclosure { font-family: 'Jost', sans-serif; font-size: 0.56rem; font-weight: 300; color: var(--ink-light); opacity: 0.5; letter-spacing: 0.03em; }
   </style>
 
   <!-- Google Analytics (gtag.js) -->
@@ -1145,6 +1156,11 @@
       </div>
     </div>
   </section>
+
+  <footer class="page-footer">
+    <p class="page-disclosure">This page contains affiliate links. If you book or shop through these links, I may earn a small commission at no extra cost to you. As an Amazon Associate I earn from qualifying purchases. All opinions and GF safety ratings are my own.</p>
+    <p class="page-disclosure footer-privacy"><a href="../privacy">Privacy policy</a></p>
+  </footer>
 
   <div id="map-tooltip"></div>
 

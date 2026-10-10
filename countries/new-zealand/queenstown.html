@@ -363,6 +363,13 @@
     @media (max-width: 600px) { .site-nav, .nav, .header, .snapshot, .toc, .gf-guide, .restaurants, .where-to-stay, .landmarks, .neighborhoods, .things-to-do, .packing, .faq, .travel-tips, .getting-around, .page-footer { padding-left: 1.2rem; padding-right: 1.2rem; } .header-rule { margin: 0 1.2rem; } }
     @media (max-width: 480px) { .site-nav { padding: 0 1.2rem; } .nav-links { gap: 0.8rem; } .nav-home { font-size: 0.72rem; letter-spacing: 0.1em; } }
     @media (max-width: 480px) { .nav { flex-wrap: wrap; gap: 0.4rem 0.6rem; } .header { flex-direction: column; align-items: flex-start; gap: 0.2rem; } .trip-date { padding-bottom: 0; } }
+  
+    /* ─── Footer privacy link ─────────────────────────────── */
+    .footer-privacy { margin-top: 0.5rem; }
+    .footer-privacy a { color: inherit; text-decoration: none; border-bottom: 1px solid currentColor; transition: opacity 0.2s ease; }
+    .footer-privacy a:hover { color: var(--slate); }
+    .footer-privacy a:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .footer-privacy a:active { opacity: 0.6; }
   </style>
 
   <!-- Google Analytics (gtag.js) -->
@@ -750,6 +757,7 @@
 
   <footer class="page-footer">
     <div class="page-disclosure">This page may contain affiliate links. If you book through these links, I may earn a small commission at no extra cost to you.</div>
+    <div class="page-disclosure footer-privacy"><a href="../../privacy">Privacy policy</a></div>
   </footer>
 
   <div class="lightbox-overlay" id="lightbox">

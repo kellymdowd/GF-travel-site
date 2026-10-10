@@ -192,6 +192,13 @@
       .site-nav, .crumbs, .header, .glance, .days, .faq, .packing, .related, .tip-cta, .page-footer { padding-left: 1.2rem; padding-right: 1.2rem; }
       .header-rule { margin: 0 1.2rem; }
     }
+  
+    /* ─── Footer privacy link ─────────────────────────────── */
+    .footer-privacy { margin-top: 0.5rem; }
+    .footer-privacy a { color: inherit; text-decoration: none; border-bottom: 1px solid currentColor; transition: opacity 0.2s ease; }
+    .footer-privacy a:hover { color: var(--slate); }
+    .footer-privacy a:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .footer-privacy a:active { opacity: 0.6; }
   </style>
 
   <!-- Google Analytics (gtag.js) -->
@@ -489,6 +496,7 @@
   <footer class="page-footer">
     <div class="page-disclosure">This page may contain affiliate links. If you book through these links, I may earn a small commission at no extra cost to you.</div>
     <div class="page-disclosure" style="margin-top:0.4rem;">Restaurant and GF safety details reflect my visit in March 2025 — always reconfirm with the restaurant directly, and check the <a href="../countries/japan/kyoto" style="color:var(--slate);">full Kyoto guide</a> for the most current info.</div>
+    <div class="page-disclosure footer-privacy"><a href="../privacy">Privacy policy</a></div>
   </footer>
 
   <script>

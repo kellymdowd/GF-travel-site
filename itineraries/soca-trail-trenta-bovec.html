@@ -343,6 +343,13 @@
     .pack-note { font-size: 0.8rem; color: var(--ink-light); line-height: 1.6; margin-top: 0.8rem; }
     .pack-note a { color: var(--slate); }
     @media (max-width: 600px) { .trail-map-section { padding-left: 1.2rem; padding-right: 1.2rem; } .pack-grid { grid-template-columns: 1fr; } .stop-photos-2 { grid-template-columns: 1fr; } }
+  
+    /* ─── Footer privacy link ─────────────────────────────── */
+    .footer-privacy { margin-top: 0.5rem; }
+    .footer-privacy a { color: inherit; text-decoration: none; border-bottom: 1px solid currentColor; transition: opacity 0.2s ease; }
+    .footer-privacy a:hover { color: var(--slate); }
+    .footer-privacy a:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
+    .footer-privacy a:active { opacity: 0.6; }
   </style>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
@@ -641,6 +648,7 @@
   <footer class="page-footer">
     <div class="page-disclosure">This page may contain affiliate links. If you book through these links, I may earn a small commission at no extra cost to you.</div>
     <div class="page-disclosure" style="margin-top:0.4rem;">Trail and GF details reflect my hike in September 2026. Always check current bus timetables and trail conditions, and see the <a href="../countries/slovenia/soca-valley" style="color:var(--slate);">full Soča Valley guide</a> for the most current restaurant info.</div>
+    <div class="page-disclosure footer-privacy"><a href="../privacy">Privacy policy</a></div>
   </footer>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>

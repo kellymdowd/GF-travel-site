@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://gfgoneglobal.com/privacy">
+  <title>Privacy Policy — GF Gone Global</title>
+  <meta name="description" content="What GF Gone Global collects (not much), the analytics and affiliate partners it uses, and how to opt out.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream:      #FFFFFF;
+      --slate:      #C8717A;
+      --rose:       #B8907A;
+      --ink:        #2A2018;
+      --ink-mid:    #5A5048;
+      --ink-light:  #9A907A;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      padding-top: 52px;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 100;
+      opacity: 0.6;
+    }
+
+    /* ─── Nav ─────────────────────────────────────────────────── */
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 52px;
+      background: var(--cream);
+      border-bottom: 1px solid rgba(42, 32, 24, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2.5rem;
+      z-index: 300;
+    }
+
+    .nav-home {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 0.85rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-home:hover { color: var(--slate); }
+
+    .nav-links { display: flex; align-items: center; gap: 2rem; }
+
+    .nav-link {
+      font-family: 'Jost', sans-serif;
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-mid);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-link:hover { color: var(--ink); }
+
+    .nav-home:focus-visible,
+    .nav-link:focus-visible {
+      outline: 1.5px solid var(--slate);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+    .nav-home:active,
+    .nav-link:active { color: var(--rose); }
+
+    /* ─── Content ─────────────────────────────────────────────── */
+    .page {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 4rem 2.5rem 6rem;
+    }
+
+    .page-header {
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      transform: translateY(-14px);
+      animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.15s forwards;
+    }
+
+    .page-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      line-height: 1;
+      color: var(--ink);
+    }
+
+    .page-rule {
+      width: 3rem;
+      height: 1px;
+      background: var(--rose);
+      margin-top: 1.2rem;
+    }
+
+    .page-updated {
+      margin-top: 1.2rem;
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+    }
+
+    .policy {
+      opacity: 0;
+      animation: fadeIn 0.8s ease 0.4s forwards;
+    }
+
+    .policy-lede {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 400;
+      font-size: 1.3rem;
+      line-height: 1.6;
+      color: var(--ink);
+      margin-bottom: 2.5rem;
+    }
+
+    .policy-section + .policy-section {
+      margin-top: 2.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid rgba(42, 32, 24, 0.08);
+    }
+
+    .policy-section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .policy-section p,
+    .policy-section li {
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--ink-mid);
+    }
+
+    .policy-section p + p,
+    .policy-section p + ul,
+    .policy-section ul + p { margin-top: 1rem; }
+
+    .policy-section ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .policy-section li {
+      position: relative;
+      padding-left: 1.3rem;
+    }
+    .policy-section li + li { margin-top: 0.6rem; }
+
+    .policy-section li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.85em;
+      width: 6px;
+      height: 1px;
+      background: var(--slate);
+    }
+
+    .policy-section strong {
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .policy a {
+      color: var(--ink-mid);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(200, 113, 122, 0.4);
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .policy a:hover {
+      color: var(--slate);
+      border-color: var(--slate);
+    }
+    .policy a:focus-visible {
+      outline: 1.5px solid var(--slate);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+    .policy a:active { color: var(--rose); }
+
+    /* ─── Animations ──────────────────────────────────────────── */
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .page-header, .policy { animation: none; opacity: 1; transform: none; }
+    }
+
+    @media (max-width: 600px) {
+      .site-nav { padding: 0 1.2rem; }
+      .page { padding: 3rem 1.2rem 4rem; }
+    }
+
+    /* ─── Mobile: Nav bar ─────────────────────────────────── */
+    @media (max-width: 480px) {
+      .nav-links { gap: 0.8rem; }
+      .nav-home { font-size: 0.72rem; letter-spacing: 0.1em; }
+      .nav-link { font-size: 0.56rem; letter-spacing: 0.1em; }
+    }
+  </style>
+
+  <!-- Google Analytics (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J5LD1HTY75"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J5LD1HTY75');
+
+    // ─── Enhanced event tracking ──────────────────────────
+    document.addEventListener('DOMContentLoaded', function() {
+
+      // Scroll depth tracking
+      var scrollMarks = { 25: false, 50: false, 75: false, 100: false };
+      var ticking = false;
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            var scrollPct = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+            [25, 50, 75, 100].forEach(function(mark) {
+              if (scrollPct >= mark && !scrollMarks[mark]) {
+                scrollMarks[mark] = true;
+                gtag('event', 'scroll_depth', { event_category: 'engagement', event_label: mark + '%', page_title: document.title });
+              }
+            });
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+
+      // Outbound link clicks
+      document.querySelectorAll('a[target="_blank"]').forEach(function(link) {
+        link.addEventListener('click', function() {
+          gtag('event', 'outbound_click', { event_category: 'engagement', event_label: this.href, link_type: 'other', transport_type: 'beacon' });
+        });
+      });
+
+      // Internal navigation
+      document.querySelectorAll('.nav-link, .nav-home').forEach(function(link) {
+        link.addEventListener('click', function() {
+          gtag('event', 'internal_nav', { event_category: 'navigation', event_label: this.textContent.trim(), link_url: this.href || '' });
+        });
+      });
+
+      // Time on page
+      [30, 60, 120, 300].forEach(function(seconds) {
+        setTimeout(function() { if (!document.hidden) { gtag('event', 'time_on_page', { event_category: 'engagement', event_label: seconds + 's', page_title: document.title }); } }, seconds * 1000);
+      });
+
+    });
+  </script>
+
+</head>
+<body>
+
+  <nav class="site-nav">
+    <a href="./" class="nav-home">GF Gone Global</a>
+    <div class="nav-links">
+      <a href="./" class="nav-link">Places</a>
+      <a href="./itineraries/" class="nav-link">Itineraries</a>
+      <a href="gf-scoring" class="nav-link">GF Scoring</a>
+      <a href="about" class="nav-link">About Me</a>
+    </div>
+  </nav>
+
+  <main class="page">
+
+    <div class="page-header">
+      <h1 class="page-title">Privacy Policy</h1>
+      <div class="page-rule"></div>
+      <p class="page-updated">Last updated October 10, 2026</p>
+    </div>
+
+    <div class="policy">
+
+      <p class="policy-lede">The short version: I don't ask you for anything, I don't sell anything about you, and the tracking on this site exists so I can tell which pages are actually useful.</p>
+
+      <section class="policy-section">
+        <h2>Who runs this site</h2>
+        <p>GF Gone Global (gfgoneglobal.com) is a personal travel site I write and maintain myself. There are no accounts, logins, comment sections, newsletter forms, or checkout pages here, so there's no place on the site where you type in personal information.</p>
+        <p>If you have a question about this policy, email me at <a href="mailto:gfgoneglobal@gmail.com">gfgoneglobal@gmail.com</a>.</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>Google Analytics</h2>
+        <p>I use Google Analytics to see how people use the site: which pages get read, how far down a page people scroll, how long they stay, roughly where in the world visits come from, what kind of device and browser they use, and which links get clicked (including which hotel, tour, or restaurant links). That last part tells me which recommendations are actually helping people plan a trip.</p>
+        <p>Google Analytics does this by setting cookies in your browser and sending usage data to Google. I see that data in aggregate reports; I can't see your name, email, or anything that identifies you personally. Google Analytics 4 doesn't log or store IP addresses.</p>
+        <p>I've also turned on <strong>Google signals</strong>, which lets Google add aggregated demographic and interest information (age range, general interests) for visitors who are signed in to a Google account and have ad personalization turned on. I only see this as totals across many visitors.</p>
+        <p>I keep analytics data for 14 months, after which Google deletes it.</p>
+        <p>Google's own explanation of what it does with this data is here: <a href="https://policies.google.com/technologies/partner-sites" target="_blank" rel="noopener">How Google uses information from sites that use its services</a>.</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>Affiliate links</h2>
+        <p>Some links on this site are affiliate links. If you click one and then book or buy something, I may earn a small commission at no extra cost to you. The partners I currently use are:</p>
+        <ul>
+          <li><strong>Amazon</strong> (packing list items). As an Amazon Associate I earn from qualifying purchases.</li>
+          <li><strong>Viator</strong> and <strong>GetYourGuide</strong> (tours and activities)</li>
+          <li><strong>Hotels.com</strong> (hotel bookings)</li>
+        </ul>
+        <p>When you click an affiliate link, you leave this site, and that company may set its own cookies so it can credit the referral. What happens on their site is covered by their privacy policies, not this one. I don't receive any personal information from them, only reports on clicks and commissions.</p>
+        <p>Affiliate links never decide what I recommend. Plenty of places on this site have no affiliate link at all, and celiac-safety notes are the same either way.</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>Other services the pages load</h2>
+        <p>Like most websites, pages here pull in a few things from outside services. When your browser loads them, that service receives standard technical information such as your IP address and browser type:</p>
+        <ul>
+          <li><strong>Google Fonts</strong> for the site's typefaces</li>
+          <li><strong>Esri (ArcGIS)</strong> for the map tiles on city and country pages</li>
+          <li><strong>unpkg</strong> and <strong>jsDelivr</strong>, which host the code libraries that draw the maps</li>
+          <li><strong>Wikimedia Commons</strong> for a few photos on some pages</li>
+        </ul>
+        <p>Links to outside sites (Find Me Gluten Free, Google Maps, restaurant and hotel websites) are just links. Nothing is shared with them unless you click through.</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>If you email me</h2>
+        <p>Some pages have a link to send me a tip or correction by email. If you do, I'll have your email address and whatever you write. I use it only to read and reply to your message, and I won't add you to any list or share it with anyone.</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>Your choices</h2>
+        <ul>
+          <li>You can block or delete cookies in your browser settings. The site works fine without them.</li>
+          <li>Google offers a <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">browser add-on that opts you out of Google Analytics</a> on every site.</li>
+          <li>You can turn off ad personalization in your Google account at <a href="https://myadcenter.google.com" target="_blank" rel="noopener">My Ad Center</a>, which also keeps you out of Google signals data.</li>
+          <li>Depending on where you live (for example the EU, UK, or California), you may have the right to ask what data is held about you or to have it deleted. Since I don't hold anything that identifies you, those requests mostly go to Google, but email me if you have one and I'll help however I can.</li>
+        </ul>
+      </section>
+
+      <section class="policy-section">
+        <h2>Children</h2>
+        <p>This site is written for adults planning travel. It isn't aimed at children under 13, and I don't knowingly collect information from them.</p>
+      </section>
+
+      <section class="policy-section">
+        <h2>Changes</h2>
+        <p>If I add a new analytics tool or affiliate partner, I'll update this page and the date at the top.</p>
+      </section>
+
+    </div>
+
+  </main>
+
+</body>
+</html>
