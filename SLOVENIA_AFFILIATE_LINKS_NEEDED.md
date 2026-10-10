@@ -4,22 +4,22 @@ Every booking link on the 5 Slovenia city pages is currently a **plain, untracke
 
 ---
 
-## Hotels.com (8)
+## Hotels.com (8) — 7 done, 1 waiting on Booking.com
 
 Generate via the hotels.com affiliate tool. Existing pages use the `hotels.com/affiliate?landingPage=…&camref=…` wrapper.
 
 | Page | Hotel | Current plain URL | Notes |
 |---|---|---|---|
-| Ljubljana | Exe Lev | https://www.hotels.com/ho134298/hotel-lev-ljubljana-slovenia/ | Slug says "Hotel Lev" (its former name). Confirm it lands on Exe Lev |
-| Kranjska Gora | Boutique Hotel Skipass | https://www.hotels.com/ho1191823040/botique-hotel-skipass-kranjska-gora-slovenia/ | |
-| Kranjska Gora | Boutique Hotel Milka | https://www.hotels.com/ho1047885856/pension-milka-kranjska-gora-slovenia/ | Slug says "Pension Milka". Confirm it's the boutique hotel |
-| Kranjska Gora | Hotel Kranjska Gora | https://www.hotels.com/ho3198304064/ | ⚠️ Bare ID with no name slug, so it may be wrong. Look it up fresh |
-| Bohinj | Hotel Bohinj | https://www.hotels.com/ho2924730112/hotel-bohinj/ | |
-| Bled | Bled Rose Hotel | https://www.hotels.com/ho293139/bled-rose-hotel-bled-slovenia/ | |
-| Bohinj | Sunrose 7 Gourmet & SPA Hotel | *(no button yet)* | Research only found the hotel's own site. Add a Hotels.com link if it's listed there |
-| Soča Valley | Hotel Soča | https://www.hotelsoca.si/en/hotel/ *(direct, "Book direct")* | Swap for a Hotels.com link if it's listed there |
+| Ljubljana | Exe Lev | ✅ DONE 2026-10-10 (affiliate link added) | |
+| Kranjska Gora | Boutique Hotel Skipass | ✅ DONE 2026-10-10 (affiliate link added) | |
+| Kranjska Gora | Boutique Hotel Milka | ✅ DONE 2026-10-10 (affiliate link added) | |
+| Kranjska Gora | Hotel Kranjska Gora | ✅ DONE 2026-10-10 (affiliate link added) | Kelly regenerated from the clean hotel page |
+| Bohinj | Hotel Bohinj | ✅ DONE 2026-10-10 (affiliate link added) | |
+| Bled | Bled Rose Hotel | ✅ DONE 2026-10-10 (affiliate link added) | |
+| Bohinj | Sunrose 7 Gourmet & SPA Hotel | ✅ DONE 2026-10-10 (affiliate link added), new button | Listed on Hotels.com as "Sunrose 7 Heritage Boutique Hotel (Adults Only)" |
+| Soča Valley | Hotel Soča | ⏸ Not on Hotels.com. It IS on Booking.com | Keep "Book direct" until Kelly joins the Booking.com affiliate program |
 
-## Viator (7)
+## Viator (7) — Kelly will generate these later
 
 Existing pages append `?pid=P00313515&mcid=42383&medium=link`.
 
