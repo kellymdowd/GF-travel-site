@@ -57,6 +57,12 @@
     .footer-privacy a:hover { color: var(--slate); }
     .footer-privacy a:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
     .footer-privacy a:active { opacity: 0.6; }
+    /* ─── Mobile: Site nav bar ────────────────────────────── */
+    @media (max-width: 480px) {
+      .site-nav { padding: 0 1.2rem; }
+      .nav-links { gap: 0.8rem; }
+      .nav-home { font-size: 0.72rem; letter-spacing: 0.1em; }
+    }
   </style>
 
   <!-- Google Analytics (gtag.js) -->
@@ -221,7 +227,6 @@
   </section>
 
   <footer class="page-footer">
-    <div class="page-disclosure">This page may contain affiliate links. If you book through these links, I may earn a small commission at no extra cost to you.</div>
     <div class="page-disclosure footer-privacy"><a href="../privacy">Privacy policy</a></div>
   </footer>
 

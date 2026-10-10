@@ -235,6 +235,12 @@
     .footer-privacy a:hover { color: var(--slate); }
     .footer-privacy a:focus-visible { outline: 1.5px solid var(--slate); outline-offset: 2px; border-radius: 2px; }
     .footer-privacy a:active { opacity: 0.6; }
+    /* ─── Mobile: Site nav bar ────────────────────────────── */
+    @media (max-width: 480px) {
+      .site-nav { padding: 0 1.2rem; }
+      .nav-links { gap: 0.8rem; }
+      .nav-home { font-size: 0.72rem; letter-spacing: 0.1em; }
+    }
   </style>
 
   <!-- Google Analytics (gtag.js) -->
@@ -556,8 +562,7 @@
   </div>
 
   <footer class="page-footer">
-    <div class="page-disclosure">This page may contain affiliate links. If you book through these links, I may earn a small commission at no extra cost to you.</div>
-    <div class="page-disclosure" style="margin-top:0.4rem;">Restaurant and GF safety details reflect my visit in March 2025 — always reconfirm with the restaurant directly, and check the <a href="../countries/japan/tokyo" style="color:var(--slate);">full Tokyo guide</a> for the most current info.</div>
+    <div class="page-disclosure">Restaurant and GF safety details reflect my visit in March 2025 — always reconfirm with the restaurant directly, and check the <a href="../countries/japan/tokyo" style="color:var(--slate);">full Tokyo guide</a> for the most current info.</div>
     <div class="page-disclosure footer-privacy"><a href="../privacy">Privacy policy</a></div>
   </footer>
 
