@@ -51,12 +51,15 @@ These appear unlinked across nearly every non-English-speaking country. Establis
 - Spain — Spanish. Similar to Italy: FACE national federation certification and the blue "sin gluten" sticker mean most staff already recognize what's being asked; card mainly helps explain cross-contamination faster than doing it yourself at a counter.
 - Finland — Finnish (specific phrase to include: "Sairastan keliakiaa"). Another weaker-need case — copy says Finnish staff are generally very GF-aware, card is just extra insurance.
 - Sweden — Swedish. Same weaker-need pattern — English is widely spoken, card just reinforces seriousness when ordering.
+- Slovenia — Slovenian (specific phrase to include: "Imam celiakijo"). Weaker-need case: most staff spoke good English and allergens are listed on most menus; copy uses the softened "if that makes you feel more comfortable" framing.
 
 ---
 
 ## Not shoppable — informational only, flagging for awareness
 
 These don't need a product link; including them so nothing silently falls through the cracks. No action needed unless you want to change how they're presented:
+
+- Slovenia — "Offline maps" (Slovenia-Wide Essentials): a reminder to download maps before hiking, not a product.
 
 - **Resort dining advance notice** (Maldives) — a process tip (email the resort ~14 days ahead), not a product.
 - **IC card (Suica/Pasmo/ICOCA)** (Japan) — a transit card you buy/load locally, not an Amazon item.
