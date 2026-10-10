@@ -621,6 +621,7 @@
       "author": { "@type": "Person", "name": "Kelly" },
       "publisher": { "@type": "Organization", "name": "GF Gone Global" }
     },
+    { "@type": "Restaurant", "name": "Sunrose 7 Restaurant", "servesCuisine": "Gourmet tasting menu", "address": { "@type": "PostalAddress", "addressLocality": "Bohinjska Bistrica", "addressCountry": "Slovenia" }, "review": { "@type": "Review", "author": { "@type": "Person", "name": "Kelly" }, "reviewRating": { "@type": "Rating", "ratingValue": 5, "bestRating": 5 } } },
     { "@type": "Restaurant", "name": "Restavracija Kramar", "servesCuisine": "Slovenian, International", "address": { "@type": "PostalAddress", "addressLocality": "Bohinj", "addressCountry": "Slovenia" }, "review": { "@type": "Review", "author": { "@type": "Person", "name": "Kelly" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5 } } },
     { "@type": "Restaurant", "name": "Hotel Gasperin Bohinj", "servesCuisine": "Hotel breakfast", "address": { "@type": "PostalAddress", "addressLocality": "Bohinj", "addressCountry": "Slovenia" }, "review": { "@type": "Review", "author": { "@type": "Person", "name": "Kelly" }, "reviewRating": { "@type": "Rating", "ratingValue": 4, "bestRating": 5 } } },
     { "@type": "Restaurant", "name": "Restaurant Mihovc", "servesCuisine": "Slovenian", "address": { "@type": "PostalAddress", "addressLocality": "Bohinj", "addressCountry": "Slovenia" }, "review": { "@type": "Review", "author": { "@type": "Person", "name": "Kelly" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5 } } },
@@ -748,7 +749,8 @@
     <!-- Sunrose 7 — stayed. Photo deferred (Kelly's own photos to be added later). No hotels.com/Expedia URL found, so no booking button. -->
     <div class="hotel-card">
       <div class="hotel-image-side">
-        <div class="hotel-image-placeholder"></div>
+        <img class="hotel-image" src="../../photos/slovenia/bohinj/sunrose-7/IMG_4715.jpeg" alt="Windowsill reading nook overlooking the garden at Sunrose 7" loading="lazy">
+        <div class="hotel-image-overlay"></div>
         <div class="hotel-badge">
           <span class="hotel-badge-dot"></span>
           Where I stayed
@@ -762,7 +764,7 @@
         </div>
         <div class="hotel-why">
           <div class="hotel-why-label">Why Stay Here</div>
-          <div class="hotel-why-text">A really beautiful, adults-only hotel tucked into Bohinjska Bistrica, the valley's main village. They upgraded me to a room with a windowsill reading nook overlooking the garden, which I loved. I didn't realize until I arrived that it's a digital-detox concept (there is still WiFi, for people like me who can't fully disconnect). The spa is lovely: sauna, jacuzzi, cold shower, and lounge beds with tea, water, and sparkling wine. The real standout was dinner. The kitchen made their four-course tasting menu gluten-free and pescatarian for me, and it was one of the best meals of my whole Slovenia trip (I added the wine pairing, and it was so worth it). Breakfast is a good buffet (smoothies, juices, meats, cheeses, traditional dishes, build-your-own yogurt bowls) plus eggs cooked to order. The staff were unbelievably kind. My only regret is that I didn't book a second night to do that dinner again.</div>
+          <div class="hotel-why-text">A really beautiful, adults-only hotel tucked into Bohinjska Bistrica, the valley's main village. They upgraded me to a room with a windowsill reading nook overlooking the garden, which I loved. I didn't realize until I arrived that it's a digital-detox concept (there is still WiFi, for people like me who can't fully disconnect). The spa is lovely: sauna, jacuzzi, cold shower, and lounge beds with tea, water, and sparkling wine. The real standout was dinner. The kitchen made their four-course tasting menu gluten-free and pescatarian for me, and it was unbelievable. I can't say enough good things about it (I added the wine pairing, and it was so worth it). Breakfast is a good buffet (smoothies, juices, meats, cheeses, traditional dishes, build-your-own yogurt bowls) plus eggs cooked to order. The staff were unbelievably kind. My only regret is that I didn't book a second night to do that dinner again.</div>
         </div>
         <div class="hotel-features">
           <span class="hotel-feature"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M4 6.2L5.4 7.5L8 4.5" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg> GF tasting menu</span>
@@ -775,7 +777,8 @@
     <!-- Hotel Bohinj — stayed. Photo deferred. -->
     <div class="hotel-card" style="margin-top:1.6rem;">
       <div class="hotel-image-side">
-        <div class="hotel-image-placeholder"></div>
+        <img class="hotel-image" src="../../photos/slovenia/bohinj/hotel-bohinj/IMG_4741.jpeg" alt="Guest room with a stationary bike at Hotel Bohinj" loading="lazy">
+        <div class="hotel-image-overlay"></div>
         <div class="hotel-badge">
           <span class="hotel-badge-dot"></span>
           Where I stayed
@@ -916,6 +919,7 @@
       var colors = { 5:'#3d6e40', 4:'#6a9a40', 3:'#b48c3c', 2:'#c87a50', 1:'#b4463c', 0:'#9a9a9a' };
 
       var restaurants = [
+        { name:'Sunrose 7 Restaurant', score:5, lat:46.271411, lng:13.957210 },
         { name:'Restavracija Kramar', score:3, lat:46.281466, lng:13.881315 },
         { name:'Hotel Gasperin Bohinj', score:4, lat:46.274965, lng:13.891465 },
         { name:'Restaurant Mihovc', score:3, lat:46.288691, lng:13.894666 },
@@ -953,6 +957,49 @@
     <div class="restaurants-grid">
 
       <!-- Restavracija Kramar — VISITED -->
+      <div class="restaurant-card">
+        <div class="restaurant-card-inner">
+        <div class="restaurant-card-content">
+        <div class="restaurant-top">
+          <h3 class="restaurant-name">Sunrose 7 Restaurant</h3>
+          <div class="restaurant-tags">
+            <span class="restaurant-tag restaurant-tag-options">GF Options</span>
+          </div>
+        </div>
+        <div class="restaurant-cuisine">Gourmet tasting menu · Hotel restaurant</div>
+        <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
+        <div class="restaurant-gf-score">
+          <span class="restaurant-gf-score-label">GF Score</span>
+          <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
+        </div>
+        <div class="restaurant-details">
+          <div class="restaurant-detail">
+            <div class="restaurant-detail-label">Safety Notes</div>
+            <div class="restaurant-detail-value">They were able to make their four-course tasting menu gluten-free and pescatarian for me. <!-- RESEARCHED -->Find Me Gluten Free reviewers say the same, with one mentioning the chef walked them through what was safe.</div>
+          </div>
+          <div class="restaurant-detail">
+            <div class="restaurant-detail-label">What to Order</div>
+            <div class="restaurant-detail-value">The tasting menu. I can't say enough good things about this dinner &mdash; it was unbelievable. I added the wine pairing (four glasses) and it was so beyond worth it. My only regret is that I didn't book a second night to have it again.</div>
+          </div>
+          <div class="restaurant-detail restaurant-location">
+            <div class="restaurant-detail-label">Location</div>
+            <div class="restaurant-detail-value restaurant-location-value">
+              <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
+              <span class="restaurant-detail-value">Inside Sunrose 7, Bohinjska Bistrica</span>
+            </div>
+          </div>
+        </div>
+        <div class="restaurant-fmgf">
+          <a href="https://www.findmeglutenfree.com/biz/sunrose-7/5993868621643776" class="restaurant-fmgf-link" target="_blank" rel="noopener">
+            See reviews on Find Me Gluten Free
+            <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M4.5 2H2.5C1.95 2 1.5 2.45 1.5 3V9.5C1.5 10.05 1.95 10.5 2.5 10.5H9C9.55 10.5 10 10.05 10 9.5V7.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/><path d="M7.5 1.5H10.5V4.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 7L10.5 1.5" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+        </div>
+        <img class="restaurant-photo" src="../../photos/slovenia/bohinj/sunrose-7-restaurant/IMG_4728.jpeg" alt="Starter from the gluten-free tasting menu at Sunrose 7" loading="lazy">
+        </div>
+      </div>
+
       <div class="restaurant-card">
         <div class="restaurant-top">
           <h3 class="restaurant-name">Restavracija Kramar</h3>
@@ -1184,9 +1231,7 @@
             </div>
             <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
           </div>
-          <div class="landmark-photo-placeholder">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="2" y="6" width="20" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2.5h5L16 6"/></svg>
-          </div>
+          <img class="landmark-photo" src="../../photos/slovenia/bohinj/lake-bohinj/IMG_4753.jpeg" alt="Mountains reflected in a still Lake Bohinj" loading="lazy">
         </div>
       </div>
 
@@ -1204,9 +1249,7 @@
             </div>
             <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
           </div>
-          <div class="landmark-photo-placeholder">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="2" y="6" width="20" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2.5h5L16 6"/></svg>
-          </div>
+          <img class="landmark-photo" src="../../photos/slovenia/bohinj/stara-fuzina/IMG_4865.jpeg" alt="Village street in Stara Fužina with mountains behind" loading="lazy">
         </div>
       </div>
 
@@ -1225,9 +1268,7 @@
             </div>
             <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
           </div>
-          <div class="landmark-photo-placeholder">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="2" y="6" width="20" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2.5h5L16 6"/></svg>
-          </div>
+          <img class="landmark-photo" src="../../photos/slovenia/bohinj/triglav-national-park/IMG_4789.jpeg" alt="Mountain panorama in Triglav National Park" loading="lazy">
         </div>
       </div>
 
@@ -1244,11 +1285,9 @@
               <svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg>
               Ribčev Laz, by the stone bridge
             </div>
-            <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
+            <div class="landmark-source landmark-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
           </div>
-          <div class="landmark-photo-placeholder">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="2" y="6" width="20" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2.5h5L16 6"/></svg>
-          </div>
+          <img class="landmark-photo" src="../../photos/slovenia/bohinj/church-st-john/IMG_4757.jpeg" alt="Church of St. John the Baptist by the river at Lake Bohinj" loading="lazy">
         </div>
       </div>
 
@@ -1266,9 +1305,6 @@
               Above Ukanc, west end of the lake
             </div>
             <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
-          </div>
-          <div class="landmark-photo-placeholder">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="2" y="6" width="20" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2.5h5L16 6"/></svg>
           </div>
         </div>
       </div>
@@ -1288,9 +1324,6 @@
             </div>
             <div class="landmark-source landmark-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
           </div>
-          <div class="landmark-photo-placeholder">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><rect x="2" y="6" width="20" height="14" rx="2"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2.5h5L16 6"/></svg>
-          </div>
         </div>
       </div>
 
@@ -1309,6 +1342,8 @@
       <div class="things-grid">
 
         <div class="thing-card">
+          <div class="thing-card-inner">
+          <div class="thing-card-content">
           <div class="thing-top">
             <h3 class="thing-name">Seven Lakes Valley Hike</h3>
             <span class="thing-tag thing-tag-free">Free</span>
@@ -1318,6 +1353,9 @@
             <span class="thing-detail"><svg width="10" height="10" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1"/><path d="M6 3.5V6.5L8 7.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/></svg> Full day</span>
             <span class="thing-detail"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg> Starts at Planina Blato</span>
             <span class="thing-detail" style="color:var(--rose);"><span class="restaurant-source-dot" style="width:4px;height:4px;border-radius:50%;background:var(--rose);display:inline-block;"></span> Went here</span>
+          </div>
+          </div>
+          <img class="thing-photo" src="../../photos/slovenia/bohinj/seven-lakes-valley/IMG_4797.jpeg" alt="Emerald lake in the Seven Lakes Valley" loading="lazy">
           </div>
         </div>
 
