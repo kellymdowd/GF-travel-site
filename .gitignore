@@ -1539,3 +1539,12 @@ photos/slovenia/bled/pletna-boat/*
 !photos/slovenia/bled/vintgar-gorge/
 photos/slovenia/bled/vintgar-gorge/*
 !photos/slovenia/bled/vintgar-gorge/IMG_5036.jpeg
+!photos/japan/kyoto/sanga-stadium-by-kyocera/IMG_1071.jpeg
+
+# Stadiums page (stadiums.html) — not a city page, so allowlisted by hand
+!photos/stadiums/
+photos/stadiums/*
+!photos/stadiums/valencia-mestalla.jpeg
+!photos/stadiums/houston-nrg.jpeg
+!photos/stadiums/dallas-norway-ivory-coast.jpeg
+!photos/stadiums/dallas-spain-portugal.jpeg

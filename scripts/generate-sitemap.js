@@ -13,7 +13,7 @@ const BASE_URL = 'https://gfgoneglobal.com';
 const today = new Date().toISOString().slice(0, 10);
 
 // Internal-only pages that should never be publicly indexed.
-const EXCLUDED_ROOT_PAGES = new Set(['admin.html', 'pipeline-status.html']);
+const EXCLUDED_ROOT_PAGES = new Set(['admin.html', 'pipeline-status.html', 'stadiums.html']); // stadiums: unlinked + noindex draft
 
 function collectHtmlFiles(dir, relativeTo) {
   const entries = [];
