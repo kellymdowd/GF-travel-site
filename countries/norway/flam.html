@@ -809,7 +809,7 @@
       restaurants.forEach(function(r){
         var c = scoreColors[r.score] || '#9a9a9a';
         var icon = L.divIcon({className:'',html:'<div style="width:18px;height:18px;display:flex;align-items:center;justify-content:center;background:'+c+';border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.25);"><span style="font-family:Jost,sans-serif;font-size:8px;font-weight:500;color:#fff;">'+r.score+'</span></div>',iconSize:[18,18],iconAnchor:[9,9]});
-        L.marker([r.lat,r.lng],{icon:icon}).addTo(map).bindPopup('<strong>'+r.name+'</strong><br>GF Score: '+r.score+'/5');
+        L.marker([r.lat,r.lng],{icon:icon}).addTo(map).bindPopup('<strong>'+r.name+'</strong><br>GF Score: '+r.score+ '/' + 5);
       });
       var hotelIcon = L.divIcon({className:'',html:'<div style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;background:#2A2018;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.25);"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 21V13h6v8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 21h22" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><rect x="7" y="8" width="3" height="3" rx="0.5" fill="#fff"/><rect x="14" y="8" width="3" height="3" rx="0.5" fill="#fff"/></svg></div>',iconSize:[22,22],iconAnchor:[11,11]});
       L.marker([60.863888,7.117631],{icon:hotelIcon}).addTo(map).bindPopup('<strong>Flåmsbrygga Hotel</strong><br>Where I stayed');

@@ -1021,7 +1021,7 @@
 
       places.forEach(function(p) {
         L.marker([p.lat, p.lng], { icon: dot(scoreColor(p.score)) })
-          .bindPopup('<strong>' + p.name + '</strong><br>GF Score: ' + p.score + '/5')
+          .bindPopup('<strong>' + p.name + '</strong><br>GF Score: ' + p.score + '/' + 5)
           .addTo(map);
       });
 

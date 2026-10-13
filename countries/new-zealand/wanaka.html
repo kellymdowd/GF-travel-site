@@ -557,7 +557,7 @@
       restaurants.forEach(function(r) {
         var color = colors[r.score];
         var icon = L.divIcon({ className: '', html: '<div style="width:14px;height:14px;border-radius:50%;background:'+color+';border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.2);"></div>', iconSize: [14, 14], iconAnchor: [7, 7] });
-        L.marker([r.lat, r.lng], { icon: icon }).addTo(map).bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">'+r.name+'</strong><br><span style="font-size:11px;color:#5A5048;">GF Score: '+(r.score > 0 ? r.score+'/5' : 'Unrated')+'</span></div>', { closeButton: false });
+        L.marker([r.lat, r.lng], { icon: icon }).addTo(map).bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">'+r.name+'</strong><br><span style="font-size:11px;color:#5A5048;">GF Score: '+(r.score > 0 ? r.score+ '/' + 5 : 'Unrated')+'</span></div>', { closeButton: false });
       });
     })();
     </script>

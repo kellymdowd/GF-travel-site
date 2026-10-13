@@ -885,7 +885,7 @@
         });
         L.marker([r.lat, r.lng], { icon: icon })
           .addTo(map)
-          .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">'+r.name+'</strong><br><span style="font-size:11px;color:#5A5048;">GF Options'+(r.score>0?' \u00b7 GF Score: '+r.score+'/5':'')+'</span></div>', { closeButton: false });
+          .bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">'+r.name+'</strong><br><span style="font-size:11px;color:#5A5048;">GF Options'+(r.score>0?' \u00b7 GF Score: '+r.score+ '/' + 5:'')+'</span></div>', { closeButton: false });
       });
     })();
     </script>
