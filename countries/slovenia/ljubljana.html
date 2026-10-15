@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- Old .html URLs → clean URL (GitHub Pages can't do server redirects). Runs before analytics. -->
-  <script>(function(l){if(/(^|\.)gfgoneglobal\.com$/.test(l.hostname)&&/\.html$/.test(l.pathname)){l.replace(l.pathname.replace(/\/index\.html$/,'/').replace(/\.html$/,'')+l.search+l.hash);}})(location);</script>
+  <!-- Old .html URLs → clean URL (GitHub Pages can't do server redirects). Runs before analytics and carries the original referrer (e.g. google.com) across the redirect so GA credits the right source. -->
+  <script>(function(l){var s;try{s=window.sessionStorage;}catch(e){}if(/(^|\.)gfgoneglobal\.com$/.test(l.hostname)&&/\.html$/.test(l.pathname)){try{s.setItem('gfg_ref',document.referrer);}catch(e){}l.replace(l.pathname.replace(/\/index\.html$/,'/').replace(/\.html$/,'')+l.search+l.hash);return;}try{var r=s.getItem('gfg_ref');if(r!==null){s.removeItem('gfg_ref');window.gfgRef=r;}}catch(e){}})(location);</script>
   <meta name="description" content="First-hand celiac travel guide to Ljubljana with 9 GF-rated restaurants, 7/10 safety score, hotel reviews, and interactive maps. Visited September 2026.">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="canonical" href="https://gfgoneglobal.com/countries/slovenia/ljubljana">
@@ -414,7 +414,7 @@
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-J5LD1HTY75');
+    gtag('config', 'G-J5LD1HTY75', window.gfgRef != null ? { page_referrer: window.gfgRef } : {});
 
     // ─── Enhanced event tracking ──────────────────────────
     // This is the complete, working implementation — copy verbatim, do not
