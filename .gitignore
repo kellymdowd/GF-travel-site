@@ -8,6 +8,10 @@ data/
 .claude/settings.local.json
 admin.html
 .validation-screenshots/
+pipeline-status.html
+pipeline-status.json
+travel-site-status.xlsx
+travel_master.xlsx
 
 # Ignore all photos except those used on city pages
 photos/*
