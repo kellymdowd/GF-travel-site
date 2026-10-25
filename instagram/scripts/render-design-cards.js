@@ -1,12 +1,21 @@
 // Redesigned "explainer" card (visual split-stat layout instead of a wall of
-// text) and the new "packing" card type (icon grid), both at 1080x1350.
-// Usage: node render-design-cards.js
+// text), the "packing" card type (icon grid), and the map-based end card.
+//
+// Usage:
+//   node render-design-cards.js              -> 4:5 (1080x1350), exports/
+//   node render-design-cards.js --pinterest   -> 2:3 (1000x1500), exports/pinterest/
+//
+// The end card's map inset is a fixed 1:1 square regardless of card height,
+// so at 2:3 it doesn't crop worse than 4:5 — it just leaves more room below
+// for text. Check the render anyway; don't assume.
 
 const puppeteer = require('puppeteer');
 const path = require('path');
 const fs = require('fs');
 
-const OUT_DIR = path.join(__dirname, '..', 'exports');
+const PINTEREST = process.argv.includes('--pinterest');
+const DIMS = PINTEREST ? { w: 500, h: 750 } : { w: 540, h: 675 };
+const OUT_DIR = path.join(__dirname, '..', 'exports', ...(PINTEREST ? ['pinterest'] : []));
 const MAP_PATH = 'file://' + path.join(__dirname, '..', 'map-assets', 'scotland-map.png');
 
 const SHARED_CSS = `
@@ -15,9 +24,9 @@ const SHARED_CSS = `
     --rose: #B8907A; --ink: #2A2018; --ink-mid: #5A5048; --ink-light: #9A907A;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { width: 540px; height: 675px; overflow: hidden; font-family: 'Jost', sans-serif; }
+  body { width: ${DIMS.w}px; height: ${DIMS.h}px; overflow: hidden; font-family: 'Jost', sans-serif; }
   .card {
-    width: 540px; height: 675px; position: relative; background: var(--cream);
+    width: ${DIMS.w}px; height: ${DIMS.h}px; position: relative; background: var(--cream);
     padding: 3.4rem 2.3rem 3rem; display: flex; flex-direction: column;
     justify-content: space-between;
   }
@@ -74,7 +83,7 @@ const SHARED_CSS = `
     position: relative; width: 100%; aspect-ratio: 1 / 1; border-radius: 6px;
     overflow: hidden; background: #F0ECE6;
   }
-  .map-frame img { position: absolute; width: 180%; max-width: none; left: -48%; top: -32%; }
+  .map-frame .map-bg { position: absolute; inset: 0; background-size: cover; background-position: 38% 55%; }
   .end-title {
     font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.5rem;
     letter-spacing: 0.01em; color: var(--ink); line-height: 1.3; text-align: center;
@@ -159,7 +168,7 @@ function scotlandEndCardHtml() {
     <style>${SHARED_CSS}</style></head><body>
     <div class="card end-card-map" data-card>
       <div class="label" style="margin-bottom:0;">Thanks for Following Along</div>
-      <div class="map-frame"><img src="${MAP_PATH}"></div>
+      <div class="map-frame"><div class="map-bg" style="background-image:url('${MAP_PATH}')"></div></div>
       <div class="end-title">The full guide — every restaurant, GF score, and map — is on the site.</div>
       <div class="end-subtitle">Link in bio</div>
       <div class="watermark">GF Gone Global</div>
@@ -172,7 +181,7 @@ function scotlandEndCardHtml() {
   const tmpPath = path.join(__dirname, '_tmp-design-card.html');
   const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
-  await page.setViewport({ width: 540, height: 675, deviceScaleFactor: 2 });
+  await page.setViewport({ width: DIMS.w, height: DIMS.h, deviceScaleFactor: 2 });
 
   const cards = [
     { out: 'gfgoneglobal-explainer-gf-scores.png', html: explainerHtml() },

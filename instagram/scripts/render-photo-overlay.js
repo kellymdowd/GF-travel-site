@@ -1,18 +1,25 @@
 // Renders the photo-overlay card treatment (full-bleed photo, bottom scrim,
-// serif title, optional subtitle + GF score dots, GF GONE GLOBAL watermark)
-// at 1080x1350 (4:5). Used for the Skye carousel-slide retrofit and the
-// redesigned end cards. Extends the existing card-landscape pattern from
-// scotland-batch-1.html / japan-batch-1.html to the taller ratio — same
-// type system and palette, not a new visual identity.
+// serif title, optional subtitle + GF score dots, GF GONE GLOBAL watermark).
+// Used for the Skye carousel-slide retrofit and the redesigned end cards.
+// Extends the existing card-landscape pattern from scotland-batch-1.html /
+// japan-batch-1.html — same type system and palette, not a new identity.
 //
-// Usage: node render-photo-overlay.js
+// Usage:
+//   node render-photo-overlay.js              -> 4:5 (1080x1350), exports/
+//   node render-photo-overlay.js --pinterest   -> 2:3 (1000x1500), exports/pinterest/
+//
+// Pinterest mode is a true re-render at the taller ratio, not a crop of the
+// 4:5 PNG — the background-position/size per slide may need its own tuning
+// at 2:3; check each render rather than assuming the 4:5 values still work.
 
 const puppeteer = require('puppeteer');
 const path = require('path');
 const fs = require('fs');
 
 const REPO_ROOT = path.join(__dirname, '..', '..');
-const OUT_DIR = path.join(__dirname, '..', 'exports');
+const PINTEREST = process.argv.includes('--pinterest');
+const DIMS = PINTEREST ? { w: 500, h: 750 } : { w: 540, h: 675 };
+const OUT_DIR = path.join(__dirname, '..', 'exports', ...(PINTEREST ? ['pinterest'] : []));
 
 const CSS = `
   :root {
@@ -20,8 +27,8 @@ const CSS = `
     --rose: #B8907A; --rose-light: #D4B5A0; --ink: #2A2018;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { width: 540px; height: 675px; overflow: hidden; }
-  .card { width: 540px; height: 675px; position: relative; }
+  body { width: ${DIMS.w}px; height: ${DIMS.h}px; overflow: hidden; }
+  .card { width: ${DIMS.w}px; height: ${DIMS.h}px; position: relative; }
   .card-bg {
     position: absolute; inset: 0; background-size: cover;
   }
@@ -76,7 +83,7 @@ function buildHtml(slide) {
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
     <style>${CSS}</style></head><body>
     <div class="card" data-card>
-      <div class="card-bg" style="background-image:url('${slide.photo}'); background-position:${slide.bgPos || 'center'}; background-size:${slide.bgSize || 'cover'};"></div>
+      <div class="card-bg" style="background-image:url('${slide.photo}'); background-position:${(PINTEREST && slide.pinBgPos) || slide.bgPos || 'center'}; background-size:${(PINTEREST && slide.pinBgSize) || slide.bgSize || 'cover'};"></div>
       <div class="scrim"></div>
       <div class="watermark">GF Gone Global</div>
       <div class="content">
@@ -115,6 +122,8 @@ const slides = [
     score: { score: 4, max: 5 },
     bgPos: '68% 88%',
     bgSize: '148%',
+    pinBgPos: '72% 97%',
+    pinBgSize: '190%',
   },
   {
     out: 'gfgoneglobal-scotland-skye-cuillin-hills-hotel.png',
@@ -154,7 +163,7 @@ const slides = [
   const tmpPath = path.join(__dirname, '_tmp-slide.html');
   const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
-  await page.setViewport({ width: 540, height: 675, deviceScaleFactor: 2 });
+  await page.setViewport({ width: DIMS.w, height: DIMS.h, deviceScaleFactor: 2 });
 
   for (const slide of slides) {
     fs.writeFileSync(tmpPath, buildHtml(slide));

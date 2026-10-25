@@ -1,16 +1,20 @@
-// Renders the "overview" stats card type (photo strip + stat grid on cream)
-// at 1080x1350, extending the existing .card-overview pattern from
-// scotland-batch-1.html / japan-batch-1.html. Now holds 6 stats (3x2) to fit
-// Best Months + Ideal Stay alongside the original 4.
+// Renders the "overview" stats card type (photo strip + stat grid on cream),
+// extending the existing .card-overview pattern from scotland-batch-1.html /
+// japan-batch-1.html. Holds 6 stats (3x2) to fit Best Months + Ideal Stay
+// alongside the original 4.
 //
-// Usage: node render-overview-card.js
+// Usage:
+//   node render-overview-card.js              -> 4:5 (1080x1350), exports/
+//   node render-overview-card.js --pinterest   -> 2:3 (1000x1500), exports/pinterest/
 
 const puppeteer = require('puppeteer');
 const path = require('path');
 const fs = require('fs');
 
 const REPO_ROOT = path.join(__dirname, '..', '..');
-const OUT_DIR = path.join(__dirname, '..', 'exports');
+const PINTEREST = process.argv.includes('--pinterest');
+const DIMS = PINTEREST ? { w: 500, h: 750 } : { w: 540, h: 675 };
+const OUT_DIR = path.join(__dirname, '..', 'exports', ...(PINTEREST ? ['pinterest'] : []));
 
 const CSS = `
   :root {
@@ -18,8 +22,8 @@ const CSS = `
     --rose: #B8907A; --ink: #2A2018; --ink-light: #9A907A;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { width: 540px; height: 675px; overflow: hidden; font-family: 'Jost', sans-serif; }
-  .card { width: 540px; height: 675px; position: relative; background: var(--cream); display: flex; flex-direction: column; }
+  body { width: ${DIMS.w}px; height: ${DIMS.h}px; overflow: hidden; font-family: 'Jost', sans-serif; }
+  .card { width: ${DIMS.w}px; height: ${DIMS.h}px; position: relative; background: var(--cream); display: flex; flex-direction: column; }
   .photo-strip { height: 42%; position: relative; overflow: hidden; }
   .photo-strip .bg { position: absolute; inset: 0; background-size: cover; }
   .photo-strip::after {
@@ -80,7 +84,7 @@ const cards = [
   const tmpPath = path.join(__dirname, '_tmp-overview-card.html');
   const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
-  await page.setViewport({ width: 540, height: 675, deviceScaleFactor: 2 });
+  await page.setViewport({ width: DIMS.w, height: DIMS.h, deviceScaleFactor: 2 });
 
   for (const card of cards) {
     fs.writeFileSync(tmpPath, buildHtml(card));
