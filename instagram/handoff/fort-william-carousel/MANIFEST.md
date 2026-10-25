@@ -23,7 +23,7 @@ Six slides. It leads with Ben Nevis because that's why people come to Fort Willi
 2. **Live-site data quirk:** the restaurants badge on the guide says "4 spots," but the page lists 5 restaurant cards. The overview uses 5, the actual count. The badge itself is unchanged, pending Kelly.
 3. **Photos of Kelly** at the summit (`ben-nevis/IMG_9011.jpeg`, `IMG_9013.jpeg`): excluded.
 4. **Stock photo excluded:** `glenfinnan-viaduct/glenfinnan-viaduct-unsplash.jpg`. Glenfinnan is researched-only anyway.
-5. **Ben Nevis lead photo was never exported:** IMG_9018 came straight from Apple Photos (July 8, 2024, index ~7113). The 21 photos already exported for Fort William had no lake view. The source JPEG is local only, not committed, following Glasgow's carousel-only precedent. The rendered slides are committed.
+5. **Ben Nevis lead photo was never exported:** IMG_9018 came straight from Apple Photos (July 8, 2024, index ~7113). The 21 photos already exported for Fort William had no lake view. It's now also the photo on the live guide's Ben Nevis card. **Re-render caveat:** the site's photo pipeline caps card photos at 400px, so the committed `ben-nevis/IMG_9018.jpeg`, `nevis-bank-inn-browns-restaurant/IMG_8994.jpeg` and `the-geographer/IMG_9032.jpeg` are now 400px thumbnails. The committed slide PNGs were rendered from full-size sources and are fine. Before any future re-render, re-export those three from Apple Photos at full size, or slides 1, 2 and 4 will come out soft.
 6. **Misfiled, unused:** `fort-william-scotrail-train-station/IMG_9033.jpeg` shows a park, not a station.
 
 ## Supporting data
