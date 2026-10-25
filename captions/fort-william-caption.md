@@ -1,5 +1,5 @@
 # Caption — Fort William carousel
-# Status: DRAFT v2 — revised per Kelly's feedback 2026-10-25, awaiting her approval (do not treat as cleared)
+# Status: APPROVED by Kelly 2026-10-25 (v2 final)
 # Written by Moose. Do not edit the status line — only Kelly approves, only Moose updates status.
 
 Fort William is officially the Outdoor Capital of the UK — the adventure capital, the mountain town, the whole personality. Its gluten-free scene is somewhat less extreme.
