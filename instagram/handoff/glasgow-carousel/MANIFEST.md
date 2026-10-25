@@ -29,7 +29,7 @@ Two of the four "new" photo slides needed real investigation because the first c
 - **Caption:** Not written yet. Moose to draft the single carousel caption once source material is reviewed; update this manifest's status line when Kelly approves.
 - **Z Hotel affiliate URL** (Hotels.com): `https://www.hotels.com/affiliate?landingPage=https%3A%2F%2Fwww.hotels.com%2Fho273536832%2F&camref=1100l5QxCT&creativeref=1011l66481`
 - **Source guide page:** `countries/scotland/glasgow.html` (restaurant/landmark/hotel data, GF scores, visited-vs-researched status).
-- **Card templates / regeneration scripts:** `instagram/scripts/render-photo-overlay.js` (Cathedral, Necropolis, Mural Trail, Z Hotel), `instagram/scripts/render-overview-card.js` (Glasgow Overview), `instagram/scripts/render-design-cards.js` (Red Onion, Browns — new `textRestaurantHtml()` template added this round for no-photo restaurant cards; also where the shared Scotland end card lives). Each takes `--pinterest` for the 2:3 set.
+- **Regenerate:** `node instagram/scripts/render.js glasgow` (both ratios). Every slide's settings live in `instagram/carousels/glasgow.json`; card templates (including the no-photo `text-restaurant` type used for Red Onion and Browns) in `instagram/scripts/lib/templates.js`.
 - **Pipeline fix this round:** the photo-overlay watermark ("GF GONE GLOBAL") was nearly invisible against light-colored backgrounds (first noticed on the Mural Trail photo). Added a subtle text-shadow — fixed system-wide, including on the already-pushed Portree slides, which were re-rendered and will show the improved watermark too.
 
 ## Explicitly NOT part of this post

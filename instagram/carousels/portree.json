@@ -1,0 +1,106 @@
+{
+  "slug": "portree",
+  "country": "scotland",
+  "city": "Portree",
+  "guide": "countries/scotland/portree.html",
+  "handoff": "instagram/handoff/portree-carousel/MANIFEST.md",
+  "slides": [
+    {
+      "type": "photo",
+      "out": "gfgoneglobal-scotland-skye-the-view-restaurant.png",
+      "photo": "photos/scotland/portree/the-view-restaurant-at-cuillins-hills/IMG_9152.jpeg",
+      "label": "Portree, Isle of Skye",
+      "title": "The View Restaurant",
+      "subtitle": "Scottish & Seafood Fine Dining · Cuillin Hills Hotel",
+      "score": { "score": 5, "max": 5 },
+      "bgPos": "center 55%"
+    },
+    {
+      "type": "photo",
+      "out": "gfgoneglobal-scotland-skye-quiraing.png",
+      "photo": "photos/scotland/portree/quiraing-walk/IMG_9273.jpeg",
+      "label": "Isle of Skye, Scotland",
+      "title": "The Quiraing",
+      "bgPos": "center 55%"
+    },
+    {
+      "type": "photo",
+      "out": "gfgoneglobal-scotland-skye-portree-harbour.png",
+      "photo": "photos/scotland/portree/colour-house-viewpoint/IMG_9155.jpeg",
+      "label": "Portree, Isle of Skye",
+      "title": "Portree Harbour",
+      "bgPos": "center 40%"
+    },
+    {
+      "type": "photo",
+      "out": "gfgoneglobal-scotland-skye-fairy-pools.png",
+      "photo": "photos/scotland/portree/fairy-pools/IMG_9163.jpeg",
+      "label": "Isle of Skye, Scotland",
+      "title": "Fairy Pools",
+      "bgPos": "center 50%"
+    },
+    {
+      "type": "photo",
+      "out": "gfgoneglobal-scotland-skye-chargrill.png",
+      "photo": "photos/scotland/portree/chargrill-restaurant-portree-at-marmalade-hotel/IMG_9117.jpeg",
+      "label": "Portree, Isle of Skye",
+      "title": "Chargrill",
+      "subtitle": "Scottish · Steak & Seafood — Marmalade Hotel",
+      "score": { "score": 4, "max": 5 },
+      "bgPos": "68% 88%",
+      "bgSize": "148%",
+      "pinBgPos": "72% 97%",
+      "pinBgSize": "190%"
+    },
+    {
+      "type": "photo",
+      "out": "gfgoneglobal-scotland-skye-cuillin-hills-hotel.png",
+      "photo": "photos/scotland/portree/the-view-restaurant-at-cuillins-hills/IMG_9124.jpeg",
+      "label": "Where to Stay · Portree",
+      "title": "Cuillin Hills Hotel",
+      "subtitle": "Home of The View Restaurant · Overlooking Portree Bay",
+      "bgPos": "40% 55%"
+    },
+    {
+      "type": "overview",
+      "out": "gfgoneglobal-scotland-skye-portree-overview.png",
+      "photo": "photos/scotland/portree/quiraing-walk/IMG_9112.jpeg",
+      "bgPos": "center 55%",
+      "country": "Isle of Skye",
+      "city": "Portree",
+      "stats": [
+        { "num": "11", "label": "GF Restaurants" },
+        { "num": "6/10", "label": "GF Safety Score" },
+        { "num": "3", "label": "Scored 5/5 GF" },
+        { "num": "10", "label": "Landmarks" },
+        { "num": "May–Sep", "label": "Best Months" },
+        { "num": "3–4", "label": "Ideal Stay (Nights)" }
+      ]
+    },
+    {
+      "type": "map-end-card",
+      "out": "gfgoneglobal-scotland-end-card.png",
+      "map": "instagram/map-assets/scotland-map.png",
+      "mapPos": "38% 55%"
+    }
+  ],
+  "extras": [
+    {
+      "type": "explainer",
+      "out": "gfgoneglobal-explainer-gf-scores.png"
+    },
+    {
+      "type": "packing",
+      "out": "gfgoneglobal-scotland-skye-what-to-pack.png",
+      "label": "Portree · Packing Essentials",
+      "title": "What to Pack for Skye",
+      "footer": "Full Scotland packing list — link in bio",
+      "items": [
+        { "icon": "boots", "name": "Waterproof Boots", "why": "Non-negotiable for the Quiraing and Fairy Pools." },
+        { "icon": "rain", "name": "Packable Rain Jacket", "why": "It will rain, even in July." },
+        { "icon": "layers", "name": "Layers", "why": "Sunshine to wind to drizzle, same afternoon." },
+        { "icon": "bug", "name": "Midge Repellent", "why": "Brutal May–September near water." }
+      ]
+    }
+  ]
+}

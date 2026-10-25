@@ -1,0 +1,85 @@
+{
+  "slug": "glasgow",
+  "country": "scotland",
+  "city": "Glasgow",
+  "guide": "countries/scotland/glasgow.html",
+  "handoff": "instagram/handoff/glasgow-carousel/MANIFEST.md",
+  "slides": [
+    {
+      "type": "photo",
+      "out": "gfgoneglobal-scotland-glasgow-cathedral.png",
+      "photo": "photos/scotland/glasgow/the-glasgow-necropolis/IMG_8987.jpeg",
+      "label": "Glasgow, Scotland",
+      "title": "Glasgow Cathedral",
+      "bgPos": "center 38%"
+    },
+    {
+      "type": "text-restaurant",
+      "out": "gfgoneglobal-scotland-glasgow-red-onion.png",
+      "city": "Glasgow, Scotland",
+      "name": "Red Onion",
+      "cuisine": "Contemporary Scottish",
+      "badge": "Dedicated GF Menu",
+      "quote": "Full dedicated GF a la carte menu with starters, mains, and desserts. Dedicated GF fryer. GF Sunday roast with GF Yorkshire puddings.",
+      "score": { "score": 5, "max": 5 }
+    },
+    {
+      "type": "photo",
+      "out": "gfgoneglobal-scotland-glasgow-necropolis.png",
+      "photo": "photos/scotland/glasgow/glasgow-cathedral/IMG_8984.jpeg",
+      "label": "Glasgow, Scotland",
+      "title": "The Glasgow Necropolis",
+      "bgPos": "center 45%"
+    },
+    {
+      "type": "text-restaurant",
+      "out": "gfgoneglobal-scotland-glasgow-browns.png",
+      "city": "Glasgow, Scotland",
+      "name": "Browns",
+      "cuisine": "Modern British Brasserie",
+      "badge": "Coeliac UK",
+      "quote": "Coeliac UK accredited — the gold standard for celiac safety in the UK. Staff specifically ask if you’re coeliac, and the kitchen meets verified preparation standards.",
+      "score": { "score": 5, "max": 5 }
+    },
+    {
+      "type": "photo",
+      "out": "gfgoneglobal-scotland-glasgow-z-hotel.png",
+      "photo": "photos/scotland/glasgow/z-hotel/exterior.jpeg",
+      "label": "Where to Stay · Glasgow",
+      "title": "The Z Hotel",
+      "subtitle": "City Centre · Near George Square",
+      "bgPos": "center 35%"
+    },
+    {
+      "type": "photo",
+      "out": "gfgoneglobal-scotland-glasgow-mural-trail.png",
+      "photo": "photos/scotland/glasgow/merchant-square/IMG_8977.jpeg",
+      "label": "Glasgow, Scotland",
+      "title": "Glasgow Mural Trail",
+      "subtitle": "#10 · The World’s Most Economical Taxi",
+      "bgPos": "35% center"
+    },
+    {
+      "type": "overview",
+      "out": "gfgoneglobal-scotland-glasgow-overview.png",
+      "photo": "photos/scotland/glasgow/the-glasgow-necropolis/IMG_8987.jpeg",
+      "bgPos": "center 30%",
+      "country": "Scotland",
+      "city": "Glasgow",
+      "stats": [
+        { "num": "10", "label": "GF Restaurants" },
+        { "num": "8/10", "label": "GF Safety Score" },
+        { "num": "2", "label": "Scored 5/5 GF" },
+        { "num": "6", "label": "Landmarks" },
+        { "num": "May–Sep", "label": "Best Months" },
+        { "num": "2–3", "label": "Ideal Stay (Nights)" }
+      ]
+    },
+    {
+      "type": "map-end-card",
+      "out": "gfgoneglobal-scotland-end-card.png",
+      "map": "instagram/map-assets/scotland-map.png",
+      "mapPos": "38% 55%"
+    }
+  ]
+}
