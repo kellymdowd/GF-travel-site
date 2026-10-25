@@ -1,0 +1,69 @@
+{
+  "slug": "fort-william",
+  "country": "scotland",
+  "city": "Fort William",
+  "guide": "countries/scotland/fort-william.html",
+  "handoff": "instagram/handoff/fort-william-carousel/MANIFEST.md",
+  "slides": [
+    {
+      "type": "photo",
+      "out": "gfgoneglobal-scotland-fort-william-ben-nevis.png",
+      "photo": "photos/scotland/fort-william/ben-nevis/IMG_9008.jpeg",
+      "label": "Fort William, Scotland",
+      "title": "Ben Nevis",
+      "subtitle": "Summit · 1,345m · The UK’s highest peak",
+      "bgPos": "center 45%"
+    },
+    {
+      "type": "photo",
+      "out": "gfgoneglobal-scotland-fort-william-browns.png",
+      "photo": "photos/scotland/fort-william/nevis-bank-inn-browns-restaurant/IMG_8994.jpeg",
+      "label": "Fort William, Scotland",
+      "title": "Browns",
+      "subtitle": "Scottish / Modern British · Nevis Bank Inn",
+      "score": { "score": 3, "max": 5 },
+      "bgPos": "center 40%"
+    },
+    {
+      "type": "photo",
+      "out": "gfgoneglobal-scotland-fort-william-nevis-bank-inn.png",
+      "photo": "photos/scotland/fort-william/nevis-bank-inn-browns-restaurant/IMG_9036.jpeg",
+      "label": "Where I Stayed · Fort William",
+      "title": "Nevis Bank Inn",
+      "subtitle": "Belford Road · Walkable to the Ben Nevis trailhead",
+      "bgPos": "center 40%"
+    },
+    {
+      "type": "photo",
+      "out": "gfgoneglobal-scotland-fort-william-the-geographer.png",
+      "photo": "photos/scotland/fort-william/the-geographer/IMG_9032.jpeg",
+      "label": "Fort William, Scotland",
+      "title": "The Geographer",
+      "subtitle": "Scottish / Seafood",
+      "score": { "score": 3, "max": 5 },
+      "bgPos": "center 55%"
+    },
+    {
+      "type": "overview",
+      "out": "gfgoneglobal-scotland-fort-william-overview.png",
+      "photo": "photos/scotland/fort-william/ben-nevis-visitor-centre/IMG_9030.jpeg",
+      "bgPos": "center 40%",
+      "country": "Scotland",
+      "city": "Fort William",
+      "stats": [
+        { "num": "5", "label": "GF Restaurants" },
+        { "num": "5/10", "label": "GF Safety Score" },
+        { "num": "3/5", "label": "Top Restaurant Score" },
+        { "num": "3", "label": "Landmarks" },
+        { "num": "May–Sep", "label": "Best Months" },
+        { "num": "1–2", "label": "Ideal Stay (Days)" }
+      ]
+    },
+    {
+      "type": "map-end-card",
+      "out": "gfgoneglobal-scotland-end-card.png",
+      "map": "instagram/map-assets/scotland-map.png",
+      "mapPos": "38% 55%"
+    }
+  ]
+}
