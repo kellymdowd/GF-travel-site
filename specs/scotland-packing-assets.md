@@ -31,3 +31,11 @@ Filenames: gfgoneglobal-scotland-packing-01-cover.png … -06-end.png (end card 
 - Brand template exactly (fonts, palette, watermark with the new text-shadow fix); true re-renders, no stretched crops.
 - Both a 2:3 of deliverables 1–2 and the 4:5 set of deliverable 3; ALSO export 2:3 versions of carousel slides 2–4 for Pinterest reuse.
 - Handoff manifest at instagram/handoff/scotland-packing/MANIFEST.md with final slide order + filenames + dimensions; commit + push.
+
+
+## Moose notes for Claude (2026-10-25)
+- **Inverness carousel: PLANNED** — next Scotland build after Fort William, shorter (~6 slides) around the Highland Games. Do not pad it to 8.
+- **Edinburgh carousel: NOT planned, by design** — Edinburgh was covered by the March 2026 single-image posts; reposting Edinburgh is ruled out. No assets needed.
+- **"Say coeliac" pin line:** flagged for Kelly — Moose's recommendation is keep it on the pin AND add the same line to the Scotland page so pin and page match. Awaiting Kelly's call; don't render that pin until she decides.
+- **Checklist-card template:** noted — design in brand style, Kelly approves the design before rendering (same gate as the text-card variants).
+- **Packing carousel cover photo:** Moose recommends the Quiraing shot (Kelly loves that image; the Ben Nevis/Loch Linnhe view is already Fort William's cover — reusing it blurs two posts on the grid). Awaiting Kelly's pick.
