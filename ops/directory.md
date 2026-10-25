@@ -11,7 +11,7 @@ _Last updated: 2026-10-25 by Moose_
 | Expedia Group Creator | Hotels.com affiliate links (link builder) | https://creator.expediagroup.com/app/products/link-builder | — | Links live across the city guides |
 | Viator | Tour / experience affiliate links | Builder: https://partners.viator.com/tools/links · Performance: https://partners.viator.com/reports/performance-trends · Broken-link alerts: https://partners.viator.com/reports/link-alert | Partner ID: P00313515 (account: GF Gone Global, USD) | Links live on guides |
 | Amazon Associates | Packing & product links | https://affiliate-program.amazon.com | Tag: gfgoneglobal-20 | 117 clicks, $0 sales as of Oct 2026. Needs 3 qualifying sales within 180 days to unlock the Influencer storefront |
-| Klook | Activity links | TBD — add portal URL | — | Link on the Hakone guide may be untagged — audit pending |
+| Klook | Activity links — NOT a member (no program) | — | — | Exactly one Klook link sitewide: Hakone guide → Hakone Venetian Glass Museum page, plain untagged URL (sends Klook a free click). Decision pending: join Klook's affiliate program when the Japan series launches (strong for Japan passes/transit products) and tag it then |
 
 ## Site, domain & analytics
 
@@ -39,4 +39,3 @@ _Last updated: 2026-10-25 by Moose_
 - **Publishing cadence**: Instagram Tue/Fri 6:30pm CT · Pinterest Wed/Sat 9:00am CT · Sunday brief 9:00am CT
 
 ## To add when handy
-- Klook affiliate portal URL
