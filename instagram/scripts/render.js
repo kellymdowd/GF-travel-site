@@ -4,6 +4,8 @@
 //   node instagram/scripts/render.js <slug> --only 4x5   or --only pinterest
 //   node instagram/scripts/render.js --all               every spec
 //   --out <dir>   write to <dir>/ and <dir>/pinterest/ instead of exports/
+//   A slug ending in .json is read as a spec path (for one-off variant proofs
+//   that shouldn't live in carousels/ and get swept up by --all).
 //
 // Spec: instagram/carousels/<slug>.json — `slides` (the post, in order) and
 // optional `extras` (rendered, not part of the post). Card types live in
@@ -50,7 +52,8 @@ function parseArgs(argv) {
   const tmpPath = path.join(__dirname, '_tmp-render.html');
 
   for (const slug of args.slugs) {
-    const spec = JSON.parse(fs.readFileSync(path.join(CAROUSELS_DIR, `${slug}.json`), 'utf8'));
+    const specPath = slug.endsWith('.json') ? path.resolve(slug) : path.join(CAROUSELS_DIR, `${slug}.json`);
+    const spec = JSON.parse(fs.readFileSync(specPath, 'utf8'));
     const cards = [...spec.slides, ...(spec.extras || [])];
     console.log(`\n${slug}: ${spec.slides.length} slides${spec.extras ? ` + ${spec.extras.length} extras` : ''}`);
 

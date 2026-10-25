@@ -1,6 +1,6 @@
 # Handoff: Glasgow Carousel (Scotland relaunch post #2)
 
-**Status: Caption NOT yet written. Not cleared to publish.** Same division of labor as Portree — Moose writes the single carousel caption; Kelly approves before this goes out. Do not publish until a follow-up updates this status line.
+**Status: NOT cleared to publish.** Moose's caption is in `captions/glasgow-caption.md` as **DRAFT**, awaiting Kelly's approval. Kelly also needs to pick a text-card variant (see "Text-card redesign: pending Kelly's pick" below) before the final Red Onion + Browns slides are re-rendered. Do not publish until a follow-up updates this status line.
 
 Final 8-slide order, leading with a photo per Kelly's note (not a text-only card first). Two complete sets, same filenames in each folder:
 - **Instagram (4:5, 1080×1350):** `instagram/exports/`
@@ -17,6 +17,21 @@ Final 8-slide order, leading with a photo per Kelly's note (not a text-only card
 | 7 | Glasgow Overview | `gfgoneglobal-scotland-glasgow-overview.png` | 704K | 764K | 10 restaurants, 8/10 GF score, 2 scored 5/5 (Browns + Red Onion), 6 landmarks, May–Sep, 2–3 nights — all from the live Glasgow guide page. |
 | 8 | Scotland End Card | `gfgoneglobal-scotland-end-card.png` | 496K | 500K | **Identical file to Portree's end card** — this is the one reusable-per-country asset, not slide-specific. Don't regenerate it for Glasgow; it's already shared. |
 
+## Text-card redesign: pending Kelly's pick
+
+Per `specs/text-card-redesign.md`: Kelly found the text-only cards (Red Onion, Browns) bottom-heavy, with the top ~55% empty. Two Red Onion proofs are in `variants/`. **The slide-2/slide-4 exports in the table above are still the old bottom-anchored design** and stay that way until Kelly picks.
+
+| Variant | 4:5 (1080×1350) | 2:3 (1000×1500) | What changed |
+|---|---|---|---|
+| A: Centered | `variants/red-onion-variant-a.png` | `variants/pinterest/red-onion-variant-a.png` | Content group vertically centered. Description 1rem → 1.1rem. Badge top-left, watermark top-right, as before. |
+| B: Centered + monogram | `variants/red-onion-variant-b.png` | `variants/pinterest/red-onion-variant-b.png` | Same as A, plus the profile-logo globe (64px, `#C8717A`, the logo's exact stroke color) above the location label. |
+
+Interpretation note: the spec says the globe is "centered above the location label." The text block is left-aligned, so the globe sits on the content's left edge, directly above the label, rather than in the horizontal center of the card, where it floated detached in a left-aligned layout. Easy to switch if Kelly wants it card-centered.
+
+Copy is unchanged from the real guide data. Both variants were reviewed at both ratios with no clipping or crowding. Template support is opt-in (`layout: "centered"`, `monogram: true`, `quoteSize` on `text-restaurant` cards), so nothing else re-renders differently yet. Regenerate the proofs with `node instagram/scripts/render.js instagram/handoff/glasgow-carousel/variants/variants.json --out instagram/handoff/glasgow-carousel/variants`.
+
+**After the pick:** make the winner the `text-restaurant` default, re-render the full Glasgow 4:5 + 2:3 sets, and update this section and the status line.
+
 ## Photo issues found while building this (none live on the site, but worth knowing)
 
 Two of the four "new" photo slides needed real investigation because the first candidate photo was wrong — same pattern as the Day 7/Day 11/Day 10 issues found during the Portree build:
@@ -26,7 +41,7 @@ Two of the four "new" photo slides needed real investigation because the first c
 
 ## Supporting data
 
-- **Caption:** Not written yet. Moose to draft the single carousel caption once source material is reviewed; update this manifest's status line when Kelly approves.
+- **Caption:** Drafted by Moose in `captions/glasgow-caption.md` (status DRAFT). That file's status header is authoritative. Update this manifest's status line when Kelly approves.
 - **Z Hotel affiliate URL** (Hotels.com): `https://www.hotels.com/affiliate?landingPage=https%3A%2F%2Fwww.hotels.com%2Fho273536832%2F&camref=1100l5QxCT&creativeref=1011l66481`
 - **Source guide page:** `countries/scotland/glasgow.html` (restaurant/landmark/hotel data, GF scores, visited-vs-researched status).
 - **Regenerate:** `node instagram/scripts/render.js glasgow` (both ratios). Every slide's settings live in `instagram/carousels/glasgow.json`; card templates (including the no-photo `text-restaurant` type used for Red Onion and Browns) in `instagram/scripts/lib/templates.js`.

@@ -82,15 +82,26 @@ function photo(s, dims, pinterest) {
 }
 
 // ─── text-restaurant: dark no-photo restaurant card ───
+// Optional: layout "centered" (vertically centers the content group instead of
+// bottom-anchoring it), monogram (brand globe above the city label), quoteSize.
+const GLOBE_SVG = (size, stroke) => `
+  <svg class="monogram" width="${size}" height="${size}" viewBox="0 0 40 40" fill="none" stroke="${stroke}" stroke-width="1.2">
+    <circle cx="20" cy="20" r="17"/><ellipse cx="20" cy="20" rx="8" ry="17"/>
+    <line x1="3" y1="20" x2="37" y2="20"/>
+    <path d="M 5.6 12 Q 20 15.5 34.4 12"/><path d="M 5.6 28 Q 20 24.5 34.4 28"/>
+  </svg>`;
+
 function textRestaurant(s, dims) {
+  const centered = s.layout === 'centered';
   const css = `
     :root { --ink: #2A2018; --slate: #C8717A; --slate-light: #D9979E; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { width: ${dims.w}px; height: ${dims.h}px; overflow: hidden; font-family: 'Jost', sans-serif; }
     .card {
       width: ${dims.w}px; height: ${dims.h}px; position: relative; background: var(--ink);
-      padding: 2.4rem 2.3rem 2.6rem; display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 2.4rem 2.3rem 2.6rem; display: flex; flex-direction: column; justify-content: ${centered ? 'center' : 'flex-end'};
     }
+    .monogram { position: relative; display: block; margin-bottom: 1.1rem; }
     .card::before {
       content: ''; position: absolute; inset: 0;
       background:
@@ -110,7 +121,7 @@ function textRestaurant(s, dims) {
     .city-label { position: relative; font-size: 0.5rem; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--slate-light); margin-bottom: 0.5rem; }
     .r-name { position: relative; font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 2.3rem; letter-spacing: 0.06em; text-transform: uppercase; color: #fff; line-height: 1.1; }
     .r-cuisine { position: relative; font-size: 0.72rem; font-weight: 300; color: rgba(255,255,255,0.55); margin-top: 0.4rem; }
-    .r-quote { position: relative; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; line-height: 1.65; color: rgba(255,255,255,0.65); margin-top: 1.4rem; max-width: 400px; }
+    .r-quote { position: relative; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: ${s.quoteSize || '1rem'}; line-height: 1.65; color: rgba(255,255,255,0.65); margin-top: 1.4rem; max-width: 400px; }
     .r-score { position: relative; display: flex; align-items: center; gap: 0.6rem; margin-top: 1.3rem; }
     .r-dots { display: flex; gap: 0.3rem; }
     .r-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.15); }
@@ -120,6 +131,7 @@ function textRestaurant(s, dims) {
     <div class="card">
       ${s.badge ? `<div class="badge">${s.badge}</div>` : ''}
       <div class="watermark">GF Gone Global</div>
+      ${s.monogram ? GLOBE_SVG(32, '#C8717A') : ''}
       <div class="city-label">${s.city}</div>
       <div class="r-name">${s.name}</div>
       <div class="r-cuisine">${s.cuisine}</div>
