@@ -1,5 +1,5 @@
 # Caption — Glasgow carousel
-# Status: DRAFT v4 — revised per Kelly's feedback 2026-10-25, awaiting her approval (do not treat as cleared)
+# Status: DRAFT v5 — revised per Kelly's feedback 2026-10-25, awaiting her approval (do not treat as cleared)
 # Written by Moose. Do not edit the status line — only Kelly approves, only Moose updates status.
 
 I went to Glasgow expecting to deploy the emergency snacks. Glasgow had other plans.
@@ -10,7 +10,7 @@ Scotland's biggest city scored 8/10 on my GF safety scale — I tested 10 restau
 → Red Onion — a full dedicated GF menu, a dedicated fryer, and a chef who'll come out and talk allergies with you. They even do a GF Sunday roast with GF Yorkshire puddings — in Glasgow, even the roast dinner is celiac-safe.
 → The Necropolis — a Victorian cemetery on a hill with the best view in the city. Slightly morbid as a highlight? Perhaps. Worth it anyway.
 → Browns — Coeliac UK accredited, the gold standard for celiac safety in the UK. The staff literally ask if you're coeliac. I nearly proposed.
-→ Where to stay: The Z Hotel — compact, modern, right by George Square, everything walkable — base yourself there and the whole centre is a stroll. Booking link is in the guide.
+→ Where to stay: The Z Hotel — compact, modern, and right by George Square, so you're in the middle of everything. Booking link is in the guide.
 → The Mural Trail — giant street art all over the city centre. Free, outdoors, and impossible to eat wrong. My favourite kind of attraction.
 
 Also in the full guide: the rest of the 10 restaurants (including proper GF fish & chips), and the UK tip that actually works — say "coeliac," not "gluten-free." Staff take you twice as seriously.
