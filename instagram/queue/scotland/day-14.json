@@ -1,0 +1,39 @@
+{
+  "post_id": "scotland-day-14",
+  "status": "ready_to_post",
+  "platforms": {
+    "instagram": true,
+    "pinterest": true
+  },
+  "country": "Scotland",
+  "city": "Glasgow, Scotland",
+  "day": 14,
+  "post_type": "landmark",
+  "carousel_group": "glasgow",
+  "slide_order": 2,
+  "subject": "Glasgow Cathedral",
+  "cuisine": null,
+  "badge": null,
+  "gf_score": null,
+  "media": {
+    "image_path": "instagram/exports/gfgoneglobal-scotland-day-14.png",
+    "alt_text": "Glasgow Cathedral's medieval stone exterior in Glasgow, Scotland",
+    "source_photos": [
+      "../photos/scotland/glasgow/glasgow-cathedral/IMG_8978.jpeg"
+    ]
+  },
+  "caption": {
+    "body": "Glasgow Cathedral — medieval, atmospheric, and free to visit. The lower church is worth spending time in, and the Glasgow Necropolis behind it (a Victorian cemetery on the hill) has great views across the city.\n\nGlasgow was also better for GF dining than its reputation suggests. 10 restaurants tested, with Red Onion (dedicated GF menu) and Browns (Coeliac UK accredited) both scoring 5/5.\n\nFull Glasgow guide on the site (link in bio).",
+    "hashtags": [
+      "#glasgowcathedral",
+      "#glasgow",
+      "#scotland",
+      "#glutenfreetravel",
+      "#gfgoneglobal"
+    ],
+    "full_text": "Glasgow Cathedral — medieval, atmospheric, and free to visit. The lower church is worth spending time in, and the Glasgow Necropolis behind it (a Victorian cemetery on the hill) has great views across the city.\n\nGlasgow was also better for GF dining than its reputation suggests. 10 restaurants tested, with Red Onion (dedicated GF menu) and Browns (Coeliac UK accredited) both scoring 5/5.\n\nFull Glasgow guide on the site (link in bio).\n\n#glasgowcathedral #glasgow #scotland #glutenfreetravel #gfgoneglobal"
+  },
+  "link_in_bio_target": "https://gfgoneglobal.com/countries/scotland/glasgow",
+  "source_batch": "instagram/scotland-batch-1.html",
+  "generated_at": "2026-10-25"
+}

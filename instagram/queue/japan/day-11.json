@@ -1,0 +1,39 @@
+{
+  "post_id": "japan-day-11",
+  "status": "ready_to_post",
+  "platforms": {
+    "instagram": true,
+    "pinterest": true
+  },
+  "country": "Japan",
+  "city": "Kyoto, Japan",
+  "day": 11,
+  "post_type": "landmark",
+  "carousel_group": "kyoto",
+  "slide_order": 3,
+  "subject": "Arashiyama Bamboo Forest",
+  "cuisine": null,
+  "badge": null,
+  "gf_score": null,
+  "media": {
+    "image_path": "instagram/exports/gfgoneglobal-japan-day-11.png",
+    "alt_text": "Towering green stalks of the Arashiyama Bamboo Forest in Kyoto",
+    "source_photos": [
+      "../photos/japan/kyoto/arashiyama-bamboo-forest/IMG_0993.jpeg"
+    ]
+  },
+  "caption": {
+    "body": "Arashiyama Bamboo Forest in Kyoto — towering bamboo, filtered light, and surprisingly quiet if you go early enough. One of those places that lives up to the photos.",
+    "hashtags": [
+      "#arashiyama",
+      "#bambooforest",
+      "#kyoto",
+      "#japan",
+      "#gfgoneglobal"
+    ],
+    "full_text": "Arashiyama Bamboo Forest in Kyoto — towering bamboo, filtered light, and surprisingly quiet if you go early enough. One of those places that lives up to the photos.\n\n#arashiyama #bambooforest #kyoto #japan #gfgoneglobal"
+  },
+  "link_in_bio_target": "https://gfgoneglobal.com/countries/japan/kyoto",
+  "source_batch": "instagram/japan-batch-1.html",
+  "generated_at": "2026-10-25"
+}

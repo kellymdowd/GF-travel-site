@@ -1,0 +1,39 @@
+{
+  "post_id": "japan-day-03",
+  "status": "ready_to_post",
+  "platforms": {
+    "instagram": true,
+    "pinterest": true
+  },
+  "country": "Japan",
+  "city": "Kyoto, Japan",
+  "day": 3,
+  "post_type": "landmark",
+  "carousel_group": "kyoto",
+  "slide_order": 1,
+  "subject": "Fushimi Inari Taisha",
+  "cuisine": null,
+  "badge": null,
+  "gf_score": null,
+  "media": {
+    "image_path": "instagram/exports/gfgoneglobal-japan-day-3.png",
+    "alt_text": "Rows of vermillion torii gates at Fushimi Inari Taisha in Kyoto",
+    "source_photos": [
+      "../photos/japan/kyoto/fushimi-inari-taisha/IMG_1047.jpeg"
+    ]
+  },
+  "caption": {
+    "body": "Thousands of vermillion torii gates winding up the mountain behind Fushimi Inari. Go as early as you can — it's a different experience without the crowds. The full Kyoto guide on the site covers where to eat GF nearby.",
+    "hashtags": [
+      "#fushimiinari",
+      "#kyoto",
+      "#japan",
+      "#visitjapan",
+      "#gfgoneglobal"
+    ],
+    "full_text": "Thousands of vermillion torii gates winding up the mountain behind Fushimi Inari. Go as early as you can — it's a different experience without the crowds. The full Kyoto guide on the site covers where to eat GF nearby.\n\n#fushimiinari #kyoto #japan #visitjapan #gfgoneglobal"
+  },
+  "link_in_bio_target": "https://gfgoneglobal.com/countries/japan/kyoto",
+  "source_batch": "instagram/japan-batch-1.html",
+  "generated_at": "2026-10-25"
+}

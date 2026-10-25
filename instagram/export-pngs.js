@@ -2,6 +2,9 @@ const puppeteer = require('puppeteer');
 const path = require('path');
 const fs = require('fs');
 
+// Usage: node export-pngs.js [country]  (default: scotland)
+const country = process.argv[2] || 'scotland';
+
 (async () => {
   const outputDir = path.join(__dirname, 'exports');
   if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir);
@@ -12,7 +15,7 @@ const fs = require('fs');
   const page = await browser.newPage();
   await page.setViewport({ width: 1200, height: 900, deviceScaleFactor: 2 });
 
-  const htmlPath = path.join(__dirname, 'scotland-batch-1.html');
+  const htmlPath = path.join(__dirname, `${country}-batch-1.html`);
   await page.goto('file://' + htmlPath, { waitUntil: 'networkidle0' });
 
   // Get the [data-card] elements (the actual styled cards inside the containers)
@@ -23,7 +26,7 @@ const fs = require('fs');
 
   for (let i = 0; i < cards.length; i++) {
     const label = days[i].toLowerCase().replace(/\s+/g, '-');
-    const filename = `gfgoneglobal-scotland-${label}.png`;
+    const filename = `gfgoneglobal-${country}-${label}.png`;
     const box = await cards[i].boundingBox();
 
     // Clip to exact card size, ignoring any overflow

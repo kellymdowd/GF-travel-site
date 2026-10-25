@@ -1,0 +1,39 @@
+{
+  "post_id": "scotland-day-12",
+  "status": "ready_to_post",
+  "platforms": {
+    "instagram": true,
+    "pinterest": true
+  },
+  "country": "Scotland",
+  "city": "Inverness, Scotland",
+  "day": 12,
+  "post_type": "landmark",
+  "carousel_group": "inverness",
+  "slide_order": 1,
+  "subject": "Highland Games",
+  "cuisine": null,
+  "badge": null,
+  "gf_score": null,
+  "media": {
+    "image_path": "instagram/exports/gfgoneglobal-scotland-day-12.png",
+    "alt_text": "Highland Games event at Bught Park in Inverness, Scotland",
+    "source_photos": [
+      "../photos/scotland/inverness/bught-park-pitches-highland-games/IMG_9372.jpeg"
+    ]
+  },
+  "caption": {
+    "body": "The Inverness Highland Games at Bught Park — caber tossing, pipe bands, Highland dancing. If your trip overlaps with a Games anywhere in the Highlands, it's worth going.\n\nInverness has 12 GF-rated restaurants on the site, including The Kitchen — right on the river, with GF clearly marked on the menu and staff who know their stuff.\n\nFull Inverness guide on the site.",
+    "hashtags": [
+      "#highlandgames",
+      "#inverness",
+      "#scotland",
+      "#glutenfreetravel",
+      "#gfgoneglobal"
+    ],
+    "full_text": "The Inverness Highland Games at Bught Park — caber tossing, pipe bands, Highland dancing. If your trip overlaps with a Games anywhere in the Highlands, it's worth going.\n\nInverness has 12 GF-rated restaurants on the site, including The Kitchen — right on the river, with GF clearly marked on the menu and staff who know their stuff.\n\nFull Inverness guide on the site.\n\n#highlandgames #inverness #scotland #glutenfreetravel #gfgoneglobal"
+  },
+  "link_in_bio_target": "https://gfgoneglobal.com/countries/scotland/inverness",
+  "source_batch": "instagram/scotland-batch-1.html",
+  "generated_at": "2026-10-25"
+}

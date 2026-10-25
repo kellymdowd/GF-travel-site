@@ -1,0 +1,39 @@
+{
+  "post_id": "japan-day-09",
+  "status": "ready_to_post",
+  "platforms": {
+    "instagram": true,
+    "pinterest": true
+  },
+  "country": "Japan",
+  "city": "Hakone, Japan",
+  "day": 9,
+  "post_type": "overview",
+  "carousel_group": "hakone",
+  "slide_order": 1,
+  "subject": null,
+  "cuisine": null,
+  "badge": null,
+  "gf_score": null,
+  "media": {
+    "image_path": "instagram/exports/gfgoneglobal-japan-day-9.png",
+    "alt_text": "Overview graphic for Hakone with travel stats over a photo of the Hakone Open-Air Museum",
+    "source_photos": [
+      "../photos/japan/hakone/the-hakone-open-air-museum/IMG_0723.jpeg"
+    ]
+  },
+  "caption": {
+    "body": "Hakone — mountain town an hour from Tokyo by bullet train. Famous for hot springs, open-air museums, and views of Mount Fuji on a clear day.\n\nI stayed at a traditional ryokan where they accommodated celiac for a full kaiseki dinner — a very different side of Japan from Tokyo and Kyoto.\n\nFull Hakone guide on the site (link in bio).",
+    "hashtags": [
+      "#hakone",
+      "#japan",
+      "#onsen",
+      "#ryokan",
+      "#gfgoneglobal"
+    ],
+    "full_text": "Hakone — mountain town an hour from Tokyo by bullet train. Famous for hot springs, open-air museums, and views of Mount Fuji on a clear day.\n\nI stayed at a traditional ryokan where they accommodated celiac for a full kaiseki dinner — a very different side of Japan from Tokyo and Kyoto.\n\nFull Hakone guide on the site (link in bio).\n\n#hakone #japan #onsen #ryokan #gfgoneglobal"
+  },
+  "link_in_bio_target": "https://gfgoneglobal.com/countries/japan/hakone",
+  "source_batch": "instagram/japan-batch-1.html",
+  "generated_at": "2026-10-25"
+}

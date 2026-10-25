@@ -1,0 +1,39 @@
+{
+  "post_id": "japan-day-14",
+  "status": "ready_to_post",
+  "platforms": {
+    "instagram": true,
+    "pinterest": true
+  },
+  "country": "Japan",
+  "city": "Nara, Japan",
+  "day": 14,
+  "post_type": "landmark",
+  "carousel_group": "nara",
+  "slide_order": 1,
+  "subject": "Nara Park",
+  "cuisine": null,
+  "badge": null,
+  "gf_score": null,
+  "media": {
+    "image_path": "instagram/exports/gfgoneglobal-japan-day-14.png",
+    "alt_text": "Deer in Nara Park with a temple in the background in Nara, Japan",
+    "source_photos": [
+      "../photos/japan/nara/nara-park/IMG_1217.jpeg"
+    ]
+  },
+  "caption": {
+    "body": "Nara Park — where the deer bow to you (sometimes). An easy day trip from Kyoto or Osaka, and Kōfuku-ji temple next door has a five-story pagoda worth the walk over.\n\nNara also has Harushika sake brewery, where you can do GF sake tastings — naturally gluten-free and worth the stop.",
+    "hashtags": [
+      "#nara",
+      "#narapark",
+      "#japan",
+      "#visitjapan",
+      "#gfgoneglobal"
+    ],
+    "full_text": "Nara Park — where the deer bow to you (sometimes). An easy day trip from Kyoto or Osaka, and Kōfuku-ji temple next door has a five-story pagoda worth the walk over.\n\nNara also has Harushika sake brewery, where you can do GF sake tastings — naturally gluten-free and worth the stop.\n\n#nara #narapark #japan #visitjapan #gfgoneglobal"
+  },
+  "link_in_bio_target": "https://gfgoneglobal.com/countries/japan/nara",
+  "source_batch": "instagram/japan-batch-1.html",
+  "generated_at": "2026-10-25"
+}

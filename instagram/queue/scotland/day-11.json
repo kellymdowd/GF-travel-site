@@ -1,0 +1,42 @@
+{
+  "post_id": "scotland-day-11",
+  "status": "ready_to_post",
+  "platforms": {
+    "instagram": true,
+    "pinterest": true
+  },
+  "country": "Scotland",
+  "city": "Portree, Isle of Skye",
+  "day": 11,
+  "post_type": "restaurant",
+  "carousel_group": "portree",
+  "slide_order": 4,
+  "subject": "The View Restaurant",
+  "cuisine": "Scottish & Seafood Fine Dining · Cuillin Hills Hotel",
+  "badge": null,
+  "gf_score": {
+    "score": 5,
+    "max": 5
+  },
+  "media": {
+    "image_path": "instagram/exports/gfgoneglobal-scotland-day-11.png",
+    "alt_text": "Dining room at The View Restaurant, Cuillin Hills Hotel, overlooking the Cuillin mountains in Portree",
+    "source_photos": [
+      "../photos/scotland/portree/the-view-restaurant-at-cuillins-hills/IMG_9122.jpeg"
+    ]
+  },
+  "caption": {
+    "body": "The View Restaurant at Cuillin Hills Hotel in Portree — Scottish seafood with views of the Cuillin mountains, and almost everything on the menu can be made GF.\n\nThe staff were lovely about it, and the food was some of the best I had on Skye. 5/5 on my GF safety scale. Book ahead if you're visiting in summer.",
+    "hashtags": [
+      "#portree",
+      "#isleofskye",
+      "#glutenfreerestaurant",
+      "#scottishseafood",
+      "#gfgoneglobal"
+    ],
+    "full_text": "The View Restaurant at Cuillin Hills Hotel in Portree — Scottish seafood with views of the Cuillin mountains, and almost everything on the menu can be made GF.\n\nThe staff were lovely about it, and the food was some of the best I had on Skye. 5/5 on my GF safety scale. Book ahead if you're visiting in summer.\n\n#portree #isleofskye #glutenfreerestaurant #scottishseafood #gfgoneglobal"
+  },
+  "link_in_bio_target": "https://gfgoneglobal.com/countries/scotland/portree",
+  "source_batch": "instagram/scotland-batch-1.html",
+  "generated_at": "2026-10-25"
+}

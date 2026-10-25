@@ -1,0 +1,40 @@
+{
+  "post_id": "scotland-day-08",
+  "status": "ready_to_post",
+  "platforms": {
+    "instagram": true,
+    "pinterest": true
+  },
+  "country": "Scotland",
+  "city": "Glasgow, Scotland",
+  "day": 8,
+  "post_type": "restaurant",
+  "carousel_group": "glasgow",
+  "slide_order": 1,
+  "subject": "Red Onion",
+  "cuisine": "Contemporary Scottish",
+  "badge": "Dedicated GF Menu",
+  "gf_score": {
+    "score": 5,
+    "max": 5
+  },
+  "media": {
+    "image_path": "instagram/exports/gfgoneglobal-scotland-day-8.png",
+    "alt_text": "Text card describing Red Onion restaurant in Glasgow's dedicated gluten-free menu and 5 out of 5 GF score",
+    "source_photos": []
+  },
+  "caption": {
+    "body": "Red Onion in Glasgow has a full dedicated GF menu — starters, mains, desserts — plus a dedicated fryer and a chef/owner who comes to the table to talk through allergies himself.\n\nThey also do GF-vegan and dairy-free-GF menus, and on Sundays there's a GF roast. Contemporary Scottish cooking and one of the best GF experiences I've had in Scotland.\n\n5/5 on my GF safety scale. Full review on the site.",
+    "hashtags": [
+      "#redonion",
+      "#glasgow",
+      "#glutenfreerestaurant",
+      "#dedicatedgf",
+      "#gfgoneglobal"
+    ],
+    "full_text": "Red Onion in Glasgow has a full dedicated GF menu — starters, mains, desserts — plus a dedicated fryer and a chef/owner who comes to the table to talk through allergies himself.\n\nThey also do GF-vegan and dairy-free-GF menus, and on Sundays there's a GF roast. Contemporary Scottish cooking and one of the best GF experiences I've had in Scotland.\n\n5/5 on my GF safety scale. Full review on the site.\n\n#redonion #glasgow #glutenfreerestaurant #dedicatedgf #gfgoneglobal"
+  },
+  "link_in_bio_target": "https://gfgoneglobal.com/countries/scotland/glasgow",
+  "source_batch": "instagram/scotland-batch-1.html",
+  "generated_at": "2026-10-25"
+}

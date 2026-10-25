@@ -1,0 +1,42 @@
+{
+  "post_id": "japan-day-04",
+  "status": "ready_to_post",
+  "platforms": {
+    "instagram": true,
+    "pinterest": true
+  },
+  "country": "Japan",
+  "city": "Tokyo, Japan",
+  "day": 4,
+  "post_type": "restaurant",
+  "carousel_group": "tokyo",
+  "slide_order": 3,
+  "subject": "Gluten Free Kushiage Su",
+  "cuisine": "Kushiage · Deep-Fried",
+  "badge": "100% GF",
+  "gf_score": {
+    "score": 5,
+    "max": 5
+  },
+  "media": {
+    "image_path": "instagram/exports/gfgoneglobal-japan-day-4.png",
+    "alt_text": "Dedicated gluten-free kushiage dish at Gluten Free Kushiage Su in Tokyo",
+    "source_photos": [
+      "../photos/japan/tokyo/gluten-free-kushiage-su/IMG_0445.jpeg"
+    ]
+  },
+  "caption": {
+    "body": "Gluten Free Kushiage Su in Tokyo — entirely dedicated gluten-free kushiage. Everything's deep-fried in dedicated GF oil, served course by course at the counter. No gluten in the building.\n\nEating fried food without worrying about cross-contamination is rare for me as a celiac. 5/5 on my GF safety scale.",
+    "hashtags": [
+      "#kushiage",
+      "#tokyo",
+      "#100percentgf",
+      "#dedicatedgf",
+      "#gfgoneglobal"
+    ],
+    "full_text": "Gluten Free Kushiage Su in Tokyo — entirely dedicated gluten-free kushiage. Everything's deep-fried in dedicated GF oil, served course by course at the counter. No gluten in the building.\n\nEating fried food without worrying about cross-contamination is rare for me as a celiac. 5/5 on my GF safety scale.\n\n#kushiage #tokyo #100percentgf #dedicatedgf #gfgoneglobal"
+  },
+  "link_in_bio_target": "https://gfgoneglobal.com/countries/japan/tokyo",
+  "source_batch": "instagram/japan-batch-1.html",
+  "generated_at": "2026-10-25"
+}

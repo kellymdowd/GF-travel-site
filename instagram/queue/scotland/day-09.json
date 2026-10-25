@@ -1,0 +1,39 @@
+{
+  "post_id": "scotland-day-09",
+  "status": "ready_to_post",
+  "platforms": {
+    "instagram": true,
+    "pinterest": true
+  },
+  "country": "Scotland",
+  "city": "Portree, Isle of Skye",
+  "day": 9,
+  "post_type": "overview",
+  "carousel_group": "portree",
+  "slide_order": 2,
+  "subject": null,
+  "cuisine": null,
+  "badge": null,
+  "gf_score": null,
+  "media": {
+    "image_path": "instagram/exports/gfgoneglobal-scotland-day-9.png",
+    "alt_text": "Overview graphic for Portree, Isle of Skye with gluten-free travel stats over a Highland landscape photo",
+    "source_photos": [
+      "../photos/scotland/portree/quiraing-walk/IMG_9112.jpeg"
+    ]
+  },
+  "caption": {
+    "body": "Didn't expect a small harbour town on a Scottish island to have this many GF options, but Portree was genuinely good. 11 restaurants tested, three scoring 5/5 on my GF safety scale, and several places with dedicated fryers and GF bread.\n\nAlso: the Quiraing, Fairy Pools, and some of the most dramatic landscape I've seen anywhere.\n\nFull Portree guide on the site (link in bio).",
+    "hashtags": [
+      "#portree",
+      "#isleofskye",
+      "#scotland",
+      "#glutenfreetravel",
+      "#gfgoneglobal"
+    ],
+    "full_text": "Didn't expect a small harbour town on a Scottish island to have this many GF options, but Portree was genuinely good. 11 restaurants tested, three scoring 5/5 on my GF safety scale, and several places with dedicated fryers and GF bread.\n\nAlso: the Quiraing, Fairy Pools, and some of the most dramatic landscape I've seen anywhere.\n\nFull Portree guide on the site (link in bio).\n\n#portree #isleofskye #scotland #glutenfreetravel #gfgoneglobal"
+  },
+  "link_in_bio_target": "https://gfgoneglobal.com/countries/scotland/portree",
+  "source_batch": "instagram/scotland-batch-1.html",
+  "generated_at": "2026-10-25"
+}

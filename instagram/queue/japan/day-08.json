@@ -1,0 +1,39 @@
+{
+  "post_id": "japan-day-08",
+  "status": "ready_to_post",
+  "platforms": {
+    "instagram": true,
+    "pinterest": true
+  },
+  "country": "Japan",
+  "city": "Tokyo, Japan",
+  "day": 8,
+  "post_type": "landmark",
+  "carousel_group": "tokyo",
+  "slide_order": 4,
+  "subject": "Gōtokuji Temple",
+  "cuisine": null,
+  "badge": null,
+  "gf_score": null,
+  "media": {
+    "image_path": "instagram/exports/gfgoneglobal-japan-day-8.png",
+    "alt_text": "Rows of white maneki-neko beckoning cat statues at Gotokuji Temple in Tokyo",
+    "source_photos": [
+      "../photos/japan/tokyo/g%C5%8Dtokuji-temple/IMG_0429.jpeg"
+    ]
+  },
+  "caption": {
+    "body": "Gōtokuji Temple in Tokyo — the birthplace of the maneki-neko. Hundreds of white beckoning cat statues tucked into every corner. It's off the main tourist path and worth the detour.",
+    "hashtags": [
+      "#gotokuji",
+      "#manekineko",
+      "#tokyo",
+      "#japan",
+      "#gfgoneglobal"
+    ],
+    "full_text": "Gōtokuji Temple in Tokyo — the birthplace of the maneki-neko. Hundreds of white beckoning cat statues tucked into every corner. It's off the main tourist path and worth the detour.\n\n#gotokuji #manekineko #tokyo #japan #gfgoneglobal"
+  },
+  "link_in_bio_target": "https://gfgoneglobal.com/countries/japan/tokyo",
+  "source_batch": "instagram/japan-batch-1.html",
+  "generated_at": "2026-10-25"
+}

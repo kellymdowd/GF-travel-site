@@ -1,0 +1,42 @@
+{
+  "post_id": "japan-day-12",
+  "status": "ready_to_post",
+  "platforms": {
+    "instagram": true,
+    "pinterest": true
+  },
+  "country": "Japan",
+  "city": "Osaka, Japan",
+  "day": 12,
+  "post_type": "restaurant",
+  "carousel_group": "osaka",
+  "slide_order": 1,
+  "subject": "Comeconoco",
+  "cuisine": "GF Bakery · Rice Flour",
+  "badge": "100% GF",
+  "gf_score": {
+    "score": 5,
+    "max": 5
+  },
+  "media": {
+    "image_path": "instagram/exports/gfgoneglobal-japan-day-12.png",
+    "alt_text": "Gluten-free baked goods at Comeconoco bakery in Osaka",
+    "source_photos": [
+      "../photos/japan/osaka/comeconoco-gluten-free-laboratory-cafe-%E5%A4%A7%E9%98%AA%E5%A4%A9%E6%BA%80%E6%A9%8B%E5%BA%97-%E3%82%B0%E3%83%AB%E3%83%86%E3%83%B3%E3%83%95%E3%83%AA%E3%83%BC%E7%B1%B3%E7%B2%89%E5%B0%82%E9%96%80%E5%BA%97%E7%B1%B3%E7%B2%89%E8%8F%93%E5%AD%90%E6%95%99%E5%AE%A4/IMG_1241.jpeg"
+    ]
+  },
+  "caption": {
+    "body": "Comeconoco in Osaka — a dedicated gluten-free bakery specializing in rice flour. Breads, pastries, cakes, all made in a fully GF facility.\n\nWalking into a bakery in Japan and being able to eat everything off the shelf was a first for me. 5/5 on my GF safety scale.",
+    "hashtags": [
+      "#comeconoco",
+      "#osaka",
+      "#glutenfreebakery",
+      "#100percentgf",
+      "#gfgoneglobal"
+    ],
+    "full_text": "Comeconoco in Osaka — a dedicated gluten-free bakery specializing in rice flour. Breads, pastries, cakes, all made in a fully GF facility.\n\nWalking into a bakery in Japan and being able to eat everything off the shelf was a first for me. 5/5 on my GF safety scale.\n\n#comeconoco #osaka #glutenfreebakery #100percentgf #gfgoneglobal"
+  },
+  "link_in_bio_target": "https://gfgoneglobal.com/countries/japan/osaka",
+  "source_batch": "instagram/japan-batch-1.html",
+  "generated_at": "2026-10-25"
+}

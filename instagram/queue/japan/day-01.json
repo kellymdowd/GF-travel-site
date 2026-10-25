@@ -1,0 +1,39 @@
+{
+  "post_id": "japan-day-01",
+  "status": "ready_to_post",
+  "platforms": {
+    "instagram": true,
+    "pinterest": true
+  },
+  "country": "Japan",
+  "city": "Tokyo, Japan",
+  "day": 1,
+  "post_type": "overview",
+  "carousel_group": "tokyo",
+  "slide_order": 1,
+  "subject": null,
+  "cuisine": null,
+  "badge": null,
+  "gf_score": null,
+  "media": {
+    "image_path": "instagram/exports/gfgoneglobal-japan-day-1.png",
+    "alt_text": "Overview graphic for Tokyo with gluten-free travel stats over a photo of Shibuya Scramble Crossing",
+    "source_photos": [
+      "../photos/japan/tokyo/shibuya-scramble-crossing/IMG_0555.jpeg"
+    ]
+  },
+  "caption": {
+    "body": "Japan was the country I was most nervous about eating in as a celiac — soy sauce contains wheat, and it's in nearly everything.\n\nTokyo had more GF-safe options than I expected: 20 restaurants tested, nine fully dedicated gluten-free, and a 7/10 on my GF safety score. Highlights were a 100% GF kushiage counter, a celiac-aware omakase, and GF sweets in Asakusa.\n\nFull guide with all restaurants, GF scores, and maps on the site (link in bio).",
+    "hashtags": [
+      "#tokyo",
+      "#japan",
+      "#glutenfreetravel",
+      "#celiactravel",
+      "#gfgoneglobal"
+    ],
+    "full_text": "Japan was the country I was most nervous about eating in as a celiac — soy sauce contains wheat, and it's in nearly everything.\n\nTokyo had more GF-safe options than I expected: 20 restaurants tested, nine fully dedicated gluten-free, and a 7/10 on my GF safety score. Highlights were a 100% GF kushiage counter, a celiac-aware omakase, and GF sweets in Asakusa.\n\nFull guide with all restaurants, GF scores, and maps on the site (link in bio).\n\n#tokyo #japan #glutenfreetravel #celiactravel #gfgoneglobal"
+  },
+  "link_in_bio_target": "https://gfgoneglobal.com/countries/japan/tokyo",
+  "source_batch": "instagram/japan-batch-1.html",
+  "generated_at": "2026-10-25"
+}

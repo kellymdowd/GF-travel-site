@@ -1,0 +1,39 @@
+{
+  "post_id": "scotland-day-06",
+  "status": "ready_to_post",
+  "platforms": {
+    "instagram": true,
+    "pinterest": true
+  },
+  "country": "Scotland",
+  "city": "Isle of Skye, Scotland",
+  "day": 6,
+  "post_type": "landmark",
+  "carousel_group": "portree",
+  "slide_order": 1,
+  "subject": "Fairy Pools",
+  "cuisine": null,
+  "badge": null,
+  "gf_score": null,
+  "media": {
+    "image_path": "instagram/exports/gfgoneglobal-scotland-day-6.png",
+    "alt_text": "Turquoise Fairy Pools waterfall cascading over rocks on the Isle of Skye, Scotland",
+    "source_photos": [
+      "../photos/scotland/portree/fairy-pools/IMG_9163.jpeg"
+    ]
+  },
+  "caption": {
+    "body": "The Fairy Pools on the Isle of Skye — about 2.5km round trip from the car park and one of the best walks I did in Scotland.\n\nGo early if you can. It gets busy by mid-morning, and the midges are less aggressive before the crowds arrive.\n\nSkye was also better for GF dining than I expected — 11 restaurants tested in Portree, three of them scoring 5/5 on my GF safety scale. More on the site.",
+    "hashtags": [
+      "#fairypools",
+      "#isleofskye",
+      "#scotland",
+      "#glutenfreetravel",
+      "#gfgoneglobal"
+    ],
+    "full_text": "The Fairy Pools on the Isle of Skye — about 2.5km round trip from the car park and one of the best walks I did in Scotland.\n\nGo early if you can. It gets busy by mid-morning, and the midges are less aggressive before the crowds arrive.\n\nSkye was also better for GF dining than I expected — 11 restaurants tested in Portree, three of them scoring 5/5 on my GF safety scale. More on the site.\n\n#fairypools #isleofskye #scotland #glutenfreetravel #gfgoneglobal"
+  },
+  "link_in_bio_target": "https://gfgoneglobal.com/countries/scotland/portree",
+  "source_batch": "instagram/scotland-batch-1.html",
+  "generated_at": "2026-10-25"
+}

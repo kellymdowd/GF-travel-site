@@ -1,0 +1,42 @@
+{
+  "post_id": "japan-day-02",
+  "status": "ready_to_post",
+  "platforms": {
+    "instagram": true,
+    "pinterest": true
+  },
+  "country": "Japan",
+  "city": "Tokyo, Japan",
+  "day": 2,
+  "post_type": "restaurant",
+  "carousel_group": "tokyo",
+  "slide_order": 2,
+  "subject": "SUSHI KORIN",
+  "cuisine": "Sushi · Omakase",
+  "badge": null,
+  "gf_score": {
+    "score": 4,
+    "max": 5
+  },
+  "media": {
+    "image_path": "instagram/exports/gfgoneglobal-japan-day-2.png",
+    "alt_text": "Sushi counter setting at SUSHI KORIN in Nishiazabu, Tokyo",
+    "source_photos": [
+      "../photos/japan/tokyo/sushi-korin-nishiazabu/IMG_0467.jpeg"
+    ]
+  },
+  "caption": {
+    "body": "SUSHI KORIN in Nishiazabu — celiac-aware omakase. The chef uses tamari instead of standard soy sauce, adjusts the rice vinegar, and talked me through every piece.\n\nSitting at the counter in Tokyo and eating omakase without having to explain or worry was a relief. 4/5 on my GF safety scale. Full review on the site.",
+    "hashtags": [
+      "#sushikorin",
+      "#tokyo",
+      "#omakase",
+      "#glutenfreerestaurant",
+      "#gfgoneglobal"
+    ],
+    "full_text": "SUSHI KORIN in Nishiazabu — celiac-aware omakase. The chef uses tamari instead of standard soy sauce, adjusts the rice vinegar, and talked me through every piece.\n\nSitting at the counter in Tokyo and eating omakase without having to explain or worry was a relief. 4/5 on my GF safety scale. Full review on the site.\n\n#sushikorin #tokyo #omakase #glutenfreerestaurant #gfgoneglobal"
+  },
+  "link_in_bio_target": "https://gfgoneglobal.com/countries/japan/tokyo",
+  "source_batch": "instagram/japan-batch-1.html",
+  "generated_at": "2026-10-25"
+}

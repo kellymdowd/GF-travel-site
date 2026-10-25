@@ -1,0 +1,39 @@
+{
+  "post_id": "scotland-day-10",
+  "status": "ready_to_post",
+  "platforms": {
+    "instagram": true,
+    "pinterest": true
+  },
+  "country": "Scotland",
+  "city": "Isle of Skye, Scotland",
+  "day": 10,
+  "post_type": "landmark",
+  "carousel_group": "portree",
+  "slide_order": 3,
+  "subject": "The Quiraing",
+  "cuisine": null,
+  "badge": null,
+  "gf_score": null,
+  "media": {
+    "image_path": "instagram/exports/gfgoneglobal-scotland-day-10.png",
+    "alt_text": "The Quiraing rock formations and rolling green landscape on the Isle of Skye's Trotternish Ridge",
+    "source_photos": [
+      "../photos/scotland/portree/quiraing-walk/IMG_9273.jpeg"
+    ]
+  },
+  "caption": {
+    "body": "The Quiraing on the Isle of Skye — an ancient landslip on the Trotternish Ridge. The circular walk is about 7km, takes 2-3 hours, and it's some of the most striking landscape I've seen in Scotland.\n\nWear layers and bring waterproofs. The weather changes fast up here.\n\nAfterwards, The Hungry Gull near Portree reportedly has a dedicated GF fryer and GF bread for burgers — on the list to try next time. Scores 5/5 on the site's GF scale.",
+    "hashtags": [
+      "#quiraing",
+      "#isleofskye",
+      "#scotland",
+      "#glutenfreetravel",
+      "#gfgoneglobal"
+    ],
+    "full_text": "The Quiraing on the Isle of Skye — an ancient landslip on the Trotternish Ridge. The circular walk is about 7km, takes 2-3 hours, and it's some of the most striking landscape I've seen in Scotland.\n\nWear layers and bring waterproofs. The weather changes fast up here.\n\nAfterwards, The Hungry Gull near Portree reportedly has a dedicated GF fryer and GF bread for burgers — on the list to try next time. Scores 5/5 on the site's GF scale.\n\n#quiraing #isleofskye #scotland #glutenfreetravel #gfgoneglobal"
+  },
+  "link_in_bio_target": "https://gfgoneglobal.com/countries/scotland/portree",
+  "source_batch": "instagram/scotland-batch-1.html",
+  "generated_at": "2026-10-25"
+}

@@ -1,0 +1,42 @@
+{
+  "post_id": "japan-day-10",
+  "status": "ready_to_post",
+  "platforms": {
+    "instagram": true,
+    "pinterest": true
+  },
+  "country": "Japan",
+  "city": "Hakone, Japan",
+  "day": 10,
+  "post_type": "restaurant",
+  "carousel_group": "hakone",
+  "slide_order": 2,
+  "subject": "Hoshino Resorts KAI",
+  "cuisine": "Traditional Ryokan · Kaiseki Dinner",
+  "badge": null,
+  "gf_score": {
+    "score": 4,
+    "max": 5
+  },
+  "media": {
+    "image_path": "instagram/exports/gfgoneglobal-japan-day-10.png",
+    "alt_text": "Traditional ryokan room setting at Hoshino Resorts KAI Sengokuhara in Hakone",
+    "source_photos": [
+      "../photos/japan/hakone/hoshino-resorts-kai-sengokuhara/IMG_0824.jpeg"
+    ]
+  },
+  "caption": {
+    "body": "Hoshino Resorts KAI Sengokuhara in Hakone — traditional Japanese ryokan with kaiseki dinner, and they accommodated celiac across every course. Private onsen, tatami rooms, multi-course dinner served in your room.\n\nThey adjusted the soy sauce, removed wheat-based items, and the staff communicated with the kitchen on every dish.",
+    "hashtags": [
+      "#hoshinoresorts",
+      "#hakone",
+      "#ryokan",
+      "#kaiseki",
+      "#gfgoneglobal"
+    ],
+    "full_text": "Hoshino Resorts KAI Sengokuhara in Hakone — traditional Japanese ryokan with kaiseki dinner, and they accommodated celiac across every course. Private onsen, tatami rooms, multi-course dinner served in your room.\n\nThey adjusted the soy sauce, removed wheat-based items, and the staff communicated with the kitchen on every dish.\n\n#hoshinoresorts #hakone #ryokan #kaiseki #gfgoneglobal"
+  },
+  "link_in_bio_target": "https://gfgoneglobal.com/countries/japan/hakone",
+  "source_batch": "instagram/japan-batch-1.html",
+  "generated_at": "2026-10-25"
+}

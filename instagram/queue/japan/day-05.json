@@ -1,0 +1,39 @@
+{
+  "post_id": "japan-day-05",
+  "status": "ready_to_post",
+  "platforms": {
+    "instagram": true,
+    "pinterest": true
+  },
+  "country": "Japan",
+  "city": "Kyoto, Japan",
+  "day": 5,
+  "post_type": "landmark",
+  "carousel_group": "kyoto",
+  "slide_order": 2,
+  "subject": "Kinkaku-ji",
+  "cuisine": null,
+  "badge": null,
+  "gf_score": null,
+  "media": {
+    "image_path": "instagram/exports/gfgoneglobal-japan-day-5.png",
+    "alt_text": "Kinkaku-ji, the Golden Pavilion, reflected in its pond in Kyoto",
+    "source_photos": [
+      "../photos/japan/kyoto/kinkaku-ji/IMG_0977.jpeg"
+    ]
+  },
+  "caption": {
+    "body": "Kinkaku-ji — the Golden Pavilion in Kyoto. One of the most-photographed sights in Japan, and worth seeing in person. Kyoto also had surprisingly good GF ramen options — more on that soon.",
+    "hashtags": [
+      "#kinkakuji",
+      "#goldenpavilion",
+      "#kyoto",
+      "#japan",
+      "#gfgoneglobal"
+    ],
+    "full_text": "Kinkaku-ji — the Golden Pavilion in Kyoto. One of the most-photographed sights in Japan, and worth seeing in person. Kyoto also had surprisingly good GF ramen options — more on that soon.\n\n#kinkakuji #goldenpavilion #kyoto #japan #gfgoneglobal"
+  },
+  "link_in_bio_target": "https://gfgoneglobal.com/countries/japan/kyoto",
+  "source_batch": "instagram/japan-batch-1.html",
+  "generated_at": "2026-10-25"
+}
