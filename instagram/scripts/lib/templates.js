@@ -81,9 +81,11 @@ function photo(s, dims, pinterest) {
     </div>`);
 }
 
-// ─── text-restaurant: dark no-photo restaurant card ───
-// Optional: layout "centered" (vertically centers the content group instead of
-// bottom-anchoring it), monogram (brand globe above the city label), quoteSize.
+// ─── text-restaurant: no-photo restaurant card ───
+// Default (Kelly's pick, 2026-10-25): cream "printed menu" card. Centered,
+// globe monogram between rules, inset frame, 1.1rem description. Overrides:
+// theme ("cream" | "menu" | "wine" | "glow" | "dark" = original plain dark),
+// layout ("centered" | "bottom"), monogram (true/false), quoteSize.
 const GLOBE_SVG = (size, stroke) => `
   <svg class="monogram" width="${size}" height="${size}" viewBox="0 0 40 40" fill="none" stroke="${stroke}" stroke-width="1.2">
     <circle cx="20" cy="20" r="17"/><ellipse cx="20" cy="20" rx="8" ry="17"/>
@@ -91,15 +93,67 @@ const GLOBE_SVG = (size, stroke) => `
     <path d="M 5.6 12 Q 20 15.5 34.4 12"/><path d="M 5.6 28 Q 20 24.5 34.4 28"/>
   </svg>`;
 
-function textRestaurant(s, dims) {
-  const centered = s.layout === 'centered';
-  const css = `
+const GRAIN = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E")`;
+
+// Framed "printed menu" structure shared by menu/cream/wine: inset hairline
+// frame, everything centered, globe flanked by rules above, a rule below.
+const FRAMED_CSS = (c) => `
+    .card { align-items: center; text-align: center; background: ${c.bg}; }
+    .card::before { background: ${c.glow}, ${GRAIN}; }
+    .card::after { content: ''; position: absolute; inset: 0.85rem; border: 1px solid ${c.frame}; pointer-events: none; }
+    .badge { top: 1.65rem; left: 50%; transform: translateX(-50%); background: ${c.badgeBg}; color: ${c.badgeInk}; }
+    .watermark { top: auto; bottom: 1.55rem; right: 50%; transform: translateX(50%); color: ${c.faint}; }
+    .ornament { position: relative; display: flex; align-items: center; gap: 0.8rem; width: 70%; margin-bottom: 1.2rem; }
+    .ornament .rule, .rule-bottom { flex: 1; height: 1px; background: ${c.rule}; }
+    .ornament .monogram { margin: 0; }
+    .rule-bottom { position: relative; flex: none; width: 70%; margin-top: 1.5rem; }
+    .city-label { color: ${c.accent}; }
+    .r-name { color: ${c.ink}; }
+    .r-cuisine { color: ${c.muted}; }
+    .r-quote { color: ${c.body}; max-width: 390px; }
+    .r-dot { background: ${c.dotOff}; }
+    .r-dot.filled { background: ${c.accent}; }
+    .r-score-label { color: ${c.muted}; }`;
+
+const TEXT_THEMES = {
+  menu: { globe: '#C8717A', css: FRAMED_CSS({
+    bg: '#2A2018', glow: 'radial-gradient(ellipse at 50% 45%, rgba(200,113,122,0.20) 0%, transparent 60%)',
+    frame: 'rgba(217,151,158,0.35)', rule: 'rgba(217,151,158,0.55)', badgeBg: '#C8717A', badgeInk: '#fff',
+    accent: '#D9979E', ink: '#fff', muted: 'rgba(255,255,255,0.5)', body: 'rgba(255,255,255,0.72)',
+    faint: 'rgba(255,255,255,0.35)', dotOff: 'rgba(255,255,255,0.15)' }) },
+  cream: { globe: '#C8717A', css: FRAMED_CSS({
+    bg: '#FFFCF9', glow: 'radial-gradient(ellipse at 50% 40%, rgba(200,113,122,0.10) 0%, transparent 65%), radial-gradient(ellipse at 80% 90%, rgba(184,144,122,0.10) 0%, transparent 55%)',
+    frame: 'rgba(200,113,122,0.35)', rule: 'rgba(200,113,122,0.5)', badgeBg: '#C8717A', badgeInk: '#fff',
+    accent: '#C8717A', ink: '#2A2018', muted: '#9A907A', body: 'rgba(42,32,24,0.72)',
+    faint: 'rgba(42,32,24,0.35)', dotOff: 'rgba(42,32,24,0.12)' }) },
+  wine: { globe: '#F0C9CC', css: FRAMED_CSS({
+    bg: 'linear-gradient(165deg, #6E3640 0%, #4A2329 55%, #2E1A1A 100%)',
+    glow: 'radial-gradient(ellipse at 50% 35%, rgba(240,201,204,0.16) 0%, transparent 60%)',
+    frame: 'rgba(240,201,204,0.3)', rule: 'rgba(240,201,204,0.5)', badgeBg: '#FFFCF9', badgeInk: '#6E3640',
+    accent: '#F0C9CC', ink: '#FFFCF9', muted: 'rgba(255,252,249,0.55)', body: 'rgba(255,252,249,0.8)',
+    faint: 'rgba(255,252,249,0.4)', dotOff: 'rgba(255,252,249,0.18)' }) },
+  // Keeps the left-aligned layout; fills the space with an oversized globe
+  // bleeding off the right edge plus a warmer glow and short accent rules.
+  glow: { globe: '#C8717A', css: `
+    .card::before { background:
+      radial-gradient(ellipse at 20% 50%, rgba(200,113,122,0.30) 0%, transparent 55%),
+      radial-gradient(ellipse at 90% 10%, rgba(184,144,122,0.18) 0%, transparent 50%), ${GRAIN}; }
+    .bg-globe { position: absolute; right: -38%; top: 50%; transform: translateY(-50%); width: 115%; opacity: 0.13; }
+    .city-label::before { content: ''; display: block; width: 2.2rem; height: 1px; background: #D9979E; margin-bottom: 0.9rem; }
+    .r-quote { border-left: 1px solid rgba(217,151,158,0.5); padding-left: 1rem; }` },
+};
+
+function textRestaurant(spec, dims) {
+  const s = { theme: 'cream', layout: 'centered', monogram: true, quoteSize: '1.1rem', ...spec };
+  const theme = TEXT_THEMES[s.theme];
+  const framed = theme && s.theme !== 'glow';
+    const css = `
     :root { --ink: #2A2018; --slate: #C8717A; --slate-light: #D9979E; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { width: ${dims.w}px; height: ${dims.h}px; overflow: hidden; font-family: 'Jost', sans-serif; }
     .card {
       width: ${dims.w}px; height: ${dims.h}px; position: relative; background: var(--ink);
-      padding: 2.4rem 2.3rem 2.6rem; display: flex; flex-direction: column; justify-content: ${centered ? 'center' : 'flex-end'};
+      padding: 2.4rem 2.3rem 2.6rem; display: flex; flex-direction: column; justify-content: ${s.layout === 'centered' ? 'center' : 'flex-end'};
     }
     .monogram { position: relative; display: block; margin-bottom: 1.1rem; }
     .card::before {
@@ -121,22 +175,26 @@ function textRestaurant(s, dims) {
     .city-label { position: relative; font-size: 0.5rem; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--slate-light); margin-bottom: 0.5rem; }
     .r-name { position: relative; font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 2.3rem; letter-spacing: 0.06em; text-transform: uppercase; color: #fff; line-height: 1.1; }
     .r-cuisine { position: relative; font-size: 0.72rem; font-weight: 300; color: rgba(255,255,255,0.55); margin-top: 0.4rem; }
-    .r-quote { position: relative; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: ${s.quoteSize || '1rem'}; line-height: 1.65; color: rgba(255,255,255,0.65); margin-top: 1.4rem; max-width: 400px; }
+    .r-quote { position: relative; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: ${s.quoteSize}; line-height: 1.65; color: rgba(255,255,255,0.65); margin-top: 1.4rem; max-width: 400px; }
     .r-score { position: relative; display: flex; align-items: center; gap: 0.6rem; margin-top: 1.3rem; }
     .r-dots { display: flex; gap: 0.3rem; }
     .r-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.15); }
     .r-dot.filled { background: var(--slate-light); }
-    .r-score-label { font-size: 0.52rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.4); }`;
+    .r-score-label { font-size: 0.52rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    ${theme ? theme.css : ''}`;
+  const globe = s.monogram ? GLOBE_SVG(32, theme ? theme.globe : '#C8717A') : '';
   return doc(css, `
     <div class="card">
+      ${s.theme === 'glow' ? GLOBE_SVG(400, '#C8717A').replace('class="monogram"', 'class="bg-globe"') : ''}
       ${s.badge ? `<div class="badge">${s.badge}</div>` : ''}
       <div class="watermark">GF Gone Global</div>
-      ${s.monogram ? GLOBE_SVG(32, '#C8717A') : ''}
+      ${framed ? `<div class="ornament"><span class="rule"></span>${globe}<span class="rule"></span></div>` : globe}
       <div class="city-label">${s.city}</div>
       <div class="r-name">${s.name}</div>
       <div class="r-cuisine">${s.cuisine}</div>
       <div class="r-quote">${s.quote}</div>
       <div class="r-score"><div class="r-dots">${dotsHtml(s.score, 'r-dot')}</div><span class="r-score-label">GF Score</span></div>
+      ${framed ? '<div class="rule-bottom"></div>' : ''}
     </div>`);
 }
 

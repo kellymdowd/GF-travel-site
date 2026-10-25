@@ -1,6 +1,6 @@
 # Handoff: Glasgow Carousel (Scotland relaunch post #2)
 
-**Status: NOT cleared to publish.** Moose's caption is in `captions/glasgow-caption.md` as **DRAFT**, awaiting Kelly's approval. Kelly also needs to pick a text-card variant (see "Text-card redesign: pending Kelly's pick" below) before the final Red Onion + Browns slides are re-rendered. Do not publish until a follow-up updates this status line.
+**Status: NOT cleared to publish.** Moose's caption is in `captions/glasgow-caption.md` as **DRAFT**, awaiting Kelly's approval. Do not publish until a follow-up updates this status line.
 
 Final 8-slide order, leading with a photo per Kelly's note (not a text-only card first). Two complete sets, same filenames in each folder:
 - **Instagram (4:5, 1080×1350):** `instagram/exports/`
@@ -9,28 +9,21 @@ Final 8-slide order, leading with a photo per Kelly's note (not a text-only card
 | # | Slide | Filename (same in both folders) | 4:5 Size | Pinterest Size | Notes |
 |---|-------|----------|------|------|-------|
 | 1 | Glasgow Cathedral | `gfgoneglobal-scotland-glasgow-cathedral.png` | 2.5M | 2.5M | Lead slide. Photo is the view down from the Necropolis — shows the full cathedral. **Not** the old Day 14 photo (`glasgow-cathedral/IMG_8978.jpeg`), which turned out to show St Mungo Museum, a different building next door. See "Photo issues found" below. |
-| 2 | Red Onion | `gfgoneglobal-scotland-glasgow-red-onion.png` | 436K | 452K | 5/5, Dedicated GF Menu. Text-only card (no photo exists for this restaurant) — same treatment as the original Day 8 card, just re-rendered at 4:5/2:3 with the new text-restaurant template. Content unchanged from the real guide data. |
+| 2 | Red Onion | `gfgoneglobal-scotland-glasgow-red-onion.png` | 1.3M | 1.3M | 5/5, Dedicated GF Menu. Text-only card (no photo exists for this restaurant), re-rendered 2026-10-25 in the new cream menu-card design (see "Text-card redesign" below). Content unchanged from the real guide data. |
 | 3 | Glasgow Necropolis | `gfgoneglobal-scotland-glasgow-necropolis.png` | 2.5M | 2.5M | Photo shows the entrance gate/bridge with monuments on the hill. |
-| 4 | Browns | `gfgoneglobal-scotland-glasgow-browns.png` | 444K | 460K | 5/5, Coeliac UK accredited. Text-only (no photo exists). New card, not previously in any batch file. |
+| 4 | Browns | `gfgoneglobal-scotland-glasgow-browns.png` | 1.3M | 1.3M | 5/5, Coeliac UK accredited. Text-only (no photo exists), in the new cream menu-card design. New card, not previously in any batch file. |
 | 5 | Z Hotel | `gfgoneglobal-scotland-glasgow-z-hotel.png` | 2.5M | 2.5M | "Where to Stay" treatment, same pattern as Portree's Cuillin Hills Hotel slide. Hotels.com affiliate URL below, not yet placed anywhere. |
 | 6 | Glasgow Mural Trail | `gfgoneglobal-scotland-glasgow-mural-trail.png` | 2.5M | 2.5M | Photo is real street art but is filed under `photos/scotland/glasgow/merchant-square/IMG_8977.jpeg`, not under the mural-trail folder — the actual mural-trail folder's one photo (`IMG_8989.jpeg`) turned out to be an unrelated river/bridge shot. See "Photo issues found." |
 | 7 | Glasgow Overview | `gfgoneglobal-scotland-glasgow-overview.png` | 704K | 764K | 10 restaurants, 8/10 GF score, 2 scored 5/5 (Browns + Red Onion), 6 landmarks, May–Sep, 2–3 nights — all from the live Glasgow guide page. |
 | 8 | Scotland End Card | `gfgoneglobal-scotland-end-card.png` | 496K | 500K | **Identical file to Portree's end card** — this is the one reusable-per-country asset, not slide-specific. Don't regenerate it for Glasgow; it's already shared. |
 
-## Text-card redesign: pending Kelly's pick
+## Text-card redesign: DONE (Kelly picked cream, 2026-10-25)
 
-Per `specs/text-card-redesign.md`: Kelly found the text-only cards (Red Onion, Browns) bottom-heavy, with the top ~55% empty. Two Red Onion proofs are in `variants/`. **The slide-2/slide-4 exports in the table above are still the old bottom-anchored design** and stay that way until Kelly picks.
+Per `specs/text-card-redesign.md`: Kelly found the old text-only cards bottom-heavy, with the top ~55% empty. She reviewed centered (A) and centered + globe (B), asked for B to be "more exciting," then picked **B-cream** out of four styled takes (menu, cream, wine, glow). Cream is now the **default for every no-photo restaurant card/pin** (`text-restaurant` in `instagram/scripts/lib/templates.js`). It's a cream background with an inset rose hairline frame, everything centered, the profile-logo globe between rules above the city label, a rule below the score, the badge top-center, and the watermark bottom-center.
 
-| Variant | 4:5 (1080×1350) | 2:3 (1000×1500) | What changed |
-|---|---|---|---|
-| A: Centered | `variants/red-onion-variant-a.png` | `variants/pinterest/red-onion-variant-a.png` | Content group vertically centered. Description 1rem → 1.1rem. Badge top-left, watermark top-right, as before. |
-| B: Centered + monogram | `variants/red-onion-variant-b.png` | `variants/pinterest/red-onion-variant-b.png` | Same as A, plus the profile-logo globe (64px, `#C8717A`, the logo's exact stroke color) above the location label. |
+Slides 2 (Red Onion) and 4 (Browns) were re-rendered in it at both ratios and reviewed. The other six slides were not changed. Their re-renders differed only by 1–2 levels of render noise, so the committed files were kept, including the shared Scotland end card already posted with Portree.
 
-Interpretation note: the spec says the globe is "centered above the location label." The text block is left-aligned, so the globe sits on the content's left edge, directly above the label, rather than in the horizontal center of the card, where it floated detached in a left-aligned layout. Easy to switch if Kelly wants it card-centered.
-
-Copy is unchanged from the real guide data. Both variants were reviewed at both ratios with no clipping or crowding. Template support is opt-in (`layout: "centered"`, `monogram: true`, `quoteSize` on `text-restaurant` cards), so nothing else re-renders differently yet. Regenerate the proofs with `node instagram/scripts/render.js instagram/handoff/glasgow-carousel/variants/variants.json --out instagram/handoff/glasgow-carousel/variants`.
-
-**After the pick:** make the winner the `text-restaurant` default, re-render the full Glasgow 4:5 + 2:3 sets, and update this section and the status line.
+All proofs are kept in `variants/` for reference. `variants.json` pins A/B to the old dark theme so they reproduce. The other looks stay available per card via `"theme": "menu" | "wine" | "glow" | "dark"`.
 
 ## Photo issues found while building this (none live on the site, but worth knowing)
 

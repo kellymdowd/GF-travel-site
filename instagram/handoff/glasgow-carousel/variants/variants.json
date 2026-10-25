@@ -1,6 +1,6 @@
 {
   "slug": "glasgow-red-onion-variants",
-  "note": "Proofs for specs/text-card-redesign.md. Not part of the post; current exports untouched until Kelly picks.",
+  "note": "Proofs for specs/text-card-redesign.md. Kelly picked B-cream (2026-10-25); it's now the text-restaurant default. A/B pinned to the original dark theme so they reproduce.",
   "slides": [
     {
       "type": "text-restaurant",
@@ -15,7 +15,9 @@
         "max": 5
       },
       "layout": "centered",
-      "quoteSize": "1.1rem"
+      "quoteSize": "1.1rem",
+      "theme": "dark",
+      "monogram": false
     },
     {
       "type": "text-restaurant",
@@ -31,7 +33,76 @@
       },
       "layout": "centered",
       "quoteSize": "1.1rem",
-      "monogram": true
+      "monogram": true,
+      "theme": "dark"
+    },
+    {
+      "type": "text-restaurant",
+      "out": "red-onion-variant-b-menu.png",
+      "city": "Glasgow, Scotland",
+      "name": "Red Onion",
+      "cuisine": "Contemporary Scottish",
+      "badge": "Dedicated GF Menu",
+      "quote": "Full dedicated GF a la carte menu with starters, mains, and desserts. Dedicated GF fryer. GF Sunday roast with GF Yorkshire puddings.",
+      "score": {
+        "score": 5,
+        "max": 5
+      },
+      "layout": "centered",
+      "quoteSize": "1.1rem",
+      "monogram": true,
+      "theme": "menu"
+    },
+    {
+      "type": "text-restaurant",
+      "out": "red-onion-variant-b-cream.png",
+      "city": "Glasgow, Scotland",
+      "name": "Red Onion",
+      "cuisine": "Contemporary Scottish",
+      "badge": "Dedicated GF Menu",
+      "quote": "Full dedicated GF a la carte menu with starters, mains, and desserts. Dedicated GF fryer. GF Sunday roast with GF Yorkshire puddings.",
+      "score": {
+        "score": 5,
+        "max": 5
+      },
+      "layout": "centered",
+      "quoteSize": "1.1rem",
+      "monogram": true,
+      "theme": "cream"
+    },
+    {
+      "type": "text-restaurant",
+      "out": "red-onion-variant-b-wine.png",
+      "city": "Glasgow, Scotland",
+      "name": "Red Onion",
+      "cuisine": "Contemporary Scottish",
+      "badge": "Dedicated GF Menu",
+      "quote": "Full dedicated GF a la carte menu with starters, mains, and desserts. Dedicated GF fryer. GF Sunday roast with GF Yorkshire puddings.",
+      "score": {
+        "score": 5,
+        "max": 5
+      },
+      "layout": "centered",
+      "quoteSize": "1.1rem",
+      "monogram": true,
+      "theme": "wine"
+    },
+    {
+      "type": "text-restaurant",
+      "out": "red-onion-variant-b-glow.png",
+      "city": "Glasgow, Scotland",
+      "name": "Red Onion",
+      "cuisine": "Contemporary Scottish",
+      "badge": "Dedicated GF Menu",
+      "quote": "Full dedicated GF a la carte menu with starters, mains, and desserts. Dedicated GF fryer. GF Sunday roast with GF Yorkshire puddings.",
+      "score": {
+        "score": 5,
+        "max": 5
+      },
+      "layout": "centered",
+      "quoteSize": "1.1rem",
+      "monogram": true,
+      "theme": "glow"
     }
   ]
 }
