@@ -39,4 +39,8 @@ _Last updated: 2026-10-25 by Moose_
 - **Kelly**: approves everything before it posts
 - **Publishing cadence**: Instagram Tue/Fri 6:30pm CT · Pinterest Wed/Sat 9:00am CT · Sunday brief 9:00am CT
 
+## To add in future
+- **Holafly (eSIM)** — Kelly's own eSIM provider when she travels. Join the Holafly affiliate program, then add to packing content (she recommends what she actually uses, so this outranks Airalo)
+- Klook affiliate — when the Japan series launches (see Klook row above)
+
 ## To add when handy
