@@ -1,6 +1,6 @@
 # Handoff: Glasgow Carousel (Scotland relaunch post #2)
 
-**Status: NOT cleared to publish.** Moose's caption is in `captions/glasgow-caption.md` as **DRAFT**, awaiting Kelly's approval. Do not publish until a follow-up updates this status line.
+**Status: CLEARED to publish (Kelly, 2026-10-25).** Caption approved: `captions/glasgow-caption.md` (v5 final). Slides final: all 8 at both ratios, with Red Onion and Browns in the new cream text-card design.
 
 Final 8-slide order, leading with a photo per Kelly's note (not a text-only card first). Two complete sets, same filenames in each folder:
 - **Instagram (4:5, 1080×1350):** `instagram/exports/`
@@ -34,7 +34,7 @@ Two of the four "new" photo slides needed real investigation because the first c
 
 ## Supporting data
 
-- **Caption:** Drafted by Moose in `captions/glasgow-caption.md` (status DRAFT). That file's status header is authoritative. Update this manifest's status line when Kelly approves.
+- **Caption:** `captions/glasgow-caption.md`, APPROVED by Kelly 2026-10-25 (v5 final). That file's status header is authoritative.
 - **Z Hotel affiliate URL** (Hotels.com): `https://www.hotels.com/affiliate?landingPage=https%3A%2F%2Fwww.hotels.com%2Fho273536832%2F&camref=1100l5QxCT&creativeref=1011l66481`
 - **Source guide page:** `countries/scotland/glasgow.html` (restaurant/landmark/hotel data, GF scores, visited-vs-researched status).
 - **Regenerate:** `node instagram/scripts/render.js glasgow` (both ratios). Every slide's settings live in `instagram/carousels/glasgow.json`; card templates (including the no-photo `text-restaurant` type used for Red Onion and Browns) in `instagram/scripts/lib/templates.js`.
