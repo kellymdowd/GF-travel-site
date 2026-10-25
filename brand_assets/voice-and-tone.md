@@ -59,6 +59,28 @@ Instead of:
 Write:
 > The menu clearly marked gluten-free dishes, the server understood cross-contamination, and the kitchen confirmed that the fries were made in a dedicated fryer.
 
+**Quietly witty, not performatively funny**
+
+Occasional dry wit, casual observations, or understated humor are welcome when they fit naturally. Humor should come from specific, true details — not from forced punchlines, exaggerated enthusiasm, or self-deprecating jokes (especially about celiac disease itself).
+
+Not every paragraph needs a witty closing line, an emotional reflection, or a clever transition. A straightforward observation is often enough. Never manufacture an anecdote, a worry, an elaborate preparation, or an imagined conversation just to make an ordinary experience more entertaining — if it didn't happen, it doesn't go in.
+
+Good:
+> The pasta alone was worth the visit. Plenty of clearly marked gluten-free options, and a server who actually understood cross-contamination. Good food and peace of mind? I'll take both.
+
+Avoid:
+> I would return for the pasta alone — I nearly ordered it twice in one sitting because I forgot I'd already eaten it. The server answered my overly specific cross-contamination questions without once looking at me like I was being dramatic. (I was, a little. It's fine.)
+
+**Confident, not overly cautious**
+
+Do not portray Kelly as anxious, obsessive, or someone who interrogates restaurant staff about every detail. Her level of concern varies with the situation, her prior research, and her confidence in the place — it is not a constant state of vigilance played for either drama or comedy.
+
+Good:
+> There's something reassuring about opening a menu in a language you don't speak and immediately spotting the gluten-free options. It doesn't answer every question about celiac safety, but it certainly makes ordering a little easier.
+
+Avoid:
+> I showed up twenty minutes early having mentally rehearsed three ways to explain celiac disease in a language I do not speak.
+
 **Discerning**
 
 Not everything is "amazing," "incredible," or a "must-do."
@@ -204,9 +226,11 @@ These expressions are not absolutely prohibited, but they should only appear whe
 
 Also avoid excessive use of: amazing, incredible, stunning, delicious, perfect, iconic, magical, unique, authentic, must-do, must-see.
 
+Also avoid: game changer, I was in heaven, spoiler alert, and generic closing lines such as "sometimes it's the little things that make all the difference."
+
 Replace general praise with an explanation of what specifically made something enjoyable, useful, beautiful, safe, convenient, or worthwhile.
 
-Avoid forced cleverness, puns, and overly polished marketing language.
+Avoid forced cleverness, puns, self-deprecating jokes, and overly polished marketing language. Dry wit that comes from a specific true detail is welcome; a punchline manufactured to close out a paragraph is not.
 
 ## 6. Truth, evidence, and attribution
 
@@ -232,7 +256,7 @@ Every meaningful statement should be identifiable as one of the following:
 
 Never present researched information as though Kelly personally experienced it.
 
-Never fabricate: a restaurant visit, a meal, a conversation with staff, a hotel stay, a transportation experience, a hike or activity, a physical reaction, a celiac-safety assessment, a feeling of personal safety, a price, an operating procedure, a cultural interaction, a quote or testimonial.
+Never fabricate: a restaurant visit, a meal, a conversation with staff, a hotel stay, a transportation experience, a hike or activity, a physical reaction, a celiac-safety assessment, a feeling of personal safety, a price, an operating procedure, a cultural interaction, a quote or testimonial, a moment of anxiety or excessive preparation, or an imagined conversation — including when the goal is humor rather than information. An invented anecdote is still a fabrication even when it's entertaining.
 
 When the source material is incomplete, preserve a visible placeholder or flag the information for review. Examples:
 - `[Kelly: confirm whether the fryer was dedicated]`
@@ -439,7 +463,15 @@ Avoid:
 > This charming restaurant is a must-visit for foodies seeking delicious gluten-free cuisine in the heart of the city.
 
 Prefer:
-> I would return for the pasta alone. The menu clearly marked gluten-free dishes, and the server answered my cross-contamination questions without needing to disappear into the kitchen five times. It is not a dedicated gluten-free restaurant, but I felt more comfortable here than at most of the places I tried in the city.
+> The pasta alone was worth the visit. Plenty of clearly marked gluten-free options, and a server who actually understood cross-contamination. Good food and peace of mind? I'll take both.
+
+**Finding GF options in a language you don't speak**
+
+Avoid:
+> I showed up twenty minutes early having mentally rehearsed three ways to explain celiac disease in a language I do not speak. None of them turned out to be necessary.
+
+Prefer:
+> I always appreciate finding a restaurant with clearly marked gluten-free options, especially somewhere I don't speak the language. It takes a little of the guesswork out of ordering, and I'm all for that.
 
 **Hotel**
 
