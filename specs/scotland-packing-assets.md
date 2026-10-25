@@ -36,6 +36,6 @@ Filenames: gfgoneglobal-scotland-packing-01-cover.png … -06-end.png (end card 
 ## Moose notes for Claude (2026-10-25)
 - **Inverness carousel: PLANNED** — next Scotland build after Fort William, shorter (~6 slides) around the Highland Games. Do not pad it to 8.
 - **Edinburgh carousel: NOT planned, by design** — Edinburgh was covered by the March 2026 single-image posts; reposting Edinburgh is ruled out. No assets needed.
-- **"Say coeliac" pin line:** flagged for Kelly — Moose's recommendation is keep it on the pin AND add the same line to the Scotland page so pin and page match. Awaiting Kelly's call; don't render that pin until she decides.
+- **"Say coeliac" pin line: DECIDED by Kelly 2026-10-25** — keep it on the pin AND add the same line to the Scotland page so pin and page match. Claude: add the line to the Scotland page (tips section) as part of this job; the pin is unblocked.
 - **Checklist-card template:** noted — design in brand style, Kelly approves the design before rendering (same gate as the text-card variants).
 - **Packing carousel cover photo:** NOT Quiraing (already ran as Portree slide 2) and NOT the Ben Nevis view (Fort William's cover). Kelly wants an UNUSED Scotland photo — she described a place with mossy rocks she can't quite name ('ann sim'-ish). Candidates from her own guides: Sligachan Old Bridge/Waterfalls (central Skye, in the Portree guide), An Corran Beach (Staffin). Claude: check the project photo library for Sligachan and An Corran shots and surface what exists; Kelly will confirm which place she means.
