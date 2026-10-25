@@ -19,15 +19,15 @@ Six slides. It leads with the Ben Nevis summit because that's why people come to
 
 ## Photo issues found
 
-1. **Live-site bug, not fixed yet (Kelly's call):** The Old Deli's restaurant card on `countries/scotland/fort-william.html` displays `photos/scotland/fort-william/ben-nevis/IMG_9008.jpeg`. That's a foggy Ben Nevis cliff edge, the same photo this carousel uses as its lead, so the café card currently shows a mountain. Suggested fix: remove the img and use the no-photo card layout (same pattern as Kyoto's Gion ramen fix).
-2. **Live-site data quirk:** the restaurants badge on the guide says "4 spots," but the page lists 5 restaurant cards. The overview uses 5, the actual count.
+1. **Correction:** an earlier version of this manifest said The Old Deli's card showed a Ben Nevis photo. That was wrong. My extraction script read past the end of that card into the landmarks section. The Old Deli has no photo; Ben Nevis's photo is correctly on the Ben Nevis card. No site change was needed.
+2. **Live-site data quirk:** the restaurants badge on the guide says "4 spots," but the page lists 5 restaurant cards. The overview uses 5, the actual count. The badge itself is unchanged, pending Kelly.
 3. **Photos of Kelly** at the summit (`ben-nevis/IMG_9011.jpeg`, `IMG_9013.jpeg`): excluded.
 4. **Stock photo excluded:** `glenfinnan-viaduct/glenfinnan-viaduct-unsplash.jpg`. Glenfinnan is researched-only anyway.
 5. **Misfiled, unused:** `fort-william-scotrail-train-station/IMG_9033.jpeg` shows a park, not a station.
 
 ## Supporting data
 - **Caption:** Not written yet. Moose to draft.
-- **Hotel affiliate URL:** **none.** The guide's Nevis Bank Inn card has no Hotels.com link. Kelly can add one if she wants this slide monetized.
+- **Hotel affiliate URL** (Hotels.com, from Kelly): `https://www.hotels.com/affiliate/QZ5S5rg`. It's now also live on the guide's Nevis Bank Inn "Book" button, replacing an app deep link that the site's analytics weren't tracking.
 - **Source guide page:** `countries/scotland/fort-william.html`
 - **Regenerate:** `node instagram/scripts/render.js fort-william`. Slide settings live in `instagram/carousels/fort-william.json`.
 
