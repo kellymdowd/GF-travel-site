@@ -64,7 +64,8 @@ const CSS = `
   .watermark {
     position: absolute; top: 1.6rem; right: 1.8rem; z-index: 2;
     font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.55rem;
-    letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.45);
+    letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.55);
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
   }
 `;
 
@@ -146,6 +147,36 @@ const slides = [
     label: 'Isle of Skye, Scotland',
     title: 'Fairy Pools',
     bgPos: 'center 50%',
+  },
+  {
+    out: 'gfgoneglobal-scotland-glasgow-cathedral.png',
+    photo: 'file://' + path.join(REPO_ROOT, 'photos/scotland/glasgow/the-glasgow-necropolis/IMG_8987.jpeg'),
+    label: 'Glasgow, Scotland',
+    title: 'Glasgow Cathedral',
+    bgPos: 'center 38%',
+  },
+  {
+    out: 'gfgoneglobal-scotland-glasgow-necropolis.png',
+    photo: 'file://' + path.join(REPO_ROOT, 'photos/scotland/glasgow/glasgow-cathedral/IMG_8984.jpeg'),
+    label: 'Glasgow, Scotland',
+    title: 'The Glasgow Necropolis',
+    bgPos: 'center 45%',
+  },
+  {
+    out: 'gfgoneglobal-scotland-glasgow-mural-trail.png',
+    photo: 'file://' + path.join(REPO_ROOT, 'photos/scotland/glasgow/merchant-square/IMG_8977.jpeg'),
+    label: 'Glasgow, Scotland',
+    title: 'Glasgow Mural Trail',
+    subtitle: '#10 · The World’s Most Economical Taxi',
+    bgPos: '35% center',
+  },
+  {
+    out: 'gfgoneglobal-scotland-glasgow-z-hotel.png',
+    photo: 'file://' + path.join(REPO_ROOT, 'photos/scotland/glasgow/z-hotel/exterior.jpeg'),
+    label: 'Where to Stay · Glasgow',
+    title: 'The Z Hotel',
+    subtitle: 'City Centre · Near George Square',
+    bgPos: 'center 35%',
   },
   {
     out: 'gfgoneglobal-japan-end-card.png',

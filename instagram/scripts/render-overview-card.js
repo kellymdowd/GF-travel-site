@@ -63,6 +63,21 @@ function buildHtml(card) {
 
 const cards = [
   {
+    out: 'gfgoneglobal-scotland-glasgow-overview.png',
+    photo: 'file://' + path.join(REPO_ROOT, 'photos/scotland/glasgow/the-glasgow-necropolis/IMG_8987.jpeg'),
+    bgPos: 'center 30%',
+    country: 'Scotland',
+    city: 'Glasgow',
+    stats: [
+      { num: '10', label: 'GF Restaurants' },
+      { num: '8/10', label: 'GF Safety Score' },
+      { num: '2', label: 'Scored 5/5 GF' },
+      { num: '6', label: 'Landmarks' },
+      { num: 'May–Sep', label: 'Best Months' },
+      { num: '2–3', label: 'Ideal Stay (Nights)' },
+    ],
+  },
+  {
     out: 'gfgoneglobal-scotland-skye-portree-overview.png',
     photo: 'file://' + path.join(REPO_ROOT, 'photos/scotland/portree/quiraing-walk/IMG_9112.jpeg'),
     bgPos: 'center 55%',

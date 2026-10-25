@@ -161,6 +161,84 @@ function packingHtml() {
   </body></html>`;
 }
 
+// Dark no-photo restaurant card, matching the original .card-text-restaurant
+// design language from scotland-batch-1.html (dark ink bg, radial accents,
+// italic quote, score dots) — extended to the taller ratio.
+const TEXT_RESTAURANT_CSS = `
+  :root {
+    --ink: #2A2018; --slate: #C8717A; --slate-light: #D9979E; --rose: #B8907A;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: ${DIMS.w}px; height: ${DIMS.h}px; overflow: hidden; font-family: 'Jost', sans-serif; }
+  .card {
+    width: ${DIMS.w}px; height: ${DIMS.h}px; position: relative; background: var(--ink);
+    padding: 2.4rem 2.3rem 2.6rem; display: flex; flex-direction: column; justify-content: flex-end;
+  }
+  .card::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 30% 25%, rgba(200,113,122,0.16) 0%, transparent 55%),
+      radial-gradient(ellipse at 75% 75%, rgba(184,144,122,0.12) 0%, transparent 55%);
+  }
+  .badge {
+    position: absolute; top: 1.6rem; left: 1.8rem; z-index: 2;
+    font-size: 0.48rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 0.3rem 0.7rem; background: var(--slate); color: #fff;
+  }
+  .watermark {
+    position: absolute; top: 1.6rem; right: 1.8rem; z-index: 2;
+    font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.55rem;
+    letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.3);
+  }
+  .city-label {
+    position: relative; font-size: 0.5rem; font-weight: 500; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--slate-light); margin-bottom: 0.5rem;
+  }
+  .r-name {
+    position: relative; font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 2.3rem;
+    letter-spacing: 0.06em; text-transform: uppercase; color: #fff; line-height: 1.1;
+  }
+  .r-cuisine {
+    position: relative; font-size: 0.72rem; font-weight: 300; color: rgba(255,255,255,0.55);
+    margin-top: 0.4rem;
+  }
+  .r-quote {
+    position: relative; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem;
+    line-height: 1.65; color: rgba(255,255,255,0.65); margin-top: 1.4rem; max-width: 400px;
+  }
+  .r-score { position: relative; display: flex; align-items: center; gap: 0.6rem; margin-top: 1.3rem; }
+  .r-dots { display: flex; gap: 0.3rem; }
+  .r-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.15); }
+  .r-dot.filled { background: var(--slate-light); }
+  .r-score-label {
+    font-size: 0.52rem; font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+`;
+
+function textRestaurantHtml(r) {
+  const dots = Array.from({ length: r.score.max }, (_, i) =>
+    `<span class="r-dot${i < r.score.score ? ' filled' : ''}"></span>`
+  ).join('');
+  return `<!DOCTYPE html><html><head><meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>${TEXT_RESTAURANT_CSS}</style></head><body>
+    <div class="card" data-card>
+      ${r.badge ? `<div class="badge">${r.badge}</div>` : ''}
+      <div class="watermark">GF Gone Global</div>
+      <div class="city-label">${r.city}</div>
+      <div class="r-name">${r.name}</div>
+      <div class="r-cuisine">${r.cuisine}</div>
+      <div class="r-quote">${r.quote}</div>
+      <div class="r-score">
+        <div class="r-dots">${dots}</div>
+        <span class="r-score-label">GF Score</span>
+      </div>
+    </div>
+  </body></html>`;
+}
+
 function scotlandEndCardHtml() {
   return `<!DOCTYPE html><html><head><meta charset="UTF-8">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -187,6 +265,28 @@ function scotlandEndCardHtml() {
     { out: 'gfgoneglobal-explainer-gf-scores.png', html: explainerHtml() },
     { out: 'gfgoneglobal-scotland-skye-what-to-pack.png', html: packingHtml() },
     { out: 'gfgoneglobal-scotland-end-card.png', html: scotlandEndCardHtml() },
+    {
+      out: 'gfgoneglobal-scotland-glasgow-red-onion.png',
+      html: textRestaurantHtml({
+        city: 'Glasgow, Scotland',
+        name: 'Red Onion',
+        cuisine: 'Contemporary Scottish',
+        badge: 'Dedicated GF Menu',
+        quote: 'Full dedicated GF a la carte menu with starters, mains, and desserts. Dedicated GF fryer. GF Sunday roast with GF Yorkshire puddings.',
+        score: { score: 5, max: 5 },
+      }),
+    },
+    {
+      out: 'gfgoneglobal-scotland-glasgow-browns.png',
+      html: textRestaurantHtml({
+        city: 'Glasgow, Scotland',
+        name: 'Browns',
+        cuisine: 'Modern British Brasserie',
+        badge: 'Coeliac UK',
+        quote: 'Coeliac UK accredited — the gold standard for celiac safety in the UK. Staff specifically ask if you’re coeliac, and the kitchen meets verified preparation standards.',
+        score: { score: 5, max: 5 },
+      }),
+    },
   ];
 
   for (const card of cards) {
