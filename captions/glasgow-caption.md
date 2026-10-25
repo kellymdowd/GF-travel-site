@@ -1,5 +1,5 @@
 # Caption — Glasgow carousel
-# Status: DRAFT v5 — revised per Kelly's feedback 2026-10-25, awaiting her approval (do not treat as cleared)
+# Status: APPROVED by Kelly 2026-10-25 (v5 final)
 # Written by Moose. Do not edit the status line — only Kelly approves, only Moose updates status.
 
 I went to Glasgow expecting to deploy the emergency snacks. Glasgow had other plans.
