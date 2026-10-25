@@ -18,8 +18,8 @@ _Last updated: 2026-10-25 by Moose_
 | Service | What it's for | Link | Notes |
 |---|---|---|---|
 | GitHub | Site source + hosting (GitHub Pages) | https://github.com/kellymdowd/GF-travel-site | CNAME = gfgoneglobal.com. Do NOT make the repo private — on a free plan that turns Pages off and takes the site down |
-| Domain: gfgoneglobal.com | Registration & renewal | Namecheap (account: kellymdowd) | Registered Mar 16, 2026 · **renews/expires Mar 16, 2027** · free domain privacy on · auto-renew: TBD (confirm). Highest-risk item on this list: an expired domain takes the whole business offline |
-| Domain: kellymdowd.com | Kelly's personal domain — will eventually be tied to GF Gone Global | Namecheap (account: kellymdowd) | Registered Mar 16, 2026 · **renews/expires Mar 16, 2027** · free domain privacy on · currently parked |
+| Domain: gfgoneglobal.com | Registration & renewal | Namecheap (account: kellymdowd) | Registered Mar 16, 2026 · **renews/expires Mar 16, 2027** · free domain privacy on · **auto-renew ON for domain + privacy (set by Kelly 2026-10-25)**. Highest-risk item on this list: an expired domain takes the whole business offline |
+| Domain: kellymdowd.com | Kelly's personal domain — will eventually be tied to GF Gone Global | Namecheap (account: kellymdowd) | Registered Mar 16, 2026 · **renews/expires Mar 16, 2027** · free domain privacy on · **auto-renew ON for domain + privacy (set by Kelly 2026-10-25)** · currently parked |
 | Google Analytics | Site traffic | https://analytics.google.com | Monthly report emails land in the business Gmail |
 | Google Search Console | Search performance & indexing | https://search.google.com/search-console | Alerts land in the business Gmail |
 
