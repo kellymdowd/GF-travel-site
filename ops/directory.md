@@ -9,7 +9,7 @@ _Last updated: 2026-10-25 by Moose_
 | Service | What it's for | Link | Account / ID | Notes |
 |---|---|---|---|---|
 | Expedia Group Creator | Hotels.com affiliate links (link builder) | https://creator.expediagroup.com/app/products/link-builder | — | Links live across the city guides |
-| Viator | Tour / experience affiliate links | TBD — add portal URL | — | Links live on guides |
+| Viator | Tour / experience affiliate links | Builder: https://partners.viator.com/tools/links · Performance: https://partners.viator.com/reports/performance-trends · Broken-link alerts: https://partners.viator.com/reports/link-alert | Partner ID: P00313515 (account: GF Gone Global, USD) | Links live on guides |
 | Amazon Associates | Packing & product links | https://affiliate-program.amazon.com | Tag: gfgoneglobal-20 | 117 clicks, $0 sales as of Oct 2026. Needs 3 qualifying sales within 180 days to unlock the Influencer storefront |
 | Klook | Activity links | TBD — add portal URL | — | Link on the Hakone guide may be untagged — audit pending |
 
@@ -18,7 +18,8 @@ _Last updated: 2026-10-25 by Moose_
 | Service | What it's for | Link | Notes |
 |---|---|---|---|
 | GitHub | Site source + hosting (GitHub Pages) | https://github.com/kellymdowd/GF-travel-site | CNAME = gfgoneglobal.com. Do NOT make the repo private — on a free plan that turns Pages off and takes the site down |
-| Domain registrar | gfgoneglobal.com registration & renewal | TBD — **add registrar + renewal date** | Highest-risk item on this list: an expired domain takes the whole business offline |
+| Domain: gfgoneglobal.com | Registration & renewal | Namecheap (account: kellymdowd) | Registered Mar 16, 2026 · **renews/expires Mar 16, 2027** · free domain privacy on · auto-renew: TBD (confirm). Highest-risk item on this list: an expired domain takes the whole business offline |
+| Domain: kellymdowd.com | Kelly's personal domain — will eventually be tied to GF Gone Global | Namecheap (account: kellymdowd) | Registered Mar 16, 2026 · **renews/expires Mar 16, 2027** · free domain privacy on · currently parked |
 | Google Analytics | Site traffic | https://analytics.google.com | Monthly report emails land in the business Gmail |
 | Google Search Console | Search performance & indexing | https://search.google.com/search-console | Alerts land in the business Gmail |
 
@@ -38,6 +39,4 @@ _Last updated: 2026-10-25 by Moose_
 - **Publishing cadence**: Instagram Tue/Fri 6:30pm CT · Pinterest Wed/Sat 9:00am CT · Sunday brief 9:00am CT
 
 ## To add when handy
-- Domain registrar + renewal/expiry date
-- Viator affiliate portal URL
 - Klook affiliate portal URL
