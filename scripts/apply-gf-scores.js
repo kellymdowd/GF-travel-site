@@ -44,11 +44,12 @@ for (const [page, changes] of Object.entries(byPage)) {
     const hits = [];
 
     // Card pips: the first pip block after this card's name.
-    const nameRe = /restaurant-name">([\s\S]*?)<\/h3>/g;
+    // Card names appear as <h3>, <span> or <div class="restaurant-name"> depending on the page template.
+    const nameRe = /<(?:h3|span|div)[^>]*class="restaurant-name"[^>]*>([\s\S]*?)<\/(?:h3|span|div)>/g;
     let m, card = false;
     while ((m = nameRe.exec(html))) {
       if (norm(m[1]) !== norm(name)) continue;
-      const p = html.indexOf('restaurant-gf-pips">', m.index);
+      const p = html.indexOf('class="restaurant-gf-pips">', m.index) + 'class="'.length;
       const end = html.indexOf('</div>', p);
       const cls = (html.slice(p, end).match(/class="(restaurant-gf-pip)/) || [, 'restaurant-gf-pip'])[1];
       const open = html.lastIndexOf('<div', p);
@@ -78,6 +79,26 @@ for (const [page, changes] of Object.entries(byPage)) {
       if (norm(nm) !== norm(name)) return all;
       hits.push('marker');
       return `${a}${score}${b}`;
+    });
+
+    // Older templates: color-coded markers with the score in the popup or arguments.
+    // mkIcon('#hex') ... bindPopup('<strong>Name</strong><br>N/5 ...')
+    html = html.replace(/(mkIcon\(')(#[0-9a-f]{6})('\)\}\)\.addTo\(\w+\)\.bindPopup\('<strong>)((?:[^<\\]|\\.)*)(<\/strong><br>)(\d)(\/5)/gi, (all, a, col, b, nm, c, n, d) => {
+      if (norm(nm) !== norm(name)) return all;
+      hits.push('marker');
+      return `${a}${COLORS[score]}${b}${nm}${c}${score}${d}`;
+    });
+    // pin(lat, lng, '#hex', 'Name', 'cuisine', N)
+    html = html.replace(/(pin\([^,]+,[^,]+,\s*')(#[0-9a-f]{6})(',\s*')((?:[^'\\]|\\.)*)(',\s*'(?:[^'\\]|\\.)*',\s*)(\d)/gi, (all, a, col, b, nm, c, n) => {
+      if (norm(nm) !== norm(name)) return all;
+      hits.push('map');
+      return `${a}${COLORS[score]}${b}${nm}${c}${score}`;
+    });
+    // { name: 'Name', lat: .., lng: .., color: '#hex' }
+    html = html.replace(/(\{\s*name:\s*'((?:[^'\\]|\\.)*)'[^}]*?color:\s*')(#[0-9a-f]{6})/gi, (all, a, nm) => {
+      if (norm(nm) !== norm(name)) return all;
+      hits.push('map');
+      return `${a}${COLORS[score]}`;
     });
 
     // FAQ / summary text: "Name (N/5 GF score"

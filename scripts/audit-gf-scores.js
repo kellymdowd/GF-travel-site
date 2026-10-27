@@ -87,7 +87,7 @@ for (const country of fs.readdirSync(COUNTRIES)) {
     const scores = [];
     const chunks = html.split('class="restaurant-card"').slice(1);
     for (const c of chunks) {
-      const name = c.match(/restaurant-name">([\s\S]*?)<\/h3>/);
+      const name = c.match(/<(?:h3|span|div)[^>]*class="restaurant-name"[^>]*>([\s\S]*?)<\/(?:h3|span|div)>/);
       const pips = c.match(/restaurant-gf-pips">([\s\S]*?)<\/div>/);
       if (!name || !pips) continue;
       const nm = decode(name[1]);
@@ -110,7 +110,7 @@ for (const country of fs.readdirSync(COUNTRIES)) {
     // schema.org copies of each rating (rich results) must match the cards.
     const cardScore = new Map();
     for (const c of chunks) {
-      const name = c.match(/restaurant-name">([\s\S]*?)<\/h3>/);
+      const name = c.match(/<(?:h3|span|div)[^>]*class="restaurant-name"[^>]*>([\s\S]*?)<\/(?:h3|span|div)>/);
       const pips = c.match(/restaurant-gf-pips">([\s\S]*?)<\/div>/);
       if (name && pips) cardScore.set(norm(decode(name[1])), filled(pips[1]));
     }
