@@ -1,10 +1,10 @@
 # Caption — Glasgow carousel
-# Status: APPROVED by Kelly 2026-10-25 (v5 final)
+# Status: APPROVED by Kelly 2026-10-27 (v6 — recount fix at Kelly's direction: five 5/5s per Claude's recount in the repo manifest; v5 otherwise unchanged)
 # Written by Moose. Do not edit the status line — only Kelly approves, only Moose updates status.
 
 I went to Glasgow expecting to deploy the emergency snacks. Glasgow had other plans.
 
-Scotland's biggest city scored 8/10 on my GF safety scale — I tested 10 restaurants and two of them scored a perfect 5/5. The evidence:
+Scotland's biggest city scored 8/10 on my GF safety scale — I tested 10 restaurants and five of them scored a perfect 5/5. The evidence:
 
 → Glasgow Cathedral — 12th century, free to visit, and best seen from the Necropolis above it. Gothic drama: 10/10. And the climb up to see it? Worth every step.
 → Red Onion — a full dedicated GF menu, a dedicated fryer, and a chef who'll come out and talk allergies with you. They even do a GF Sunday roast with GF Yorkshire puddings — in Glasgow, even the roast dinner is celiac-safe.
