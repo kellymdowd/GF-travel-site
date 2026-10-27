@@ -1,6 +1,6 @@
 # Handoff: Fort William Carousel (Scotland relaunch post #3)
 
-**Status: Caption NOT yet written. Not cleared to publish.** Moose writes the single carousel caption; Kelly approves before this goes out. Do not publish until a follow-up updates this status line.
+**Status: NOT cleared to publish.** The slides are final after the 2026-10-26 GF score recount (see below). Moose's approved v3 caption in `captions/fort-william-caption.md` is now out of date: it's built around "5/10, my lowest in Scotland, no restaurant broke 3/5" and calls Browns and The Geographer 3/5. Moose needs to revise it and get Kelly's re-approval.
 
 Six slides. It leads with Ben Nevis because that's why people come to Fort William, and the two food slides do the GF work. Two complete sets, same filenames in each folder:
 - **Instagram (4:5, 1080×1350):** `instagram/exports/`
@@ -9,13 +9,13 @@ Six slides. It leads with Ben Nevis because that's why people come to Fort Willi
 | # | Slide | Filename (same in both folders) | 4:5 Size | Pinterest Size | Notes |
 |---|-------|----------|------|------|-------|
 | 1 | Ben Nevis | `gfgoneglobal-scotland-fort-william-ben-nevis.png` | 1.3MB | 1.4MB | View from the upper slopes down to Loch Linnhe and Fort William, with clouds below (`ben-nevis/IMG_9018.jpeg`, visited). Swapped in 2026-10-25 at Kelly's request for the lake view, replacing the foggy summit cliff (IMG_9008). Subtitle dropped "Summit" since this isn't the summit itself. Distant hikers on the path are unidentifiable. |
-| 2 | Browns | `gfgoneglobal-scotland-fort-william-browns.png` | 1.6M | 1.6M | 3/5. Photo is the GF chocolate tart the guide calls "incredible." The on-site restaurant at Nevis Bank Inn (not the Glasgow Browns). |
+| 2 | Browns | `gfgoneglobal-scotland-fort-william-browns.png` | 1.6M | 1.6M | 5/5 (was 3/5 before the 2026-10-26 recount). Photo is the GF chocolate tart the guide calls "incredible." The on-site restaurant at Nevis Bank Inn (not the Glasgow Browns). |
 | 3 | Nevis Bank Inn | `gfgoneglobal-scotland-fort-william-nevis-bank-inn.png` | 1.8M | 1.8M | "Where I Stayed" (the guide's own badge), so the label can say so. Exterior with the sign visible. |
-| 4 | The Geographer | `gfgoneglobal-scotland-fort-william-the-geographer.png` | 1.5M | 1.6M | 3/5. Photo is the GF calamari the guide recommends. |
-| 5 | Fort William Overview | `gfgoneglobal-scotland-fort-william-overview.png` | 760K | 796K | 5 restaurants, 5/10 GF score, top restaurant score 3/5, 3 landmarks, May–Sep, 1–2 days. See stat note below. |
+| 4 | The Geographer | `gfgoneglobal-scotland-fort-william-the-geographer.png` | 1.6M | 1.6M | 5/5 (was 3/5 before the 2026-10-26 recount). Photo is the GF calamari the guide recommends. |
+| 5 | Fort William Overview | `gfgoneglobal-scotland-fort-william-overview.png` | 757K | 790K | 5 restaurants, 7/10 GF score, 3 scored 5/5, 3 landmarks, May–Sep, 1–2 days. |
 | 6 | Scotland End Card | `gfgoneglobal-scotland-end-card.png` | 496K | 500K | Shared country end card, same file as Portree/Glasgow. |
 
-**Overview stat note:** the standard "Scored 5/5 GF" slot would read **0**, since every Fort William restaurant scores 3/5. It's replaced with **"Top Restaurant Score: 3/5"**, which tells a celiac reader the same thing honestly without a zero on the card. "Ideal Stay" is in days because the guide says "1–2 days."
+**Recount note (2026-10-26):** every Fort William restaurant had been bucket-scored 3/5 instead of counted against the rubric. Recounted, Browns, The Geographer and Crannog are 5/5 and the city is 7/10 (Easy). So the overview uses the standard "Scored 5/5 GF: 3" stat again instead of the "Top Restaurant Score" workaround. Slides 2, 4 and 5 were re-rendered at both ratios from full-size photo exports (the repo copies of IMG_8994 and IMG_9032 are 400px site thumbnails).
 
 ## Photo issues found
 

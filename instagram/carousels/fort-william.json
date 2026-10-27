@@ -21,7 +21,7 @@
       "label": "Fort William, Scotland",
       "title": "Browns",
       "subtitle": "Scottish / Modern British · Nevis Bank Inn",
-      "score": { "score": 3, "max": 5 },
+      "score": { "score": 5, "max": 5 },
       "bgPos": "center 40%"
     },
     {
@@ -40,7 +40,7 @@
       "label": "Fort William, Scotland",
       "title": "The Geographer",
       "subtitle": "Scottish / Seafood",
-      "score": { "score": 3, "max": 5 },
+      "score": { "score": 5, "max": 5 },
       "bgPos": "center 55%"
     },
     {
@@ -52,8 +52,8 @@
       "city": "Fort William",
       "stats": [
         { "num": "5", "label": "GF Restaurants" },
-        { "num": "5/10", "label": "GF Safety Score" },
-        { "num": "3/5", "label": "Top Restaurant Score" },
+        { "num": "7/10", "label": "GF Safety Score" },
+        { "num": "3", "label": "Scored 5/5 GF" },
         { "num": "3", "label": "Landmarks" },
         { "num": "May–Sep", "label": "Best Months" },
         { "num": "1–2", "label": "Ideal Stay (Days)" }
