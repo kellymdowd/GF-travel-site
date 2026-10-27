@@ -6,7 +6,9 @@
 //   node scripts/apply-gf-scores.js changes.json [--dry-run]
 //
 // changes.json: [{ "page": "countries/scotland/fort-william.html",
-//                  "name": "Browns Restaurant", "score": 5 }, ...]
+//                  "name": "Browns Restaurant", "cats": "11111" }, ...]
+// cats = Rubric 3 marks in order Options, Labeling, Range, Safety, Recommend.
+// The score is computed from them (100% GF places: "11111"), never typed.
 // Names match the card's <h3 class="restaurant-name"> text (case/punctuation-insensitive).
 // Each change must hit the card; other locations are updated when present.
 
@@ -18,11 +20,15 @@ const [file, ...flags] = process.argv.slice(2);
 const dry = flags.includes('--dry-run');
 if (!file) { console.error('Usage: node scripts/apply-gf-scores.js changes.json [--dry-run]'); process.exit(1); }
 
+const ACCENT = /&([a-zA-Z])(uml|acute|grave|circ|tilde|cedil|ring);/g;
 const norm = (s) => String(s)
   .replace(/\\u([0-9a-f]{4})/gi, (_, h) => String.fromCharCode(parseInt(h, 16)))
-  .replace(/\\'/g, "'").replace(/&#(\d+);/g, (_, d) => String.fromCharCode(d))
-  .replace(/&amp;/g, '&').replace(/&[a-z]+;/gi, (e) => ({ '&eacute;': 'é', '&auml;': 'ä', '&ouml;': 'ö', '&uuml;': 'ü', '&oacute;': 'ó', '&aacute;': 'á', '&rsquo;': '’' }[e] || ''))
-  .normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  .replace(/\\'/g, "'")
+  .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+  .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(d))
+  .replace(ACCENT, '$1').replace(/&oslash;|ø/gi, 'o').replace(/&aelig;|æ/gi, 'ae').replace(/&amp;/g, '&')
+  .replace(/&(rsquo|lsquo);/g, "'").replace(/&[a-z]+;/gi, '')
+  .normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 const pipsHtml = (n, cls) => Array.from({ length: 5 }, (_, i) => `<span class="${cls}${i < n ? ' is-filled' : ''}"></span>`).join('');
 const COLORS = { 5: '#3d6e40', 4: '#6a9a40', 3: '#b48c3c', 2: '#c87a50', 1: '#b4463c' };
 
@@ -32,7 +38,9 @@ for (const c of JSON.parse(fs.readFileSync(file, 'utf8'))) (byPage[c.page] ||= [
 let failed = 0;
 for (const [page, changes] of Object.entries(byPage)) {
   let html = fs.readFileSync(path.join(ROOT, page), 'utf8');
-  for (const { name, score } of changes) {
+  for (const { name, cats } of changes) {
+    if (!/^[01]{5}$/.test(cats || '')) { console.error(`✗ ${page}: ${name} needs cats like "11101"`); failed++; continue; }
+    const score = Math.max(1, [...cats].reduce((t, b) => t + +b, 0));
     const hits = [];
 
     // Card pips: the first pip block after this card's name.
@@ -43,7 +51,8 @@ for (const [page, changes] of Object.entries(byPage)) {
       const p = html.indexOf('restaurant-gf-pips">', m.index);
       const end = html.indexOf('</div>', p);
       const cls = (html.slice(p, end).match(/class="(restaurant-gf-pip)/) || [, 'restaurant-gf-pip'])[1];
-      html = html.slice(0, p) + 'restaurant-gf-pips">' + pipsHtml(score, cls) + html.slice(end);
+      const open = html.lastIndexOf('<div', p);
+      html = html.slice(0, open) + `<div data-gf="${cats}" class="restaurant-gf-pips">` + pipsHtml(score, cls) + html.slice(end);
       card = true;
       break;
     }
@@ -51,7 +60,7 @@ for (const [page, changes] of Object.entries(byPage)) {
     hits.push('card');
 
     // schema.org Restaurant ratingValue.
-    html = html.replace(/("@type":\s*"Restaurant",\s*"name":\s*"([^"]+)"[\s\S]{0,900}?"ratingValue":\s*)"?(\d)"?/g, (all, pre, nm) => {
+    html = html.replace(/("@type":\s*"Restaurant",\s*"name":\s*"([^"]+)"(?:(?!"@type":\s*"Restaurant")[\s\S]){0,900}?"ratingValue":\s*)"?(\d)"?/g, (all, pre, nm) => {
       if (norm(nm) !== norm(name)) return all;
       hits.push('schema');
       return `${pre}${score}`;

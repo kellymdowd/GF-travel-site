@@ -655,9 +655,9 @@
       "publisher": { "@type": "Organization", "name": "GF Gone Global" }
     },
     { "@type": "Restaurant", "name": "Sunrose 7 Restaurant", "servesCuisine": "Gourmet tasting menu", "address": { "@type": "PostalAddress", "addressLocality": "Bohinjska Bistrica", "addressCountry": "Slovenia" }, "review": { "@type": "Review", "author": { "@type": "Person", "name": "Kelly" }, "reviewRating": { "@type": "Rating", "ratingValue": 5, "bestRating": 5 } } },
-    { "@type": "Restaurant", "name": "Restavracija Kramar", "servesCuisine": "Slovenian, International", "address": { "@type": "PostalAddress", "addressLocality": "Bohinj", "addressCountry": "Slovenia" }, "review": { "@type": "Review", "author": { "@type": "Person", "name": "Kelly" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5 } } },
-    { "@type": "Restaurant", "name": "Hotel Gasperin Bohinj", "servesCuisine": "Hotel breakfast", "address": { "@type": "PostalAddress", "addressLocality": "Bohinj", "addressCountry": "Slovenia" }, "review": { "@type": "Review", "author": { "@type": "Person", "name": "Kelly" }, "reviewRating": { "@type": "Rating", "ratingValue": 4, "bestRating": 5 } } },
-    { "@type": "Restaurant", "name": "Restaurant Mihovc", "servesCuisine": "Slovenian", "address": { "@type": "PostalAddress", "addressLocality": "Bohinj", "addressCountry": "Slovenia" }, "review": { "@type": "Review", "author": { "@type": "Person", "name": "Kelly" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5 } } },
+    { "@type": "Restaurant", "name": "Restavracija Kramar", "servesCuisine": "Slovenian, International", "address": { "@type": "PostalAddress", "addressLocality": "Bohinj", "addressCountry": "Slovenia" }, "review": { "@type": "Review", "author": { "@type": "Person", "name": "Kelly" }, "reviewRating": { "@type": "Rating", "ratingValue": 2, "bestRating": 5 } } },
+    { "@type": "Restaurant", "name": "Hotel Gasperin Bohinj", "servesCuisine": "Hotel breakfast", "address": { "@type": "PostalAddress", "addressLocality": "Bohinj", "addressCountry": "Slovenia" }, "review": { "@type": "Review", "author": { "@type": "Person", "name": "Kelly" }, "reviewRating": { "@type": "Rating", "ratingValue": 5, "bestRating": 5 } } },
+    { "@type": "Restaurant", "name": "Restaurant Mihovc", "servesCuisine": "Slovenian", "address": { "@type": "PostalAddress", "addressLocality": "Bohinj", "addressCountry": "Slovenia" }, "review": { "@type": "Review", "author": { "@type": "Person", "name": "Kelly" }, "reviewRating": { "@type": "Rating", "ratingValue": 4, "bestRating": 5 } } },
     { "@type": "Restaurant", "name": "Hiša Pr' Pristavc", "servesCuisine": "Slovenian, Pizzeria", "address": { "@type": "PostalAddress", "addressLocality": "Bohinj", "addressCountry": "Slovenia" }, "review": { "@type": "Review", "author": { "@type": "Person", "name": "Kelly" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5 } } },
     { "@type": "LodgingBusiness", "name": "Sunrose 7 Gourmet & SPA Hotel", "address": { "@type": "PostalAddress", "addressLocality": "Bohinjska Bistrica", "addressCountry": "Slovenia" } },
     { "@type": "LodgingBusiness", "name": "Hotel Bohinj", "address": { "@type": "PostalAddress", "addressLocality": "Ribčev Laz, Bohinj", "addressCountry": "Slovenia" } },
@@ -957,9 +957,9 @@
 
       var restaurants = [
         { name:'Sunrose 7 Restaurant', score:5, lat:46.271411, lng:13.957210 },
-        { name:'Restavracija Kramar', score:3, lat:46.281466, lng:13.881315 },
-        { name:'Hotel Gasperin Bohinj', score:4, lat:46.274965, lng:13.891465 },
-        { name:'Restaurant Mihovc', score:3, lat:46.288691, lng:13.894666 },
+        { name:'Restavracija Kramar', score:2, lat:46.281466, lng:13.881315 },
+        { name:'Hotel Gasperin Bohinj', score:5, lat:46.274965, lng:13.891465 },
+        { name:'Restaurant Mihovc', score:4, lat:46.288691, lng:13.894666 },
         { name:'Hiša Pr\' Pristavc', score:3, lat:46.267939, lng:13.909704 }
       ];
 
@@ -1007,7 +1007,7 @@
         <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
         <div class="restaurant-gf-score">
           <span class="restaurant-gf-score-label">GF Score</span>
-          <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
+          <div data-gf="11111" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
         </div>
         <div class="restaurant-details">
           <div class="restaurant-detail">
@@ -1048,7 +1048,7 @@
         <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
         <div class="restaurant-gf-score">
           <span class="restaurant-gf-score-label">GF Score</span>
-          <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+          <div data-gf="10001" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
         </div>
         <div class="restaurant-details">
           <div class="restaurant-detail">
@@ -1081,7 +1081,7 @@
         <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
         <div class="restaurant-gf-score">
           <span class="restaurant-gf-score-label">GF Score</span>
-          <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div>
+          <div data-gf="11111" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
         </div>
         <div class="restaurant-details">
           <div class="restaurant-detail">
@@ -1120,7 +1120,7 @@
         <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
         <div class="restaurant-gf-score">
           <span class="restaurant-gf-score-label">GF Score</span>
-          <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+          <div data-gf="11011" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div>
         </div>
         <div class="restaurant-details">
           <div class="restaurant-detail">
@@ -1153,7 +1153,7 @@
         <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
         <div class="restaurant-gf-score">
           <span class="restaurant-gf-score-label">GF Score</span>
-          <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+          <div data-gf="11001" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
         </div>
         <div class="restaurant-details">
           <div class="restaurant-detail">

@@ -722,7 +722,7 @@
         },
         "reviewRating": {
           "@type": "Rating",
-          "ratingValue": 5,
+          "ratingValue": 4,
           "bestRating": 5,
           "worstRating": 0
         },
@@ -818,7 +818,7 @@
         },
         "reviewRating": {
           "@type": "Rating",
-          "ratingValue": 4,
+          "ratingValue": 5,
           "bestRating": 5,
           "worstRating": 0
         },
@@ -842,7 +842,7 @@
         },
         "reviewRating": {
           "@type": "Rating",
-          "ratingValue": 4,
+          "ratingValue": 5,
           "bestRating": 5,
           "worstRating": 0
         },
@@ -890,7 +890,7 @@
         },
         "reviewRating": {
           "@type": "Rating",
-          "ratingValue": 3,
+          "ratingValue": 5,
           "bestRating": 5,
           "worstRating": 0
         },
@@ -914,7 +914,7 @@
         },
         "reviewRating": {
           "@type": "Rating",
-          "ratingValue": 2,
+          "ratingValue": 3,
           "bestRating": 5,
           "worstRating": 0
         },
@@ -962,7 +962,7 @@
         },
         "reviewRating": {
           "@type": "Rating",
-          "ratingValue": 2,
+          "ratingValue": 1,
           "bestRating": 5,
           "worstRating": 0
         },
@@ -994,7 +994,7 @@
           "name": "What are the best gluten-free restaurants in Osaka?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Comeconoco Gluten-free Laboratory & Cafe (5/5 GF score, GF Bakery · Rice Flour); Seren Peche (米粉ヘルシーカフェ セレンペッシュ) (5/5 GF score, GF Cafe · Rice Flour); FOLK茶菓 (folksaka) (5/5 GF score, GF Cafe · Vegan)."
+            "text": "Comeconoco Gluten-free Laboratory & Cafe (5/5 GF score, GF Bakery · Rice Flour); Seren Peche (米粉ヘルシーカフェ セレンペッシュ) (4/5 GF score, GF Cafe · Rice Flour); FOLK茶菓 (folksaka) (5/5 GF score, GF Cafe · Vegan)."
           }
         },
         {
@@ -1263,17 +1263,17 @@
       var colors = { 5:'#3d6e40', 4:'#6a9a40', 3:'#b48c3c', 2:'#c87a50', 1:'#b4463c' };
       var restaurants = [
         { name:'Comeconoco', score:5, lat:34.6888, lng:135.5132 },
-        { name:'Seren Peche', score:5, lat:34.6758, lng:135.5056 },
+        { name:'Seren Peche', score:4, lat:34.6758, lng:135.5056 },
         { name:'FOLK\u8336\u83d3 (folksaka)', score:5, lat:34.6952, lng:135.4881 },
         { name:'Vegan \x26 Gluten Free Osaka', score:5, lat:34.6997, lng:135.4994 },
         { name:'OKOTAKO', score:5, lat:34.6736, lng:135.5043 },
         { name:'OKO Okonomiyaki Bar', score:4, lat:34.6725, lng:135.5034 },
-        { name:'HACCHABOOTH', score:4, lat:34.6815, lng:135.5028 },
+        { name:'HACCHABOOTH', score:5, lat:34.6815, lng:135.5028 },
         { name:'Anosaki Konosaki', score:3, lat:34.7067, lng:135.5046 },
         { name:'sari sari store', score:3, lat:34.6690, lng:135.4917 },
         { name:'Paprika shokudo', score:2, lat:34.6773, lng:135.4965 },
         { name:'Optimus cafe', score:2, lat:34.6922, lng:135.5052 },
-        { name:'Cosme Kitchen Adaptation', score:2, lat:34.7014, lng:135.4982 },
+        { name:'Cosme Kitchen Adaptation', score:1, lat:34.7014, lng:135.4982 },
 
       ];
       var hotelIcon = L.divIcon({
@@ -1309,7 +1309,7 @@
           <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
           <div class="restaurant-gf-score">
             <span class="restaurant-gf-score-label">GF Score</span>
-            <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span></div>
+            <div data-gf="11111" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span></div>
           </div>
           <div class="restaurant-details">
             <div class="restaurant-detail">
@@ -1347,13 +1347,13 @@
     <div class="restaurant-card"> <!-- RESEARCHED -->
       <div class="restaurant-top">
         <h3 class="restaurant-name">Seren Peche (&#x7C73;&#x7C89;&#x30D8;&#x30EB;&#x30B7;&#x30FC;&#x30AB;&#x30D5;&#x30A7; &#x30BB;&#x30EC;&#x30F3;&#x30DA;&#x30C3;&#x30B7;&#x30E5;)</h3>
-        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-gf">100% GF</span></div>
+        <div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div>
       </div>
       <div class="restaurant-cuisine">GF Cafe &middot; Rice Flour</div>
       <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
       <div class="restaurant-gf-score">
         <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span></div>
+        <div data-gf="11101" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div>
       </div>
       <div class="restaurant-details">
         <div class="restaurant-detail">
@@ -1389,7 +1389,7 @@
       <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
       <div class="restaurant-gf-score">
         <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span></div>
+        <div data-gf="11111" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span></div>
       </div>
       <div class="restaurant-details">
         <div class="restaurant-detail">
@@ -1425,7 +1425,7 @@
       <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
       <div class="restaurant-gf-score">
         <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span></div>
+        <div data-gf="11111" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span></div>
       </div>
       <div class="restaurant-details">
         <div class="restaurant-detail">
@@ -1455,7 +1455,7 @@
       <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
       <div class="restaurant-gf-score">
         <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span></div>
+        <div data-gf="11111" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span><span class="restaurant-gf-pip is-filled" style="background:#3d6e40;"></span></div>
       </div>
       <div class="restaurant-details">
         <div class="restaurant-detail">
@@ -1491,7 +1491,7 @@
       <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
       <div class="restaurant-gf-score">
         <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled" style="background:#6a9a40;"></span><span class="restaurant-gf-pip is-filled" style="background:#6a9a40;"></span><span class="restaurant-gf-pip is-filled" style="background:#6a9a40;"></span><span class="restaurant-gf-pip is-filled" style="background:#6a9a40;"></span><span class="restaurant-gf-pip"></span></div>
+        <div data-gf="11111" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
       </div>
       <div class="restaurant-details">
         <div class="restaurant-detail">
@@ -1527,7 +1527,7 @@
       <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
       <div class="restaurant-gf-score">
         <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled" style="background:#6a9a40;"></span><span class="restaurant-gf-pip is-filled" style="background:#6a9a40;"></span><span class="restaurant-gf-pip is-filled" style="background:#6a9a40;"></span><span class="restaurant-gf-pip is-filled" style="background:#6a9a40;"></span><span class="restaurant-gf-pip"></span></div>
+        <div data-gf="11111" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
       </div>
       <div class="restaurant-details">
         <div class="restaurant-detail">
@@ -1563,7 +1563,7 @@
       <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
       <div class="restaurant-gf-score">
         <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled" style="background:#b48c3c;"></span><span class="restaurant-gf-pip is-filled" style="background:#b48c3c;"></span><span class="restaurant-gf-pip is-filled" style="background:#b48c3c;"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+        <div data-gf="10101" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled" style="background:#b48c3c;"></span><span class="restaurant-gf-pip is-filled" style="background:#b48c3c;"></span><span class="restaurant-gf-pip is-filled" style="background:#b48c3c;"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
       </div>
       <div class="restaurant-details">
         <div class="restaurant-detail">
@@ -1599,7 +1599,7 @@
       <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
       <div class="restaurant-gf-score">
         <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled" style="background:#b48c3c;"></span><span class="restaurant-gf-pip is-filled" style="background:#b48c3c;"></span><span class="restaurant-gf-pip is-filled" style="background:#b48c3c;"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+        <div data-gf="11111" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
       </div>
       <div class="restaurant-details">
         <div class="restaurant-detail">
@@ -1635,7 +1635,7 @@
       <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
       <div class="restaurant-gf-score">
         <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled" style="background:#c87a50;"></span><span class="restaurant-gf-pip is-filled" style="background:#c87a50;"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+        <div data-gf="10101" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
       </div>
       <div class="restaurant-details">
         <div class="restaurant-detail">
@@ -1665,7 +1665,7 @@
       <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
       <div class="restaurant-gf-score">
         <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled" style="background:#c87a50;"></span><span class="restaurant-gf-pip is-filled" style="background:#c87a50;"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+        <div data-gf="10100" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled" style="background:#c87a50;"></span><span class="restaurant-gf-pip is-filled" style="background:#c87a50;"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
       </div>
       <div class="restaurant-details">
         <div class="restaurant-detail">
@@ -1701,7 +1701,7 @@
       <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
       <div class="restaurant-gf-score">
         <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled" style="background:#c87a50;"></span><span class="restaurant-gf-pip is-filled" style="background:#c87a50;"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+        <div data-gf="10000" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
       </div>
       <div class="restaurant-details">
         <div class="restaurant-detail">
@@ -1983,7 +1983,7 @@
           What are the best gluten-free restaurants in Osaka?
           <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-a"><div class="faq-a-inner">Comeconoco Gluten-free Laboratory &amp; Cafe (5/5 GF score, GF Bakery · Rice Flour); Seren Peche (米粉ヘルシーカフェ セレンペッシュ) (5/5 GF score, GF Cafe · Rice Flour); FOLK茶菓 (folksaka) (5/5 GF score, GF Cafe · Vegan).</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Comeconoco Gluten-free Laboratory &amp; Cafe (5/5 GF score, GF Bakery · Rice Flour); Seren Peche (米粉ヘルシーカフェ セレンペッシュ) (4/5 GF score, GF Cafe · Rice Flour); FOLK茶菓 (folksaka) (5/5 GF score, GF Cafe · Vegan).</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false">

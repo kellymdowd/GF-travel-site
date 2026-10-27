@@ -609,7 +609,7 @@
         "author": { "@type": "Person", "name": "GF Gone Global" },
         "reviewRating": {
           "@type": "Rating",
-          "ratingValue": 2,
+          "ratingValue": 3,
           "bestRating": 5,
           "worstRating": 0
         },
@@ -672,7 +672,7 @@
         "author": { "@type": "Person", "name": "GF Gone Global" },
         "reviewRating": {
           "@type": "Rating",
-          "ratingValue": 2,
+          "ratingValue": 4,
           "bestRating": 5,
           "worstRating": 0
         },
@@ -919,10 +919,10 @@
       L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxNativeZoom: 16, attribution: 'Tiles &copy; Esri', maxZoom: 18 }).addTo(map);
       var colors = { 5:'#3d6e40', 4:'#6a9a40', 3:'#b48c3c', 2:'#c87a50', 1:'#b4463c', 0:'#9a9a9a' };
       var restaurants = [
-        { name:'Sushi Train Gen\u00e8ve', score:2, lat:46.2032944, lng:6.1496979 },
+        { name:'Sushi Train Gen\u00e8ve', score:3, lat:46.2032944, lng:6.1496979 },
         { name:'Roberto', score:4, lat:46.2022246, lng:6.1533667 },
         { name:'Alive', score:3, lat:46.203803, lng:6.1555914 },
-        { name:'Mama Tha\u00ef', score:2, lat:46.1923107, lng:6.144171 }
+        { name:'Mama Tha\u00ef', score:4, lat:46.1923107, lng:6.144171 }
       ];
       var hotelIcon = L.divIcon({ className: '', html: '<div style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;background:#2A2018;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.25);"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 21V13h6v8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 21h22" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><rect x="7" y="8" width="3" height="3" rx="0.5" fill="#fff"/><rect x="14" y="8" width="3" height="3" rx="0.5" fill="#fff"/></svg></div>', iconSize: [22, 22], iconAnchor: [11, 11] });
       L.marker([46.211044, 6.1419024], { icon: hotelIcon }).addTo(map).bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">Montbrillant</strong><br><span style="font-size:11px;color:#5A5048;">Where I stayed</span></div>', { closeButton: false });
@@ -944,7 +944,7 @@
       <div class="restaurant-top"><h3 class="restaurant-name">Sushi Train Gen&egrave;ve</h3><div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div></div>
       <div class="restaurant-cuisine">Japanese &middot; Sushi</div>
       <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
-      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
+      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div data-gf="10101" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
       <div class="restaurant-details">
         <div class="restaurant-detail"><div class="restaurant-detail-label">Safety Notes</div><div class="restaurant-detail-value">Sushi train concept, all-you-can-eat for 41.90CHF. GF potential with rice and fish items &mdash; verify soy sauce is gluten-free before using.</div></div>
         <div class="restaurant-detail restaurant-location"><div class="restaurant-detail-label">Location</div><div class="restaurant-detail-value restaurant-location-value"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg><span class="restaurant-detail-value">Old Town &middot; Rue Neuve-du-Molard 21</span></div></div>
@@ -961,7 +961,7 @@
       <div class="restaurant-top"><h3 class="restaurant-name">Roberto</h3><div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div></div>
       <div class="restaurant-cuisine">Italian</div>
       <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
-      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div></div>
+      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div data-gf="10111" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div></div>
       <div class="restaurant-details">
         <div class="restaurant-detail"><div class="restaurant-detail-label">Safety Notes</div><div class="restaurant-detail-value"><!-- RESEARCHED -->GF pasta available with a choice of sauces. Family-run since 1945. Celiac-aware staff. Expensive but reliable. No GF bread.</div></div>
         <div class="restaurant-detail restaurant-location"><div class="restaurant-detail-label">Location</div><div class="restaurant-detail-value restaurant-location-value"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg><span class="restaurant-detail-value">Eaux-Vives &middot; Rue Pierre-Fatio 10</span></div></div>
@@ -978,7 +978,7 @@
       <div class="restaurant-top"><h3 class="restaurant-name">Alive</h3><div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div></div>
       <div class="restaurant-cuisine">Vegan &middot; Caf&eacute;</div>
       <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
-      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
+      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div data-gf="10101" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
       <div class="restaurant-details">
         <div class="restaurant-detail"><div class="restaurant-detail-label">Safety Notes</div><div class="restaurant-detail-value"><!-- RESEARCHED -->Vegan caf&eacute; with GF avocado toast and bruschetta. GF bread available. Farm-to-table organic concept. Mixed safety &mdash; communicate celiac needs clearly.</div></div>
         <div class="restaurant-detail"><div class="restaurant-detail-label">Hours</div><div class="restaurant-detail-value"><!-- RESEARCHED -->Tue&ndash;Wed 8:30&ndash;6, Thu&ndash;Fri 8:30&ndash;9pm, Sat 11&ndash;9, Sun 11&ndash;6, closed Mon.</div></div>
@@ -995,7 +995,7 @@
       <div class="restaurant-top"><h3 class="restaurant-name">Mama Tha&iuml;</h3><div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div></div>
       <div class="restaurant-cuisine">Thai</div>
       <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
-      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
+      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div data-gf="11101" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div></div>
       <div class="restaurant-details">
         <div class="restaurant-detail"><div class="restaurant-detail-label">Safety Notes</div><div class="restaurant-detail-value"><!-- RESEARCHED -->Most items GF or adaptable. Menu clearly marked for allergens. Pad Thai praised by reviewers. Also available on delivery apps.</div></div>
         <div class="restaurant-detail restaurant-location"><div class="restaurant-detail-label">Location</div><div class="restaurant-detail-value restaurant-location-value"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg><span class="restaurant-detail-value">Carouge</span></div></div>

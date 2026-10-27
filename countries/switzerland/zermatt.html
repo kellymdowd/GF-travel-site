@@ -572,7 +572,7 @@
       "review": {
         "@type": "Review",
         "author": { "@type": "Person", "name": "GF Gone Global" },
-        "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5, "worstRating": 0 },
+        "reviewRating": { "@type": "Rating", "ratingValue": 4, "bestRating": 5, "worstRating": 0 },
         "reviewBody": "GF carbonara, GF pizza and pasta available since 2020. The safest GF option in Zermatt."
       }
     },
@@ -584,7 +584,7 @@
       "review": {
         "@type": "Review",
         "author": { "@type": "Person", "name": "GF Gone Global" },
-        "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5, "worstRating": 0 },
+        "reviewRating": { "@type": "Rating", "ratingValue": 4, "bestRating": 5, "worstRating": 0 },
         "reviewBody": "GF pizza menu available with allergens listed. Closed Mondays."
       }
     },
@@ -596,7 +596,7 @@
       "review": {
         "@type": "Review",
         "author": { "@type": "Person", "name": "GF Gone Global" },
-        "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5, "worstRating": 0 },
+        "reviewRating": { "@type": "Rating", "ratingValue": 2, "bestRating": 5, "worstRating": 0 },
         "reviewBody": "Pre-packaged GF buns available for fondue. Beautiful Matterhorn views."
       }
     },
@@ -608,7 +608,7 @@
       "review": {
         "@type": "Review",
         "author": { "@type": "Person", "name": "GF Gone Global" },
-        "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5, "worstRating": 0 },
+        "reviewRating": { "@type": "Rating", "ratingValue": 2, "bestRating": 5, "worstRating": 0 },
         "reviewBody": "Oldest fondue restaurant in Zermatt. Raclette with potatoes is naturally GF. Bring your own GF bread for fondue."
       }
     },
@@ -632,7 +632,7 @@
       "review": {
         "@type": "Review",
         "author": { "@type": "Person", "name": "GF Gone Global" },
-        "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5, "worstRating": 0 },
+        "reviewRating": { "@type": "Rating", "ratingValue": 2, "bestRating": 5, "worstRating": 0 },
         "reviewBody": "GF chocolate cake available. Alaska-themed mountain restaurant at 1,920m. Seasonal opening."
       }
     },
@@ -847,12 +847,12 @@
       L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', { maxNativeZoom: 16, attribution: 'Tiles &copy; Esri', maxZoom: 18 }).addTo(map);
       var colors = { 5:'#3d6e40', 4:'#6a9a40', 3:'#b48c3c', 2:'#c87a50', 1:'#b4463c', 0:'#9a9a9a' };
       var restaurants = [
-        { name:'Grampi\u2019s', score:3, lat:46.020642, lng:7.746376 },
-        { name:'Ristorante Pizzeria CasaMia', score:3, lat:46.0242146, lng:7.7488008 },
-        { name:'Old Zermatt', score:3, lat:46.0188616, lng:7.7483952 },
-        { name:'Du Pont', score:3, lat:46.0191181, lng:7.7457478 },
+        { name:'Grampi\u2019s', score:4, lat:46.020642, lng:7.746376 },
+        { name:'Ristorante Pizzeria CasaMia', score:4, lat:46.0242146, lng:7.7488008 },
+        { name:'Old Zermatt', score:2, lat:46.0188616, lng:7.7483952 },
+        { name:'Du Pont', score:2, lat:46.0191181, lng:7.7457478 },
         { name:'Pizzeria Ristorante Molino', score:3, lat:46.02149, lng:7.746691 },
-        { name:'Othmar\u2019s Skih\u00fctte', score:3, lat:46.0306243, lng:7.7653443 },
+        { name:'Othmar\u2019s Skih\u00fctte', score:2, lat:46.0306243, lng:7.7653443 },
         { name:'Restaurant Myoko', score:2, lat:46.021451, lng:7.746198 }
       ];
       var hotelIcon = L.divIcon({ className: '', html: '<div style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;background:#2A2018;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.25);"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 21V13h6v8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 21h22" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><rect x="7" y="8" width="3" height="3" rx="0.5" fill="#fff"/><rect x="14" y="8" width="3" height="3" rx="0.5" fill="#fff"/></svg></div>', iconSize: [22, 22], iconAnchor: [11, 11] });
@@ -874,7 +874,7 @@
       <div class="restaurant-top"><h3 class="restaurant-name">Grampi&rsquo;s</h3><div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div></div>
       <div class="restaurant-cuisine">Italian &middot; Pizza</div>
       <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
-      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
+      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div data-gf="10111" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div></div>
       <div class="restaurant-details">
         <div class="restaurant-detail"><div class="restaurant-detail-label">Safety Notes</div><div class="restaurant-detail-value">GF carbonara, GF pizza and pasta available since 2020. The safest GF option in Zermatt with a solid understanding of gluten-free needs.</div></div>
         <div class="restaurant-detail"><div class="restaurant-detail-label">Location</div><div class="restaurant-detail-value restaurant-location-value"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg><span class="restaurant-detail-value">Bahnhofstrasse 70</span></div></div>
@@ -890,7 +890,7 @@
       <div class="restaurant-top"><h3 class="restaurant-name">Ristorante Pizzeria CasaMia</h3><div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div></div>
       <div class="restaurant-cuisine">Italian &middot; Pizza</div>
       <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
-      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
+      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div data-gf="11101" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div></div>
       <div class="restaurant-details">
         <div class="restaurant-detail"><div class="restaurant-detail-label">Safety Notes</div><div class="restaurant-detail-value">GF pizza menu available with allergens listed. A reliable option near the train station. Closed Mondays.</div></div>
         <div class="restaurant-detail"><div class="restaurant-detail-label">Location</div><div class="restaurant-detail-value restaurant-location-value"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg><span class="restaurant-detail-value">Bahnhofpl. 36</span></div></div>
@@ -904,7 +904,7 @@
       <div class="restaurant-top"><h3 class="restaurant-name">Old Zermatt</h3><div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div></div>
       <div class="restaurant-cuisine">Mediterranean &middot; Alpine</div>
       <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
-      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
+      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div data-gf="10001" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
       <div class="restaurant-details">
         <div class="restaurant-detail"><div class="restaurant-detail-label">Safety Notes</div><div class="restaurant-detail-value">Pre-packaged GF buns available so you can have fondue. Beautiful Matterhorn views from the terrace.</div></div>
         <div class="restaurant-detail"><div class="restaurant-detail-label">Location</div><div class="restaurant-detail-value restaurant-location-value"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg><span class="restaurant-detail-value">Village center</span></div></div>
@@ -918,7 +918,7 @@
       <div class="restaurant-top"><h3 class="restaurant-name">Du Pont</h3><div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div></div>
       <div class="restaurant-cuisine">Swiss &middot; Fondue</div>
       <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
-      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
+      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div data-gf="10001" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
       <div class="restaurant-details">
         <div class="restaurant-detail"><div class="restaurant-detail-label">Safety Notes</div><div class="restaurant-detail-value">Oldest fondue restaurant in Zermatt. Raclette with potatoes is naturally GF. Bring your own GF bread and they&rsquo;ll serve fondue with it.</div></div>
         <div class="restaurant-detail"><div class="restaurant-detail-label">Location</div><div class="restaurant-detail-value restaurant-location-value"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg><span class="restaurant-detail-value">Village center</span></div></div>
@@ -932,7 +932,7 @@
       <div class="restaurant-top"><h3 class="restaurant-name">Pizzeria Ristorante Molino</h3><div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div></div>
       <div class="restaurant-cuisine">Italian &middot; Pizza</div>
       <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
-      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
+      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div data-gf="10101" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
       <div class="restaurant-details">
         <div class="restaurant-detail"><div class="restaurant-detail-label">Safety Notes</div><div class="restaurant-detail-value">GF pizza, pasta, and complimentary GF bread rolls. A Swiss chain with consistent GF options across locations.</div></div>
         <div class="restaurant-detail"><div class="restaurant-detail-label">Location</div><div class="restaurant-detail-value restaurant-location-value"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg><span class="restaurant-detail-value">Bahnhofstrasse 52</span></div></div>
@@ -946,7 +946,7 @@
       <div class="restaurant-top"><h3 class="restaurant-name">Othmar&rsquo;s Skih&uuml;tte</h3><div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div></div>
       <div class="restaurant-cuisine">Alpine &middot; International</div>
       <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
-      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
+      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div data-gf="10001" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
       <div class="restaurant-details">
         <div class="restaurant-detail"><div class="restaurant-detail-label">Safety Notes</div><div class="restaurant-detail-value">GF chocolate cake available. Alaska-themed mountain restaurant at 1,920m with salmon, king crab, and elk. Open mid-Dec to mid-Apr and mid-Jun to mid-Oct.</div></div>
         <div class="restaurant-detail"><div class="restaurant-detail-label">Location</div><div class="restaurant-detail-value restaurant-location-value"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg><span class="restaurant-detail-value">1,920m elevation &middot; Seasonal</span></div></div>
@@ -959,7 +959,7 @@
       <div class="restaurant-top"><h3 class="restaurant-name">Restaurant Myoko</h3><div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div></div>
       <div class="restaurant-cuisine">Japanese &middot; Sushi</div>
       <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
-      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
+      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div data-gf="10001" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
       <div class="restaurant-details">
         <div class="restaurant-detail"><div class="restaurant-detail-label">Safety Notes</div><div class="restaurant-detail-value">Sushi and teppanyaki at Hotel Schweizerhof. 13 GaultMillau points. Verify soy sauce and sauces for GF safety &mdash; standard soy sauce contains wheat.</div></div>
         <div class="restaurant-detail"><div class="restaurant-detail-label">Location</div><div class="restaurant-detail-value restaurant-location-value"><svg width="10" height="12" viewBox="0 0 10 12" fill="none"><path d="M5 0C2.24 0 0 2.24 0 5C0 8.5 5 12 5 12C5 12 10 8.5 10 5C10 2.24 7.76 0 5 0ZM5 6.75C4.04 6.75 3.25 5.96 3.25 5C3.25 4.04 4.04 3.25 5 3.25C5.96 3.25 6.75 4.04 6.75 5C6.75 5.96 5.96 6.75 5 6.75Z" fill="currentColor"/></svg><span class="restaurant-detail-value">Hotel Schweizerhof</span></div></div>

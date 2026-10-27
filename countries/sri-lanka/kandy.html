@@ -559,7 +559,7 @@
       "review": {
         "@type": "Review",
         "author": { "@type": "Person", "name": "GF Gone Global" },
-        "reviewRating": { "@type": "Rating", "ratingValue": 4, "bestRating": 5, "worstRating": 0 },
+        "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5, "worstRating": 0 },
         "reviewBody": "GF dosas - cheese dosa was SO good! And MASSIVE! South Indian restaurant with naturally gluten-free rice-flour dosas, though it's worth confirming the griddle isn't also used for wheat-based items like rava dosa or rotis."
       }
     },
@@ -575,7 +575,7 @@
       "review": {
         "@type": "Review",
         "author": { "@type": "Person", "name": "GF Gone Global" },
-        "reviewRating": { "@type": "Rating", "ratingValue": 2, "bestRating": 5, "worstRating": 0 },
+        "reviewRating": { "@type": "Rating", "ratingValue": 1, "bestRating": 5, "worstRating": 0 },
         "reviewBody": "Vegetarian/vegan fusion spot with jackfruit burgers, wraps, and pizzas. Some GF options but cross-contamination risk with wheat-based items."
       }
     },
@@ -591,7 +591,7 @@
       "review": {
         "@type": "Review",
         "author": { "@type": "Person", "name": "GF Gone Global" },
-        "reviewRating": { "@type": "Rating", "ratingValue": 2, "bestRating": 5, "worstRating": 0 },
+        "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5, "worstRating": 0 },
         "reviewBody": "GF options but seems limited based on FMGF reviews. Staff accommodate with advance notice. Warning: Somersby Beer is NOT GF in Sri Lanka."
       }
     },
@@ -663,7 +663,7 @@
           "name": "What are the best gluten-free restaurants in Kandy?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Balaji Dosai (4/5 GF score, South Indian Vegetarian) is the top pick — naturally GF rice-flour dosas. Other options include Soul Food, Hideout Lounge, and Theva Cuisine, all with limited GF options (2/5 GF scores)."
+            "text": "Balaji Dosai (3/5 GF score, South Indian Vegetarian) is the top pick — naturally GF rice-flour dosas. Other options include Soul Food, Hideout Lounge, and Theva Cuisine, all with limited GF options (2/5 GF scores)."
           }
         },
         {
@@ -1031,9 +1031,9 @@
       var colors = { 5:'#3d6e40', 4:'#6a9a40', 3:'#b48c3c', 2:'#c87a50', 1:'#b4463c', 0:'#9a9a9a' };
 
       var restaurants = [
-        { name:'Balaji Dosai', score:4, lat:7.293728, lng:80.638326 },
-        { name:'Soul Food', score:2, lat:7.292551, lng:80.636053 },
-        { name:'Hideout Lounge', score:2, lat:7.287376, lng:80.646557 },
+        { name:'Balaji Dosai', score:3, lat:7.293728, lng:80.638326 },
+        { name:'Soul Food', score:1, lat:7.292551, lng:80.636053 },
+        { name:'Hideout Lounge', score:3, lat:7.287376, lng:80.646557 },
         { name:'Theva Cuisine', score:2, lat:7.276104, lng:80.635605 }
       ];
 
@@ -1083,7 +1083,7 @@
       <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
       <div class="restaurant-gf-score">
         <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div>
+        <div data-gf="10101" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
       </div>
       <div class="restaurant-details">
         <div class="restaurant-detail">
@@ -1116,7 +1116,7 @@
       <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
       <div class="restaurant-gf-score">
         <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+        <div data-gf="10000" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
       </div>
       <div class="restaurant-details">
         <div class="restaurant-detail">
@@ -1140,7 +1140,7 @@
       <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
       <div class="restaurant-gf-score">
         <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+        <div data-gf="11001" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
       </div>
       <div class="restaurant-details">
         <div class="restaurant-detail">
@@ -1170,7 +1170,7 @@
       <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
       <div class="restaurant-gf-score">
         <span class="restaurant-gf-score-label">GF Score</span>
-        <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+        <div data-gf="10001" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
       </div>
       <div class="restaurant-details">
         <div class="restaurant-detail">
@@ -1412,7 +1412,7 @@
           What are the best gluten-free restaurants in Kandy?
           <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-a"><div class="faq-a-inner">Balaji Dosai (4/5 GF score, South Indian Vegetarian) is the top pick — naturally GF rice-flour dosas. Other options include Soul Food, Hideout Lounge, and Theva Cuisine, all with limited GF options (2/5 GF scores).</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Balaji Dosai (3/5 GF score, South Indian Vegetarian) is the top pick — naturally GF rice-flour dosas. Other options include Soul Food, Hideout Lounge, and Theva Cuisine, all with limited GF options (2/5 GF scores).</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false">

@@ -507,21 +507,21 @@
       "name": "HANS IM GL\u00dcCK",
       "address": { "@type": "PostalAddress", "addressLocality": "Frankfurt", "addressCountry": "DE" },
       "servesCuisine": "Burgers",
-      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5, "worstRating": 0 }, "reviewBody": "GF buns available for an extra \u20ac2.50, safe fryer, and a detailed allergen menu. A solid option for a quick GF burger in the Altstadt." }
+      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 5, "bestRating": 5, "worstRating": 0 }, "reviewBody": "GF buns available for an extra \u20ac2.50, safe fryer, and a detailed allergen menu. A solid option for a quick GF burger in the Altstadt." }
     },
     {
       "@type": "Restaurant",
       "name": "Block House",
       "address": { "@type": "PostalAddress", "addressLocality": "Frankfurt", "addressCountry": "DE" },
       "servesCuisine": "Steakhouse",
-      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5, "worstRating": 0 }, "reviewBody": "German steakhouse chain with a GF labeling system. Items marked with 'G' contain gluten, making it easy to identify safe choices. Caprese salad and apps were great. Staff knowledgeable." }
+      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 5, "bestRating": 5, "worstRating": 0 }, "reviewBody": "German steakhouse chain with a GF labeling system. Items marked with 'G' contain gluten, making it easy to identify safe choices. Caprese salad and apps were great. Staff knowledgeable." }
     },
     {
       "@type": "Restaurant",
       "name": "MAREDO",
       "address": { "@type": "PostalAddress", "addressLocality": "Frankfurt", "addressCountry": "DE" },
       "servesCuisine": "Steakhouse",
-      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5, "worstRating": 0 }, "reviewBody": "Steakhouse with GF items clearly marked on the menu. Straightforward and reliable for celiac diners." }
+      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 4, "bestRating": 5, "worstRating": 0 }, "reviewBody": "Steakhouse with GF items clearly marked on the menu. Straightforward and reliable for celiac diners." }
     },
     {
       "@type": "Restaurant",
@@ -535,7 +535,7 @@
       "name": "Tacohaus",
       "address": { "@type": "PostalAddress", "addressLocality": "Frankfurt", "addressCountry": "DE" },
       "servesCuisine": "Mexican",
-      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 2, "bestRating": 5, "worstRating": 0 }, "reviewBody": "Mexican restaurant with corn-based options that are naturally gluten-free. Was on the GF research list but not personally tested." }
+      "review": { "@type": "Review", "author": { "@type": "Person", "name": "GF Gone Global" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5, "worstRating": 0 }, "reviewBody": "Mexican restaurant with corn-based options that are naturally gluten-free. Was on the GF research list but not personally tested." }
     },
     {
       "@type": "LodgingBusiness",
@@ -546,7 +546,7 @@
       "@type": "FAQPage",
       "mainEntity": [
         { "@type": "Question", "name": "Is Frankfurt safe for celiacs?", "acceptedAnswer": { "@type": "Answer", "text": "Frankfurt scores 6/10 for GF friendliness (Moderate). There are 5 restaurants with GF options. Top picks: HANS IM GL\u00dcCK, Block House, MAREDO." } },
-        { "@type": "Question", "name": "What are the best gluten-free restaurants in Frankfurt?", "acceptedAnswer": { "@type": "Answer", "text": "HANS IM GL\u00dcCK (3/5 GF score, Burgers); Block House (3/5 GF score, Steakhouse); MAREDO (3/5 GF score, Steakhouse)." } },
+        { "@type": "Question", "name": "What are the best gluten-free restaurants in Frankfurt?", "acceptedAnswer": { "@type": "Answer", "text": "HANS IM GL\u00dcCK (3/5 GF score, Burgers); Block House (5/5 GF score, Steakhouse); MAREDO (4/5 GF score, Steakhouse)." } },
         { "@type": "Question", "name": "Can you find gluten-free food in Frankfurt supermarkets?", "acceptedAnswer": { "@type": "Answer", "text": "Yes \u2014 REWE, EDEKA, DM, and Alnatura all carry gluten-free products. Alnatura is especially good for organic GF items." } }
       ]
     }
@@ -746,11 +746,11 @@
       }).addTo(map);
       var colors = { 5:'#3d6e40', 4:'#6a9a40', 3:'#b48c3c', 2:'#c87a50', 1:'#b4463c', 0:'#9a9a9a' };
       var restaurants = [
-        { name:'HANS IM GL\u00dcCK', score:3, lat:50.111958, lng:8.685564 },
-        { name:'Block House', score:3, lat:50.109232, lng:8.650328 },
-        { name:'MAREDO', score:3, lat:50.113902, lng:8.678046 },
+        { name:'HANS IM GL\u00dcCK', score:5, lat:50.111958, lng:8.685564 },
+        { name:'Block House', score:5, lat:50.109232, lng:8.650328 },
+        { name:'MAREDO', score:4, lat:50.113902, lng:8.678046 },
         { name:'VAPIANO', score:2, lat:50.112846, lng:8.675892 },
-        { name:'Tacohaus', score:2, lat:50.116625, lng:8.643881 }
+        { name:'Tacohaus', score:3, lat:50.116625, lng:8.643881 }
       ];
       var hotelIcon = L.divIcon({ className: '', html: '<div style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;background:#2A2018;border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.25);"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M3 21V7a2 2 0 012-2h14a2 2 0 012 2v14" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 21V13h6v8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M1 21h22" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/><rect x="7" y="8" width="3" height="3" rx="0.5" fill="#fff"/><rect x="14" y="8" width="3" height="3" rx="0.5" fill="#fff"/></svg></div>', iconSize: [22, 22], iconAnchor: [11, 11] });
       L.marker([50.108938, 8.647072], { icon: hotelIcon }).addTo(map).bindPopup('<div style="font-family:Jost,sans-serif;font-size:13px;line-height:1.4;"><strong style="font-family:Cormorant Garamond,serif;font-size:15px;">Hampton by Hilton</strong><br><span style="font-size:11px;color:#5A5048;">Where I stayed</span></div>', { closeButton: false });
@@ -769,7 +769,7 @@
       <div class="restaurant-top"><h3 class="restaurant-name">Block House</h3><div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div></div>
       <div class="restaurant-cuisine">Steakhouse</div>
       <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
-      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
+      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div data-gf="11111" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div></div>
       <div class="restaurant-details">
         <div class="restaurant-detail"><div class="restaurant-detail-label">Safety Notes</div><div class="restaurant-detail-value">German steakhouse chain with a GF labeling system &mdash; items marked with "G" contain gluten, making it easy to identify safe choices. Staff knowledgeable about allergens.</div></div>
         <div class="restaurant-detail"><div class="restaurant-detail-label">What to Order</div><div class="restaurant-detail-value">Caprese salad and apps were great. Steaks are naturally GF. Stick to items without the "G" marker on the menu.</div></div>
@@ -782,7 +782,7 @@
       <div class="restaurant-top"><h3 class="restaurant-name">MAREDO</h3><div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div></div>
       <div class="restaurant-cuisine">Steakhouse</div>
       <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
-      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
+      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div data-gf="11101" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div></div>
       <div class="restaurant-details">
         <div class="restaurant-detail"><div class="restaurant-detail-label">Safety Notes</div><div class="restaurant-detail-value">Steakhouse with GF items clearly marked on the menu. Straightforward and reliable for celiac diners. Steaks and salads are the safest bets.</div></div>
         <div class="restaurant-detail"><div class="restaurant-detail-label">What to Order</div><div class="restaurant-detail-value">Grilled steaks, salad bar, and baked potatoes. Skip the sauces unless confirmed GF by staff.</div></div>
@@ -794,7 +794,7 @@
       <div class="restaurant-top"><h3 class="restaurant-name">VAPIANO</h3><div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div></div>
       <div class="restaurant-cuisine">Italian</div>
       <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
-      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
+      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div data-gf="11000" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
       <div class="restaurant-details">
         <div class="restaurant-detail"><div class="restaurant-detail-label">Safety Notes</div><div class="restaurant-detail-value">Had GF pizza, flagged with a little marker to signify gluten-free. But it was not very good. The option exists, but manage your expectations. Shared kitchen &mdash; cross-contamination risk.</div></div>
         <div class="restaurant-detail"><div class="restaurant-detail-label">What to Order</div><div class="restaurant-detail-value">GF pizza is the main option. Salads are a safer bet. Skip the pasta &mdash; all prepared in the same area.</div></div>
@@ -810,7 +810,7 @@
           <div class="restaurant-top"><h3 class="restaurant-name">HANS IM GL&Uuml;CK</h3><div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div></div>
           <div class="restaurant-cuisine">Burgers</div>
           <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
-          <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
+          <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div data-gf="11111" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div></div>
           <div class="restaurant-details">
             <div class="restaurant-detail"><div class="restaurant-detail-label">Safety Notes</div><div class="restaurant-detail-value">GF buns available for an extra &euro;2.50. Dedicated fryer reported and a detailed allergen menu — worth confirming with staff on the day. A solid option for a quick GF burger in the Altstadt.</div></div>
             <div class="restaurant-detail"><div class="restaurant-detail-label">What to Order</div><div class="restaurant-detail-value">Any burger on a GF bun. Fries are from a dedicated fryer. Ask staff for the allergen chart if not on the table.</div></div>
@@ -826,7 +826,7 @@
       <div class="restaurant-top"><h3 class="restaurant-name">Tacohaus</h3><div class="restaurant-tags"><span class="restaurant-tag restaurant-tag-options">GF Options</span></div></div>
       <div class="restaurant-cuisine">Mexican</div>
       <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
-      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
+      <div class="restaurant-gf-score"><span class="restaurant-gf-score-label">GF Score</span><div data-gf="10101" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div></div>
       <div class="restaurant-details">
         <div class="restaurant-detail"><div class="restaurant-detail-label">Safety Notes</div><div class="restaurant-detail-value">Mexican restaurant with corn-based options that are naturally gluten-free. Was on the GF research list but not personally tested. Ask about flour tortilla cross-contamination.</div></div>
         <div class="restaurant-detail"><div class="restaurant-detail-label">What to Order</div><div class="restaurant-detail-value">Corn tacos, nachos, and rice bowls. Confirm corn tortillas are 100% corn and not a corn-wheat blend.</div></div>
@@ -976,7 +976,7 @@
           What are the best gluten-free restaurants in Frankfurt?
           <svg class="faq-q-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
         </button>
-        <div class="faq-a"><div class="faq-a-inner">HANS IM GL&Uuml;CK (3/5 GF score, Burgers); Block House (3/5 GF score, Steakhouse); MAREDO (3/5 GF score, Steakhouse).</div></div>
+        <div class="faq-a"><div class="faq-a-inner">HANS IM GL&Uuml;CK (3/5 GF score, Burgers); Block House (5/5 GF score, Steakhouse); MAREDO (4/5 GF score, Steakhouse).</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false">

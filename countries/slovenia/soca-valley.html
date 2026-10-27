@@ -657,10 +657,10 @@
     },
     { "@type": "Restaurant", "name": "Felix", "servesCuisine": "Burgers & Pub Food", "address": { "@type": "PostalAddress", "streetAddress": "Mala vas 16", "addressLocality": "Bovec", "addressCountry": "Slovenia" }, "review": { "@type": "Review", "author": { "@type": "Person", "name": "Kelly" }, "reviewRating": { "@type": "Rating", "ratingValue": 5, "bestRating": 5 } } },
     { "@type": "Restaurant", "name": "Pizzeria Kingpizza", "servesCuisine": "Pizza", "address": { "@type": "PostalAddress", "streetAddress": "Dvor 43b", "addressLocality": "Bovec", "addressCountry": "Slovenia" }, "review": { "@type": "Review", "author": { "@type": "Person", "name": "Kelly" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5 } } },
-    { "@type": "Restaurant", "name": "Restavracija Letni vrt", "servesCuisine": "Slovenian & Italian", "address": { "@type": "PostalAddress", "addressLocality": "Bovec", "addressCountry": "Slovenia" }, "review": { "@type": "Review", "author": { "@type": "Person", "name": "Kelly" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5 } } },
+    { "@type": "Restaurant", "name": "Restavracija Letni vrt", "servesCuisine": "Slovenian & Italian", "address": { "@type": "PostalAddress", "addressLocality": "Bovec", "addressCountry": "Slovenia" }, "review": { "@type": "Review", "author": { "@type": "Person", "name": "Kelly" }, "reviewRating": { "@type": "Rating", "ratingValue": 5, "bestRating": 5 } } },
     { "@type": "Restaurant", "name": "Hiša Franko", "servesCuisine": "Fine Dining", "address": { "@type": "PostalAddress", "streetAddress": "Staro Selo", "addressLocality": "Kobarid", "addressCountry": "Slovenia" }, "review": { "@type": "Review", "author": { "@type": "Person", "name": "Kelly" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5 } } },
-    { "@type": "Restaurant", "name": "Hiša Polonka", "servesCuisine": "Slovenian Gastropub", "address": { "@type": "PostalAddress", "streetAddress": "Gregorčičeva ulica 1", "addressLocality": "Kobarid", "addressCountry": "Slovenia" }, "review": { "@type": "Review", "author": { "@type": "Person", "name": "Kelly" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5 } } },
-    { "@type": "Restaurant", "name": "Sladoledna hiška Janko in Metka", "servesCuisine": "Ice Cream", "address": { "@type": "PostalAddress", "streetAddress": "Trg svobode 9", "addressLocality": "Kobarid", "addressCountry": "Slovenia" }, "review": { "@type": "Review", "author": { "@type": "Person", "name": "Kelly" }, "reviewRating": { "@type": "Rating", "ratingValue": 2, "bestRating": 5 } } },
+    { "@type": "Restaurant", "name": "Hiša Polonka", "servesCuisine": "Slovenian Gastropub", "address": { "@type": "PostalAddress", "streetAddress": "Gregorčičeva ulica 1", "addressLocality": "Kobarid", "addressCountry": "Slovenia" }, "review": { "@type": "Review", "author": { "@type": "Person", "name": "Kelly" }, "reviewRating": { "@type": "Rating", "ratingValue": 4, "bestRating": 5 } } },
+    { "@type": "Restaurant", "name": "Sladoledna hiška Janko in Metka", "servesCuisine": "Ice Cream", "address": { "@type": "PostalAddress", "streetAddress": "Trg svobode 9", "addressLocality": "Kobarid", "addressCountry": "Slovenia" }, "review": { "@type": "Review", "author": { "@type": "Person", "name": "Kelly" }, "reviewRating": { "@type": "Rating", "ratingValue": 3, "bestRating": 5 } } },
     { "@type": "LodgingBusiness", "name": "Hotel Soča", "address": { "@type": "PostalAddress", "addressLocality": "Bovec", "addressCountry": "Slovenia" } },
     {
       "@type": "FAQPage",
@@ -961,10 +961,10 @@
       var restaurants = [
         { name:'Felix', score:5, lat:46.339564, lng:13.555385 },
         { name:'Pizzeria Kingpizza', score:3, lat:46.332804, lng:13.538685 },
-        { name:'Restavracija Letni vrt', score:3, lat:46.337948, lng:13.55217 },
+        { name:'Restavracija Letni vrt', score:5, lat:46.337948, lng:13.55217 },
         { name:'Hiša Franko', score:3, lat:46.247249, lng:13.537761 },
-        { name:'Hiša Polonka', score:3, lat:46.247799, lng:13.579674 },
-        { name:'Sladoledna hiška Janko in Metka', score:2, lat:46.247498, lng:13.579416 }
+        { name:'Hiša Polonka', score:4, lat:46.247799, lng:13.579674 },
+        { name:'Sladoledna hiška Janko in Metka', score:3, lat:46.247498, lng:13.579416 }
       ];
 
       var hotelIcon = L.divIcon({
@@ -1011,7 +1011,7 @@
         <div class="restaurant-source restaurant-source-visited"><span class="restaurant-source-dot"></span> Went here</div>
         <div class="restaurant-gf-score">
           <span class="restaurant-gf-score-label">GF Score</span>
-          <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
+          <div data-gf="11111" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
         </div>
         <div class="restaurant-details">
           <div class="restaurant-detail">
@@ -1053,7 +1053,7 @@
         <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
         <div class="restaurant-gf-score">
           <span class="restaurant-gf-score-label">GF Score</span>
-          <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+          <div data-gf="10101" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
         </div>
         <div class="restaurant-details">
           <div class="restaurant-detail">
@@ -1086,7 +1086,7 @@
         <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
         <div class="restaurant-gf-score">
           <span class="restaurant-gf-score-label">GF Score</span>
-          <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+          <div data-gf="11111" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span></div>
         </div>
         <div class="restaurant-details">
           <div class="restaurant-detail">
@@ -1119,7 +1119,7 @@
         <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
         <div class="restaurant-gf-score">
           <span class="restaurant-gf-score-label">GF Score</span>
-          <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+          <div data-gf="11100" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
         </div>
         <div class="restaurant-details">
           <div class="restaurant-detail">
@@ -1152,7 +1152,7 @@
         <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
         <div class="restaurant-gf-score">
           <span class="restaurant-gf-score-label">GF Score</span>
-          <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+          <div data-gf="10111" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span></div>
         </div>
         <div class="restaurant-details">
           <div class="restaurant-detail">
@@ -1185,7 +1185,7 @@
         <div class="restaurant-source restaurant-source-researched"><span class="restaurant-source-dot"></span> Traveler recommended</div>
         <div class="restaurant-gf-score">
           <span class="restaurant-gf-score-label">GF Score</span>
-          <div class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
+          <div data-gf="11100" class="restaurant-gf-pips"><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip is-filled"></span><span class="restaurant-gf-pip"></span><span class="restaurant-gf-pip"></span></div>
         </div>
         <div class="restaurant-details">
           <div class="restaurant-detail">

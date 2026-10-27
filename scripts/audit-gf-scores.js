@@ -14,6 +14,8 @@
 //   rest-sheet      restaurant card pips match travel_master.xlsx celiac_safety_score
 //   rest-dedicated  a 100%-GF / dedicated restaurant scores 5/5 (Rubric 3 rule)
 //   rest-schema     the page's schema.org review ratingValue matches the card's pips
+//   rest-count      card pips equal the sum of its Rubric 3 marks (data-gf="OLRSW", 0/1 each)
+//   rest-uncounted  an open card has no data-gf marks, i.e. a score with no count behind it
 //   rest-uniform    every scored restaurant in a city has the same score: the
 //                   signature of bucket-default scoring rather than a category count
 //   copy-dedicated  copy claiming 5/5 is "reserved for" / "requires" dedicated kitchens
@@ -92,6 +94,9 @@ for (const country of fs.readdirSync(COUNTRIES)) {
       const n = filled(pips[1]);
       if (/restaurant-tag-closed/.test(c.slice(0, c.indexOf('restaurant-gf-pips')))) continue;
       scores.push(n);
+      const marks = c.match(/data-gf="([01]{5})"/);
+      if (!marks) add('rest-uncounted', rel, `${nm}: ${n}/5 with no data-gf category marks`);
+      else if (Math.max(1, [...marks[1]].reduce((t, b) => t + +b, 0)) !== n) add('rest-count', rel, `${nm}: pips show ${n}/5 but marks ${marks[1]} add to ${[...marks[1]].reduce((t, b) => t + +b, 0)}`);
       const head = c.slice(0, c.indexOf('restaurant-details') > 0 ? c.indexOf('restaurant-details') : 800);
       // Dedicated = the card's structured tag, not prose ("dedicated GF fryer" isn't a dedicated kitchen).
       const tags = [...c.slice(0, c.indexOf('restaurant-gf-pips')).matchAll(/restaurant-tag[^"]*">([^<]*)</g)].map((m) => decode(m[1])).filter(Boolean);
@@ -109,11 +114,14 @@ for (const country of fs.readdirSync(COUNTRIES)) {
       const pips = c.match(/restaurant-gf-pips">([\s\S]*?)<\/div>/);
       if (name && pips) cardScore.set(norm(decode(name[1])), filled(pips[1]));
     }
-    for (const [, nm, val] of html.matchAll(/"@type":\s*"Restaurant",\s*"name":\s*"([^"]+)"[\s\S]{0,900}?"ratingValue":\s*"?(\d)/g)) {
+    for (const [, nm, val] of html.matchAll(/"@type":\s*"Restaurant",\s*"name":\s*"([^"]+)"(?:(?!"@type":\s*"Restaurant")[\s\S]){0,900}?"ratingValue":\s*"?(\d)/g)) {
       const n = cardScore.get(norm(nm));
       if (n !== undefined && n !== +val) add('rest-schema', rel, `${decode(nm)}: schema rating ${val}/5, card shows ${n}/5`);
     }
-    if (scores.length >= 3 && new Set(scores).size === 1) add('rest-uniform', rel, `all ${scores.length} restaurants scored ${scores[0]}/5 (bucket default? recount against Rubric 3)`);
+    // Uniform 3s ("mixed safety") or 4s ("celiac-aware") were the bucket defaults. Only suspicious when
+    // the scores weren't counted; a city of counted 4s is just a city of 4s.
+    const uncounted = chunks.some((c) => /restaurant-gf-pips/.test(c) && !/data-gf="[01]{5}"/.test(c) && !/restaurant-tag-closed/.test(c.slice(0, c.indexOf('restaurant-gf-pips'))));
+    if (uncounted && scores.length >= 3 && new Set(scores).size === 1 && scores[0] <= 4) add('rest-uniform', rel, `all ${scores.length} restaurants scored ${scores[0]}/5 (bucket default? recount against Rubric 3)`);
 
     if (/5\/5[^.<]{0,60}(reserved for|require[sd]?|only for)[^.<]{0,30}dedicated/i.test(html)) add('copy-dedicated', rel, '5/5 described as reserved for/requiring dedicated kitchens');
   }
