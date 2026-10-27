@@ -1,20 +1,19 @@
 # Caption — Glasgow carousel
-# Status: APPROVED by Kelly 2026-10-27 (v7 — v6 recount fix, plus Kelly vetoed the Browns "I nearly proposed" line 2026-10-27; line removed)
+# Status: DRAFT v8 (2026-10-27) — shortened at Kelly's direction; awaiting her approval of the exact text
 # Written by Moose. Do not edit the status line — only Kelly approves, only Moose updates status.
 
 I went to Glasgow expecting to deploy the emergency snacks. Glasgow had other plans.
 
-Scotland's biggest city scored 8/10 on my GF safety scale — I tested 10 restaurants and five of them scored a perfect 5/5. The evidence:
+Scotland's biggest city scored 8/10 on my GF safety scale — 10 restaurants tested, and five of them scored a perfect 5/5.
 
-→ Glasgow Cathedral — 12th century, free to visit, and best seen from the Necropolis above it. Gothic drama: 10/10. And the climb up to see it? Worth every step.
-→ Red Onion — a full dedicated GF menu, a dedicated fryer, and a chef who'll come out and talk allergies with you. They even do a GF Sunday roast with GF Yorkshire puddings — in Glasgow, even the roast dinner is celiac-safe.
-→ The Necropolis — a Victorian cemetery on a hill with the best view in the city. Slightly morbid as a highlight? Perhaps. Worth it anyway.
-→ Browns — Coeliac UK accredited, the gold standard for celiac safety in the UK. The staff literally ask if you're coeliac.
-→ Where to stay: The Z Hotel — compact, modern, and right by George Square, so you're in the middle of everything. Booking link is in the guide.
-→ The Mural Trail — giant street art all over the city centre. Free, outdoors, and impossible to eat wrong. My favourite kind of attraction.
+→ Glasgow Cathedral & the Necropolis — medieval Gothic drama, plus the best view in the city.
+→ Red Onion — full dedicated GF menu, dedicated fryer, even a GF Sunday roast.
+→ Browns — Coeliac UK accredited; the staff ask if you're coeliac.
+→ The Z Hotel — compact and central, right by George Square. Booking link in the guide.
+→ The Mural Trail — giant street art all over the centre. Free, outdoors, impossible to eat wrong.
 
-Also in the full guide: the rest of the 10 restaurants (including proper GF fish & chips), and the UK tip that actually works — say "coeliac," not "gluten-free." Staff take you twice as seriously.
+The full guide is on the site (link in bio) — every restaurant, every score, and the UK tip that actually works: say "coeliac," not "gluten-free."
 
-The full Glasgow guide — every restaurant, GF score, and map — is on the site (link in bio). Verdict: Glasgow is what a city looks like when it actually tries. Emergency snacks: undeployed.
+Verdict: Glasgow is what a city looks like when it actually tries. Emergency snacks: undeployed.
 
 #glasgow #scotland #glutenfreetravel #celiac #gfgoneglobal
