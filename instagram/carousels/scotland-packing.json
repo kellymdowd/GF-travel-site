@@ -85,6 +85,10 @@
       "groups": [
         {
           "items": [
+            {
+              "name": "UK power adapter (Type G)",
+              "note": "UK plugs are Type G, so you&#8217;ll need one from day one"
+            },
             "RFID card wallet",
             "Passport holder &amp; organizer",
             {
@@ -103,7 +107,7 @@
         "4x5"
       ],
       "label": "Scotland packing list",
-      "line": "The full list — with shopping links for everything — is in the Scotland guide",
+      "line": "The full list — with shopping links — is in the Scotland guide",
       "url": "gfgoneglobal.com/countries/scotland",
       "sub": "Link in bio"
     },
@@ -154,8 +158,9 @@
         },
         {
           "heading": "Travel essentials",
-          "columns": 1,
+          "columns": 2,
           "items": [
+            "UK power adapter (Type G)",
             "RFID card wallet",
             "Passport holder &amp; organizer",
             "Reusable water bottle"

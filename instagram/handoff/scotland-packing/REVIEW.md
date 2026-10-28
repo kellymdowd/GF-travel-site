@@ -8,11 +8,11 @@ Assets and filenames are in `MANIFEST.md`. The celiac-edition pin is cut on purp
 
 ### Must fix before posting
 
-1. **Slide 5 overclaims.** Its line "The full list — with shopping links for everything — is in the Scotland guide" (copy from the spec) isn't true. On the Scotland page, "Layers, layers, layers", "Midge repellent" and the compact umbrella have no shop link; `PACKING_LINKS_NEEDED.md` says midge repellent stays unlinked by Kelly's choice. Suggested fix: **"The full list — with shopping links — is in the Scotland guide."** One-word change; I'll re-render as soon as Kelly or you confirm the wording.
+1. ~~**Slide 5 overclaims.**~~ **FIXED 2026-10-27 (Kelly approved).** "…with shopping links for everything…" wasn't true: Layers, midge repellent and the umbrella are unlinked on the Scotland page. It now reads **"The full list — with shopping links — is in the Scotland guide."** Re-rendered.
 
 ### Worth considering (Kelly's call)
 
-2. **The UK power adapter (Type G) is missing.** The Scotland page lists it under Scotland-Wide Essentials, and every non-UK visitor needs one. It would fit on slide 4 (Travel Essentials, which only has 3 items) and the checklist pin. It wasn't in the spec's Group 3, so I left it out.
+2. ~~**The UK power adapter (Type G) is missing.**~~ **ADDED 2026-10-27 (Kelly approved).** It's now the first item on slide 4 (both ratios), with the page's own reason ("UK plugs are Type G, so you'll need one from day one"), and in the checklist pin's Travel group, which is now two columns.
 3. **Hiking boots and midge repellent read as universal.** On the page, both are optional and sit under "Hiking & Outdoor Essentials" ("skip this section if you're not planning to hike"). The slide notes (Ben Nevis, the Quiraing, the Fairy Pools; May–September) give the context, so probably fine. Mention hiking in the caption if you want to be explicit.
 4. **Other items on the page but not in the set:** portable charger and multi-device cable, travel medicine (Advil, Benadryl, Dramamine), packing cubes and flight essentials. The spec scoped the set to three groups, so I'd leave them for the guide. Noting them so it's a deliberate choice.
 
@@ -36,12 +36,11 @@ Assets and filenames are in `MANIFEST.md`. The celiac-edition pin is cut on purp
 | 01 cover | Mossy green rocks and tide pools below dark basalt cliffs at An Corran Beach on the Isle of Skye, with the title "What to Pack for Scotland, Celiac Edition." |
 | 02 snacks | Checklist titled "GF Snacks & Essentials": KIND protein bars, Simple Mills cheddar crackers, tamari packets, peanut butter packets, instant GF noodles, GF mac and cheese, electrolytes, nuts and crunchy snacks. |
 | 03 clothing | Checklist titled "Clothing & Weather": packable rain jacket, compact umbrella, layers (t-shirt and light fleece), comfortable walking shoes, waterproof hiking boots, midge repellent, each with a short note on why. |
-| 04 travel | Checklist titled "Travel Essentials": RFID card wallet, passport holder and organizer, reusable water bottle, plus a tip to photograph your passport and cards and leave a copy with someone at home. |
+| 04 travel | Checklist titled "Travel Essentials": UK power adapter (Type G), RFID card wallet, passport holder and organizer, reusable water bottle, plus a tip to photograph your passport and cards and leave a copy with someone at home. |
 | 05 CTA | Text card: the full packing list, with shopping links, is in the Scotland guide at gfgoneglobal.com/countries/scotland. |
 | 06 end card | Map of Scotland marking the cities in the GF Gone Global guide, with "Thanks for following along." |
-| Checklist pin | One-page checklist "What to Pack for Scotland" in three groups: GF snacks and essentials, clothing and weather, and travel essentials. |
+| Checklist pin | One-page checklist "What to Pack for Scotland" in three groups: GF snacks and essentials, clothing and weather, and travel essentials, including a UK power adapter. |
 
-(If slide 5's wording changes, update its alt text to match.)
 
 ## Moose's review
 
