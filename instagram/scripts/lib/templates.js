@@ -419,46 +419,6 @@ function cta(s, dims) {
     </div>`);
 }
 
-// ─── tips-pin: Pinterest tip card (style "photo" = photo top half + cream tips,
-// style "bold" = wine background, large serif tips) ───
-function tipsPin(s, dims) {
-  const bold = s.style === 'bold';
-  const ink = bold ? '#FFFCF9' : '#2A2018';
-  const sub = bold ? 'rgba(255,252,249,0.72)' : '#5A5048';
-  const accent = bold ? '#F0C9CC' : '#C8717A';
-  const tips = s.items.map((t) => `
-      <li class="tip"><span class="tick-wrap">${TICK.replace('#C8717A', accent)}</span>
-        <span class="tip-text"><span class="tip-name">${t.name}</span><span class="tip-note">${t.note}</span></span></li>`).join('');
-  const css = `
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { width: ${dims.w}px; height: ${dims.h}px; overflow: hidden; font-family: 'Jost', sans-serif; }
-    .card { width: ${dims.w}px; height: ${dims.h}px; position: relative; display: flex; flex-direction: column;
-      background: ${bold ? 'linear-gradient(165deg, #6E3640 0%, #4A2329 55%, #2E1A1A 100%)' : '#FFFCF9'}; }
-    .card::after { content: ''; position: absolute; inset: 0.85rem; border: 1px solid ${bold ? 'rgba(240,201,204,0.3)' : 'rgba(200,113,122,0.35)'}; pointer-events: none; z-index: 3; }
-    .photo { position: relative; height: 44%; background-size: cover; background-position: ${s.bgPos || 'center'}; }
-    .photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(42,32,24,0.78) 0%, rgba(42,32,24,0.15) 55%, rgba(42,32,24,0) 100%); }
-    .photo-text { position: absolute; left: 2.2rem; right: 2.2rem; bottom: 1.6rem; z-index: 2; }
-    .label { font-size: 0.56rem; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: ${bold ? accent : '#D9979E'}; }
-    .title { font-family: 'Cormorant Garamond', serif; font-weight: 400; line-height: 1.1; letter-spacing: 0.01em; margin-top: 0.4rem; text-wrap: balance;
-      font-size: ${bold ? '2.7rem' : '2.15rem'}; color: ${bold ? ink : '#fff'}; }
-    .head { padding: 3.2rem 2.4rem 0; text-align: center; }
-    .head .ornament { display: flex; align-items: center; gap: 0.8rem; width: 62%; margin: 0 auto 1rem; }
-    .head .rule { flex: 1; height: 1px; background: rgba(240,201,204,0.5); }
-    .tips { list-style: none; flex: 1; display: flex; flex-direction: column; justify-content: center; gap: ${bold ? '1.5rem' : '1.15rem'}; padding: ${bold ? '1.6rem 2.6rem 1rem' : '1.4rem 2.4rem 0.6rem'}; }
-    .tip { display: flex; gap: 0.85rem; align-items: flex-start; }
-    .tick-wrap { flex: none; width: 15px; height: 15px; border: 1px solid ${bold ? 'rgba(255,252,249,0.55)' : 'rgba(42,32,24,0.45)'}; position: relative; margin-top: 0.45rem; }
-    .tick-wrap .tick { position: absolute; width: 23px; height: 23px; left: -1px; top: -10px; }
-    .tip-text { display: flex; flex-direction: column; gap: 0.15rem; }
-    .tip-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: ${bold ? '1.55rem' : '1.4rem'}; line-height: 1.15; color: ${ink}; }
-    .tip-note { font-size: ${bold ? '0.8rem' : '0.78rem'}; line-height: 1.45; color: ${sub}; }
-    .footer { text-align: center; font-size: 0.7rem; letter-spacing: 0.06em; color: ${bold ? 'rgba(255,252,249,0.6)' : '#9A907A'}; padding: 0 2rem 2.6rem; }`;
-  const top = bold
-    ? `<div class="head"><div class="ornament"><span class="rule"></span>${GLOBE_SVG(30, '#F0C9CC')}<span class="rule"></span></div>
-         <div class="label">${s.label}</div><div class="title">${s.title}</div></div>`
-    : `<div class="photo" style="background-image:url('${abs(s.photo)}')"><div class="photo-text"><div class="label">${s.label}</div><div class="title">${s.title}</div></div></div>`;
-  return doc(css, `<div class="card">${top}<ul class="tips">${tips}</ul><div class="footer">${s.footer}</div></div>`);
-}
-
 const BUILDERS = {
   photo,
   'text-restaurant': textRestaurant,
@@ -468,7 +428,6 @@ const BUILDERS = {
   packing,
   checklist,
   cta,
-  'tips-pin': tipsPin,
 };
 
 module.exports = { BUILDERS, REPO_ROOT };

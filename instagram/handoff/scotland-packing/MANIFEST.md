@@ -1,6 +1,6 @@
 # Handoff: Scotland Packing List (celiac edition)
 
-**Status: Images ready, except the celiac-edition pin (see below).** Built to `specs/scotland-packing-assets.md`. Kelly approved the checklist design and every asset here on 2026-10-27, except the celiac-edition pin, which she didn't like. Two replacement directions are with her. This carousel has no caption yet. Moose writes it and Kelly approves it before anything posts.
+**Status: Images complete.** Built to `specs/scotland-packing-assets.md`. Kelly approved the checklist design and every asset here on 2026-10-27. **Deliverable 2 (the celiac-edition pin) is cut on purpose.** Kelly felt four short lines didn't tell anyone anything useful, and the GF snacks pin is the more informative celiac pin. This carousel has no caption yet. Moose writes it and Kelly approves it before anything posts.
 
 ## Instagram carousel (4:5, 1080×1350), in `instagram/exports/`
 
@@ -19,11 +19,11 @@
 |---|---|---|---|
 | Checklist pin (deliverable 1) | `gfgoneglobal-scotland-packing-checklist.png` | 1.4M | All three groups. Clothing names are shortened for two columns. Links to the Scotland guide. |
 | Snacks / Clothing / Travel | `gfgoneglobal-scotland-packing-02-snacks.png`, `gfgoneglobal-scotland-packing-03-clothing.png`, `gfgoneglobal-scotland-packing-04-travel.png` | — | 2:3 re-renders of carousel slides 2–4, per the spec's "Pinterest reuse" criterion. |
-| Celiac-edition pin (deliverable 2) | `gfgoneglobal-scotland-packing-celiac.png` | **pending** | Kelly rejected the first design (cream checklist). Two alternatives are with her: a photo-led version (An Corran top half, tips below) and a bold wine-background version. The copy is unchanged from the spec. |
+| ~~Celiac-edition pin (deliverable 2)~~ | none | — | **Cut by Kelly 2026-10-27:** too thin to be useful. Use the GF snacks pin for celiac-focused Pinterest posts. |
 
 ## Notes
 
-- **The "coeliac" line** appears on the celiac pin as Moose's spec gave it. It was also added to the Scotland page's "Is Scotland safe for celiacs?" FAQ on 2026-10-25, so the pin and the page match.
-- **New card types:** `checklist` and `cta` (cream "packing slip" design matching the cream text-restaurant cards), and `tips-pin` (for the celiac pin options), all in `instagram/scripts/lib/templates.js`. `render.js` gained a per-card `ratios` option, so pins render only at 2:3 and the cover and CTA only at 4:5.
+- **The "coeliac" line** was written for the cut celiac pin. It still lives on the Scotland page's "Is Scotland safe for celiacs?" FAQ, added 2026-10-25.
+- **New card types:** `checklist` and `cta` (cream "packing slip" design matching the cream text-restaurant cards), both in `instagram/scripts/lib/templates.js`. `render.js` gained a per-card `ratios` option, so pins render only at 2:3 and the cover and CTA only at 4:5.
 - **Items not included:** the UK power adapter isn't on any card, because Moose's travel list didn't include it. Compact umbrella and midge repellent are in Clothing & Weather because the Scotland page lists them with the rain gear.
 - **Regenerate:** `node instagram/scripts/render.js scotland-packing`. The spec is `instagram/carousels/scotland-packing.json`.
