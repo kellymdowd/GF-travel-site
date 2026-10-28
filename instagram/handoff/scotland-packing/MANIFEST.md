@@ -1,6 +1,6 @@
 # Handoff: Scotland Packing List (celiac edition)
 
-**Status: Images complete.** Built to `specs/scotland-packing-assets.md`. Kelly approved the checklist design and every asset here on 2026-10-27. **Deliverable 2 (the celiac-edition pin) is cut on purpose.** Kelly felt four short lines didn't tell anyone anything useful, and the GF snacks pin is the more informative celiac pin. This carousel has no caption yet. Moose writes it and Kelly approves it before anything posts.
+**Status: Images complete.** Built to `specs/scotland-packing-assets.md`. Kelly approved the checklist design and every asset here on 2026-10-27. **Deliverable 2 (the celiac-edition pin) is cut on purpose.** Kelly felt four short lines didn't tell anyone anything useful, and the GF snacks pin is the more informative celiac pin. **Before posting, review `REVIEW.md`:** Kelly asked Moose and Claude to review this set for gaps. It has one must-fix (slide 5 overclaims "shopping links for everything"), open questions and paste-ready alt text. This carousel has no caption yet. Moose writes it and Kelly approves it before anything posts.
 
 ## Instagram carousel (4:5, 1080×1350), in `instagram/exports/`
 
