@@ -9,7 +9,8 @@
 //
 // Spec: instagram/carousels/<slug>.json — `slides` (the post, in order) and
 // optional `extras` (rendered, not part of the post). Card types live in
-// lib/templates.js.
+// lib/templates.js. A card's optional `ratios` (e.g. ["pinterest"]) limits
+// which ratios it renders at.
 
 const puppeteer = require('puppeteer');
 const path = require('path');
@@ -64,6 +65,7 @@ function parseArgs(argv) {
       await page.setViewport({ width: dims.w, height: dims.h, deviceScaleFactor: 2 });
 
       for (const card of cards) {
+        if (card.ratios && !card.ratios.includes(ratio)) continue;
         const build = BUILDERS[card.type];
         if (!build) throw new Error(`${slug}: unknown card type "${card.type}"`);
         fs.writeFileSync(tmpPath, build(card, dims, ratio === 'pinterest'));

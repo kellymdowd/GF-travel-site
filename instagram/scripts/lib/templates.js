@@ -3,7 +3,8 @@
 // HTML document. Photo/map paths in specs are repo-relative; `abs()` turns
 // them into file:// URLs.
 //
-// Card types: photo, text-restaurant, overview, map-end-card, explainer, packing
+// Card types: photo, text-restaurant, overview, map-end-card, explainer, packing,
+// checklist, cta
 
 const path = require('path');
 
@@ -337,6 +338,127 @@ function packing(s, dims) {
     </div>`);
 }
 
+// ─── checklist + cta: cream "packing slip" cards ───
+// Same frame and globe ornament as the cream text-restaurant card. Checklist
+// groups: { heading, intro?, columns? (1|2), items: ["name" | {name, note}] }.
+// Optional top-level `note` prints a closing line under the groups.
+const TICK = `<svg class="tick" viewBox="0 0 16 16" fill="none"><path d="M3.2 8.6 C4.6 9.6 5.6 10.8 6.4 12.4 C8.2 8.4 10.6 5.2 13.6 2.8" stroke="#C8717A" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+function slipCss(dims, compact) {
+  return `
+    :root { --cream: #FFFCF9; --rose: #C8717A; --tan: #B8907A; --ink: #2A2018; --ink-mid: #5A5048; --ink-light: #9A907A; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { width: ${dims.w}px; height: ${dims.h}px; overflow: hidden; font-family: 'Jost', sans-serif; }
+    .card {
+      width: ${dims.w}px; height: ${dims.h}px; position: relative; background: var(--cream);
+      padding: 2.6rem 2.4rem 2.6rem; display: flex; flex-direction: column; justify-content: center; align-items: center;
+    }
+    .card::before { content: ''; position: absolute; inset: 0; background:
+      radial-gradient(ellipse at 50% 30%, rgba(200,113,122,0.09) 0%, transparent 60%),
+      radial-gradient(ellipse at 85% 90%, rgba(184,144,122,0.10) 0%, transparent 55%), ${GRAIN}; }
+    .card::after { content: ''; position: absolute; inset: 0.85rem; border: 1px solid rgba(200,113,122,0.35); pointer-events: none; }
+    .card > * { position: relative; }
+    .ornament { display: flex; align-items: center; gap: 0.8rem; width: 62%; margin-bottom: 1rem; }
+    .ornament .rule { flex: 1; height: 1px; background: rgba(200,113,122,0.5); }
+    .label { font-size: 0.56rem; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--rose); text-align: center; }
+    .title { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: ${compact ? '2.05rem' : '2.4rem'}; letter-spacing: 0.01em; line-height: 1.15; color: var(--ink); text-align: center; margin-top: 0.4rem; max-width: 400px; text-wrap: balance; }
+    .groups { width: 100%; max-width: 440px; display: flex; flex-direction: column; gap: ${compact ? '1.3rem' : '1.6rem'}; margin-top: ${compact ? '1.4rem' : '1.8rem'}; }
+    .g-head { display: flex; align-items: center; gap: 0.6rem; font-size: 0.56rem; font-weight: 500; letter-spacing: 0.24em; text-transform: uppercase; color: var(--tan); }
+    .g-head::after { content: ''; flex: 1; height: 1px; background: rgba(184,144,122,0.35); }
+    .g-intro { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem; line-height: 1.5; color: var(--ink-mid); margin-top: 0.5rem; }
+    .items { list-style: none; display: grid; grid-template-columns: repeat(var(--cols, 1), 1fr); column-gap: 1.2rem; margin-top: 0.35rem; }
+    .item { display: flex; align-items: flex-start; gap: 0.7rem; padding: ${compact ? '0.5rem' : '0.7rem'} 0; border-bottom: 1px dotted rgba(200,113,122,0.35); }
+    .box { flex: none; width: 13px; height: 13px; border: 1px solid rgba(42,32,24,0.45); margin-top: 0.28rem; position: relative; }
+    .tick { position: absolute; width: 20px; height: 20px; left: -1px; top: -8px; }
+    .i-text { display: flex; flex-direction: column; gap: 0.1rem; }
+    .i-name { font-size: ${compact ? '0.92rem' : '1.02rem'}; font-weight: 400; color: var(--ink); line-height: 1.35; }
+    .i-note { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.05rem; color: var(--ink-mid); line-height: 1.35; }
+    .closing { max-width: 420px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1.15rem; line-height: 1.5; color: var(--ink-mid); text-align: center; margin-top: 1.3rem; }
+    .footer { margin-top: ${compact ? '1.4rem' : '1.8rem'}; font-size: 0.7rem; letter-spacing: 0.06em; color: var(--ink-light); text-align: center; }
+    .watermark { position: absolute; bottom: 1.55rem; left: 50%; transform: translateX(-50%); font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(42,32,24,0.35); white-space: nowrap; }
+    .cta-line { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 2.2rem; line-height: 1.3; color: var(--ink); text-align: center; max-width: 380px; text-wrap: balance; margin-top: 0.4rem; }
+    .cta-url { margin-top: 1.9rem; padding: 0.7rem 1.3rem; border: 1px solid var(--rose); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em; color: var(--rose); }
+    .cta-sub { margin-top: 1rem; font-size: 0.7rem; letter-spacing: 0.06em; color: var(--ink-light); }`;
+}
+
+const ornament = () => `<div class="ornament"><span class="rule"></span>${GLOBE_SVG(28, '#C8717A')}<span class="rule"></span></div>`;
+
+function checklist(s, dims) {
+  const groups = s.groups.map(g => {
+    const items = g.items.map(it => {
+      const { name, note } = typeof it === 'string' ? { name: it } : it;
+      return `<li class="item"><span class="box">${TICK}</span><span class="i-text"><span class="i-name">${name}</span>${note ? `<span class="i-note">${note}</span>` : ''}</span></li>`;
+    }).join('');
+    return `<section>
+      ${g.heading ? `<div class="g-head">${g.heading}</div>` : ''}
+      ${g.intro ? `<p class="g-intro">${g.intro}</p>` : ''}
+      <ul class="items" style="--cols:${g.columns || 1}">${items}</ul>
+    </section>`;
+  }).join('');
+  return doc(slipCss(dims, s.compact), `
+    <div class="card">
+      ${ornament()}
+      <div class="label">${s.label}</div>
+      <div class="title">${s.title}</div>
+      <div class="groups">${groups}</div>
+      ${s.note ? `<p class="closing">${s.note}</p>` : ''}
+      ${s.footer ? `<div class="footer">${s.footer}</div>` : ''}
+      <div class="watermark">GF Gone Global</div>
+    </div>`);
+}
+
+function cta(s, dims) {
+  return doc(slipCss(dims), `
+    <div class="card">
+      ${ornament()}
+      ${s.label ? `<div class="label">${s.label}</div>` : ''}
+      <div class="cta-line">${s.line}</div>
+      <div class="cta-url">${s.url}</div>
+      ${s.sub ? `<div class="cta-sub">${s.sub}</div>` : ''}
+      <div class="watermark">GF Gone Global</div>
+    </div>`);
+}
+
+// ─── tips-pin: Pinterest tip card (style "photo" = photo top half + cream tips,
+// style "bold" = wine background, large serif tips) ───
+function tipsPin(s, dims) {
+  const bold = s.style === 'bold';
+  const ink = bold ? '#FFFCF9' : '#2A2018';
+  const sub = bold ? 'rgba(255,252,249,0.72)' : '#5A5048';
+  const accent = bold ? '#F0C9CC' : '#C8717A';
+  const tips = s.items.map((t) => `
+      <li class="tip"><span class="tick-wrap">${TICK.replace('#C8717A', accent)}</span>
+        <span class="tip-text"><span class="tip-name">${t.name}</span><span class="tip-note">${t.note}</span></span></li>`).join('');
+  const css = `
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { width: ${dims.w}px; height: ${dims.h}px; overflow: hidden; font-family: 'Jost', sans-serif; }
+    .card { width: ${dims.w}px; height: ${dims.h}px; position: relative; display: flex; flex-direction: column;
+      background: ${bold ? 'linear-gradient(165deg, #6E3640 0%, #4A2329 55%, #2E1A1A 100%)' : '#FFFCF9'}; }
+    .card::after { content: ''; position: absolute; inset: 0.85rem; border: 1px solid ${bold ? 'rgba(240,201,204,0.3)' : 'rgba(200,113,122,0.35)'}; pointer-events: none; z-index: 3; }
+    .photo { position: relative; height: 44%; background-size: cover; background-position: ${s.bgPos || 'center'}; }
+    .photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(42,32,24,0.78) 0%, rgba(42,32,24,0.15) 55%, rgba(42,32,24,0) 100%); }
+    .photo-text { position: absolute; left: 2.2rem; right: 2.2rem; bottom: 1.6rem; z-index: 2; }
+    .label { font-size: 0.56rem; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: ${bold ? accent : '#D9979E'}; }
+    .title { font-family: 'Cormorant Garamond', serif; font-weight: 400; line-height: 1.1; letter-spacing: 0.01em; margin-top: 0.4rem; text-wrap: balance;
+      font-size: ${bold ? '2.7rem' : '2.15rem'}; color: ${bold ? ink : '#fff'}; }
+    .head { padding: 3.2rem 2.4rem 0; text-align: center; }
+    .head .ornament { display: flex; align-items: center; gap: 0.8rem; width: 62%; margin: 0 auto 1rem; }
+    .head .rule { flex: 1; height: 1px; background: rgba(240,201,204,0.5); }
+    .tips { list-style: none; flex: 1; display: flex; flex-direction: column; justify-content: center; gap: ${bold ? '1.5rem' : '1.15rem'}; padding: ${bold ? '1.6rem 2.6rem 1rem' : '1.4rem 2.4rem 0.6rem'}; }
+    .tip { display: flex; gap: 0.85rem; align-items: flex-start; }
+    .tick-wrap { flex: none; width: 15px; height: 15px; border: 1px solid ${bold ? 'rgba(255,252,249,0.55)' : 'rgba(42,32,24,0.45)'}; position: relative; margin-top: 0.45rem; }
+    .tick-wrap .tick { position: absolute; width: 23px; height: 23px; left: -1px; top: -10px; }
+    .tip-text { display: flex; flex-direction: column; gap: 0.15rem; }
+    .tip-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: ${bold ? '1.55rem' : '1.4rem'}; line-height: 1.15; color: ${ink}; }
+    .tip-note { font-size: ${bold ? '0.8rem' : '0.78rem'}; line-height: 1.45; color: ${sub}; }
+    .footer { text-align: center; font-size: 0.7rem; letter-spacing: 0.06em; color: ${bold ? 'rgba(255,252,249,0.6)' : '#9A907A'}; padding: 0 2rem 2.6rem; }`;
+  const top = bold
+    ? `<div class="head"><div class="ornament"><span class="rule"></span>${GLOBE_SVG(30, '#F0C9CC')}<span class="rule"></span></div>
+         <div class="label">${s.label}</div><div class="title">${s.title}</div></div>`
+    : `<div class="photo" style="background-image:url('${abs(s.photo)}')"><div class="photo-text"><div class="label">${s.label}</div><div class="title">${s.title}</div></div></div>`;
+  return doc(css, `<div class="card">${top}<ul class="tips">${tips}</ul><div class="footer">${s.footer}</div></div>`);
+}
+
 const BUILDERS = {
   photo,
   'text-restaurant': textRestaurant,
@@ -344,6 +466,9 @@ const BUILDERS = {
   'map-end-card': mapEndCard,
   explainer,
   packing,
+  checklist,
+  cta,
+  'tips-pin': tipsPin,
 };
 
 module.exports = { BUILDERS, REPO_ROOT };

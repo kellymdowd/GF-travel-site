@@ -1,0 +1,168 @@
+{
+  "slug": "scotland-packing",
+  "country": "scotland",
+  "guide": "countries/scotland.html",
+  "handoff": "instagram/handoff/scotland-packing/MANIFEST.md",
+  "slides": [
+    {
+      "type": "photo",
+      "out": "gfgoneglobal-scotland-packing-01-cover.png",
+      "ratios": [
+        "4x5"
+      ],
+      "photo": "photos/scotland/portree/IMG_9301.jpg",
+      "label": "Celiac Edition",
+      "title": "What to Pack for Scotland",
+      "subtitle": "An Corran Beach · Isle of Skye",
+      "bgPos": "center 60%"
+    },
+    {
+      "type": "checklist",
+      "out": "gfgoneglobal-scotland-packing-02-snacks.png",
+      "label": "Scotland packing list",
+      "title": "GF Snacks &amp; Essentials",
+      "groups": [
+        {
+          "intro": "Shelf-stable backups for long train days and the Highland stretches where GF options thin out.",
+          "columns": 1,
+          "items": [
+            "KIND protein bars",
+            "Simple Mills cheddar crackers",
+            "Tamari packets",
+            "PB packets",
+            "Instant GF noodles",
+            "GF mac &amp; cheese",
+            "Electrolytes",
+            "Nuts &amp; crunchy snacks"
+          ]
+        }
+      ],
+      "compact": true
+    },
+    {
+      "type": "checklist",
+      "out": "gfgoneglobal-scotland-packing-03-clothing.png",
+      "label": "Scotland packing list",
+      "title": "Clothing &amp; Weather",
+      "groups": [
+        {
+          "intro": "Scottish weather changes by the hour. Dress like an onion.",
+          "items": [
+            {
+              "name": "Packable rain jacket",
+              "note": "It will rain, even in July"
+            },
+            {
+              "name": "Compact umbrella",
+              "note": "For lighter town-day showers"
+            },
+            {
+              "name": "Layers: t-shirt + light fleece",
+              "note": "Sun to wind to drizzle in one afternoon"
+            },
+            {
+              "name": "Comfortable walking shoes",
+              "note": "Cobblestones, hills, cathedral steps"
+            },
+            {
+              "name": "Waterproof hiking boots",
+              "note": "Ben Nevis, the Quiraing, the Fairy Pools"
+            },
+            {
+              "name": "Midge repellent",
+              "note": "May–September, near water"
+            }
+          ]
+        }
+      ],
+      "compact": true
+    },
+    {
+      "type": "checklist",
+      "out": "gfgoneglobal-scotland-packing-04-travel.png",
+      "label": "Scotland packing list",
+      "title": "Travel Essentials",
+      "groups": [
+        {
+          "items": [
+            "RFID card wallet",
+            "Passport holder &amp; organizer",
+            {
+              "name": "Reusable water bottle",
+              "note": "Tap water is safe and excellent throughout Scotland"
+            }
+          ]
+        }
+      ],
+      "note": "Photograph your passport and cards on your phone, and leave a copy with someone at home."
+    },
+    {
+      "type": "cta",
+      "out": "gfgoneglobal-scotland-packing-05-cta.png",
+      "ratios": [
+        "4x5"
+      ],
+      "label": "Scotland packing list",
+      "line": "The full list — with shopping links for everything — is in the Scotland guide",
+      "url": "gfgoneglobal.com/countries/scotland",
+      "sub": "Link in bio"
+    },
+    {
+      "type": "map-end-card",
+      "out": "gfgoneglobal-scotland-end-card.png",
+      "map": "instagram/map-assets/scotland-map.png",
+      "mapPos": "38% 55%",
+      "ratios": []
+    }
+  ],
+  "extras": [
+    {
+      "type": "checklist",
+      "out": "gfgoneglobal-scotland-packing-checklist.png",
+      "ratios": [
+        "pinterest"
+      ],
+      "compact": true,
+      "label": "Scotland",
+      "title": "What to Pack for Scotland",
+      "groups": [
+        {
+          "heading": "GF snacks &amp; essentials",
+          "columns": 2,
+          "items": [
+            "KIND protein bars",
+            "Simple Mills cheddar crackers",
+            "Tamari packets",
+            "PB packets",
+            "Instant GF noodles",
+            "GF mac &amp; cheese",
+            "Electrolytes",
+            "Nuts &amp; crunchy snacks"
+          ]
+        },
+        {
+          "heading": "Clothing &amp; weather",
+          "columns": 2,
+          "items": [
+            "Packable rain jacket",
+            "Compact umbrella",
+            "Layers: tee + light fleece",
+            "Walking shoes",
+            "Waterproof hiking boots",
+            "Midge repellent"
+          ]
+        },
+        {
+          "heading": "Travel essentials",
+          "columns": 1,
+          "items": [
+            "RFID card wallet",
+            "Passport holder &amp; organizer",
+            "Reusable water bottle"
+          ]
+        }
+      ],
+      "footer": "Full list + links: GF Gone Global"
+    }
+  ]
+}
