@@ -1,6 +1,6 @@
 # Handoff: Fort William Carousel (Scotland relaunch post #3)
 
-**Status: NOT cleared to publish.** The slides are final after the 2026-10-26 GF score recount (see below). Moose's approved v3 caption in `captions/fort-william-caption.md` is now out of date: it's built around "5/10, my lowest in Scotland, no restaurant broke 3/5" and calls Browns and The Geographer 3/5. Moose needs to revise it and get Kelly's re-approval.
+**Status: NOT cleared to publish.** The slides are final after the 2026-10-26 GF score recount (see below). The caption in `captions/fort-william-caption.md` is at DRAFT v5 (2026-10-27). Kelly still needs to approve the exact text before it posts. Clear this line once that caption is marked APPROVED.
 
 Six slides. It leads with Ben Nevis because that's why people come to Fort William, and the two food slides do the GF work. Two complete sets, same filenames in each folder:
 - **Instagram (4:5, 1080×1350):** `instagram/exports/`

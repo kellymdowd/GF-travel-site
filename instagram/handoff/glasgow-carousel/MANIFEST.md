@@ -1,6 +1,6 @@
 # Handoff: Glasgow Carousel (Scotland relaunch post #2)
 
-**Status: ON HOLD (2026-10-26). Do not post yet.** The site-wide GF score recount raised three Glasgow restaurants to 5/5 (Bella Italia, The Butterfly and the Pig, Stack & Still), so Glasgow now has **five** 5/5 restaurants, not two. The overview slide has been re-rendered with the new count. The approved caption line "I tested 10 restaurants and two of them scored a perfect 5/5" is now wrong, and Moose needs to revise it and get Kelly's re-approval. Clear again once the caption is fixed.
+**Status: CLEARED to publish (Kelly, 2026-10-27).** Caption: `captions/glasgow-caption.md` v8, approved by Kelly 2026-10-27. Slides are final after the 2026-10-26 GF score recount: the overview shows 8/10 and five 5/5 restaurants, which matches the caption.
 
 Final 8-slide order, leading with a photo per Kelly's note (not a text-only card first). Two complete sets, same filenames in each folder:
 - **Instagram (4:5, 1080×1350):** `instagram/exports/`
